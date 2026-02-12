@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap');
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+    --primary: 45 100% 50%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 45 30% 95%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 45 100% 50%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 45 30% 85%;
+    --input: 45 30% 85%;
+    --ring: 45 100% 50%;
+    --radius: 0.5rem;
+    
+    --gold: 45 100% 50%;
+    --gold-dark: 45 100% 45%;
+    --dark: 0 0% 10%;
+    --dark-light: 0 0% 20%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Cairo', sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-gold {
+    color: hsl(var(--gold));
+  }
+  
+  .bg-gold {
+    background-color: hsl(var(--gold));
+  }
+  
+  .bg-dark {
+    background-color: hsl(var(--dark));
+  }
+  
+  .border-gold {
+    border-color: hsl(var(--gold));
+  }
+  
+  .gradient-gold {
+    background: linear-gradient(135deg, hsl(45 100% 50%) 0%, hsl(45 100% 45%) 100%);
+  }
+  
+  .gradient-dark {
+    background: linear-gradient(135deg, hsl(0 0% 10%) 0%, hsl(0 0% 20%) 100%);
+  }
+  
+  .shadow-gold {
+    box-shadow: 0 4px 30px rgba(255, 193, 7, 0.3);
+  }
+  
+  .hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+  }
+  
+  .animate-slide-in-right {
+    animation: slideInRight 0.8s ease-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .section-padding {
+    @apply py-20 px-4 sm:px-6 lg:px-8 xl:px-12;
+  }
+  
+  .container-custom {
+    @apply max-w-7xl mx-auto;
+  }
+}
