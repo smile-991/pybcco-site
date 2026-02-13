@@ -138,3 +138,52 @@
     @apply max-w-7xl mx-auto;
   }
 }
+/* Fix phone number direction */
+.topbar-phone,
+.phone-number,
+a[href^="tel:"] {
+  direction: ltr;
+  unicode-bidi: plaintext;
+}
+
+/* === HEADER LOGO FIX === */
+header a[href="#hero"],
+header a[href$="#hero"]{
+  font-size: 0 !important;
+  line-height: 0 !important;
+  color: transparent !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+header a[href="#hero"] *,
+header a[href$="#hero"] *{
+  display: none !important;
+}
+
+header a[href="#hero"]::before,
+header a[href$="#hero"]::before{
+  content: "";
+  width: 42px;
+  height: 42px;
+  display: inline-block;
+  background: url("/assets/logo.png") no-repeat center;
+  background-size: contain;
+}
+
+/* === Fix cities badges === */
+span[data-slot="badge"]{
+  background-color: #fbbf24 !important;
+  color: #111827 !important;
+  font-weight: 600;
+}
+
+span[data-slot="badge"] svg{
+  color: #111827 !important;
+}
+
+span[data-slot="badge"]:hover{
+  background-color: #f59e0b !important;
+  color: #111827 !important;
+}
