@@ -85,26 +85,42 @@ export default function Contact() {
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  e.preventDefault();
+  setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+  try {
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
 
-    toast.success('تم إرسال رسالتك بنجاح!', {
-      description: 'سنقوم بالتواصل معك في أقرب وقت ممكن.',
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      throw new Error(data?.error || "فشل إرسال الرسالة. حاول مرة أخرى.");
+    }
+
+    toast.success("تم إرسال رسالتك بنجاح!", {
+      description: "سنقوم بالتواصل معك في أقرب وقت ممكن.",
       icon: <CheckCircle2 className="w-5 h-5 text-green-500" />,
     });
 
     setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      service: '',
-      message: '',
+      name: "",
+      email: "",
+      phone: "",
+      service: "",
+      message: "",
     });
+  } catch (err: any) {
+    toast.error("تعذّر إرسال الرسالة", {
+      description: err?.message || "تحقق من الاتصال وحاول مجدداً.",
+    });
+  } finally {
     setIsSubmitting(false);
-  };
+  }
+};
 
   return (
     <section
