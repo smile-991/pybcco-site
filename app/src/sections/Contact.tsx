@@ -14,18 +14,21 @@ import {
 import { toast } from 'sonner';
 
 const contactInfo = [
-  {
-    icon: Phone,
-    title: 'اتصل بنا',
-    value: '055 060 4837',
-    subValue: '+966 55 060 4837',
-    href: 'tel:+966550604837',
-  },
+ {
+  icon: Phone,
+  title: 'اتصل بنا',
+  value: '055 060 4837',
+  subValue: '+966 55 060 4837',
+  href: 'tel:+966550604837',
+  dir: 'ltr',
+},
+
+
   {
     icon: Mail,
     title: 'البريد الإلكتروني',
     value: 'm.h.jabasini@pybcco.com',
-    subValue: 'info@bunian.com',
+    subValue: 'info@pybcco.com',
     href: 'mailto:m.h.jabasini@gmail.com',
   },
   {
@@ -168,8 +171,14 @@ export default function Contact() {
                     </div>
                     <div className="flex-1">
                       <h4 className="font-bold text-gray-900 mb-1">{info.title}</h4>
-                      <p className="text-gray-700 font-medium">{info.value}</p>
-                      <p className="text-gray-500 text-sm">{info.subValue}</p>
+                      <p dir={info.dir ?? 'rtl'} className="text-gray-700 font-medium">
+  {info.value}
+</p>
+
+                      <p dir={info.dir ?? 'rtl'} className="text-gray-500 text-sm">
+  {info.subValue}
+</p>
+
                       {info.href && (
                         <a
                           href={info.href}
