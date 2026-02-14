@@ -4,53 +4,76 @@ import Footer from "@/sections/Footer";
 import { Button } from "@/components/ui/button";
 
 export default function VillaFinishingRiyadh() {
-  useEffect(() => {
-    document.title = "تشطيب فلل بالرياض | شركة بنيان الهرم للمقاولات";
-  }, []);
+useEffect(() => {
+  document.title = "تشطيب فلل بالرياض | شركة بنيان الهرم للمقاولات";
+
+  const meta = document.createElement("meta");
+  meta.name = "description";
+  meta.content =
+    "شركة تشطيب فلل بالرياض تسليم مفتاح، عمالة على الكفالة، إشراف هندسي كامل، أسعار تبدأ من 450 ريال للمتر. تواصل الآن مع بنيان الهرم.";
+  document.head.appendChild(meta);
+
+  return () => {
+    document.head.removeChild(meta);
+  };
+}, []);
 
   return (
     <div className="min-h-screen bg-black text-white">
       <Navbar />
 
-      {/* HERO */}
-      <section className="relative overflow-hidden pt-24">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black" />
-        </div>
+<section className="container mx-auto px-4 pt-24">
+  <h1 className="text-4xl md:text-5xl font-extrabold text-gold text-center">
+    تشطيب فلل بالرياض باحترافية عالية وتسليم مفتاح
+  </h1>
 
-        <div className="relative container mx-auto px-4 py-12">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-3xl sm:text-5xl font-extrabold leading-tight">
-              تشطيب فلل بالرياض <span className="text-gold">تسليم مفتاح</span>
-            </h1>
-            <p className="mt-5 text-white/80 text-base sm:text-lg leading-relaxed">
-              تشطيب داخلي وخارجي باحترافية عالية، إشراف مهندسين ومراقبين، عمالة على الكفالة،
-              وأسعار مرنة حسب المواد ورغبة العميل بالدفع.
-            </p>
+  <p className="mt-6 text-lg text-gray-300 leading-relaxed text-center max-w-3xl mx-auto">
+    نقدم خدمات تشطيب فلل بالرياض بأعلى معايير الجودة والاحتراف،
+    مع إشراف هندسي كامل وطاقم مراقبين متخصصين.
+    ننفذ أعمال التشطيب الداخلي والخارجي وتسليم مفتاح بأسعار تبدأ من
+    <span className="text-gold font-bold"> 450 ريال للمتر</span>
+    حسب نوع المواد ومتطلبات العميل.
+  </p>
 
-            <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-              <Button
-                className="bg-gold text-black font-bold px-8 py-6 text-lg"
-                onClick={() => window.location.href = "tel:+966550604837"}
-              >
-                اتصل الآن
-              </Button>
+  <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+    <Button
+      className="bg-gold text-black font-bold px-8 py-6 text-lg"
+      onClick={() => (window.location.href = "tel:+966550604837")}
+    >
+      اتصل الآن
+    </Button>
 
-              <Button
-                variant="outline"
-                className="border-white/30 text-white px-8 py-6 text-lg"
-                onClick={() => window.location.href = "https://wa.me/966550604837"}
-              >
-                واتساب
-              </Button>
-            </div>
+    <Button
+      variant="outline"
+      className="border-white/30 text-white px-8 py-6 text-lg"
+      onClick={() => (window.location.href = "https://wa.me/966550604837")}
+    >
+      واتساب
+    </Button>
+  </div>
 
-            <div className="mt-6 text-sm text-white/60">
-              يبدأ سعر التشطيب غالبًا من <span className="text-white font-bold">450 ريال/م²</span> ويزيد حسب المواد والمستوى.
-            </div>
-          </div>
-        </div>
-      </section>
+  <div className="mt-10 grid md:grid-cols-2 gap-6 text-right max-w-5xl mx-auto">
+    <div className="bg-white/5 p-6 rounded-xl border border-gold/20">
+      <h3 className="text-xl font-bold text-gold mb-3">عمالة على الكفالة</h3>
+      <p className="text-white/80">نمتلك عمالة نظامية مدربة تضمن جودة التنفيذ وسرعة الإنجاز.</p>
+    </div>
+
+    <div className="bg-white/5 p-6 rounded-xl border border-gold/20">
+      <h3 className="text-xl font-bold text-gold mb-3">إشراف هندسي كامل</h3>
+      <p className="text-white/80">فريق مهندسين ومراقبين يتابع المشروع خطوة بخطوة حتى التسليم.</p>
+    </div>
+
+    <div className="bg-white/5 p-6 rounded-xl border border-gold/20">
+      <h3 className="text-xl font-bold text-gold mb-3">تسليم مفتاح</h3>
+      <p className="text-white/80">تنفيذ كامل من العظم حتى التشطيب النهائي بدون الحاجة لتعدد المقاولين.</p>
+    </div>
+
+    <div className="bg-white/5 p-6 rounded-xl border border-gold/20">
+      <h3 className="text-xl font-bold text-gold mb-3">أسعار مرنة</h3>
+      <p className="text-white/80">خيارات متعددة تناسب ميزانية العميل مع مرونة في اختيار المواد.</p>
+    </div>
+  </div>
+</section>
 
       {/* WHY US */}
       <section className="container mx-auto px-4 py-14">
@@ -79,6 +102,10 @@ export default function VillaFinishingRiyadh() {
       </section>
 
       {/* SERVICES */}
+      <p className="mt-8 text-white/60 text-center max-w-4xl mx-auto">
+نحن شركة مقاولات بالرياض نقدم خدمات تشطيب فلل، ترميم مباني، 
+بناء عظم، وصيانة عامة، مع التزام كامل بالجودة والجدول الزمني.
+</p>
       <section className="container mx-auto px-4 pb-14">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
           خدماتنا في <span className="text-gold">تشطيب الفلل</span>
