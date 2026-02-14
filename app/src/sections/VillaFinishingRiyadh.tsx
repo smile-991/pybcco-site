@@ -1,6 +1,4 @@
 import { useEffect } from "react";
-import Navbar from "@/sections/Navbar";
-import Footer from "@/sections/Footer";
 import { Button } from "@/components/ui/button";
 
 export default function VillaFinishingRiyadh() {
@@ -20,7 +18,6 @@ useEffect(() => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <Navbar />
 
 <section className="container mx-auto px-4 pt-24">
   <h1 className="text-4xl md:text-5xl font-extrabold text-gold text-center">
@@ -154,7 +151,6 @@ useEffect(() => {
         </div>
       </section>
 
-      <Footer />
     </div>
   );
 }

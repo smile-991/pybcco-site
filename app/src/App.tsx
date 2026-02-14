@@ -6,11 +6,13 @@ import Services from './sections/Services';
 import Projects from './sections/Projects';
 import Team from './sections/Team';
 import Certificates from './sections/Certificates';
-import Partners from './sections/Partners';
 import Contact from './sections/Contact';
 import Footer from './sections/Footer';
+import Partners from './sections/Partners';
 import { Toaster } from '@/components/ui/sonner';
 import VillaFinishingRiyadh from "./sections/VillaFinishingRiyadh";
+import { Routes, Route } from "react-router-dom";
+
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -47,6 +49,10 @@ if (isLoading) {
     <div className="min-h-screen bg-white" dir="rtl">
       <Navbar />
       <main>
+  <Routes>
+
+    <Route path="/" element={
+      <>
         <Hero />
         <About />
         <Services />
@@ -55,8 +61,13 @@ if (isLoading) {
         <Certificates />
         <Partners />
         <Contact />
-        <VillaFinishingRiyadh />
-      </main>
+      </>
+    } />
+
+    <Route path="/تشطيب-فلل-بالرياض" element={<VillaFinishingRiyadh />} />
+
+  </Routes>
+</main>
       <Footer />
       <Toaster />
     </div>
