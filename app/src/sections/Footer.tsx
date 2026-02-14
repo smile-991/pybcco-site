@@ -155,7 +155,7 @@ export default function Footer() {
                   </div>
                   <div>
                     <p className="text-sm text-white/50">البريد الإلكتروني</p>
-                    <p className="font-semibold">m.h.jabasini@pybcco.com</p>
+                    <p className="font-semibold">info@pybcco.com</p>
                   </div>
                 </a>
               </li>
