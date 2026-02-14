@@ -1,4 +1,3 @@
-import React from "react";
 
 const clients = [
   { name: "KAFD", src: "/clients/kafd.png" },
