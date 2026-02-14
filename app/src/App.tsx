@@ -21,23 +21,26 @@ function App() {
     }, 1500);
   }, []);
 
-  if (isLoading) {
-    return (
-      <div className="fixed inset-0 bg-dark flex items-center justify-center z-50">
-        <div className="text-center">
-          <div className="w-24 h-24 mx-auto mb-6 relative">
-            <div className="absolute inset-0 border-4 border-gold/20 rounded-full"></div>
-            <div className="absolute inset-0 border-4 border-gold border-t-transparent rounded-full animate-spin"></div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-gold text-2xl font-bold">ب</span>
-            </div>
-          </div>
-          <h2 className="text-gold text-xl font-bold mb-2">بنيان الهرم</h2>
-          <p className="text-white/60 text-sm">جاري التحميل...</p>
+if (isLoading) {
+  return (
+    <div className="fixed inset-0 bg-dark flex items-center justify-center z-50">
+      <div className="text-center animate-fadeIn">
+        <div className="w-28 h-28 mx-auto mb-6 relative">
+          <div className="absolute inset-0 rounded-full bg-gold/20 blur-xl"></div>
+          <img
+            src="/assets/logo.png"
+            alt="Bunian AlHaram Logo"
+            className="relative w-full h-full object-contain"
+          />
         </div>
+
+        <h2 className="text-gold text-xl font-bold mb-2">بنيان الهرم</h2>
+        <p className="text-white/60 text-sm">جاري التحميل...</p>
       </div>
-    );
-  }
+    </div>
+  );
+}
+
 
   return (
     <div className="min-h-screen bg-white" dir="rtl">
