@@ -193,6 +193,17 @@ export default function Footer() {
           </div>
         </div>
       </div>
+{/* QR Code */}
+<div className="mt-10 flex flex-col items-center gap-3">
+  <p className="text-sm text-white/70">امسح الكود لزيارة بروفايل الشركة</p>
+
+  <img
+    src="/assets/qr.png"
+    alt="QR Code"
+    className="w-32 h-32 object-contain rounded-md bg-white p-2"
+    loading="lazy"
+  />
+</div>
 
       {/* Scroll to Top Button */}
       <Button
