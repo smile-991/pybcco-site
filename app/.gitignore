@@ -2,3 +2,19 @@ node_modules/
 dist/
 .vite
 .env
+# dependencies
+node_modules/
+app/node_modules/
+
+# builds
+dist/
+app/dist/
+.vite/
+
+# env
+.env
+app/.env
+
+# OS
+.DS_Store
+Thumbs.db
