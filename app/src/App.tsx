@@ -10,6 +10,7 @@ import Partners from './sections/Partners';
 import Contact from './sections/Contact';
 import Footer from './sections/Footer';
 import { Toaster } from '@/components/ui/sonner';
+import VillaFinishingRiyadh from "./sections/VillaFinishingRiyadh";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -54,6 +55,7 @@ if (isLoading) {
         <Certificates />
         <Partners />
         <Contact />
+        <VillaFinishingRiyadh />
       </main>
       <Footer />
       <Toaster />
