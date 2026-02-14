@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowDown, Building2, HardHat, Ruler, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -10,21 +10,34 @@ const stats = [
 
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
+const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (heroRef.current) {
-        const scrollY = window.scrollY;
-        const parallaxElements = heroRef.current.querySelectorAll('.parallax');
-        parallaxElements.forEach((el) => {
-          (el as HTMLElement).style.transform = `translateY(${scrollY * 0.5}px)`;
-        });
-      }
-    };
+  const handleScroll = () => {
+    const y = window.scrollY || 0;
+    setScrollY(y);
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    if (heroRef.current) {
+      const parallaxElements =
+        heroRef.current.querySelectorAll(".parallax");
+
+      parallaxElements.forEach((el) => {
+        (el as HTMLElement).style.transform =
+          `translateY(${y * 0.5}px)`;
+      });
+    }
+  };
+
+  handleScroll();
+  window.addEventListener("scroll", handleScroll, { passive: true });
+
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);  // ← useEffect انتهى هون
+
+// 👇👇👇 من هون صار خارج useEffect
+const progress = Math.min(scrollY / 320, 1);
+const fade = 1 - progress * 0.55;
+const lift = progress * 14;
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -58,7 +71,14 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 container-custom pt-20">
-        <div className="text-center max-w-4xl mx-auto">
+<div
+  className="text-center max-w-4xl mx-auto"
+  style={{
+    opacity: fade,
+    transform: `translateY(${lift}px)`,
+    willChange: "opacity, transform",
+  }}
+>
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-gold/20 backdrop-blur-sm border border-gold/30 rounded-full px-4 py-2 mb-6 animate-fade-in">
             <span className="w-2 h-2 bg-gold rounded-full animate-pulse" />
@@ -68,16 +88,19 @@ export default function Hero() {
           </div>
 
           {/* Main Title */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 animate-slide-up">
-            <span className="block">بنيان الهرم</span>
-            <span className="block text-gold mt-2">للمقاولات</span>
-          </h1>
+          <h1 className="text-white font-extrabold leading-tight tracking-wide text-4xl sm:text-5xl lg:text-6xl text-center mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]">
+  شركة{" "}
+  <span className="text-gold/90">بنيان الهرم</span>{" "}
+  <span className="whitespace-nowrap">
+    للمقاولات
+  </span>
+</h1>
 
           {/* Subtitle */}
-          <p className="text-lg sm:text-xl text-white/80 mb-8 max-w-2xl mx-auto leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
-            نبني المستقبل بإتقان وجودة عالية. خبرة تمتد لأكثر من 12 عاماً في مجال
-            المقاولات والتشطيبات حول المملكة العربية السعودية
-          </p>
+          <p className="mt-6 text-white/80 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed text-center drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]">
+  نقدم حلول مقاولات متكاملة تشمل الأعمال الإنشائية وأعمال التشطيبات،
+  وفق أعلى معايير الجودة والالتزام داخل المملكة العربية السعودية.
+</p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-slide-up" style={{ animationDelay: '0.4s' }}>
@@ -93,7 +116,7 @@ export default function Hero() {
               onClick={() => scrollToSection('#projects')}
               size="lg"
               variant="outline"
-              className="border-white/30 text-white hover:bg-white/10 px-8 py-6 text-lg w-full sm:w-auto"
+              className="border border-white/30 text-white bg-transparent hover:bg-white/10 hover:border-white transition-all duration-300 px-8 py-6 text-lg w-full sm:w-auto"
             >
               استعرض مشاريعنا
             </Button>
@@ -104,7 +127,7 @@ export default function Hero() {
             {stats.map((stat, index) => (
               <div
                 key={index}
-                className="bg-white/10 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-white/10"
+                className="bg-white/5 backdrop-blur-md rounded-xl p-4 sm:p-6 border border-white/10"
               >
                 <stat.icon className="w-6 h-6 sm:w-8 sm:h-8 text-gold mx-auto mb-2" />
                 <div className="text-2xl sm:text-4xl font-bold text-white mb-1">
