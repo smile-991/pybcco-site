@@ -16,6 +16,8 @@ import { Toaster } from "@/components/ui/sonner";
 import VillaRenovationRiyadh from "./sections/VillaRenovationRiyadh";
 import ConstructionCompanyRiyadh from "./sections/ConstructionCompanyRiyadh";
 import ApartmentFinishingRiyadh from "./sections/ApartmentFinishingRiyadh";
+import HomeRenovationCompanyRiyadh from "./sections/HomeRenovationCompanyRiyadh";
+
 
 
 
@@ -104,6 +106,8 @@ export default function App() {
         <Route path="/villa-finishing-price-riyadh" element={<VillaFinishingPriceRiyadh />} />
         <Route path="/villa-bone-construction-riyadh" element={<VillaBoneConstructionRiyadh />} />
         <Route path="/apartment-finishing-riyadh" element={<ApartmentFinishingRiyadh />} />
+        <Route path="/home-renovation-company-riyadh" element={<HomeRenovationCompanyRiyadh />} />
+
 
 
 
