@@ -25,11 +25,23 @@ export default function ConstructionCompanyRiyadh() {
         </h1>
 
         <p className="mt-6 text-lg text-gray-300 leading-relaxed text-center max-w-3xl mx-auto">
-          <span className="text-gold font-bold">بنيان الهرم للمقاولات</span> شركة
+          <a href="/" className="text-gold font-bold hover:underline">
+  شركة بنيان الهرم للمقاولات
+</a>
+
           مقاولات في الرياض تقدم حلول تنفيذ متكاملة تشمل{" "}
-          <strong>تشطيب الفلل والشقق</strong>، <strong>الترميم والصيانة</strong>،
-          و<strong>بناء العظم</strong> مع إشراف هندسي كامل وطاقم مراقبين لضمان
-          الجودة والالتزام بالمواعيد.
+          <a href="/villa-finishing-riyadh" className="text-gold font-bold hover:underline">
+  تشطيب الفلل والشقق
+</a>
+،{" "}
+<a href="/villa-renovation-riyadh" className="text-gold font-bold hover:underline">
+  الترميم والصيانة
+</a>
+،{" "}
+<a href="/villa-bone-construction-riyadh" className="text-gold font-bold hover:underline">
+  بناء العظم
+</a>
+
         </p>
 
         <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
@@ -126,27 +138,68 @@ export default function ConstructionCompanyRiyadh() {
           صفحات مهمة <span className="text-gold">لخدماتنا</span>
         </h2>
 
-        <div className="mt-8 grid md:grid-cols-2 gap-6">
-          <a
-            href="/villa-finishing-riyadh"
-            className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
-          >
-            <div className="text-lg font-bold text-gold">تشطيب فلل بالرياض</div>
-            <div className="mt-2 text-white/70">
-              صفحة مخصصة لتفاصيل التشطيب وتسليم المفتاح مع عروض وطرق تواصل مباشرة.
-            </div>
-          </a>
+        <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <a
+    href="/villa-finishing-riyadh"
+    className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
+  >
+    <div className="text-lg font-bold text-gold">تشطيب فلل بالرياض</div>
+    <div className="mt-2 text-white/70">
+      تفاصيل التشطيب وتسليم المفتاح مع طرق تواصل مباشرة.
+    </div>
+  </a>
 
-          <a
-            href="/villa-renovation-riyadh"
-            className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
-          >
-            <div className="text-lg font-bold text-gold">ترميم فلل بالرياض</div>
-            <div className="mt-2 text-white/70">
-              تجديد وترميم شامل، معالجة مشاكل قديمة، وتحديث كامل حسب ميزانيتك.
-            </div>
-          </a>
-        </div>
+  <a
+    href="/villa-renovation-riyadh"
+    className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
+  >
+    <div className="text-lg font-bold text-gold">ترميم فلل بالرياض</div>
+    <div className="mt-2 text-white/70">
+      تجديد وترميم شامل ومعالجة التشققات والرطوبة وتحديث كامل حسب ميزانيتك.
+    </div>
+  </a>
+
+  <a
+    href="/villa-bone-construction-riyadh"
+    className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
+  >
+    <div className="text-lg font-bold text-gold">بناء عظم بالرياض</div>
+    <div className="mt-2 text-white/70">
+      تنفيذ العظم حسب المخططات والمواصفات مع إشراف هندسي والتزام بالجدول الزمني.
+    </div>
+  </a>
+
+  <a
+    href="/apartment-finishing-riyadh"
+    className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
+  >
+    <div className="text-lg font-bold text-gold">تشطيب شقق بالرياض</div>
+    <div className="mt-2 text-white/70">
+      تشطيب شقق سكنية بتصاميم عصرية وجودة عالية من البداية حتى التسليم.
+    </div>
+  </a>
+
+  <a
+    href="/villa-finishing-price-riyadh"
+    className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
+  >
+    <div className="text-lg font-bold text-gold">أسعار تشطيب فلل بالرياض</div>
+    <div className="mt-2 text-white/70">
+      تقدير تكلفة التشطيب حسب المساحة والمواد مع استشارة مجانية قبل البدء.
+    </div>
+  </a>
+
+  <a
+    href="/home-renovation-company-riyadh"
+    className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
+  >
+    <div className="text-lg font-bold text-gold">مقاول ترميم منازل بالرياض</div>
+    <div className="mt-2 text-white/70">
+      حلول ترميم المنازل وإعادة التأهيل بإدارة هندسية متكاملة حتى التسليم.
+    </div>
+  </a>
+</div>
+
       </section>
 
       {/* FAQ */}
