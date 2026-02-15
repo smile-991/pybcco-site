@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import VillaFinishingPriceRiyadh from "./sections/VillaFinishingPriceRiyadh";
 import VillaBoneConstructionRiyadh from "./sections/VillaBoneConstructionRiyadh";
 import Navbar from "./sections/Navbar";
