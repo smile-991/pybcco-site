@@ -171,11 +171,19 @@ export default function Contact() {
                     </div>
                     <div className="flex-1">
                       <h4 className="font-bold text-gray-900 mb-1">{info.title}</h4>
-                      <p dir={info.dir ?? 'rtl'} className="text-gray-700 font-medium">
+<p
+  dir={info.dir ?? 'rtl'}
+  className="text-gray-700 font-medium text-right"
+  style={{ unicodeBidi: 'plaintext' }}
+>
   {info.value}
 </p>
 
-                      <p dir={info.dir ?? 'rtl'} className="text-gray-500 text-sm">
+<p
+  dir={info.dir ?? 'rtl'}
+  className="text-gray-500 text-sm text-right"
+  style={{ unicodeBidi: 'plaintext' }}
+>
   {info.subValue}
 </p>
 
