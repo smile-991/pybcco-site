@@ -13,6 +13,8 @@ import Contact from "./sections/Contact";
 import Footer from "./sections/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import VillaRenovationRiyadh from "./sections/VillaRenovationRiyadh";
+import ConstructionCompanyRiyadh from "./sections/ConstructionCompanyRiyadh";
+
 
 import VillaFinishingRiyadh from "./sections/VillaFinishingRiyadh";
 
@@ -57,6 +59,8 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/villa-finishing-riyadh" element={<VillaFinishingRiyadh />} />
         <Route path="/villa-renovation-riyadh" element={<VillaRenovationRiyadh />} />
+        <Route path="/construction-company-riyadh" element={<ConstructionCompanyRiyadh />} />
+
       </Routes>
 
       <Footer />
