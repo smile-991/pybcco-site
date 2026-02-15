@@ -58,9 +58,14 @@ export default function Footer() {
           {/* Company Info */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-14 h-14 bg-gold rounded-xl flex items-center justify-center">
-                <span className="text-black font-bold text-2xl">ب</span>
-              </div>
+<div className="w-14 h-14 bg-gold rounded-xl flex items-center justify-center overflow-hidden">
+  <img
+    src="/assets/logo.png"
+    alt="بنيان الهرم للمقاولات"
+    className="w-12 h-12 object-contain"
+  />
+</div>
+
               <div>
                 <h3 className="font-bold text-xl">بنيان الهرم</h3>
                 <p className="text-white/60 text-sm">للمقاولات</p>
