@@ -46,20 +46,27 @@ export default function ApartmentFinishingRiyadh() {
             واتساب الآن
           </Button>
         </div>
-      </section>
+            </section>
 
-      <section className="container mx-auto px-4 py-14 text-right max-w-4xl">
-        <h2 className="text-2xl font-bold text-gold mb-4">
-          خدمات تشطيب الشقق تشمل:
+      {/* INTERNAL LINKS */}
+      <section className="container mx-auto px-4 pb-14">
+        <h2 className="text-2xl sm:text-3xl font-bold text-center">
+          خدمات أخرى في <span className="text-gold">الرياض</span>
         </h2>
 
-        <ul className="space-y-3 text-white/80">
-          <li>✔️ دهانات داخلية احترافية</li>
-          <li>✔️ جبس بورد وأسقف ديكورية</li>
-          <li>✔️ تركيب أرضيات (بورسلان – باركيه – رخام)</li>
-          <li>✔️ أعمال سباكة وكهرباء حسب الاتفاق</li>
-          <li>✔️ تجهيز كامل وتسليم مفتاح</li>
-        </ul>
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <a href="/construction-company-riyadh" className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition text-right">
+            <div className="text-lg font-bold text-gold">شركة مقاولات بالرياض</div>
+          </a>
+
+          <a href="/villa-finishing-riyadh" className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition text-right">
+            <div className="text-lg font-bold text-gold">تشطيب فلل بالرياض</div>
+          </a>
+
+          <a href="/villa-bone-construction-riyadh" className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition text-right">
+            <div className="text-lg font-bold text-gold">بناء عظم بالرياض</div>
+          </a>
+        </div>
       </section>
 
     </div>
