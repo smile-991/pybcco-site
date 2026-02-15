@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 
 import Navbar from "./sections/Navbar";
 import Hero from "./sections/Hero";
@@ -28,6 +28,44 @@ function HomePage() {
       <Team />
       <Certificates />
       <Partners />
+      <section className="container mx-auto px-4 py-14">
+  <h2 className="text-2xl sm:text-3xl font-bold text-center">
+    خدماتنا في <span className="text-gold">الرياض</span>
+  </h2>
+
+  <div className="mt-8 grid md:grid-cols-3 gap-6 text-right">
+    <Link
+  to="/construction-company-riyadh"
+  className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
+>
+  <div className="text-lg font-bold text-gold">شركة مقاولات بالرياض</div>
+  <p className="mt-2 text-white/70">
+    تنفيذ مشاريع سكنية وتجارية بإشراف هندسي كامل.
+  </p>
+</Link>
+
+    <Link
+  to="/villa-finishing-riyadh"
+  className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
+>
+  <div className="text-lg font-bold text-gold">تشطيب فلل بالرياض</div>
+  <p className="mt-2 text-white/70">
+    تشطيب داخلي وخارجي وتسليم مفتاح بجودة عالية.
+  </p>
+</Link>
+
+    <a
+  href="/villa-renovation-riyadh"
+  className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
+>
+  <div className="text-lg font-bold text-gold">ترميم فلل بالرياض</div>
+  <p className="mt-2 text-white/70">
+    تجديد شامل وصيانة حسب المعاينة.
+  </p>
+</a>
+  </div>
+</section>
+
       <Contact />
     </>
   );
@@ -65,6 +103,21 @@ export default function App() {
 
       <Footer />
       <Toaster />
+      <a
+  href="tel:+966550604837"
+  className="fixed bottom-20 right-6 bg-gold text-black px-5 py-3 rounded-full shadow-lg hover:scale-105 transition z-50 font-bold"
+>
+  اتصال
+</a>
+
+      <a
+  href="https://wa.me/966550604837"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="fixed bottom-6 right-6 bg-green-500 text-white px-5 py-3 rounded-full shadow-lg hover:scale-105 transition z-50"
+>
+  واتساب
+</a>
     </div>
   );
 }
