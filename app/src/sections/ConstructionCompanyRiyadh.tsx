@@ -52,13 +52,7 @@ export default function ConstructionCompanyRiyadh() {
             اتصال مباشر
           </Button>
 
-          <Button
-            variant="outline"
-            className="border-white/30 text-white px-8 py-6 text-lg"
-            onClick={() => (window.location.href = "https://wa.me/966550604837")}
-          >
-            واتساب الآن
-          </Button>
+          
 
           <Button
             variant="secondary"

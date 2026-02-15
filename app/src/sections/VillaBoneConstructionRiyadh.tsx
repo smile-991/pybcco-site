@@ -59,14 +59,6 @@ export default function VillaBoneConstructionRiyadh() {
           </Button>
 
           <Button
-            variant="outline"
-            className="border-white/30 text-white px-8 py-6 text-lg"
-            onClick={() => (window.location.href = "https://wa.me/966550604837")}
-          >
-            واتساب الآن
-          </Button>
-
-          <Button
             variant="secondary"
             className="bg-white text-black font-bold px-8 py-6 text-lg"
             onClick={() =>
