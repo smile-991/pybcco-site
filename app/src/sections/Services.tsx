@@ -50,7 +50,7 @@ const services = [
     title: 'مقاول ترميم منازل بالرياض',
     shortDesc: 'حلول ترميم المنازل وإعادة التأهيل بإدارة هندسية متكاملة حتى التسليم.',
     href: '/home-renovation-company-riyadh',
-    image: 'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?w=1200&q=80',
+    image: "/assets/home-renovation.jpg",
   },
 ];
 
