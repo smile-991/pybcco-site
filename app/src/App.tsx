@@ -117,8 +117,9 @@ export default function App() {
   href="https://wa.me/966550604837"
   target="_blank"
   rel="noopener noreferrer"
-  className="fixed bottom-6 right-6 bg-green-500 text-white px-5 py-3 rounded-full shadow-lg hover:scale-105 transition z-50"
+  className="fixed bottom-6 left-6 bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-full shadow-2xl transition-all duration-300 z-50 flex items-center gap-2"
 >
+  <span className="text-lg">🟢</span>
   واتساب
 </a>
     </div>
