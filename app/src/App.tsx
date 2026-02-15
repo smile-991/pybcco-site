@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import VillaFinishingPriceRiyadh from "./sections/VillaFinishingPriceRiyadh";
-
+import VillaBoneConstructionRiyadh from "./sections/VillaBoneConstructionRiyadh";
 import Navbar from "./sections/Navbar";
 import Hero from "./sections/Hero";
 import About from "./sections/About";
@@ -100,6 +100,7 @@ export default function App() {
         <Route path="/villa-renovation-riyadh" element={<VillaRenovationRiyadh />} />
         <Route path="/construction-company-riyadh" element={<ConstructionCompanyRiyadh />} />
         <Route path="/villa-finishing-price-riyadh" element={<VillaFinishingPriceRiyadh />} />
+        <Route path="/villa-bone-construction-riyadh" element={<VillaBoneConstructionRiyadh />} />
 
 
       </Routes>
