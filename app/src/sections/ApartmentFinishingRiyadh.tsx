@@ -40,7 +40,7 @@ export default function ApartmentFinishingRiyadh() {
 
           <Button
   className="bg-gold text-black font-bold px-8 py-6 text-lg hover:opacity-90 transition"
-  onClick={() => window.location.href = "https://wa.me/966556064837"}
+  onClick={() => window.location.href = "https://wa.me/966550604837"}
 >
   واتساب الآن
 </Button>
@@ -54,19 +54,49 @@ export default function ApartmentFinishingRiyadh() {
           خدمات أخرى في <span className="text-gold">الرياض</span>
         </h2>
 
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <a href="/construction-company-riyadh" className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition text-right">
-            <div className="text-lg font-bold text-gold">شركة مقاولات بالرياض</div>
-          </a>
+<div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <a
+    href="/construction-company-riyadh"
+    className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition text-right"
+  >
+    <div className="text-lg font-bold text-gold">شركة مقاولات بالرياض</div>
+  </a>
 
-          <a href="/villa-finishing-riyadh" className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition text-right">
-            <div className="text-lg font-bold text-gold">تشطيب فلل بالرياض</div>
-          </a>
+  <a
+    href="/villa-finishing-riyadh"
+    className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition text-right"
+  >
+    <div className="text-lg font-bold text-gold">تشطيب فلل بالرياض</div>
+  </a>
 
-          <a href="/villa-bone-construction-riyadh" className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition text-right">
-            <div className="text-lg font-bold text-gold">بناء عظم بالرياض</div>
-          </a>
-        </div>
+  <a
+    href="/villa-bone-construction-riyadh"
+    className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition text-right"
+  >
+    <div className="text-lg font-bold text-gold">بناء عظم بالرياض</div>
+  </a>
+
+  <a
+    href="/villa-renovation-riyadh"
+    className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition text-right"
+  >
+    <div className="text-lg font-bold text-gold">ترميم فلل بالرياض</div>
+  </a>
+
+  <a
+    href="/villa-finishing-price-riyadh"
+    className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition text-right"
+  >
+    <div className="text-lg font-bold text-gold">سعر تشطيب المتر بالرياض</div>
+  </a>
+
+  <a
+    href="/home-renovation-company-riyadh"
+    className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition text-right"
+  >
+    <div className="text-lg font-bold text-gold">شركة ترميم منازل بالرياض</div>
+  </a>
+</div>
       </section>
 
     </div>

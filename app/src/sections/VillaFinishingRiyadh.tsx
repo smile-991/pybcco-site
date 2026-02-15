@@ -178,7 +178,7 @@ useEffect(() => {
 
             <Button
   className="bg-gold text-black font-bold px-8 py-6 text-lg hover:opacity-90 transition"
-  onClick={() => window.location.href = "https://wa.me/966556064837"}
+  onClick={() => window.location.href = "https://wa.me/966550604837"}
 >
   واتساب الآن
 </Button>
