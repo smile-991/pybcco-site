@@ -62,7 +62,7 @@ export default function Footer() {
   <img
     src="/assets/logo.png"
     alt="بنيان الهرم للمقاولات"
-    className="w-12 h-12 object-contain"
+    className="w-full h-full object-contain"
   />
 </div>
 
