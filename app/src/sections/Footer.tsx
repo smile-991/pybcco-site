@@ -185,7 +185,7 @@ export default function Footer() {
         <div className="container-custom py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-white/50 text-sm text-center md:text-right">
-              © 2025 بنيان الهرم للمقاولات. جميع الحقوق محفوظة.
+              © 2026 بنيان الهرم للمقاولات. جميع الحقوق محفوظة.
             </p>
             <div className="flex items-center gap-6">
               <a href="#" className="text-white/50 hover:text-gold text-sm transition-colors">
