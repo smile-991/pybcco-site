@@ -33,44 +33,6 @@ function HomePage() {
       <Team />
       <Certificates />
       <Partners />
-      <section className="container mx-auto px-4 py-14">
-  <h2 className="text-2xl sm:text-3xl font-bold text-center">
-    خدماتنا في <span className="text-gold">الرياض</span>
-  </h2>
-
-  <div className="mt-8 grid md:grid-cols-3 gap-6 text-right">
-    <Link
-  to="/construction-company-riyadh"
-  className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
->
-  <div className="text-lg font-bold text-gold">شركة مقاولات بالرياض</div>
-  <p className="mt-2 text-white/70">
-    تنفيذ مشاريع سكنية وتجارية بإشراف هندسي كامل.
-  </p>
-</Link>
-
-    <Link
-  to="/villa-finishing-riyadh"
-  className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
->
-  <div className="text-lg font-bold text-gold">تشطيب فلل بالرياض</div>
-  <p className="mt-2 text-white/70">
-    تشطيب داخلي وخارجي وتسليم مفتاح بجودة عالية.
-  </p>
-</Link>
-
-    <a
-  href="/villa-renovation-riyadh"
-  className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
->
-  <div className="text-lg font-bold text-gold">ترميم فلل بالرياض</div>
-  <p className="mt-2 text-white/70">
-    تجديد شامل وصيانة حسب المعاينة.
-  </p>
-</a>
-  </div>
-</section>
-
       <Contact />
     </>
   );
