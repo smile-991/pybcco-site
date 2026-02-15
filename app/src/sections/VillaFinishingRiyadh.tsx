@@ -100,8 +100,14 @@ useEffect(() => {
 
       {/* SERVICES */}
       <p className="mt-8 text-white/60 text-center max-w-4xl mx-auto">
-نحن شركة مقاولات بالرياض نقدم خدمات تشطيب فلل، ترميم مباني، 
-بناء عظم، وصيانة عامة، مع التزام كامل بالجودة والجدول الزمني.
+  نحن{" "}
+  <a
+    href="/construction-company-riyadh"
+    className="text-gold font-bold hover:underline"
+  >
+    شركة مقاولات بالرياض
+  </a>{" "}
+  نقدم خدمات تشطيب فلل، ترميم مباني، بناء عظم، وصيانة عامة، مع التزام كامل بالجودة والجدول الزمني.
 </p>
       <section className="container mx-auto px-4 pb-14">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
@@ -123,6 +129,36 @@ useEffect(() => {
           ))}
         </div>
       </section>
+{/* INTERNAL LINKS */}
+<section className="container mx-auto px-4 pb-14">
+  <h2 className="text-2xl sm:text-3xl font-bold text-center">
+    خدمات أخرى في <span className="text-gold">الرياض</span>
+  </h2>
+
+  <p className="mt-4 text-white/70 text-center max-w-3xl mx-auto">
+    إذا بدك تقارن الخدمات أو عندك مشروع مختلف، تفضل تصفّح الصفحات التالية:
+  </p>
+
+  <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {[
+      { title: "شركة مقاولات بالرياض", href: "/construction-company-riyadh" },
+      { title: "ترميم فلل بالرياض", href: "/villa-renovation-riyadh" },
+      { title: "بناء عظم بالرياض", href: "/villa-bone-construction-riyadh" },
+      { title: "تشطيب شقق بالرياض", href: "/apartment-finishing-riyadh" },
+      { title: "أسعار تشطيب فلل بالرياض", href: "/villa-finishing-price-riyadh" },
+      { title: "مقاول ترميم منازل بالرياض", href: "/home-renovation-company-riyadh" },
+    ].map((x, i) => (
+      <a
+        key={i}
+        href={x.href}
+        className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition text-right"
+      >
+        <div className="text-lg font-bold text-gold">{x.title}</div>
+        <div className="mt-1 text-white/70 text-sm">اضغط لعرض التفاصيل</div>
+      </a>
+    ))}
+  </div>
+</section>
 
       {/* CTA */}
       <section className="container mx-auto px-4 pb-20">
