@@ -19,50 +19,75 @@ export default function ConstructionCompanyRiyadh() {
   return (
     <div className="min-h-screen bg-black text-white" dir="rtl">
       {/* HERO */}
-      <section className="container mx-auto px-4 pt-24 pb-10">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-gold text-center">
-          شركة مقاولات بالرياض لتنفيذ المشاريع والتشطيب والترميم باحتراف
-        </h1>
+      {/* HERO (full width background image + content) */}
+<section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
+  {/* Background image */}
+  <img
+    src="/images/ConstructionCompanyRiyadh.jpg"
+    alt="شركة مقاولات بالرياض"
+    className="absolute inset-0 h-full w-full object-cover object-bottom"
+    loading="eager"
+  />
 
-        <p className="mt-6 text-lg text-gray-300 leading-relaxed text-center max-w-3xl mx-auto">
-          <a href="/" className="text-gold font-bold hover:underline">
-  شركة بنيان الهرم للمقاولات
-</a>
+  {/* Dark overlay */}
+  <div className="absolute inset-0 bg-black/65" />
 
-          مقاولات في الرياض تقدم حلول تنفيذ متكاملة تشمل{" "}
-          <a href="/villa-finishing-riyadh" className="text-gold font-bold hover:underline">
-  تشطيب الفلل والشقق
-</a>
-،{" "}
-<a href="/villa-renovation-riyadh" className="text-gold font-bold hover:underline">
-  الترميم والصيانة
-</a>
-،{" "}
-<a href="/villa-bone-construction-riyadh" className="text-gold font-bold hover:underline">
-  بناء العظم
-</a>
+  {/* Gold glow */}
+  <div
+    className="absolute inset-0 opacity-25 blur-3xl"
+    style={{
+      background:
+        "radial-gradient(circle at top, rgba(245, 158, 11, 0.25), transparent 60%)",
+    }}
+  />
 
-        </p>
+  {/* Content */}
+  <div className="container mx-auto px-4 text-center relative z-10">
+    <h1 className="text-4xl md:text-5xl font-extrabold text-gold text-center">
+      شركة مقاولات بالرياض لتنفيذ المشاريع والتشطيب والترميم باحتراف
+    </h1>
 
-        <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-          <Button
-            className="bg-gold text-black font-bold px-8 py-6 text-lg"
-            onClick={() => (window.location.href = "tel:+966550604837")}
-          >
-            اتصال مباشر
-          </Button>
+    <p className="mt-6 text-lg text-gray-300 leading-relaxed text-center max-w-3xl mx-auto">
+      <a href="/" className="text-gold font-bold hover:underline">
+        شركة بنيان الهرم للمقاولات
+      </a>{" "}
+      في الرياض تقدم حلول تنفيذ متكاملة تشمل{" "}
+      <a href="/villa-finishing-riyadh" className="text-gold font-bold hover:underline">
+        تشطيب الفلل والشقق
+      </a>
+      ،{" "}
+      <a href="/villa-renovation-riyadh" className="text-gold font-bold hover:underline">
+        الترميم والصيانة
+      </a>
+      ،{" "}
+      <a href="/villa-bone-construction-riyadh" className="text-gold font-bold hover:underline">
+        بناء العظم
+      </a>
+      .
+    </p>
 
-          
+    <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+      <Button
+        className="bg-gold text-black font-bold px-8 py-6 text-lg"
+        onClick={() => (window.location.href = "tel:+966550604837")}
+      >
+        اتصال مباشر
+      </Button>
 
-          <Button
-            variant="secondary"
-            className="bg-white text-black font-bold px-8 py-6 text-lg"
-            onClick={() => (window.location.href = "https://wa.me/966550604837?text=أرغب%20بـ%20طلب%20معاينة%20مجانية%20لمشروع%20في%20الرياض")}
-          >
-            طلب معاينة مجانية
-          </Button>
-        </div>
-      </section>
+      <Button
+        variant="secondary"
+        className="bg-white text-black font-bold px-8 py-6 text-lg"
+        onClick={() =>
+          (window.location.href =
+            "https://wa.me/966550604837?text=أرغب%20بـ%20طلب%20معاينة%20مجانية%20لمشروع%20في%20الرياض")
+        }
+      >
+        طلب معاينة مجانية
+      </Button>
+    </div>
+  </div>
+</section>
+
 
       {/* TRUST CARDS */}
       <section className="container mx-auto px-4 pb-12">
