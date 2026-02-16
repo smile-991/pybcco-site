@@ -19,59 +19,82 @@ useEffect(() => {
   return (
     <div className="min-h-screen bg-black text-white">
 
-<section className="container mx-auto px-4 pt-24">
-  <h1 className="text-4xl md:text-5xl font-extrabold text-gold text-center">
-    تشطيب فلل بالرياض باحترافية عالية وتسليم مفتاح
-  </h1>
+{/* HERO (full width background image + content) */}
+<section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
+  {/* Background image */}
+  <img
+    src="/images/VillaFinishingRiyadh.jpg"
+    alt="تشطيب فلل بالرياض"
+    className="absolute inset-0 h-full w-full object-cover object-center"
+    loading="eager"
+  />
 
-  <p className="mt-6 text-lg text-gray-300 leading-relaxed text-center max-w-3xl mx-auto">
-    نقدم خدمات تشطيب فلل بالرياض بأعلى معايير الجودة والاحتراف،
-    مع إشراف هندسي كامل وطاقم مراقبين متخصصين.
-    ننفذ أعمال التشطيب الداخلي والخارجي وتسليم مفتاح بأسعار تبدأ من
-    <span className="text-gold font-bold"> 450 ريال للمتر</span>
-    حسب نوع المواد ومتطلبات العميل.
-  </p>
+  {/* Dark overlay */}
+  <div className="absolute inset-0 bg-black/65" />
 
-  <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-    <Button
-      className="bg-gold text-black font-bold px-8 py-6 text-lg"
-      onClick={() => (window.location.href = "tel:+966550604837")}
-    >
-      اتصل الآن
-    </Button>
+  {/* Optional gold glow */}
+  <div
+    className="absolute inset-0 opacity-25 blur-3xl"
+    style={{
+      background:
+        "radial-gradient(circle at top, rgba(245, 158, 11, 0.25), transparent 60%)",
+    }}
+  />
 
-    <Button
-      variant="outline"
-      className="border-white/30 text-white px-8 py-6 text-lg"
-      onClick={() => (window.location.href = "https://wa.me/966550604837")}
-    >
-      واتساب
-    </Button>
-  </div>
+  {/* Content */}
+  <div className="container mx-auto px-4 text-center relative z-10">
+    <h1 className="text-4xl md:text-5xl font-extrabold text-gold text-center">
+      تشطيب فلل بالرياض باحترافية عالية وتسليم مفتاح
+    </h1>
 
-  <div className="mt-10 grid md:grid-cols-2 gap-6 text-right max-w-5xl mx-auto">
-    <div className="bg-white/5 p-6 rounded-xl border border-gold/20">
-      <h3 className="text-xl font-bold text-gold mb-3">عمالة على الكفالة</h3>
-      <p className="text-white/80">نمتلك عمالة نظامية مدربة تضمن جودة التنفيذ وسرعة الإنجاز.</p>
+    <p className="mt-6 text-lg text-gray-300 leading-relaxed text-center max-w-3xl mx-auto">
+      نقدم خدمات تشطيب فلل بالرياض بأعلى معايير الجودة والاحتراف، مع إشراف هندسي كامل وطاقم مراقبين متخصصين.
+      ننفذ أعمال التشطيب الداخلي والخارجي وتسليم مفتاح بأسعار تبدأ من
+      <span className="text-gold font-bold"> 450 ريال للمتر</span>
+      حسب نوع المواد ومتطلبات العميل.
+    </p>
+
+    <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+      <Button
+        className="bg-gold text-black font-bold px-8 py-6 text-lg"
+        onClick={() => (window.location.href = "tel:+966550604837")}
+      >
+        اتصل الآن
+      </Button>
+
+      <Button
+        variant="outline"
+        className="border-white/30 text-white px-8 py-6 text-lg"
+        onClick={() => (window.location.href = "https://wa.me/966550604837")}
+      >
+        واتساب
+      </Button>
     </div>
 
-    <div className="bg-white/5 p-6 rounded-xl border border-gold/20">
-      <h3 className="text-xl font-bold text-gold mb-3">إشراف هندسي كامل</h3>
-      <p className="text-white/80">فريق مهندسين ومراقبين يتابع المشروع خطوة بخطوة حتى التسليم.</p>
-    </div>
+    {/* Cards داخل الهيرو */}
+    <div className="mt-10 grid md:grid-cols-2 gap-6 text-right max-w-5xl mx-auto">
+      <div className="bg-white/5 p-6 rounded-xl border border-gold/20 backdrop-blur-sm">
+        <h3 className="text-xl font-bold text-gold mb-3">عمالة على الكفالة</h3>
+        <p className="text-white/80">نمتلك عمالة نظامية مدربة تضمن جودة التنفيذ وسرعة الإنجاز.</p>
+      </div>
 
-    <div className="bg-white/5 p-6 rounded-xl border border-gold/20">
-      <h3 className="text-xl font-bold text-gold mb-3">تسليم مفتاح</h3>
-      <p className="text-white/80">تنفيذ كامل من العظم حتى التشطيب النهائي بدون الحاجة لتعدد المقاولين.</p>
-    </div>
+      <div className="bg-white/5 p-6 rounded-xl border border-gold/20 backdrop-blur-sm">
+        <h3 className="text-xl font-bold text-gold mb-3">إشراف هندسي كامل</h3>
+        <p className="text-white/80">فريق مهندسين ومراقبين يتابع المشروع خطوة بخطوة حتى التسليم.</p>
+      </div>
 
-    <div className="bg-white/5 p-6 rounded-xl border border-gold/20">
-      <h3 className="text-xl font-bold text-gold mb-3">أسعار مرنة</h3>
-      <p className="text-white/80">خيارات متعددة تناسب ميزانية العميل مع مرونة في اختيار المواد.</p>
+      <div className="bg-white/5 p-6 rounded-xl border border-gold/20 backdrop-blur-sm">
+        <h3 className="text-xl font-bold text-gold mb-3">تسليم مفتاح</h3>
+        <p className="text-white/80">تنفيذ كامل من العظم حتى التشطيب النهائي بدون الحاجة لتعدد المقاولين.</p>
+      </div>
+
+      <div className="bg-white/5 p-6 rounded-xl border border-gold/20 backdrop-blur-sm">
+        <h3 className="text-xl font-bold text-gold mb-3">أسعار مرنة</h3>
+        <p className="text-white/80">خيارات متعددة تناسب ميزانية العميل مع مرونة في اختيار المواد.</p>
+      </div>
     </div>
   </div>
 </section>
-
       {/* WHY US */}
       <section className="container mx-auto px-4 py-14">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
