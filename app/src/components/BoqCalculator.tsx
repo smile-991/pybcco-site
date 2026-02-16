@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { BOQ_UNIFIED, type BoqItem } from "@/data/boqUnified";
 import { Button } from "@/components/ui/button";
 
@@ -31,11 +31,12 @@ function groupByCategory(items: BoqItem[]) {
   }));
 }
 
+// ✅ لا نخزّن amount نهائي حتى ما يضل ثابت عند تغيير المستوى
 type CartLine = {
   name: string;
   unit: string;
   qty: number;
-  amount: number; // total for this line (after level factor)
+  basePrice: number;
 };
 
 export default function BoqCalculator({
@@ -43,7 +44,7 @@ export default function BoqCalculator({
   onTotalChange,
 }: {
   level: Level;
-  onTotalChange: (total: number) => void; // ✅ صار يرجّع إجمالي البنود بالكامل
+  onTotalChange: (total: number) => void; // إجمالي البنود بالكامل
 }) {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("الكل");
@@ -75,22 +76,48 @@ export default function BoqCalculator({
 
   const rows = useMemo(() => filtered.slice(0, 60), [filtered]);
 
-  const calcAmount = (item: BoqItem, qty: number) => qty * item.basePrice * factor;
+  // للعرض تحت الحقل (Preview)
+  const calcPreviewAmount = (item: BoqItem, qty: number) =>
+    qty * item.basePrice * factor;
+
+  // ✅ حساب مبلغ سطر من السلة حسب المستوى الحالي دائماً
+  const calcLineAmount = (line: CartLine) => line.qty * line.basePrice * factor;
 
   const cartCount = useMemo(() => Object.keys(cart).length, [cart]);
-  const cartTotal = useMemo(
-    () => Object.values(cart).reduce((sum, x) => sum + x.amount, 0),
-    [cart]
-  );
+
+  const cartTotal = useMemo(() => {
+    return Object.values(cart).reduce((sum, x) => sum + calcLineAmount(x), 0);
+  }, [cart, factor]);
+
+  // ✅ أهم سطر: كل ما تغيّر level أو السلة → حدّث إجمالي الإضافات في الصفحة الأم
+  useEffect(() => {
+    onTotalChange(cartTotal);
+  }, [cartTotal, onTotalChange]);
+
+  // تنظيف التايمرز عند الخروج
+  useEffect(() => {
+    return () => {
+      Object.values(timersRef.current).forEach((t) => window.clearTimeout(t));
+      timersRef.current = {};
+    };
+  }, []);
 
   const buildWhatsAppText = () => {
+    const levelText =
+      level === "commercial" ? "تجاري" : level === "standard" ? "قياسي" : "فاخر";
+
     const lines = Object.values(cart)
       .sort((a, b) => a.name.localeCompare(b.name, "ar"))
-      .map((x) => `- ${x.name} | الكمية: ${x.qty} ${x.unit} | الإجمالي: ${formatSAR(x.amount)} ريال`);
+      .map(
+        (x) =>
+          `- ${x.name} | الكمية: ${x.qty} ${x.unit} | الإجمالي: ${formatSAR(
+            calcLineAmount(x)
+          )} ريال`
+      );
 
     return [
       "عرض سعر تقديري – بنيان الهرم للمقاولات (PYBCCO)",
-      `المستوى: ${level === "commercial" ? "تجاري" : level === "standard" ? "قياسي" : "فاخر"}`,
+      `المستوى: ${levelText}`,
       "",
       "البنود:",
       ...(lines.length ? lines : ["(لا يوجد بنود)"]),
@@ -102,7 +129,7 @@ export default function BoqCalculator({
   const waLink = useMemo(() => {
     const text = encodeURIComponent(buildWhatsAppText());
     return `https://wa.me/${WA_NUMBER}?text=${text}`;
-  }, [cartTotal, cart, level]);
+  }, [cart, cartTotal, level]);
 
   return (
     <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-5">
@@ -156,7 +183,7 @@ export default function BoqCalculator({
           const key = `${it.category}|${it.name}`;
           const qtyStr = qtyByKey[key] ?? "";
           const qty = Number(qtyStr) || 0;
-          const amountPreview = qty > 0 ? calcAmount(it, qty) : 0;
+          const amountPreview = qty > 0 ? calcPreviewAmount(it, qty) : 0;
 
           return (
             <div
@@ -190,12 +217,10 @@ export default function BoqCalculator({
                             name: it.name,
                             unit: it.unit,
                             qty: q,
-                            amount: calcAmount(it, q),
+                            basePrice: it.basePrice,
                           };
                         }
 
-                        const total = Object.values(next).reduce((sum, x) => sum + x.amount, 0);
-                        onTotalChange(total);
                         return next;
                       });
                     }, 500);
@@ -207,7 +232,10 @@ export default function BoqCalculator({
 
                 {amountPreview > 0 && (
                   <div className="mt-1 text-xs text-white/60">
-                    تقديري لهذا البند: <span className="text-gold font-bold">{formatSAR(amountPreview)} ريال</span>
+                    تقديري لهذا البند:{" "}
+                    <span className="text-gold font-bold">
+                      {formatSAR(amountPreview)} ريال
+                    </span>
                   </div>
                 )}
               </div>
@@ -246,8 +274,8 @@ export default function BoqCalculator({
       </div>
 
       {/* Summary output + WhatsApp */}
-      {showSummary && (
-        cartCount > 0 ? (
+      {showSummary &&
+        (cartCount > 0 ? (
           <div className="mt-4 rounded-2xl border border-white/10 bg-black/30 p-4">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
               <div className="text-lg font-bold">ملخص البنود المضافة</div>
@@ -279,7 +307,7 @@ export default function BoqCalculator({
                       <td className="py-2 text-center">{x.qty}</td>
                       <td className="py-2 text-center text-white/70">{x.unit}</td>
                       <td className="py-2 text-left font-bold">
-                        {formatSAR(x.amount)} ريال
+                        {formatSAR(calcLineAmount(x))} ريال
                       </td>
                     </tr>
                   ))}
@@ -301,8 +329,7 @@ export default function BoqCalculator({
               ✅ فقط اكتب الكمية داخل أي بند، وسيُضاف تلقائياً.
             </div>
           </div>
-        )
-      )}
+        ))}
 
       <div className="mt-3 text-xs text-white/60">
         ملاحظة: هذه البنود لتفصيل إضافي اختياري فوق “المقطوعية”. يمكن لاحقاً تحويلها إلى “حساب شامل”
