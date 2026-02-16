@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, Youtube, ArrowUp } from 'lucide-react';
+import { Phone, Mail, MapPin, Linkedin, ArrowUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const quickLinks = [
@@ -20,11 +20,7 @@ const services = [
 ];
 
 const socialLinks = [
-  { icon: Facebook, href: '#', label: 'Facebook' },
-  { icon: Twitter, href: '#', label: 'Twitter' },
-  { icon: Instagram, href: '#', label: 'Instagram' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
-  { icon: Youtube, href: '#', label: 'YouTube' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/company/pybcco/', label: 'LinkedIn' },
 ];
 
 export default function Footer() {
@@ -152,7 +148,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="mailto:m.h.jabasini@pybcco.com"
+                  href="mailto:info@pybcco.com"
                   className="flex items-center gap-3 text-white/70 hover:text-gold transition-colors"
                 >
                   <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
