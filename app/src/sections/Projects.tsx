@@ -9,6 +9,8 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
+import ProjectsGallery from "./ProjectsGallery";
+
 
 const projects = [
   {
@@ -204,6 +206,7 @@ export default function Projects() {
       className="section-padding bg-white relative overflow-hidden"
     >
       <div className="container-custom relative z-10">
+        <ProjectsGallery />
         {/* Section Header */}
         <div className={`text-center mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <span className="inline-block bg-gold/10 text-gold-dark px-4 py-2 rounded-full text-sm font-semibold mb-4">
