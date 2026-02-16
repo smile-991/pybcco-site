@@ -17,6 +17,9 @@ import VillaRenovationRiyadh from "./sections/VillaRenovationRiyadh";
 import ConstructionCompanyRiyadh from "./sections/ConstructionCompanyRiyadh";
 import ApartmentFinishingRiyadh from "./sections/ApartmentFinishingRiyadh";
 import HomeRenovationCompanyRiyadh from "./sections/HomeRenovationCompanyRiyadh";
+import ProjectsGallery from "./sections/ProjectsGallery";
+
+<Route path="/projects" element={<ProjectsGallery />} />
 
 
 
