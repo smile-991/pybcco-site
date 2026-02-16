@@ -25,7 +25,7 @@ export default function HomeRenovationCompanyRiyadh() {
         </h1>
 
         <p className="mt-6 text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
-          تقدم <a href="/" className="text-gold font-bold hover:underline">بنيان الهرم للمقاولات</a>
+          تقدم <a href="/" className="text-gold font-bold hover:underline">بنيان الهرم للمقاولات </a>
           خدمات ترميم منازل بالرياض تشمل معالجة التشققات،
           إصلاح الأضرار، تجديد الواجهات، وتحديث كامل للمنازل القديمة
           بإشراف هندسي وجودة تنفيذ عالية.
