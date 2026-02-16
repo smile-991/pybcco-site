@@ -17,9 +17,17 @@ export default function HomeRenovationCompanyRiyadh() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white" dir="rtl">
+    <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-zinc-950 to-black text-white" dir="rtl">
 
-      <section className="container mx-auto px-4 pt-24 text-center">
+      <section className="container mx-auto px-4 pt-24 text-center relative overflow-hidden">
+        <div
+  className="absolute inset-0 -z-10 opacity-30 blur-3xl"
+  style={{
+    background:
+      "radial-gradient(circle at top, rgba(245, 158, 11, 0.25), transparent 60%)",
+  }}
+/>
+
         <h1 className="text-4xl md:text-5xl font-extrabold text-gold">
           شركة ترميم منازل بالرياض وتجديد شامل
         </h1>
@@ -43,19 +51,21 @@ export default function HomeRenovationCompanyRiyadh() {
         </div>
       </section>
 
-      <section className="container mx-auto px-4 py-14 text-right max-w-4xl">
-        <h2 className="text-2xl font-bold text-gold mb-4">
-          خدمات ترميم المنازل تشمل:
-        </h2>
+      <section className="container mx-auto px-4 py-14 max-w-4xl">
+  <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+    <h2 className="text-2xl font-bold text-gold mb-4 text-right">
+      خدمات ترميم المنازل تشمل:
+    </h2>
 
-        <ul className="space-y-3 text-white/80">
-          <li>✔️ إصلاح تشققات الجدران والأسقف</li>
-          <li>✔️ معالجة رطوبة وتسربات</li>
-          <li>✔️ تجديد دهانات وواجهات</li>
-          <li>✔️ تحديث مطابخ وحمامات</li>
-          <li>✔️ إعادة تأهيل كاملة حسب حالة المنزل</li>
-        </ul>
-      </section>
+    <ul className="space-y-3 text-white/80 text-right">
+      <li>✔️ إصلاح تشققات الجدران والأسقف</li>
+      <li>✔️ معالجة رطوبة وتسربات</li>
+      <li>✔️ تجديد دهانات وواجهات</li>
+      <li>✔️ تحديث مطابخ وحمامات</li>
+      <li>✔️ إعادة تأهيل كاملة حسب حالة المنزل</li>
+    </ul>
+  </div>
+</section>
       {/* INTERNAL LINKS */}
       <section className="container mx-auto px-4 pb-14">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
@@ -78,7 +88,7 @@ export default function HomeRenovationCompanyRiyadh() {
             <a
               key={i}
               href={x.href}
-              className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition text-right"
+              className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 hover:border-gold/30 transition text-right"
             >
               <div className="text-lg font-bold text-gold">{x.title}</div>
               <div className="mt-1 text-white/70 text-sm">اضغط لعرض التفاصيل</div>
