@@ -20,7 +20,7 @@ export default function HomeRenovationCompanyRiyadh() {
     <div className="min-h-screen bg-black text-white" dir="rtl">
 
       {/* HERO (full width background + container content) */}
-<section className="relative pt-24 overflow-hidden">
+<section className="relative pt-24 pb-32 min-h-[70vh] overflow-hidden">
   {/* الخلفية: صورة + طبقة تغميق */}
   <div className="absolute inset-0 -z-10">
     <img
