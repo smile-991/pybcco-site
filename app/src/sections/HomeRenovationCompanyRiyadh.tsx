@@ -20,7 +20,7 @@ export default function HomeRenovationCompanyRiyadh() {
     <div className="min-h-screen bg-black text-white" dir="rtl">
 
       {/* HERO (full width background image + container content) */}
-<section className="relative pt-24 pb-24 min-h-[70vh] overflow-hidden">
+<section className="relative min-h-screen flex items-center justify-center overflow-hidden">
   {/* Background image */}
   <img
     src="/images/home-renovation-hero.jpg"
@@ -42,7 +42,7 @@ export default function HomeRenovationCompanyRiyadh() {
   />
 
   {/* Content */}
-  <div className="relative z-10 container mx-auto px-4 text-center">
+  <div className="container mx-auto px-4 text-center relative z-10">
     <h1 className="text-4xl md:text-5xl font-extrabold text-gold">
       شركة ترميم منازل بالرياض وتجديد شامل
     </h1>
