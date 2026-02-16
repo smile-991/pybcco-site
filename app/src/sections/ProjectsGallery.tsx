@@ -164,7 +164,13 @@ export default function ProjectsGallery() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-4xl p-0 overflow-hidden bg-black" dir="rtl">
           {activeSrc ? (
-            <img src={activeSrc} alt="Preview" className="w-full h-auto max-h-[85vh] object-contain" />
+            <img
+  src={activeSrc}
+  alt="Preview"
+  style={{ imageOrientation: "from-image" }}
+  className="w-full h-auto max-h-[85vh] object-contain"
+/>
+
           ) : null}
         </DialogContent>
       </Dialog>
