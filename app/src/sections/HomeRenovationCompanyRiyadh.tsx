@@ -64,10 +64,8 @@ export default function HomeRenovationCompanyRiyadh() {
         اتصال مباشر
       </Button>
     </div>
-  </div>
-</section>
-      <section className="container mx-auto px-4 -mt-16 pb-14 max-w-4xl relative z-20">
-  <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+    <section className="container mx-auto px-4 mt-8 max-w-4xl relative z-20">
+  <div className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-sm">
     <h2 className="text-2xl font-bold text-gold mb-4 text-right">
       خدمات ترميم المنازل تشمل:
     </h2>
@@ -81,6 +79,9 @@ export default function HomeRenovationCompanyRiyadh() {
     </ul>
   </div>
 </section>
+  </div>
+</section>
+      
       {/* INTERNAL LINKS */}
       <section className="container mx-auto px-4 pb-14">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
