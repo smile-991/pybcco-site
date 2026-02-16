@@ -19,34 +19,45 @@ export default function ApartmentFinishingRiyadh() {
   return (
     <div className="min-h-screen bg-black text-white" dir="rtl">
 
-      <section className="container mx-auto px-4 pt-24 text-center">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-gold">
-          تشطيب شقق بالرياض تسليم مفتاح
-        </h1>
+      {/* HERO (full width background image) */}
+<section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <img
+    src="/images/ApartmentFinishingRiyadh.jpg"
+    alt="تشطيب شقق بالرياض"
+    className="absolute inset-0 h-full w-full object-cover"
+    loading="eager"
+  />
+  <div className="absolute inset-0 bg-black/65" />
 
-        <p className="mt-6 text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
-          نقدم خدمات تشطيب شقق بالرياض بجودة عالية، من الدهانات والأرضيات
-          إلى الأسقف الجبسية والإضاءة، مع إشراف هندسي وتنفيذ منظم
-          يضمن تسليم الشقة جاهزة للسكن.
-        </p>
+  <div className="container mx-auto px-4 text-center relative z-10 pt-24">
+    <h1 className="text-4xl md:text-5xl font-extrabold text-gold">
+      تشطيب شقق بالرياض تسليم مفتاح
+    </h1>
 
-        <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-          <Button
-            className="bg-gold text-black font-bold px-8 py-6 text-lg"
-            onClick={() => window.location.href = "tel:+966550604837"}
-          >
-            اتصال مباشر
-          </Button>
+    <p className="mt-6 text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
+      نقدم خدمات تشطيب شقق بالرياض بجودة عالية، من الدهانات والأرضيات
+      إلى الأسقف الجبسية والإضاءة، مع إشراف هندسي وتنفيذ منظم
+      يضمن تسليم الشقة جاهزة للسكن.
+    </p>
 
-          <Button
-  className="bg-gold text-black font-bold px-8 py-6 text-lg hover:opacity-90 transition"
-  onClick={() => window.location.href = "https://wa.me/966550604837"}
->
-  واتساب الآن
-</Button>
+    <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+      <Button
+        className="bg-gold text-black font-bold px-8 py-6 text-lg"
+        onClick={() => (window.location.href = "tel:+966550604837")}
+      >
+        اتصال مباشر
+      </Button>
 
-        </div>
-            </section>
+      <Button
+        className="bg-gold text-black font-bold px-8 py-6 text-lg hover:opacity-90 transition"
+        onClick={() => (window.location.href = "https://wa.me/966550604837")}
+      >
+        واتساب الآن
+      </Button>
+    </div>
+  </div>
+</section>
+
 
       {/* INTERNAL LINKS */}
       <section className="container mx-auto px-4 pb-14">
