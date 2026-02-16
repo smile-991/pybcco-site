@@ -19,8 +19,9 @@ export default function HomeRenovationCompanyRiyadh() {
   return (
     <div className="min-h-screen bg-black text-white" dir="rtl">
 
-      <section className="container mx-auto px-4 pt-24 text-center relative overflow-hidden">
-  {/* HERO BACKGROUND IMAGE */}
+      {/* HERO (full width background + container content) */}
+<section className="relative pt-24 overflow-hidden">
+  {/* الخلفية: صورة + طبقة تغميق */}
   <div className="absolute inset-0 -z-10">
     <img
       src="/images/home-renovation-hero.jpg"
@@ -28,38 +29,32 @@ export default function HomeRenovationCompanyRiyadh() {
       className="h-full w-full object-cover"
       loading="eager"
     />
-    {/* Dark overlay */}
     <div className="absolute inset-0 bg-black/65" />
-    {/* Gold subtle glow */}
-    <div
-      className="absolute inset-0 opacity-25 blur-3xl"
-      style={{
-        background:
-          "radial-gradient(circle at top, rgba(245, 158, 11, 0.25), transparent 60%)",
-      }}
-    />
   </div>
 
-  <h1 className="text-4xl md:text-5xl font-extrabold text-gold">
-    شركة ترميم منازل بالرياض وتجديد شامل
-  </h1>
+  {/* المحتوى داخل container */}
+  <div className="container mx-auto px-4 text-center">
+    <h1 className="text-4xl md:text-5xl font-extrabold text-gold">
+      شركة ترميم منازل بالرياض وتجديد شامل
+    </h1>
 
-  <p className="mt-6 text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
-    تقدم{" "}
-    <a href="/" className="text-gold font-bold hover:underline">
-      بنيان الهرم للمقاولات
-    </a>{" "}
-    خدمات ترميم منازل بالرياض تشمل معالجة التشققات، إصلاح الأضرار، تجديد الواجهات،
-    وتحديث كامل للمنازل القديمة بإشراف هندسي وجودة تنفيذ عالية.
-  </p>
+    <p className="mt-6 text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
+      تقدم{" "}
+      <a href="/" className="text-gold font-bold hover:underline">
+        بنيان الهرم للمقاولات
+      </a>{" "}
+      خدمات ترميم منازل بالرياض تشمل معالجة التشققات، إصلاح الأضرار، تجديد الواجهات،
+      وتحديث كامل للمنازل القديمة بإشراف هندسي وجودة تنفيذ عالية.
+    </p>
 
-  <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-    <Button
-      className="bg-gold text-black font-bold px-8 py-6 text-lg"
-      onClick={() => (window.location.href = "tel:+966550604837")}
-    >
-      اتصال مباشر
-    </Button>
+    <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+      <Button
+        className="bg-gold text-black font-bold px-8 py-6 text-lg"
+        onClick={() => (window.location.href = "tel:+966550604837")}
+      >
+        اتصال مباشر
+      </Button>
+    </div>
   </div>
 </section>
 
