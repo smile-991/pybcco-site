@@ -80,23 +80,31 @@ export default function App() {
 
       <Footer />
       <Toaster />
-      <a
-  href="tel:+966550604837"
-  className="fixed bottom-20 right-6 bg-gold text-black px-5 py-3 rounded-full shadow-lg hover:scale-105 transition z-50 font-bold"
->
-  اتصال
-</a>
+      {/* Floating Buttons (Mobile only) */}
+<div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 lg:hidden">
+  {/* WhatsApp */}
+  <a
+    href="https://wa.me/966550604837"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="WhatsApp"
+    className="w-12 h-12 bg-green-600 hover:bg-green-700 text-white rounded-full
+               flex items-center justify-center shadow-lg transition-transform hover:scale-105"
+  >
+    <span className="text-xl">🟢</span>
+  </a>
 
-      <a
-  href="https://wa.me/966550604837"
-  target="_blank"
-  rel="noopener noreferrer"
-className="fixed bottom-20 left-6 bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-full shadow-2xl transition-all duration-300 z-50 flex items-center gap-2"
+  {/* Call */}
+  <a
+    href="tel:+966550604837"
+    aria-label="Call"
+    className="w-12 h-12 bg-gold hover:bg-gold/90 text-black rounded-full
+               flex items-center justify-center shadow-lg transition-transform hover:scale-105 font-bold"
+  >
+    📞
+  </a>
+</div>
 
->
-  <span className="text-lg">🟢</span>
-  واتساب
-</a>
     </div>
   );
 }
