@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, Phone } from 'lucide-react';
+import { Menu, Phone, Linkedin, Twitter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -86,23 +86,52 @@ export default function Navbar() {
           </div>
 
           {/* CTA Button */}
-          <div className="hidden lg:flex items-center gap-4">
-            <a
-              href="tel:+966550604837"
-              className={`flex items-center gap-2 text-sm font-medium ${
-                isScrolled ? 'text-gray-800' : 'text-white'
-              }`}
-            >
-              <Phone className="w-4 h-4" />
-              <span>055 060 4837</span>
-            </a>
-            <Button
-              onClick={() => scrollToSection('#contact')}
-              className="bg-gold hover:bg-gold/90 text-black font-bold px-6"
-            >
-              طلب عرض سعر
-            </Button>
-          </div>
+<div className="hidden lg:flex items-center gap-4">
+  <a
+    href="tel:+966550604837"
+    className={`flex items-center gap-2 text-sm font-medium ${
+      isScrolled ? 'text-gray-800' : 'text-white'
+    }`}
+  >
+    <Phone className="w-4 h-4" />
+    <span>055 060 4837</span>
+  </a>
+
+  {/* Social Icons */}
+  <div className="flex items-center gap-2">
+    <a
+      href="https://x.com/pybcco"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="X"
+      className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+        isScrolled ? 'bg-black/5 hover:bg-black/10' : 'bg-white/10 hover:bg-white/20'
+      }`}
+    >
+      <Twitter className={`w-4 h-4 ${isScrolled ? 'text-gray-800' : 'text-white'}`} />
+    </a>
+
+    <a
+      href="https://www.linkedin.com/company/pybcco"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="LinkedIn"
+      className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+        isScrolled ? 'bg-black/5 hover:bg-black/10' : 'bg-white/10 hover:bg-white/20'
+      }`}
+    >
+      <Linkedin className={`w-4 h-4 ${isScrolled ? 'text-gray-800' : 'text-white'}`} />
+    </a>
+  </div>
+
+  <Button
+    onClick={() => scrollToSection('#contact')}
+    className="bg-gold hover:bg-gold/90 text-black font-bold px-6"
+  >
+    طلب عرض سعر
+  </Button>
+</div>
+
 
           {/* Mobile Menu */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -159,11 +188,32 @@ export default function Navbar() {
                     </div>
                   </a>
                   <Button
+                  
                     onClick={() => scrollToSection('#contact')}
                     className="w-full bg-gold hover:bg-gold/90 text-black font-bold"
                   >
                     طلب عرض سعر
                   </Button>
+                  <div className="flex items-center justify-center gap-3 mt-4">
+  <a
+    href="https://x.com/pybcco"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition-colors"
+  >
+    <Twitter className="w-5 h-5 text-white" />
+  </a>
+
+  <a
+    href="https://www.linkedin.com/company/pybcco"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition-colors"
+  >
+    <Linkedin className="w-5 h-5 text-white" />
+  </a>
+</div>
+
                 </div>
               </div>
             </SheetContent>
