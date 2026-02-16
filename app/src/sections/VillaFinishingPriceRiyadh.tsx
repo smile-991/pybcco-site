@@ -18,31 +18,56 @@ export default function VillaFinishingPriceRiyadh() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white" dir="rtl">
 
-      <section className="container mx-auto px-4 pt-24 text-center">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-gold">
-          سعر تشطيب المتر بالرياض 2026
-        </h1>
+      {/* HERO */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
 
-        <p className="mt-6 text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
-          يبدأ سعر تشطيب المتر في الرياض من 
-          <span className="text-gold font-bold"> 450 ريال للمتر</span>
-          ويختلف السعر حسب مستوى المواد ونوع التشطيب
-          (اقتصادي – متوسط – فاخر).
-        </p>
+        {/* Background Image */}
+        <img
+          src="/images/VillaFinishingPriceRiyadh.jpg"
+          alt="سعر تشطيب المتر بالرياض"
+          className="absolute inset-0 h-full w-full object-cover"
+          loading="eager"
+        />
 
-        <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-          <Button
-            className="bg-gold text-black font-bold px-8 py-6 text-lg"
-            onClick={() => window.location.href = "tel:+966550604837"}
-          >
-            اتصال مباشر
-          </Button>
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-black/65" />
 
+        {/* Gold Glow */}
+        <div
+          className="absolute inset-0 opacity-25 blur-3xl"
+          style={{
+            background:
+              "radial-gradient(circle at top, rgba(245, 158, 11, 0.25), transparent 60%)",
+          }}
+        />
+
+        {/* Content */}
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gold">
+            سعر تشطيب المتر بالرياض 2026
+          </h1>
+
+          <p className="mt-6 text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            يبدأ سعر تشطيب المتر في الرياض من{" "}
+            <span className="text-gold font-bold">450 ريال للمتر</span>{" "}
+            ويختلف السعر حسب مستوى المواد ونوع التشطيب
+            (اقتصادي – متوسط – فاخر).
+          </p>
+
+          <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+            <Button
+              className="bg-gold text-black font-bold px-8 py-6 text-lg"
+              onClick={() => window.location.href = "tel:+966550604837"}
+            >
+              اتصال مباشر
+            </Button>
+          </div>
         </div>
       </section>
 
+      {/* PRICE DETAILS */}
       <section className="container mx-auto px-4 py-14 text-right max-w-4xl">
         <h2 className="text-2xl font-bold text-gold mb-4">
           ما الذي يؤثر على سعر التشطيب؟
@@ -56,6 +81,7 @@ export default function VillaFinishingPriceRiyadh() {
           <li>✔️ مستوى التشطيب المطلوب</li>
         </ul>
       </section>
+
       {/* INTERNAL LINKS */}
       <section className="container mx-auto px-4 pb-14">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
