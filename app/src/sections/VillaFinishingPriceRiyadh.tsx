@@ -114,8 +114,8 @@ export default function VillaFinishingPriceRiyadh() {
         <div className="max-w-4xl mx-auto rounded-2xl border border-white/10 bg-white/5 p-5 md:p-7">
           <div className="text-center">
             <h2 className="text-2xl md:text-3xl font-extrabold">
-              احسب <span className="text-gold">التكلفة التقديرية</span>
-            </h2>
+  احسب <span className="text-gold">التكلفة التقديرية (للمقطوعة)</span>
+</h2>
             <p className="mt-3 text-white/70">
               اختر نوع العمل والمستوى، ثم أدخل المساحة واضغط “احسب”.
             </p>
