@@ -19,21 +19,30 @@ export default function HomeRenovationCompanyRiyadh() {
   return (
     <div className="min-h-screen bg-black text-white" dir="rtl">
 
-      {/* HERO (full width background + container content) */}
-<section className="relative pt-24 pb-32 min-h-[70vh] overflow-hidden">
-  {/* الخلفية: صورة + طبقة تغميق */}
-  <div className="absolute inset-0 -z-10">
-    <img
-      src="/images/home-renovation-hero.jpg"
-      alt="ترميم منازل بالرياض"
-      className="h-full w-full object-cover"
-      loading="eager"
-    />
-    <div className="absolute inset-0 bg-black/65" />
-  </div>
+      {/* HERO (full width background image + container content) */}
+<section className="relative pt-24 pb-24 min-h-[70vh] overflow-hidden">
+  {/* Background image */}
+  <img
+    src="/images/home-renovation-hero.jpg"
+    alt="ترميم منازل بالرياض"
+    className="absolute inset-0 h-full w-full object-cover"
+    loading="eager"
+  />
 
-  {/* المحتوى داخل container */}
-  <div className="container mx-auto px-4 text-center">
+  {/* Dark overlay */}
+  <div className="absolute inset-0 bg-black/65" />
+
+  {/* Optional gold glow */}
+  <div
+    className="absolute inset-0 opacity-25 blur-3xl"
+    style={{
+      background:
+        "radial-gradient(circle at top, rgba(245, 158, 11, 0.25), transparent 60%)",
+    }}
+  />
+
+  {/* Content */}
+  <div className="relative z-10 container mx-auto px-4 text-center">
     <h1 className="text-4xl md:text-5xl font-extrabold text-gold">
       شركة ترميم منازل بالرياض وتجديد شامل
     </h1>
@@ -57,9 +66,7 @@ export default function HomeRenovationCompanyRiyadh() {
     </div>
   </div>
 </section>
-
-
-      <section className="container mx-auto px-4 py-14 max-w-4xl">
+      <section className="container mx-auto px-4 -mt-16 pb-14 max-w-4xl relative z-20">
   <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
     <h2 className="text-2xl font-bold text-gold mb-4 text-right">
       خدمات ترميم المنازل تشمل:
