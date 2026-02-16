@@ -204,24 +204,28 @@ export default function Contact() {
             </div>
 
             {/* Quick Contact Buttons */}
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              <a
-                href="https://wa.me/966550604837"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-green-500 hover:bg-green-600 text-white rounded-xl p-4 text-center transition-colors"
-              >
-                <Phone className="w-6 h-6 mx-auto mb-2" />
-                <span className="font-bold text-sm">واتساب</span>
-              </a>
-              <a
-                href="tel:+966550604837"
-                className="bg-gold hover:bg-gold/90 text-black rounded-xl p-4 text-center transition-colors"
-              >
-                <Phone className="w-6 h-6 mx-auto mb-2" />
-                <span className="font-bold text-sm">اتصال مباشر</span>
-              </a>
-            </div>
+<div className="mt-6 grid grid-cols-2 gap-3">
+  <a
+    href="https://wa.me/966550604837"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="bg-green-500 hover:bg-green-600 text-white rounded-xl text-center transition-colors
+               px-3 py-3 sm:p-4"
+  >
+    <Phone className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-1.5 sm:mb-2" />
+    <span className="font-bold text-xs sm:text-sm">واتساب</span>
+  </a>
+
+  <a
+    href="tel:+966550604837"
+    className="bg-gold hover:bg-gold/90 text-black rounded-xl text-center transition-colors
+               px-3 py-3 sm:p-4"
+  >
+    <Phone className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-1.5 sm:mb-2" />
+    <span className="font-bold text-xs sm:text-sm">اتصال مباشر</span>
+  </a>
+</div>
+
           </div>
 
           {/* Contact Form */}
