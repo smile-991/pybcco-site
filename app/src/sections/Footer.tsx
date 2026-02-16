@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin, Linkedin, ArrowUp } from 'lucide-react';
+import { Phone, Mail, MapPin, Linkedin, Twitter, ArrowUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const quickLinks = [
@@ -21,7 +21,9 @@ const services = [
 
 const socialLinks = [
   { icon: Linkedin, href: 'https://www.linkedin.com/company/pybcco/', label: 'LinkedIn' },
+  { icon: Twitter, href: 'https://x.com/pybcco', label: 'X' },
 ];
+
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -75,11 +77,14 @@ export default function Footer() {
             <div className="flex gap-2">
               {socialLinks.map((social, index) => (
                 <a
-                  key={index}
-                  href={social.href}
-                  className="w-10 h-10 bg-white/10 hover:bg-gold rounded-lg flex items-center justify-center transition-colors group"
-                  aria-label={social.label}
-                >
+  key={index}
+  href={social.href}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-10 h-10 bg-white/10 hover:bg-gold rounded-lg flex items-center justify-center transition-colors group"
+  aria-label={social.label}
+>
+              
                   <social.icon className="w-5 h-5 text-white group-hover:text-black transition-colors" />
                 </a>
               ))}
