@@ -146,11 +146,13 @@ export default function ProjectsGallery() {
             >
               <div className="aspect-[4/3] w-full overflow-hidden">
                 <img
-                  src={safeSrc}
-                  alt={`project-${idx + 1}`}
-                  loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+  src={safeSrc}
+  alt={`project-${idx + 1}`}
+  loading="lazy"
+  style={{ imageOrientation: "from-image" }}
+  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+/>
+
               </div>
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-black/20" />
             </button>
