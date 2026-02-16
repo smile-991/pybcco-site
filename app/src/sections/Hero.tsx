@@ -120,6 +120,14 @@ const lift = progress * 14;
             >
               استعرض مشاريعنا
             </Button>
+            <Button
+  onClick={() => (window.location.href = "/villa-finishing-price-riyadh#boq")}
+  size="lg"
+  className="bg-gold/80 hover:bg-gold text-black font-bold px-8 py-6 text-lg w-full sm:w-auto"
+>
+  انشئ عرض سعرك بنفسك
+</Button>
+
           </div>
 
           {/* Stats */}
