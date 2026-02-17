@@ -3,46 +3,82 @@ import { Button } from "@/components/ui/button";
 
 export default function ContractorAlMalqaRiyadh() {
   useEffect(() => {
-    document.title = "مقاول تشطيب وبناء في حي الملقا بالرياض | بنيان الهرم PYBCCO";
+  document.title =
+    "مقاول تشطيب وبناء في حي الملقا بالرياض | بنيان الهرم PYBCCO";
 
-    const meta = document.createElement("meta");
-    meta.name = "description";
-    meta.content =
-      "مقاول تشطيب وبناء في حي الملقا بالرياض: تشطيب فلل وشقق، بناء عظم، ترميم وتجديد حسب المعاينة. إشراف هندسي، جودة تنفيذ، والتزام بالوقت. تواصل الآن.";
-    document.head.appendChild(meta);
+  const meta = document.createElement("meta");
+  meta.name = "description";
+  meta.content =
+    "مقاول تشطيب وبناء في حي الملقا بالرياض: تشطيب فلل وشقق، بناء عظم، ترميم وتجديد حسب المعاينة. إشراف هندسي، جودة تنفيذ، والتزام بالوقت.";
+  document.head.appendChild(meta);
 
-    // Service Schema (Page-specific)
-    const serviceSchema = document.createElement("script");
-    serviceSchema.type = "application/ld+json";
-    serviceSchema.text = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Service",
-      name: "مقاول تشطيب وبناء في حي الملقا بالرياض",
-      serviceType:
-        "Contractor / Villa finishing / Bone construction / Renovation",
-      url: "https://www.pybcco.com/contractor-almalqa-riyadh",
-      areaServed: { "@type": "City", name: "Riyadh" },
-      provider: {
-        "@type": ["LocalBusiness", "ConstructionCompany"],
-        name: "PYBCCO – بنيان الهرم للمقاولات",
-        url: "https://www.pybcco.com/",
-        telephone: "+966550604837",
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: "Al Washm St, Al Murabba",
-          addressLocality: "Riyadh",
-          postalCode: "12345",
-          addressCountry: "SA",
-        },
+  // Service Schema
+  const serviceSchema = document.createElement("script");
+  serviceSchema.type = "application/ld+json";
+  serviceSchema.text = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "مقاول تشطيب وبناء في حي الملقا بالرياض",
+    areaServed: { "@type": "City", name: "Riyadh" },
+    provider: {
+      "@type": "LocalBusiness",
+      name: "PYBCCO – بنيان الهرم للمقاولات",
+      telephone: "+966550604837",
+      url: "https://www.pybcco.com"
+    }
+  });
+  document.head.appendChild(serviceSchema);
+
+  // FAQ Schema
+  const faqSchema = document.createElement("script");
+  faqSchema.type = "application/ld+json";
+  faqSchema.text = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "كم تكلفة تشطيب فيلا في حي الملقا بالرياض؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "تختلف التكلفة حسب المساحة ومستوى التشطيب (تجاري، قياسي، فاخر). يمكن استخدام حاسبة الأسعار بالموقع لمعرفة تقدير مبدئي قبل المعاينة."
+        }
       },
-    });
-    document.head.appendChild(serviceSchema);
+      {
+        "@type": "Question",
+        name: "هل تقدمون بناء عظم في حي الملقا؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "نعم، ننفذ بناء عظم في حي الملقا حسب المخططات المعتمدة مع إشراف هندسي وجودة تنفيذ."
+        }
+      },
+      {
+        "@type": "Question",
+        name: "هل يوجد معاينة مجانية لمشاريع الملقا؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "نعم، نوفر معاينة ميدانية مجانية داخل حي الملقا لتحديد نطاق العمل بدقة قبل تقديم عرض السعر."
+        }
+      },
+      {
+        "@type": "Question",
+        name: "ما مدة تنفيذ مشروع تشطيب في الملقا؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "مدة التنفيذ تعتمد على حجم المشروع ونطاق العمل، ويتم تحديد جدول زمني واضح بعد المعاينة."
+        }
+      }
+    ]
+  });
+  document.head.appendChild(faqSchema);
 
-    return () => {
-      document.head.removeChild(meta);
-      document.head.removeChild(serviceSchema);
-    };
-  }, []);
+  return () => {
+    document.head.removeChild(meta);
+    document.head.removeChild(serviceSchema);
+    document.head.removeChild(faqSchema);
+  };
+}, []);
+
 
   const track = (eventName: string) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -347,6 +383,49 @@ export default function ContractorAlMalqaRiyadh() {
           ))}
         </div>
       </section>
+
+{/* FAQ Section */}
+<section className="container mx-auto px-4 py-16">
+  <h2 className="text-2xl sm:text-3xl font-bold text-center">
+    أسئلة شائعة حول <span className="text-gold">مقاول حي الملقا</span>
+  </h2>
+
+  <div className="mt-10 space-y-6 max-w-4xl mx-auto text-right">
+
+    <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+      <h3 className="text-lg font-bold text-gold">
+        كم سعر تشطيب فيلا في حي الملقا؟
+      </h3>
+      <p className="mt-2 text-white/80 leading-relaxed">
+        تختلف الأسعار حسب المساحة ومستوى التشطيب (تجاري – قياسي – فاخر).
+        يمكن استخدام حاسبة الأسعار بالموقع للحصول على تقدير مبدئي،
+        ثم يتم تحديد السعر النهائي بعد المعاينة.
+      </p>
+    </div>
+
+    <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+      <h3 className="text-lg font-bold text-gold">
+        هل تقدمون بناء عظم في الملقا؟
+      </h3>
+      <p className="mt-2 text-white/80 leading-relaxed">
+        نعم، ننفذ أعمال البناء العظم حسب المخططات المعتمدة،
+        مع إشراف هندسي كامل ومتابعة جودة في جميع المراحل.
+      </p>
+    </div>
+
+    <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+      <h3 className="text-lg font-bold text-gold">
+        هل المعاينة مجانية داخل حي الملقا؟
+      </h3>
+      <p className="mt-2 text-white/80 leading-relaxed">
+        نعم، نوفر معاينة ميدانية مجانية لتقييم الموقع بدقة
+        وتحديد نطاق العمل قبل إصدار عرض السعر.
+      </p>
+    </div>
+
+  </div>
+</section>
+
 
       {/* CTA BOTTOM (Buttons fixed - no outline) */}
       <section className="container mx-auto px-4 pb-20">
