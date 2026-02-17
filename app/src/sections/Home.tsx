@@ -11,7 +11,16 @@ import {
   MapPin,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Contact from "./Contact"; // ✅ رجّعنا الفورم القديم + الإرسال الأوتوماتيكي
+
+import Contact from "./Contact";
+
+// ✅ الأقسام اللي اختفوا (لازم يكونوا موجودين عندك داخل sections)
+import Team from "./Team";
+import Certificates from "./Certificates";
+import Partners from "./Partners";
+
+// ✅ قسم العملاء (اللوجوهات) — إذا عندك ملف Clients.tsx استخدمه بدل القسم اللي تحت
+// import Clients from "./Clients";
 
 type GalleryCat = "concrete" | "finishing" | "entertainment";
 
@@ -109,6 +118,21 @@ const GALLERY: Record<
   },
 };
 
+const CLIENT_LOGOS = [
+  { src: "/clients/built.png", alt: "Built Industrial" },
+  { src: "/clients/derrah.png", alt: "Derrah" },
+  { src: "/clients/kaec.png", alt: "KAEC" },
+  { src: "/clients/kafd.png", alt: "KAFD" },
+  { src: "/clients/kkia.png", alt: "KKIA" },
+  { src: "/clients/marco.png", alt: "Marco" },
+  { src: "/clients/mbl.png", alt: "MBL" },
+  { src: "/clients/mcdonalds.png", alt: "McDonald's" },
+  { src: "/clients/nesma.png", alt: "Nesma" },
+  { src: "/clients/salini.png", alt: "Salini" },
+  { src: "/clients/sela.png", alt: "Sela" },
+  { src: "/clients/tarfeeh.png", alt: "Tarfeeh" },
+];
+
 function scrollToId(id: string) {
   const el = document.querySelector(id);
   if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -174,7 +198,6 @@ export default function Home() {
         id="hero"
         className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
       >
-        {/* background */}
         <div className="absolute inset-0">
           <img
             src={heroImage}
@@ -184,7 +207,6 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/85" />
         </div>
 
-        {/* content */}
         <div className="relative z-10 container-custom pt-24 pb-14 px-4">
           <div className="text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 bg-gold/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
@@ -205,7 +227,6 @@ export default function Home() {
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-              {/* ✅ اطلب معاينة = واتساب */}
               <Button
                 onClick={() => window.open(WA_LINK, "_blank")}
                 size="lg"
@@ -258,12 +279,12 @@ export default function Home() {
         <div className="container-custom px-4">
           <div className="max-w-4xl mx-auto rounded-3xl bg-gray-50 p-6 sm:p-10 shadow-sm">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900">
-              احسب تكلفة مشروعك خلال{" "}
-              <span className="text-gold">دقيقة</span>
+              احسب تكلفة مشروعك خلال <span className="text-gold">دقيقة</span>
             </h2>
+
             <p className="mt-3 text-gray-600 leading-relaxed max-w-2xl">
-              أداة احترافية تمنحك تقديرًا سريعًا لتكلفة التشطيب قبل المعاينة —
-              بدون انتظار — وبإمكانك إنشاء عرض سعرك بنفسك ثم التواصل معنا مباشرة.
+              أداة احترافية تمنحك تقديرًا سريعًا لتكلفة التشطيب قبل المعاينة — بدون انتظار —
+              وبإمكانك إنشاء عرض سعرك بنفسك ثم التواصل معنا مباشرة.
             </p>
 
             <div className="mt-6 flex flex-col sm:flex-row gap-3">
@@ -275,7 +296,6 @@ export default function Home() {
                 <Link to="/villa-finishing-price-riyadh#boq">ابدأ الحسبة الآن</Link>
               </Button>
 
-              {/* هذا يسكروّل للفورم */}
               <Button
                 onClick={() => scrollToId("#contact")}
                 size="lg"
@@ -300,21 +320,21 @@ export default function Home() {
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3">
               خدمات <span className="text-gold">رئيسية</span> واضحة
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-              روابط مباشرة لصفحات التفاصيل (SEO ثقيل) — تجربة سريعة وواضحة.
-            </p>
+
+            {/* ✅ حذفنا الجملة اللي قلت عليها */}
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {SERVICES.map((s, i) => (
-              <div key={i} className="bg-white rounded-3xl p-6 shadow-sm hover:shadow-md transition">
+              <div
+                key={i}
+                className="bg-white rounded-3xl p-6 shadow-sm hover:shadow-md transition"
+              >
                 <div className="flex items-center gap-3">
                   <div className="w-11 h-11 rounded-2xl bg-gold/15 flex items-center justify-center">
                     <s.icon className="w-5 h-5 text-gold" />
                   </div>
-                  <h3 className="text-lg font-extrabold text-gray-900">
-                    {s.title}
-                  </h3>
+                  <h3 className="text-lg font-extrabold text-gray-900">{s.title}</h3>
                 </div>
 
                 <p className="mt-3 text-gray-600 leading-relaxed">{s.desc}</p>
@@ -331,12 +351,12 @@ export default function Home() {
       </section>
 
       {/* المعرض */}
-      <section id="gallery" className="section-padding bg-gray-50">
+      <section id="projects" className="section-padding bg-gray-50">
         <div className="container-custom px-4">
           <div className="flex items-end justify-between gap-4">
             <div>
               <span className="inline-block bg-gold/10 text-gold-dark px-4 py-2 rounded-full text-sm font-semibold mb-3">
-                معرض مختصر
+                معرض الأعمال
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
                 عظم / تشطيب / <span className="text-gold">ترفيه</span>
@@ -364,20 +384,55 @@ export default function Home() {
 
           <div className="mt-10 rounded-3xl bg-white p-6 sm:p-8 shadow-sm">
             <h3 className="text-xl sm:text-2xl font-extrabold text-gray-900">
-              شاهدت أعمالنا؟ احسب تكلفة مشروع{" "}
-              <span className="text-gold">مشابه</span>
+              شاهدت أعمالنا؟ احسب تكلفة مشروع <span className="text-gold">مشابه</span>
             </h3>
 
             <div className="mt-5 flex flex-col sm:flex-row gap-3">
-              <Button asChild className="bg-gold hover:bg-gold/90 text-black font-bold w-full sm:w-auto">
+              <Button
+                asChild
+                className="bg-gold hover:bg-gold/90 text-black font-bold w-full sm:w-auto"
+              >
                 <Link to="/villa-finishing-price-riyadh#boq">احسب التكلفة الآن</Link>
               </Button>
 
-              {/* ✅ اطلب معاينة = واتساب */}
-              <Button onClick={() => window.open(WA_LINK, "_blank")} variant="outline" className="hover:bg-black/5 w-full sm:w-auto">
+              <Button
+                onClick={() => window.open(WA_LINK, "_blank")}
+                variant="outline"
+                className="hover:bg-black/5 w-full sm:w-auto"
+              >
                 اطلب معاينة
               </Button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ✅ العملاء (اللوجوهات) */}
+      <section id="clients" className="section-padding bg-white">
+        <div className="container-custom px-4">
+          <div className="text-center mb-10">
+            <span className="inline-block bg-gold/10 text-gold-dark px-4 py-2 rounded-full text-sm font-semibold mb-4">
+              عملاؤنا
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+              شركاء نجاح <span className="text-gold">نفتخر بهم</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            {CLIENT_LOGOS.map((c, i) => (
+              <div
+                key={i}
+                className="bg-gray-50 rounded-2xl p-4 flex items-center justify-center border border-gray-100"
+              >
+                <img
+                  src={c.src}
+                  alt={c.alt}
+                  className="max-h-12 w-auto object-contain"
+                  loading="lazy"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -414,6 +469,21 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ✅ فريق العمل */}
+      <section id="team">
+        <Team />
+      </section>
+
+      {/* ✅ الشهادات */}
+      <section id="certificates">
+        <Certificates />
+      </section>
+
+      {/* ✅ شركاؤنا (بالوجوهات/اللوجوهات حسب ملفك) */}
+      <section id="partners">
+        <Partners />
+      </section>
+
       {/* CTA ختامي */}
       <section id="final-cta" className="section-padding bg-white">
         <div className="container-custom px-4">
@@ -423,11 +493,14 @@ export default function Home() {
             </h2>
 
             <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center">
-              <Button asChild size="lg" className="bg-gold hover:bg-gold/90 text-black font-bold w-full sm:w-auto">
+              <Button
+                asChild
+                size="lg"
+                className="bg-gold hover:bg-gold/90 text-black font-bold w-full sm:w-auto"
+              >
                 <Link to="/villa-finishing-price-riyadh#boq">احسب التكلفة</Link>
               </Button>
 
-              {/* ✅ اطلب معاينة = واتساب */}
               <Button
                 onClick={() => window.open(WA_LINK, "_blank")}
                 size="lg"
@@ -441,7 +514,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ✅ Contact Section: رجعنا الفورم + الإرسال الأوتوماتيك */}
+      {/* ✅ Contact Section */}
       <section id="contact">
         <Contact />
       </section>
@@ -455,10 +528,9 @@ export default function Home() {
 
           <div className="mt-4 text-gray-700 leading-relaxed text-sm sm:text-base space-y-4 max-w-5xl">
             <p>
-              تبحث عن شركة مقاولات بالرياض تجمع بين التنظيم وجودة التنفيذ ووضوح
-              التعامل؟ في بنيان الهرم للمقاولات نعتمد منهجية عمل تبدأ بفهم احتياج
-              العميل، ثم وضع خطة تنفيذ وجدول زمني، مع إشراف ومتابعة لضمان جودة
-              الأعمال وتسليم مرتب.
+              تبحث عن شركة مقاولات بالرياض تجمع بين التنظيم وجودة التنفيذ ووضوح التعامل؟
+              في بنيان الهرم للمقاولات نعتمد منهجية عمل تبدأ بفهم احتياج العميل،
+              ثم وضع خطة تنفيذ وجدول زمني، مع إشراف ومتابعة لضمان جودة الأعمال وتسليم مرتب.
             </p>
           </div>
         </div>
