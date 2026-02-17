@@ -1,11 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Menu, Phone, Linkedin, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const navLinks = [
   { name: "الرئيسية", href: "#hero" },
@@ -22,9 +18,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -38,14 +32,12 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-lg"
-          : "bg-transparent"
+        isScrolled ? "bg-white/95 backdrop-blur-md shadow-lg" : "bg-transparent"
       }`}
+      dir="rtl"
     >
       <div className="container-custom">
         <nav className="flex items-center justify-between h-20">
-
           {/* ===== Logo ===== */}
           <a
             href="#hero"
@@ -61,16 +53,13 @@ export default function Navbar() {
               className="w-12 h-12 object-contain"
             />
             <div className={`hidden sm:block ${isScrolled ? "text-black" : "text-white"}`}>
-              <h1 className="font-bold text-lg leading-tight">
-                بنيان الهرم
-              </h1>
+              <h1 className="font-bold text-lg leading-tight">بنيان الهرم</h1>
               <p className="text-xs opacity-80">للمقاولات</p>
             </div>
           </a>
 
           {/* ===== Desktop Navigation ===== */}
           <div className="hidden lg:flex items-center gap-2">
-
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -87,9 +76,10 @@ export default function Navbar() {
               </a>
             ))}
 
-            {/* ===== مناطق عملنا Dropdown ===== */}
+            {/* ===== مناطق عملنا Dropdown (Desktop) ===== */}
             <div className="relative group">
               <button
+                type="button"
                 className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 ${
                   isScrolled ? "text-gray-800" : "text-white"
                 }`}
@@ -98,7 +88,7 @@ export default function Navbar() {
                 <span className="text-xs">▾</span>
               </button>
 
-              <div className="absolute right-0 mt-2 w-52 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+              <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                 <a
                   href="/contractor-almalqa-riyadh"
                   className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 rounded-xl transition"
@@ -121,6 +111,33 @@ export default function Navbar() {
               <span>055 060 4837</span>
             </a>
 
+            {/* Social (Desktop) */}
+            <div className="flex items-center gap-2">
+              <a
+                href="https://x.com/pybcco"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="X"
+                className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+                  isScrolled ? "bg-black/5 hover:bg-black/10" : "bg-white/10 hover:bg-white/20"
+                }`}
+              >
+                <Twitter className={`w-4 h-4 ${isScrolled ? "text-gray-800" : "text-white"}`} />
+              </a>
+
+              <a
+                href="https://www.linkedin.com/company/pybcco"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+                  isScrolled ? "bg-black/5 hover:bg-black/10" : "bg-white/10 hover:bg-white/20"
+                }`}
+              >
+                <Linkedin className={`w-4 h-4 ${isScrolled ? "text-gray-800" : "text-white"}`} />
+              </a>
+            </div>
+
             <Button
               onClick={() => scrollToSection("#contact")}
               className="bg-gold hover:bg-gold/90 text-black font-bold px-6"
@@ -141,15 +158,14 @@ export default function Navbar() {
               </Button>
             </SheetTrigger>
 
-            <SheetContent side="right" className="w-80 bg-black text-white">
+            <SheetContent side="right" className="w-80 bg-black text-white border-white/10">
               <div className="flex flex-col h-full">
-
-                {/* Logo Mobile */}
+                {/* Mobile Header */}
                 <div className="flex items-center gap-3 mb-8">
                   <img
                     src="/logo.png"
-                    alt="بنيان الهرم"
-                    className="w-10 h-10"
+                    alt="بنيان الهرم للمقاولات"
+                    className="w-10 h-10 object-contain"
                   />
                   <div>
                     <h1 className="font-bold">بنيان الهرم</h1>
@@ -157,7 +173,7 @@ export default function Navbar() {
                   </div>
                 </div>
 
-                {/* Links */}
+                {/* Mobile Links (بدون تكرار) */}
                 <nav className="flex flex-col gap-2">
                   {navLinks.map((link) => (
                     <a
@@ -167,30 +183,32 @@ export default function Navbar() {
                         e.preventDefault();
                         scrollToSection(link.href);
                       }}
-                      className="px-4 py-3 hover:bg-gold/10 hover:text-gold rounded-lg transition"
+                      className="px-4 py-3 text-white hover:bg-gold/10 hover:text-gold rounded-lg transition"
                     >
                       {link.name}
                     </a>
                   ))}
 
-                  {/* مناطق عملنا - Mobile */}
+                  {/* مناطق عملنا (Mobile) */}
                   <a
                     href="/contractor-almalqa-riyadh"
                     onClick={() => setIsOpen(false)}
-                    className="px-4 py-3 hover:bg-gold/10 hover:text-gold rounded-lg transition"
+                    className="px-4 py-3 text-white hover:bg-gold/10 hover:text-gold rounded-lg transition"
                   >
                     مناطق عملنا – حي الملقا
                   </a>
                 </nav>
 
-                {/* Bottom Mobile */}
+                {/* Mobile Bottom */}
                 <div className="mt-auto pt-6 border-t border-white/10">
-                  <a
-                    href="tel:+966550604837"
-                    className="flex items-center gap-3 mb-4"
-                  >
-                    <Phone className="w-5 h-5 text-gold" />
-                    <span>055 060 4837</span>
+                  <a href="tel:+966550604837" className="flex items-center gap-3 mb-4 text-white">
+                    <div className="w-10 h-10 bg-gold/20 rounded-lg flex items-center justify-center">
+                      <Phone className="w-5 h-5 text-gold" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-white/60">اتصل بنا</p>
+                      <p className="font-bold">055 060 4837</p>
+                    </div>
                   </a>
 
                   <Button
@@ -199,12 +217,33 @@ export default function Navbar() {
                   >
                     طلب عرض سعر
                   </Button>
-                </div>
 
+                  {/* Social Icons (Mobile) */}
+                  <div className="flex items-center justify-center gap-3 mt-4">
+                    <a
+                      href="https://x.com/pybcco"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="X"
+                      className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition"
+                    >
+                      <Twitter className="w-5 h-5 text-white" />
+                    </a>
+
+                    <a
+                      href="https://www.linkedin.com/company/pybcco"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LinkedIn"
+                      className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition"
+                    >
+                      <Linkedin className="w-5 h-5 text-white" />
+                    </a>
+                  </div>
+                </div>
               </div>
             </SheetContent>
           </Sheet>
-
         </nav>
       </div>
     </header>
