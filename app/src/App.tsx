@@ -18,6 +18,7 @@ import ConstructionCompanyRiyadh from "./sections/ConstructionCompanyRiyadh";
 import ApartmentFinishingRiyadh from "./sections/ApartmentFinishingRiyadh";
 import HomeRenovationCompanyRiyadh from "./sections/HomeRenovationCompanyRiyadh";
 import ProjectsGallery from "./sections/ProjectsGallery";
+import ContractorAlMalqaRiyadh from "./sections/ContractorAlMalqaRiyadh";
 
 <Route path="/projects" element={<ProjectsGallery />} />
 
@@ -72,7 +73,7 @@ export default function App() {
         <Route path="/villa-bone-construction-riyadh" element={<VillaBoneConstructionRiyadh />} />
         <Route path="/apartment-finishing-riyadh" element={<ApartmentFinishingRiyadh />} />
         <Route path="/home-renovation-company-riyadh" element={<HomeRenovationCompanyRiyadh />} />
-
+<Route path="/contractor-almalqa-riyadh" element={<ContractorAlMalqaRiyadh />} />
 
 
 
