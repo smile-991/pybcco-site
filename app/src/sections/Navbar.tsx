@@ -68,22 +68,43 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection(link.href);
-                }}
-                className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 ${
-                  isScrolled ? 'text-gray-800' : 'text-white'
-                }`}
-              >
-                {link.name}
-              </a>
-            ))}
-          </div>
+  {navLinks.map((link) => (
+    <a
+      key={link.name}
+      href={link.href}
+      onClick={(e) => {
+        e.preventDefault();
+        scrollToSection(link.href);
+      }}
+      className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 ${
+        isScrolled ? 'text-gray-800' : 'text-white'
+      }`}
+    >
+      {link.name}
+    </a>
+  ))}
+
+  {/* ===== مناطق عملنا Dropdown ===== */}
+  <div className="relative group">
+    <button
+      className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 ${
+        isScrolled ? 'text-gray-800' : 'text-white'
+      }`}
+    >
+      مناطق عملنا
+      <span className="text-xs">▾</span>
+    </button>
+
+    <div className="absolute right-0 mt-2 w-52 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+      <a
+        href="/contractor-almalqa-riyadh"
+        className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 rounded-xl transition"
+      >
+        حي الملقا
+      </a>
+    </div>
+  </div>
+</div>
 
           {/* CTA Button */}
 <div className="hidden lg:flex items-center gap-4">
@@ -172,6 +193,31 @@ export default function Navbar() {
                       {link.name}
                     </a>
                   ))}
+                  <nav className="flex flex-col gap-2">
+  {navLinks.map((link) => (
+    <a
+      key={link.name}
+      href={link.href}
+      onClick={(e) => {
+        e.preventDefault();
+        scrollToSection(link.href);
+      }}
+      className="px-4 py-3 text-white hover:bg-gold/10 hover:text-gold rounded-lg transition-all duration-200"
+    >
+      {link.name}
+    </a>
+  ))}
+
+  {/* ===== مناطق عملنا - الموبايل ===== */}
+  <a
+    href="/contractor-almalqa-riyadh"
+    onClick={() => setIsOpen(false)}
+    className="px-4 py-3 text-white hover:bg-gold/10 hover:text-gold rounded-lg transition-all duration-200"
+  >
+    مناطق عملنا – حي الملقا
+  </a>
+</nav>
+
                 </nav>
 
                 <div className="mt-auto pt-6 border-t border-white/10">
