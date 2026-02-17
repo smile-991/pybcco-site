@@ -118,20 +118,6 @@ const GALLERY: Record<
   },
 };
 
-const CLIENT_LOGOS = [
-  { src: "/clients/built.png", alt: "Built Industrial" },
-  { src: "/clients/derrah.png", alt: "Derrah" },
-  { src: "/clients/kaec.png", alt: "KAEC" },
-  { src: "/clients/kafd.png", alt: "KAFD" },
-  { src: "/clients/kkia.png", alt: "KKIA" },
-  { src: "/clients/marco.png", alt: "Marco" },
-  { src: "/clients/mbl.png", alt: "MBL" },
-  { src: "/clients/mcdonalds.png", alt: "McDonald's" },
-  { src: "/clients/nesma.png", alt: "Nesma" },
-  { src: "/clients/salini.png", alt: "Salini" },
-  { src: "/clients/sela.png", alt: "Sela" },
-  { src: "/clients/tarfeeh.png", alt: "Tarfeeh" },
-];
 
 function scrollToId(id: string) {
   const el = document.querySelector(id);
@@ -407,37 +393,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ✅ العملاء (اللوجوهات) */}
-      <section id="clients" className="section-padding bg-white">
-        <div className="container-custom px-4">
-          <div className="text-center mb-10">
-            <span className="inline-block bg-gold/10 text-gold-dark px-4 py-2 rounded-full text-sm font-semibold mb-4">
-              عملاؤنا
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-              شركاء نجاح <span className="text-gold">نفتخر بهم</span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {CLIENT_LOGOS.map((c, i) => (
-              <div
-                key={i}
-                className="bg-gray-50 rounded-2xl p-4 flex items-center justify-center border border-gray-100"
-              >
-                <img
-                  src={c.src}
-                  alt={c.alt}
-                  className="max-h-12 w-auto object-contain"
-                  loading="lazy"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* لماذا نحن */}
+            {/* لماذا نحن */}
       <section id="why-us" className="section-padding bg-white">
         <div className="container-custom px-4">
           <div className="text-center mb-10">
