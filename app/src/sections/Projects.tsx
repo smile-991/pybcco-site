@@ -9,8 +9,6 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
-import ProjectsGallery from "./ProjectsGallery";
-
 
 const projects = [
   {
@@ -188,16 +186,14 @@ export default function Projects() {
       { threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
-  const filteredProjects = selectedCategory === 'الكل'
-    ? projects
-    : projects.filter((p) => p.category === selectedCategory);
+  const filteredProjects =
+    selectedCategory === 'الكل'
+      ? projects
+      : projects.filter((p) => p.category === selectedCategory);
 
   return (
     <section
@@ -206,9 +202,12 @@ export default function Projects() {
       className="section-padding bg-white relative overflow-hidden"
     >
       <div className="container-custom relative z-10">
-        <ProjectsGallery />
         {/* Section Header */}
-        <div className={`text-center mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div
+          className={`text-center mb-12 transition-all duration-700 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <span className="inline-block bg-gold/10 text-gold-dark px-4 py-2 rounded-full text-sm font-semibold mb-4">
             مشاريعنا
           </span>
@@ -221,7 +220,11 @@ export default function Projects() {
         </div>
 
         {/* Cities Map */}
-        <div className={`mb-12 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div
+          className={`mb-12 transition-all duration-700 delay-100 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
             <h3 className="text-lg font-bold text-gray-900 mb-4 text-center">
               نغطي مشاريعنا <span className="text-gold">19 مدينة</span> حول المملكة
@@ -242,14 +245,22 @@ export default function Projects() {
         </div>
 
         {/* Category Filter */}
-        <div className={`flex flex-wrap justify-center gap-2 mb-10 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div
+          className={`flex flex-wrap justify-center gap-2 mb-10 transition-all duration-700 delay-200 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           {categories.map((category) => (
             <Button
               key={category}
               variant={selectedCategory === category ? 'default' : 'outline'}
               size="sm"
               onClick={() => setSelectedCategory(category)}
-              className={selectedCategory === category ? 'bg-gold text-black hover:bg-gold/90' : 'hover:bg-gold/10 hover:text-gold'}
+              className={
+                selectedCategory === category
+                  ? 'bg-gold text-black hover:bg-gold/90'
+                  : 'hover:bg-gold/10 hover:text-gold'
+              }
             >
               {category}
             </Button>
@@ -261,7 +272,9 @@ export default function Projects() {
           {filteredProjects.map((project, index) => (
             <div
               key={project.id}
-              className={`group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover-lift border border-gray-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+              className={`group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover-lift border border-gray-100 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
               style={{ transitionDelay: `${300 + index * 50}ms` }}
             >
               {/* Image */}
@@ -311,7 +324,11 @@ export default function Projects() {
         </div>
 
         {/* View All Button */}
-        <div className={`text-center mt-12 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div
+          className={`text-center mt-12 transition-all duration-700 delay-500 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <Button
             size="lg"
             className="bg-gold hover:bg-gold/90 text-black font-bold px-8"

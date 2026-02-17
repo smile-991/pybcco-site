@@ -1,179 +1,148 @@
-import { useMemo, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useState } from "react";
 
-type TabKey = "finishing" | "concrete" | "entertainment";
+type Cat = "finishing" | "concrete" | "entertainment";
 
-export default function ProjectsGallery() {
-  const [tab, setTab] = useState<TabKey>("finishing");
-  const [open, setOpen] = useState(false);
-  const [activeSrc, setActiveSrc] = useState<string>("");
+const CATS: { key: Cat; label: string }[] = [
+  { key: "finishing", label: "تشطيب" },
+  { key: "concrete", label: "عظم" },
+  { key: "entertainment", label: "ترفيه" },
+];
 
-  const finishing = useMemo(
-    () => [
-      "/projects/finishing/20200711_101116.jpg",
-      "/projects/finishing/20201111_223855.jpg",
-      "/projects/finishing/20210207_153016.jpg",
-      "/projects/finishing/20210223_213643.jpg",
-      "/projects/finishing/20210223_213725.jpg",
-      "/projects/finishing/20210223_214106.jpg",
-      "/projects/finishing/20210302_141220_001.jpg",
-      "/projects/finishing/20210302_141227.jpg",
-      "/projects/finishing/20210403_164435.jpg",
-      "/projects/finishing/20211003_205456.jpg",
-      "/projects/finishing/20211003_205520.jpg",
-      "/projects/finishing/20211003_205526.jpg",
-      "/projects/finishing/20211003_205543.jpg",
-      "/projects/finishing/6.jpg",
-      "/projects/finishing/99_001.png",
-      "/projects/finishing/IMG-20230924-WA0013.jpg",
-      "/projects/finishing/IMG-20250814-WA0024.jpg",
-      "/projects/finishing/IMG-20250905-WA0038.jpg",
-      "/projects/finishing/IMG-20250906-WA0039.jpg",
-      "/projects/finishing/IMG-20250916-WA0097.jpg",
-      "/projects/finishing/IMG-20250921-WA0166.jpg",
-      "/projects/finishing/IMG_20200804_052340.jpg",
+const GALLERY: Record<Cat, { title: string; items: { src: string; alt: string }[] }> = {
+  finishing: {
+    title: "مشاريع التشطيب",
+    items: [
+      { src: "/projects/finishing/6.jpg", alt: "تشطيب - 1" },
+      { src: "/projects/finishing/20211003_205520.jpg", alt: "تشطيب - 2" },
+      { src: "/projects/finishing/20211003_205526.jpg", alt: "تشطيب - 3" },
+      { src: "/projects/finishing/20211003_205543.jpg", alt: "تشطيب - 4" },
+      { src: "/projects/finishing/20211003_205456.jpg", alt: "تشطيب - 5" },
+      { src: "/projects/finishing/20211011_223855.jpg", alt: "تشطيب - 6" },
     ],
-    []
-  );
-
-  const entertainment = useMemo(
-    () => [
-      "/projects/entertainment/20201226_162127.jpg",
-      "/projects/entertainment/20201227_165443.jpg",
-      "/projects/entertainment/20231126_024030.jpg",
-      "/projects/entertainment/IMG-20230915-WA0021.jpg",
-      "/projects/entertainment/IMG-20230915-WA0022.jpg",
-      "/projects/entertainment/IMG-20230915-WA0023.jpg",
-      "/projects/entertainment/IMG-20231117-WA0119.jpg",
-      "/projects/entertainment/IMG-20231117-WA0136.jpg",
-      "/projects/entertainment/IMG-20231117-WA0161.jpg",
-      "/projects/entertainment/IMG-20231119-WA0157.jpg",
-      "/projects/entertainment/IMG-20231126-WA0059.jpg",
-      "/projects/entertainment/IMG-20231128-WA0053.jpg",
-      "/projects/entertainment/IMG-20231202-WA0001.jpg",
-      "/projects/entertainment/IMG-20251020-WA0020.jpeg",
-      "/projects/entertainment/IMG-20251023-WA0142.jpeg",
-      "/projects/entertainment/IMG-20251023-WA0148.jpeg",
-      "/projects/entertainment/IMG-20251023-WA0181.jpeg",
-      "/projects/entertainment/IMG-20251026-WA0064.jpeg",
-      "/projects/entertainment/صور_001.png",
+  },
+  concrete: {
+    title: "مشاريع العظم",
+    items: [
+      { src: "/projects/concrete/20250426_103629.jpg", alt: "عظم - 1" },
+      { src: "/projects/concrete/20250426_103637.jpg", alt: "عظم - 2" },
+      { src: "/projects/concrete/20250426_104512.jpg", alt: "عظم - 3" },
+      { src: "/projects/concrete/20250426_104515.jpg", alt: "عظم - 4" },
+      { src: "/projects/concrete/20250426_104711.jpg", alt: "عظم - 5" },
+      { src: "/projects/concrete/20251104_145343.jpg", alt: "عظم - 6" },
     ],
-    []
-  );
-
-  const concrete = useMemo(
-    () => [
-      "/projects/concrete/20250426_103629.jpg",
-      "/projects/concrete/20250426_103637.jpg",
-      "/projects/concrete/20250426_103643.jpg",
-      "/projects/concrete/20250426_104512.jpg",
-      "/projects/concrete/20250426_104515.jpg",
-      "/projects/concrete/20250426_104711.jpg",
-      "/projects/concrete/20250426_222103631.jpg",
-      "/projects/concrete/20251104_145343.jpg",
-      "/projects/concrete/20251104_145346.jpg",
-      "/projects/concrete/20251104_145348.jpg",
-      "/projects/concrete/20251104_145352.jpg",
-      "/projects/concrete/IMG_20200804_051327_130.jpg",
-      "/projects/concrete/خخخخ_001.png",
-      "/projects/concrete/خخخخخخخخخ_001.png",
-      "/projects/concrete/خخخخخخخخخخخخ_001.png",
+  },
+  entertainment: {
+    title: "مشاريع الترفيه",
+    items: [
+      { src: "/projects/entertainment/IMG-20231126-WA0059.jpg", alt: "ترفيه - 1" },
+      { src: "/projects/entertainment/IMG-20231119-WA0157.jpg", alt: "ترفيه - 2" },
+      { src: "/projects/entertainment/IMG-20231117-WA0119.jpg", alt: "ترفيه - 3" },
+      { src: "/projects/entertainment/IMG-20231117-WA0161.jpg", alt: "ترفيه - 4" },
+      { src: "/projects/entertainment/20231126_024030.jpg", alt: "ترفيه - 5" },
+      { src: "/projects/entertainment/20201226_162127.jpg", alt: "ترفيه - 6" },
     ],
-    []
-  );
+  },
+};
 
-  const images =
-    tab === "finishing" ? finishing : tab === "concrete" ? concrete : entertainment;
+function SmartImage({
+  src,
+  alt,
+  className,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) {
+  const [currentSrc, setCurrentSrc] = useState(src);
 
-  const tabTitle =
-    tab === "finishing" ? "أعمال التشطيبات" : tab === "concrete" ? "أعمال الخرسانات" : "أعمال الترفيه";
+  const handleError = () => {
+    if (currentSrc.endsWith(".jpg")) setCurrentSrc(currentSrc.replace(/\.jpg$/i, ".jpeg"));
+    else if (currentSrc.endsWith(".jpeg")) setCurrentSrc(currentSrc.replace(/\.jpeg$/i, ".jpg"));
+  };
 
   return (
-    <div className="mb-10">
-      {/* Tabs */}
-      <div className="flex flex-wrap justify-center gap-2 mb-6">
-        <Button
-          size="sm"
-          variant={tab === "finishing" ? "default" : "outline"}
-          onClick={() => setTab("finishing")}
-          className={tab === "finishing" ? "bg-gold text-black hover:bg-gold/90" : "hover:bg-gold/10 hover:text-gold"}
-        >
-          التشطيبات
-        </Button>
+    <img
+      src={currentSrc}
+      alt={alt}
+      loading="lazy"
+      onError={handleError}
+      className={className}
+    />
+  );
+}
 
-        <Button
-          size="sm"
-          variant={tab === "concrete" ? "default" : "outline"}
-          onClick={() => setTab("concrete")}
-          className={tab === "concrete" ? "bg-gold text-black hover:bg-gold/90" : "hover:bg-gold/10 hover:text-gold"}
-        >
-          الخرسانات
-        </Button>
+export default function ProjectsGallery() {
+  const [cat, setCat] = useState<Cat>("entertainment"); // خليته يبدأ على الترفيه مثل صورتك
 
-        <Button
-          size="sm"
-          variant={tab === "entertainment" ? "default" : "outline"}
-          onClick={() => setTab("entertainment")}
-          className={tab === "entertainment" ? "bg-gold text-black hover:bg-gold/90" : "hover:bg-gold/10 hover:text-gold"}
-        >
-          الترفيه
-        </Button>
-      </div>
+  const title = GALLERY[cat].title;
+  const items = GALLERY[cat].items;
 
-      {/* Title */}
-      <div className="text-center mb-5">
-        <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
-          معرض صور <span className="text-gold">{tabTitle}</span>
-        </h3>
-        <p className="text-gray-600 mt-2">صور حقيقية من أعمال بنيان الهرم</p>
-      </div>
+  return (
+    <main dir="rtl" className="bg-white">
+      <section className="pt-28 pb-10">
+        <div className="container-custom px-4">
+          <div className="text-center">
+            <span className="inline-block bg-gold/10 text-gold-dark px-4 py-2 rounded-full text-sm font-semibold mb-4">
+              معرض الأعمال
+            </span>
 
-      {/* Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-        {images.map((src, idx) => {
-          const safeSrc = encodeURI(src);
-          return (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => {
-                setActiveSrc(safeSrc);
-                setOpen(true);
-              }}
-              className="group relative rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-all bg-white"
-              aria-label="Open image"
-            >
-              <div className="aspect-[4/3] w-full overflow-hidden">
-                <img
-  src={safeSrc}
-  alt={`project-${idx + 1}`}
-  loading="lazy"
-  style={{ imageOrientation: "from-image" }}
-  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-/>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900">
+              عظم / تشطيب / <span className="text-gold">ترفيه</span>
+            </h1>
 
+            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
+              اختر القسم وشاهد نماذج حقيقية من أعمال بنيان الهرم.
+            </p>
+          </div>
+
+          {/* Tabs */}
+          <div className="mt-8 sticky top-[90px] z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 py-3">
+            <div className="flex flex-wrap gap-2 justify-center">
+              {CATS.map((t) => {
+                const active = cat === t.key;
+                return (
+                  <button
+                    key={t.key}
+                    type="button"
+                    onClick={() => setCat(t.key)}
+                    className={[
+                      "px-4 py-2 rounded-xl text-sm font-bold transition border",
+                      active
+                        ? "bg-gold text-black border-gold"
+                        : "bg-white text-gray-900 border-gray-200 hover:bg-gold/10 hover:border-gold/40",
+                    ].join(" ")}
+                  >
+                    {t.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="text-center mt-2 text-sm text-gray-600">{title}</div>
+          </div>
+
+          {/* Grid (key=cat لإجبار التبديل بشكل قطعي) */}
+          <div
+            key={cat}
+            className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4"
+          >
+            {items.map((img, i) => (
+              <div
+                key={i}
+                className="group rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 shadow-sm"
+              >
+                <SmartImage
+                  src={img.src}
+                  alt={img.alt}
+                  className="w-full h-40 md:h-52 lg:h-56 object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                />
               </div>
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-black/20" />
-            </button>
-          );
-        })}
-      </div>
+            ))}
+          </div>
 
-      {/* Lightbox */}
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-4xl p-0 overflow-hidden bg-black" dir="rtl">
-          {activeSrc ? (
-            <img
-  src={activeSrc}
-  alt="Preview"
-  style={{ imageOrientation: "from-image" }}
-  className="w-full h-auto max-h-[85vh] object-contain"
-/>
-
-          ) : null}
-        </DialogContent>
-      </Dialog>
-    </div>
+          <div className="h-10" />
+        </div>
+      </section>
+    </main>
   );
 }
