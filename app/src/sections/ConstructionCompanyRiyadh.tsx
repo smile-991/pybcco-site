@@ -88,6 +88,39 @@ export default function ConstructionCompanyRiyadh() {
   </div>
 </section>
 
+{/* INTERNAL LINK: Al Malqa */}
+<section className="container mx-auto px-4 py-12">
+  <div className="bg-white/5 border border-white/10 rounded-2xl p-8 text-right">
+    <h2 className="text-2xl sm:text-3xl font-bold">
+      مقاول تشطيب وبناء في <span className="text-gold">حي الملقا</span> بالرياض
+    </h2>
+
+    <p className="mt-4 text-white/80 leading-relaxed">
+      إذا كنت تبحث عن <span className="text-gold font-bold">مقاول في حي الملقا بالرياض</span> لتنفيذ
+      التشطيب أو بناء العظم أو الترميم، فشركة <span className="text-gold font-bold">بنيان الهرم للمقاولات</span>
+      تقدم حلول تنفيذ كاملة مع إشراف هندسي والتزام بالمواصفات وجودة التسليم.
+      الصفحة التالية مخصصة للملقا وتحتوي تفاصيل الخدمات + صور + أسئلة شائعة + زر واتساب مباشر.
+    </p>
+
+    <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-end">
+      <a
+        href="/contractor-almalqa-riyadh"
+        className="bg-gold hover:bg-gold/90 text-black font-bold px-6 py-3 rounded-xl transition text-center"
+      >
+        افتح صفحة حي الملقا
+      </a>
+
+      <a
+        href="/villa-finishing-price-riyadh"
+        className="bg-white/10 hover:bg-white/20 text-white font-bold px-6 py-3 rounded-xl transition text-center"
+      >
+        افتح حاسبة الأسعار
+      </a>
+    </div>
+  </div>
+</section>
+
+
 
       {/* TRUST CARDS */}
       <section className="container mx-auto px-4 pb-12">
