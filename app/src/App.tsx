@@ -29,7 +29,7 @@ export default function App() {
     return (
       <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
         <div className="text-center">
-          <img src="/logo.png" alt="Logo" className="w-24 mx-auto mb-4" />
+          <img src="/assets/logo.png" alt="Logo" className="w-24 mx-auto mb-4" />
           <p className="text-white/60">جاري التحميل...</p>
         </div>
       </div>
