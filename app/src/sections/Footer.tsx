@@ -38,16 +38,17 @@ function ContactRow({
   ltrValue?: boolean;
 }) {
   const Content = (
-    <div className="flex flex-row-reverse items-center gap-3 text-right">
+    <div className="flex flex-row-reverse items-start gap-3 w-full">
       <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
         <Icon className="w-5 h-5" />
       </div>
 
-      <div className="min-w-0 text-right">
+      <div className="min-w-0 text-right flex-1">
         <p className="text-sm text-white/50 leading-5">{label}</p>
         <p
-          className="font-semibold text-white/80 leading-6 break-words"
+          className="font-semibold text-white/80 leading-6 break-words text-right"
           dir={ltrValue ? "ltr" : "rtl"}
+          style={{ unicodeBidi: "plaintext" as any }}
         >
           {value}
         </p>
@@ -56,13 +57,16 @@ function ContactRow({
   );
 
   return (
-    <li>
+    <li className="w-full">
       {href ? (
-        <a href={href} className="block text-white/70 hover:text-gold transition-colors">
+        <a
+          href={href}
+          className="block w-full text-white/70 hover:text-gold transition-colors"
+        >
           {Content}
         </a>
       ) : (
-        <div className="text-white/70">{Content}</div>
+        <div className="w-full text-white/70">{Content}</div>
       )}
     </li>
   );
