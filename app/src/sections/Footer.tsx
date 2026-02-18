@@ -68,10 +68,12 @@ export default function Footer() {
                 <p className="text-white/60 text-sm">للمقاولات</p>
               </div>
             </div>
+
             <p className="text-white/70 mb-6 leading-relaxed">
               نبني المستقبل بإتقان وجودة عالية. خبرة تمتد لأكثر من 12 عاماً في مجال
               المقاولات والتشطيبات حول المملكة العربية السعودية.
             </p>
+
             {/* Social Links */}
             <div className="flex gap-2">
               {socialLinks.map((social, index) => (
@@ -132,25 +134,24 @@ export default function Footer() {
           </div>
 
           {/* Contact Info */}
-          <div className="text-right">
+          <div>
             <h4 className="font-bold text-lg mb-6 text-gold">تواصل معنا</h4>
-
             <ul className="space-y-4">
               {/* Phone */}
               <li>
                 <a
                   href="tel:+966550604837"
-                  className="flex items-center justify-end gap-3 text-white/70 hover:text-gold transition-colors"
+                  className="flex items-center gap-3 text-white/70 hover:text-gold transition-colors"
                 >
-                  <div className="text-right leading-tight">
+                  <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
+                    <Phone className="w-5 h-5" />
+                  </div>
+
+                  <div className="flex-1 text-right">
                     <p className="text-sm text-white/50">اتصل بنا</p>
                     <p dir="ltr" className="font-semibold whitespace-nowrap tabular-nums">
                       055 060 4837
                     </p>
-                  </div>
-
-                  <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
-                    <Phone className="w-5 h-5" />
                   </div>
                 </a>
               </li>
@@ -159,48 +160,36 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:info@pybcco.com"
-                  className="flex items-center justify-end gap-3 text-white/70 hover:text-gold transition-colors"
+                  className="flex items-center gap-3 text-white/70 hover:text-gold transition-colors"
                 >
-                  <div className="text-right leading-tight">
+                  <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
+                    <Mail className="w-5 h-5" />
+                  </div>
+
+                  <div className="flex-1 text-right">
                     <p className="text-sm text-white/50">البريد الإلكتروني</p>
                     <p dir="ltr" className="font-semibold whitespace-nowrap">
                       info@pybcco.com
                     </p>
-                  </div>
-
-                  <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
-                    <Mail className="w-5 h-5" />
                   </div>
                 </a>
               </li>
 
               {/* Address */}
               <li>
-                <div className="flex items-center justify-end gap-3 text-white/70">
-                  <div className="text-right leading-tight">
-                    <p className="text-sm text-white/50">العنوان</p>
-                    <p className="font-semibold">شارع الوشم، المعذر، الرياض</p>
-                  </div>
-
+                <div className="flex items-center gap-3 text-white/70">
                   <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
                     <MapPin className="w-5 h-5" />
+                  </div>
+
+                  <div className="flex-1 text-right">
+                    <p className="text-sm text-white/50">العنوان</p>
+                    <p className="font-semibold">شارع الوشم، المعذر، الرياض</p>
                   </div>
                 </div>
               </li>
             </ul>
           </div>
-        </div>
-
-        {/* QR Code */}
-        <div className="mt-10 flex flex-col items-center gap-3">
-          <p className="text-sm text-white/70">امسح الكود لزيارة بروفايل الشركة</p>
-
-          <img
-            src="/assets/qr.png"
-            alt="QR Code"
-            className="w-32 h-32 object-contain rounded-md bg-white p-2"
-            loading="lazy"
-          />
         </div>
       </div>
 
@@ -221,6 +210,18 @@ export default function Footer() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* QR Code */}
+      <div className="mt-10 flex flex-col items-center gap-3">
+        <p className="text-sm text-white/70">امسح الكود لزيارة بروفايل الشركة</p>
+
+        <img
+          src="/assets/qr.png"
+          alt="QR Code"
+          className="w-32 h-32 object-contain rounded-md bg-white p-2"
+          loading="lazy"
+        />
       </div>
 
       {/* Scroll to Top Button */}
