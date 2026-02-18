@@ -1,9 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  Calculator,
-  Phone,
- } from "lucide-react";
+import { Calculator, Phone, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import Contact from "./Contact";
@@ -25,10 +22,7 @@ function GalleryTabs() {
   const [cat, setCat] = useState<GalleryCat>("finishing");
 
   // ✅ يعرض أول 6 صور فقط بالهوم
-  const items = useMemo(
-    () => GALLERY[cat].items.slice(0, 6),
-    [cat]
-  );
+  const items = useMemo(() => GALLERY[cat].items.slice(0, 6), [cat]);
 
   return (
     <div className="mt-6">
@@ -42,6 +36,7 @@ function GalleryTabs() {
           return (
             <button
               key={t.key}
+              type="button"
               onClick={() => setCat(t.key as GalleryCat)}
               className={[
                 "px-4 py-2 rounded-full text-sm font-bold transition",
@@ -56,9 +51,7 @@ function GalleryTabs() {
         })}
       </div>
 
-      <div className="mt-4 text-sm text-gray-600">
-        {GALLERY[cat].title}
-      </div>
+      <div className="mt-4 text-sm text-gray-600">{GALLERY[cat].title}</div>
 
       <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-3">
         {items.map((img, i) => (
@@ -80,10 +73,11 @@ function GalleryTabs() {
 }
 
 export default function Home() {
-  const heroImage = GALLERY.finishing.items[0].src; // ✅ ديناميكي
+  const heroImage = GALLERY.finishing.items[0]?.src ?? "/projects/finishing/finishing-01.jpg";
 
   return (
     <main dir="rtl">
+      {/* HERO */}
       <section
         id="hero"
         className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
@@ -108,7 +102,7 @@ export default function Home() {
               <Button
                 onClick={() => window.open(WA_LINK, "_blank")}
                 size="lg"
-                className="bg-gold hover:bg-gold/90 text-black font-bold px-8 py-6 text-lg"
+                className="bg-gold hover:bg-gold/90 text-black font-bold px-8 py-6 text-lg w-full sm:w-auto"
               >
                 <Phone className="w-5 h-5 ml-2" />
                 اطلب معاينة
@@ -118,7 +112,7 @@ export default function Home() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="text-gold bg-transparent hover:bg-white/10 px-8 py-6 text-lg"
+                className="text-gold bg-transparent hover:bg-white/10 px-8 py-6 text-lg w-full sm:w-auto"
               >
                 <Link to="/villa-finishing-price-riyadh#boq">
                   <Calculator className="w-5 h-5 ml-2" />
@@ -126,10 +120,22 @@ export default function Home() {
                 </Link>
               </Button>
             </div>
+
+            {/* ✅ استخدمنا scrollToId بشكل فعلي */}
+            <div className="mt-8 text-white/70 text-sm">
+              <button
+                type="button"
+                onClick={() => scrollToId("#projects")}
+                className="hover:text-gold transition"
+              >
+                شاهد معرض الأعمال ↓
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
+      {/* المعرض */}
       <section id="projects" className="section-padding bg-gray-50">
         <div className="container-custom px-4">
           <div className="flex items-end justify-between gap-4">
@@ -151,6 +157,19 @@ export default function Home() {
           </div>
 
           <GalleryTabs />
+
+          {/* ✅ زر إضافي يستخدم scrollToId (لتجنب أي حذف مستقبلاً) */}
+          <div className="mt-6 flex justify-center">
+            <Button
+              type="button"
+              variant="outline"
+              className="hover:bg-black/5"
+              onClick={() => scrollToId("#contact")}
+            >
+              تواصل معنا
+              <ArrowLeft className="w-5 h-5 mr-2" />
+            </Button>
+          </div>
         </div>
       </section>
 
