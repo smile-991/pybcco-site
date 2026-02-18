@@ -74,7 +74,7 @@ export default function BoqCalculator({
     return base.filter((x) => (x.name || "").toLowerCase().includes(q));
   }, [activeCategory, query]);
 
-  const rows = useMemo(() => filtered.slice(0, 60), [filtered]);
+  const rows = useMemo(() => filtered, [filtered]);
 
   // للعرض تحت الحقل (Preview)
   const calcPreviewAmount = (item: BoqItem, qty: number) =>
