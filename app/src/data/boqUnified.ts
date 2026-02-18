@@ -53,6 +53,24 @@ export const BOQ_UNIFIED: BoqItem[] = [
     basePrice: 35,
   },
   {
+  category: "العظم و البلك",
+  name: "عزل مائي وحراري للسطح كامل",
+  unit: "متر مربع",
+  basePrice: 55,
+},
+{
+  category: "العظم و البلك",
+  name: "عزل دورات المياه قبل البلاط",
+  unit: "متر مربع",
+  basePrice: 35,
+},
+{
+  category: "العظم و البلك",
+  name: "عزل خزان أرضي داخلي",
+  unit: "متر مربع",
+  basePrice: 45,
+},
+  {
     category: "الجبس",
     name: "توريد وتركيب عمل اسمنت بورد مع تيوبات 6*3 سم",
     unit: "متر مربع",
@@ -209,6 +227,18 @@ export const BOQ_UNIFIED: BoqItem[] = [
     basePrice: 75,
   },
   {
+  category: "الكهرباء",
+  name: "توريد وتركيب كاميرات مراقبة 4 نقاط",
+  unit: "مقطوعية",
+  basePrice: 2800,
+},
+{
+  category: "الكهرباء",
+  name: "توريد وتركيب جرس باب مع شاشة داخلية",
+  unit: "عدد",
+  basePrice: 950,
+},
+  {
     category: "باب الشتر",
     name: "توريد و تركيب شباك شتر",
     unit: "متر مربع",
@@ -256,6 +286,12 @@ export const BOQ_UNIFIED: BoqItem[] = [
     unit: "عدد",
     basePrice: 400,
   },
+  {
+  category: "التكييف",
+  name: "تأسيس تمديدات مكيف سبليت شامل النحاس والعزل",
+  unit: "نقطة",
+  basePrice: 450,
+},
   {
     category: "زجاج و شاور",
     name: "توريد وتركيب زجاج سكريت ثابت شاور سماكة 12 ملم لأقل من ارتفاع  3.6 م",
@@ -323,6 +359,30 @@ export const BOQ_UNIFIED: BoqItem[] = [
     basePrice: 65,
   },
   {
+  category: "سباكة",
+  name: "تأسيس سباكة حمام كامل (تغذية + صرف)",
+  unit: "نقطة",
+  basePrice: 850,
+},
+{
+  category: "سباكة",
+  name: "تأسيس سباكة مطبخ",
+  unit: "نقطة",
+  basePrice: 950,
+},
+{
+  category: "سباكة",
+  name: "توريد وتركيب خزان مياه علوي",
+  unit: "عدد",
+  basePrice: 1800,
+},
+{
+  category: "سباكة",
+  name: "توريد وتركيب مضخة مياه أوتوماتيكية",
+  unit: "عدد",
+  basePrice: 1200,
+},
+  {
     category: "أخرى",
     name: "توريد وتركيب انتر لوك لون رمادي الغامق",
     unit: "متر مربع",
@@ -346,4 +406,40 @@ export const BOQ_UNIFIED: BoqItem[] = [
     unit: "بالنقطه",
     basePrice: 70,
   },
+  {
+  category: "أخرى",
+  name: "توريد وتركيب باب داخلي WPC أو خشب",
+  unit: "عدد",
+  basePrice: 850,
+},
+{
+  category: "أخرى",
+  name: "توريد وتركيب باب رئيسي خشب فاخر",
+  unit: "عدد",
+  basePrice: 3500,
+},
+{
+  category: "أخرى",
+  name: "تنظيف نهائي بعد التسليم",
+  unit: "مقطوعية",
+  basePrice: 2500,
+},
+{
+  category: "أخرى",
+  name: "تنفيذ سور خارجي بلوك مع لياسة ودهان",
+  unit: "متر طولي",
+  basePrice: 280,
+},
+{
+  category: "أخرى",
+  name: "توريد وتركيب بوابة حديد خارجية",
+  unit: "عدد",
+  basePrice: 4500,
+},
+{
+  category: "أخرى",
+  name: "تنفيذ مظلة سيارات حديد مجلفن",
+  unit: "متر مربع",
+  basePrice: 320,
+},
 ];
