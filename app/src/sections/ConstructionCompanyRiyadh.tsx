@@ -11,8 +11,52 @@ export default function ConstructionCompanyRiyadh() {
       "شركة بنيان الهرم للمقاولات بالرياض: تنفيذ مشاريع، تشطيب فلل وشقق تسليم مفتاح، ترميم وصيانة، بناء عظم، وإشراف هندسي كامل. أسعار تنافسية والتزام بالمواعيد. تواصل الآن.";
     document.head.appendChild(meta);
 
+    // ✅ FAQ Schema (SEO) — مطابق للـFAQ الظاهر في الصفحة
+    const faqSchema = document.createElement("script");
+    faqSchema.type = "application/ld+json";
+    faqSchema.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "هل تقدمون معاينة مجانية داخل الرياض؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نعم، حسب موقع المشروع ونطاق العمل، ونرتب زيارة ومعاينة ثم عرض سعر واضح.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "هل عندكم إشراف هندسي ومراقبين؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نعم، لدينا فريق إشراف لضبط الجودة والمواد والتنفيذ والالتزام بالمخططات.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "هل تقدمون تسليم مفتاح؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نعم، من إدارة المشروع حتى التسليم النهائي، ويمكن الاتفاق مع توريد مواد أو بدون.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "كم مدة التنفيذ عادة؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "تختلف حسب حجم المشروع ونوع التشطيب. نضع جدول زمني واضح قبل البدء.",
+          },
+        },
+      ],
+    });
+    document.head.appendChild(faqSchema);
+
     return () => {
       document.head.removeChild(meta);
+      document.head.removeChild(faqSchema);
     };
   }, []);
 
@@ -20,107 +64,118 @@ export default function ConstructionCompanyRiyadh() {
     <div className="min-h-screen bg-black text-white" dir="rtl">
       {/* HERO */}
       {/* HERO (full width background image + content) */}
-<section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
-  {/* Background image */}
-  <img
-    src="/images/ConstructionCompanyRiyadh.jpg"
-    alt="شركة مقاولات بالرياض"
-    className="absolute inset-0 h-full w-full object-cover object-bottom"
-    loading="eager"
-  />
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
+        {/* Background image */}
+        <img
+          src="/images/ConstructionCompanyRiyadh.jpg"
+          alt="شركة مقاولات بالرياض"
+          className="absolute inset-0 h-full w-full object-cover object-bottom"
+          loading="eager"
+        />
 
-  {/* Dark overlay */}
-  <div className="absolute inset-0 bg-black/65" />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/65" />
 
-  {/* Gold glow */}
-  <div
-    className="absolute inset-0 opacity-25 blur-3xl"
-    style={{
-      background:
-        "radial-gradient(circle at top, rgba(245, 158, 11, 0.25), transparent 60%)",
-    }}
-  />
+        {/* Gold glow */}
+        <div
+          className="absolute inset-0 opacity-25 blur-3xl"
+          style={{
+            background:
+              "radial-gradient(circle at top, rgba(245, 158, 11, 0.25), transparent 60%)",
+          }}
+        />
 
-  {/* Content */}
-  <div className="container mx-auto px-4 text-center relative z-10">
-    <h1 className="text-4xl md:text-5xl font-extrabold text-gold text-center">
-      شركة مقاولات بالرياض لتنفيذ المشاريع والتشطيب والترميم باحتراف
-    </h1>
+        {/* Content */}
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gold text-center">
+            شركة مقاولات بالرياض لتنفيذ المشاريع والتشطيب والترميم باحتراف
+          </h1>
 
-    <p className="mt-6 text-lg text-gray-300 leading-relaxed text-center max-w-3xl mx-auto">
-      <a href="/" className="text-gold font-bold hover:underline">
-        شركة بنيان الهرم للمقاولات
-      </a>{" "}
-      في الرياض تقدم حلول تنفيذ متكاملة تشمل{" "}
-      <a href="/villa-finishing-riyadh" className="text-gold font-bold hover:underline">
-        تشطيب الفلل والشقق
-      </a>
-      ،{" "}
-      <a href="/villa-renovation-riyadh" className="text-gold font-bold hover:underline">
-        الترميم والصيانة
-      </a>
-      ،{" "}
-      <a href="/villa-bone-construction-riyadh" className="text-gold font-bold hover:underline">
-        بناء العظم
-      </a>
-      .
-    </p>
+          <p className="mt-6 text-lg text-gray-300 leading-relaxed text-center max-w-3xl mx-auto">
+            <a href="/" className="text-gold font-bold hover:underline">
+              شركة بنيان الهرم للمقاولات
+            </a>{" "}
+            في الرياض تقدم حلول تنفيذ متكاملة تشمل{" "}
+            <a
+              href="/villa-finishing-riyadh"
+              className="text-gold font-bold hover:underline"
+            >
+              تشطيب الفلل والشقق
+            </a>
+            ،{" "}
+            <a
+              href="/villa-renovation-riyadh"
+              className="text-gold font-bold hover:underline"
+            >
+              الترميم والصيانة
+            </a>
+            ،{" "}
+            <a
+              href="/villa-bone-construction-riyadh"
+              className="text-gold font-bold hover:underline"
+            >
+              بناء العظم
+            </a>
+            .
+          </p>
 
-    <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-      <Button
-        className="bg-gold text-black font-bold px-8 py-6 text-lg"
-        onClick={() => (window.location.href = "tel:+966550604837")}
-      >
-        اتصال مباشر
-      </Button>
+          <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+            <Button
+              className="bg-gold text-black font-bold px-8 py-6 text-lg"
+              onClick={() => (window.location.href = "tel:+966550604837")}
+            >
+              اتصال مباشر
+            </Button>
 
-      <Button
-        variant="secondary"
-        className="bg-white text-black font-bold px-8 py-6 text-lg"
-        onClick={() =>
-          (window.location.href =
-            "https://wa.me/966550604837?text=أرغب%20بـ%20طلب%20معاينة%20مجانية%20لمشروع%20في%20الرياض")
-        }
-      >
-        طلب معاينة مجانية
-      </Button>
-    </div>
-  </div>
-</section>
+            <Button
+              variant="secondary"
+              className="bg-white text-black font-bold px-8 py-6 text-lg"
+              onClick={() =>
+                (window.location.href =
+                  "https://wa.me/966550604837?text=أرغب%20بـ%20طلب%20معاينة%20مجانية%20لمشروع%20في%20الرياض")
+              }
+            >
+              طلب معاينة مجانية
+            </Button>
+          </div>
+        </div>
+      </section>
 
-{/* INTERNAL LINK: Al Malqa */}
-<section className="container mx-auto px-4 py-12">
-  <div className="bg-white/5 border border-white/10 rounded-2xl p-8 text-right">
-    <h2 className="text-2xl sm:text-3xl font-bold">
-      مقاول تشطيب وبناء في <span className="text-gold">حي الملقا</span> بالرياض
-    </h2>
+      {/* INTERNAL LINK: Al Malqa */}
+      <section className="container mx-auto px-4 py-12">
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-8 text-right">
+          <h2 className="text-2xl sm:text-3xl font-bold">
+            مقاول تشطيب وبناء في <span className="text-gold">حي الملقا</span>{" "}
+            بالرياض
+          </h2>
 
-    <p className="mt-4 text-white/80 leading-relaxed">
-      إذا كنت تبحث عن <span className="text-gold font-bold">مقاول في حي الملقا بالرياض</span> لتنفيذ
-      التشطيب أو بناء العظم أو الترميم، فشركة <span className="text-gold font-bold">بنيان الهرم للمقاولات</span>
-      تقدم حلول تنفيذ كاملة مع إشراف هندسي والتزام بالمواصفات وجودة التسليم.
-      الصفحة التالية مخصصة للملقا وتحتوي تفاصيل الخدمات + صور + أسئلة شائعة + زر واتساب مباشر.
-    </p>
+          <p className="mt-4 text-white/80 leading-relaxed">
+            إذا كنت تبحث عن{" "}
+            <span className="text-gold font-bold">مقاول في حي الملقا بالرياض</span>{" "}
+            لتنفيذ التشطيب أو بناء العظم أو الترميم، فشركة{" "}
+            <span className="text-gold font-bold">بنيان الهرم للمقاولات</span>{" "}
+            تقدم حلول تنفيذ كاملة مع إشراف هندسي والتزام بالمواصفات وجودة التسليم.
+            الصفحة التالية مخصصة للملقا وتحتوي تفاصيل الخدمات + صور + أسئلة شائعة
+            + زر واتساب مباشر.
+          </p>
 
-    <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-end">
-      <a
-        href="/contractor-almalqa-riyadh"
-        className="bg-gold hover:bg-gold/90 text-black font-bold px-6 py-3 rounded-xl transition text-center"
-      >
-        افتح صفحة حي الملقا
-      </a>
+          <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-end">
+            <a
+              href="/contractor-almalqa-riyadh"
+              className="bg-gold hover:bg-gold/90 text-black font-bold px-6 py-3 rounded-xl transition text-center"
+            >
+              افتح صفحة حي الملقا
+            </a>
 
-      <a
-        href="/villa-finishing-price-riyadh"
-        className="bg-white/10 hover:bg-white/20 text-white font-bold px-6 py-3 rounded-xl transition text-center"
-      >
-        افتح حاسبة الأسعار
-      </a>
-    </div>
-  </div>
-</section>
-
-
+            <a
+              href="/villa-finishing-price-riyadh"
+              className="bg-white/10 hover:bg-white/20 text-white font-bold px-6 py-3 rounded-xl transition text-center"
+            >
+              افتح حاسبة الأسعار
+            </a>
+          </div>
+        </div>
+      </section>
 
       {/* TRUST CARDS */}
       <section className="container mx-auto px-4 pb-12">
@@ -191,67 +246,67 @@ export default function ConstructionCompanyRiyadh() {
         </h2>
 
         <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-  <a
-    href="/villa-finishing-riyadh"
-    className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
-  >
-    <div className="text-lg font-bold text-gold">تشطيب فلل بالرياض</div>
-    <div className="mt-2 text-white/70">
-      تفاصيل التشطيب وتسليم المفتاح مع طرق تواصل مباشرة.
-    </div>
-  </a>
+          <a
+            href="/villa-finishing-riyadh"
+            className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
+          >
+            <div className="text-lg font-bold text-gold">تشطيب فلل بالرياض</div>
+            <div className="mt-2 text-white/70">
+              تفاصيل التشطيب وتسليم المفتاح مع طرق تواصل مباشرة.
+            </div>
+          </a>
 
-  <a
-    href="/villa-renovation-riyadh"
-    className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
-  >
-    <div className="text-lg font-bold text-gold">ترميم فلل بالرياض</div>
-    <div className="mt-2 text-white/70">
-      تجديد وترميم شامل ومعالجة التشققات والرطوبة وتحديث كامل حسب ميزانيتك.
-    </div>
-  </a>
+          <a
+            href="/villa-renovation-riyadh"
+            className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
+          >
+            <div className="text-lg font-bold text-gold">ترميم فلل بالرياض</div>
+            <div className="mt-2 text-white/70">
+              تجديد وترميم شامل ومعالجة التشققات والرطوبة وتحديث كامل حسب ميزانيتك.
+            </div>
+          </a>
 
-  <a
-    href="/villa-bone-construction-riyadh"
-    className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
-  >
-    <div className="text-lg font-bold text-gold">بناء عظم بالرياض</div>
-    <div className="mt-2 text-white/70">
-      تنفيذ العظم حسب المخططات والمواصفات مع إشراف هندسي والتزام بالجدول الزمني.
-    </div>
-  </a>
+          <a
+            href="/villa-bone-construction-riyadh"
+            className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
+          >
+            <div className="text-lg font-bold text-gold">بناء عظم بالرياض</div>
+            <div className="mt-2 text-white/70">
+              تنفيذ العظم حسب المخططات والمواصفات مع إشراف هندسي والتزام بالجدول
+              الزمني.
+            </div>
+          </a>
 
-  <a
-    href="/apartment-finishing-riyadh"
-    className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
-  >
-    <div className="text-lg font-bold text-gold">تشطيب شقق بالرياض</div>
-    <div className="mt-2 text-white/70">
-      تشطيب شقق سكنية بتصاميم عصرية وجودة عالية من البداية حتى التسليم.
-    </div>
-  </a>
+          <a
+            href="/apartment-finishing-riyadh"
+            className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
+          >
+            <div className="text-lg font-bold text-gold">تشطيب شقق بالرياض</div>
+            <div className="mt-2 text-white/70">
+              تشطيب شقق سكنية بتصاميم عصرية وجودة عالية من البداية حتى التسليم.
+            </div>
+          </a>
 
-  <a
-    href="/villa-finishing-price-riyadh"
-    className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
-  >
-    <div className="text-lg font-bold text-gold">أسعار تشطيب فلل بالرياض</div>
-    <div className="mt-2 text-white/70">
-      تقدير تكلفة التشطيب حسب المساحة والمواد مع استشارة مجانية قبل البدء.
-    </div>
-  </a>
+          <a
+            href="/villa-finishing-price-riyadh"
+            className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
+          >
+            <div className="text-lg font-bold text-gold">أسعار تشطيب فلل بالرياض</div>
+            <div className="mt-2 text-white/70">
+              تقدير تكلفة التشطيب حسب المساحة والمواد مع استشارة مجانية قبل البدء.
+            </div>
+          </a>
 
-  <a
-    href="/home-renovation-company-riyadh"
-    className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
-  >
-    <div className="text-lg font-bold text-gold">مقاول ترميم منازل بالرياض</div>
-    <div className="mt-2 text-white/70">
-      حلول ترميم المنازل وإعادة التأهيل بإدارة هندسية متكاملة حتى التسليم.
-    </div>
-  </a>
-</div>
-
+          <a
+            href="/home-renovation-company-riyadh"
+            className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition"
+          >
+            <div className="text-lg font-bold text-gold">مقاول ترميم منازل بالرياض</div>
+            <div className="mt-2 text-white/70">
+              حلول ترميم المنازل وإعادة التأهيل بإدارة هندسية متكاملة حتى التسليم.
+            </div>
+          </a>
+        </div>
       </section>
 
       {/* FAQ */}
@@ -268,7 +323,7 @@ export default function ConstructionCompanyRiyadh() {
             },
             {
               q: "هل عندكم إشراف هندسي ومراقبين؟",
-              a: "نعم، لدينا فريق إشراف لضبط الجودة والمواد والتنفيذ والالتزام بالمخططات.",
+              a: "نعم، لدينا فريق إشراف لضبط الجودة والمواد والتنفيذ والالتزام بالمخطط��ت.",
             },
             {
               q: "هل تقدمون تسليم مفتاح؟",
@@ -310,7 +365,9 @@ export default function ConstructionCompanyRiyadh() {
             <Button
               variant="outline"
               className="border-white/30 text-white px-8 py-6 text-lg"
-              onClick={() => (window.location.href = "https://wa.me/966550604837")}
+              onClick={() =>
+                (window.location.href = "https://wa.me/966550604837")
+              }
             >
               واتساب
             </Button>
