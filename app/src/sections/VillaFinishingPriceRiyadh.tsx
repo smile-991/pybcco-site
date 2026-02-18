@@ -354,9 +354,6 @@ export default function VillaFinishingPriceRiyadh() {
                 <div className="mt-2 text-xl font-extrabold">
                   بنود تفصيلية وإضافات فوق المقطوعية
                 </div>
-                <div className="mt-2 text-sm text-white/60">
-                  استخدم هذا القسم فقط إذا عندك إضافات مثل: سور، بوابة، كاميرات، خزان، مضخة… إلخ.
-                </div>
               </div>
 
               <Button
