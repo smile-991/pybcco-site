@@ -38,9 +38,8 @@ function ContactRow({
   ltrValue?: boolean;
 }) {
   const Content = (
-    // ✅ لا justify-between نهائيًا
-    <div className="flex flex-row-reverse items-start gap-3 w-full">
-      {/* Icon (يمين دائمًا) */}
+    <div className="flex flex-row-reverse items-start gap-3 w-full text-right" dir="rtl">
+      {/* Icon (يمين) */}
       <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
         <Icon className="w-5 h-5" />
       </div>
@@ -48,12 +47,9 @@ function ContactRow({
       {/* Text */}
       <div className="flex-1 min-w-0 text-right">
         <p className="text-sm text-white/50 leading-5">{label}</p>
-
-        {/* ✅ نثبت المحاذاة يمين حتى لو القيمة LTR */}
         <p
           className="font-semibold text-white/80 leading-6 break-words text-right"
           dir={ltrValue ? "ltr" : "rtl"}
-          style={{ unicodeBidi: "isolate" as any }}
         >
           {value}
         </p>
@@ -62,12 +58,9 @@ function ContactRow({
   );
 
   return (
-    <li className="w-full">
+    <li className="w-full m-0 p-0">
       {href ? (
-        <a
-          href={href}
-          className="block w-full text-white/70 hover:text-gold transition-colors"
-        >
+        <a href={href} className="block w-full text-white/70 hover:text-gold transition-colors">
           {Content}
         </a>
       ) : (
@@ -86,7 +79,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-dark text-white relative overflow-hidden" dir="rtl">
+    <footer className="bg-dark text-white relative overflow-hidden text-right" dir="rtl">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
@@ -142,9 +135,9 @@ export default function Footer() {
           {/* Quick Links */}
           <div>
             <h4 className="font-bold text-lg mb-6 text-gold">روابط سريعة</h4>
-            <ul className="space-y-3">
+            <ul className="space-y-3 list-none p-0 m-0">
               {quickLinks.map((link, i) => (
-                <li key={i}>
+                <li key={i} className="m-0 p-0">
                   <a
                     href={link.href}
                     onClick={(e) => {
@@ -163,9 +156,9 @@ export default function Footer() {
           {/* Services */}
           <div>
             <h4 className="font-bold text-lg mb-6 text-gold">خدماتنا</h4>
-            <ul className="space-y-3">
+            <ul className="space-y-3 list-none p-0 m-0">
               {services.map((s, i) => (
-                <li key={i}>
+                <li key={i} className="m-0 p-0">
                   <a
                     href="#services"
                     onClick={(e) => {
@@ -185,7 +178,8 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-6 text-gold">تواصل معنا</h4>
 
-            <ul className="space-y-4">
+            {/* ✅ أهم سطرين: list-none + p-0 m-0 */}
+            <ul className="space-y-4 list-none p-0 m-0" dir="rtl">
               <ContactRow
                 icon={Phone}
                 label="اتصل بنا"
@@ -200,11 +194,7 @@ export default function Footer() {
                 href="mailto:info@pybcco.com"
                 ltrValue
               />
-              <ContactRow
-                icon={MapPin}
-                label="العنوان"
-                value="شارع الوشم، المعذر، الرياض"
-              />
+              <ContactRow icon={MapPin} label="العنوان" value="شارع الوشم، المعذر، الرياض" />
             </ul>
           </div>
         </div>
