@@ -1,48 +1,13 @@
 import { useState } from "react";
+import { GALLERY, type GalleryCat } from "../data/gallery";
 
-type Cat = "finishing" | "concrete" | "entertainment";
+type Cat = GalleryCat;
 
 const CATS: { key: Cat; label: string }[] = [
   { key: "finishing", label: "تشطيب" },
   { key: "concrete", label: "عظم" },
   { key: "entertainment", label: "ترفيه" },
 ];
-
-const GALLERY: Record<Cat, { title: string; items: { src: string; alt: string }[] }> = {
-  finishing: {
-    title: "مشاريع التشطيب",
-    items: [
-      { src: "/projects/finishing/6.jpg", alt: "تشطيب - 1" },
-      { src: "/projects/finishing/20211003_205520.jpg", alt: "تشطيب - 2" },
-      { src: "/projects/finishing/20211003_205526.jpg", alt: "تشطيب - 3" },
-      { src: "/projects/finishing/20211003_205543.jpg", alt: "تشطيب - 4" },
-      { src: "/projects/finishing/20211003_205456.jpg", alt: "تشطيب - 5" },
-      { src: "/projects/finishing/20211011_223855.jpg", alt: "تشطيب - 6" },
-    ],
-  },
-  concrete: {
-    title: "مشاريع العظم",
-    items: [
-      { src: "/projects/concrete/20250426_103629.jpg", alt: "عظم - 1" },
-      { src: "/projects/concrete/20250426_103637.jpg", alt: "عظم - 2" },
-      { src: "/projects/concrete/20250426_104512.jpg", alt: "عظم - 3" },
-      { src: "/projects/concrete/20250426_104515.jpg", alt: "عظم - 4" },
-      { src: "/projects/concrete/20250426_104711.jpg", alt: "عظم - 5" },
-      { src: "/projects/concrete/20251104_145343.jpg", alt: "عظم - 6" },
-    ],
-  },
-  entertainment: {
-    title: "مشاريع الترفيه",
-    items: [
-      { src: "/projects/entertainment/IMG-20231126-WA0059.jpg", alt: "ترفيه - 1" },
-      { src: "/projects/entertainment/IMG-20231119-WA0157.jpg", alt: "ترفيه - 2" },
-      { src: "/projects/entertainment/IMG-20231117-WA0119.jpg", alt: "ترفيه - 3" },
-      { src: "/projects/entertainment/IMG-20231117-WA0161.jpg", alt: "ترفيه - 4" },
-      { src: "/projects/entertainment/20231126_024030.jpg", alt: "ترفيه - 5" },
-      { src: "/projects/entertainment/20201226_162127.jpg", alt: "ترفيه - 6" },
-    ],
-  },
-};
 
 function SmartImage({
   src,
@@ -56,8 +21,10 @@ function SmartImage({
   const [currentSrc, setCurrentSrc] = useState(src);
 
   const handleError = () => {
-    if (currentSrc.endsWith(".jpg")) setCurrentSrc(currentSrc.replace(/\.jpg$/i, ".jpeg"));
-    else if (currentSrc.endsWith(".jpeg")) setCurrentSrc(currentSrc.replace(/\.jpeg$/i, ".jpg"));
+    if (currentSrc.endsWith(".jpg"))
+      setCurrentSrc(currentSrc.replace(/\.jpg$/i, ".jpeg"));
+    else if (currentSrc.endsWith(".jpeg"))
+      setCurrentSrc(currentSrc.replace(/\.jpeg$/i, ".jpg"));
   };
 
   return (
@@ -72,7 +39,7 @@ function SmartImage({
 }
 
 export default function ProjectsGallery() {
-  const [cat, setCat] = useState<Cat>("entertainment"); // خليته يبدأ على الترفيه مثل صورتك
+  const [cat, setCat] = useState<Cat>("entertainment");
 
   const title = GALLERY[cat].title;
   const items = GALLERY[cat].items;
@@ -118,10 +85,12 @@ export default function ProjectsGallery() {
               })}
             </div>
 
-            <div className="text-center mt-2 text-sm text-gray-600">{title}</div>
+            <div className="text-center mt-2 text-sm text-gray-600">
+              {title}
+            </div>
           </div>
 
-          {/* Grid (key=cat لإجبار التبديل بشكل قطعي) */}
+          {/* Grid */}
           <div
             key={cat}
             className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4"
