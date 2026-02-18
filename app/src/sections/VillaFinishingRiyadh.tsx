@@ -56,15 +56,15 @@ useEffect(() => {
 
     <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
       <Button
-        className="bg-gold text-black font-bold px-8 py-6 text-lg"
+        className="bg-gold text-black font-bold px-8 py-6 text-lg hover:bg-gold/90 transition"
         onClick={() => (window.location.href = "tel:+966550604837")}
       >
         اتصل الآن
       </Button>
 
+      {/* ✅ FIX: كان variant="outline" يطلع خلفية بيضاء */}
       <Button
-        variant="outline"
-        className="border-white/30 text-white px-8 py-6 text-lg"
+        className="bg-gold text-black font-bold px-8 py-6 text-lg hover:bg-gold/90 transition"
         onClick={() => (window.location.href = "https://wa.me/966550604837")}
       >
         واتساب
