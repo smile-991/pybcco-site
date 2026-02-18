@@ -24,7 +24,6 @@ const socialLinks = [
   { icon: Twitter, href: 'https://x.com/pybcco', label: 'X' },
 ];
 
-
 export default function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -38,7 +37,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-dark text-white relative overflow-hidden">
+    <footer className="bg-dark text-white relative overflow-hidden" dir="rtl">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
@@ -56,13 +55,13 @@ export default function Footer() {
           {/* Company Info */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-6">
-<div className="w-14 h-14 bg-gold rounded-xl flex items-center justify-center overflow-hidden">
-  <img
-    src="/assets/logo.png"
-    alt="بنيان الهرم للمقاولات"
-    className="w-full h-full object-contain"
-  />
-</div>
+              <div className="w-14 h-14 bg-gold rounded-xl flex items-center justify-center overflow-hidden">
+                <img
+                  src="/assets/logo.png"
+                  alt="بنيان الهرم للمقاولات"
+                  className="w-full h-full object-contain"
+                />
+              </div>
 
               <div>
                 <h3 className="font-bold text-xl">بنيان الهرم</h3>
@@ -77,14 +76,13 @@ export default function Footer() {
             <div className="flex gap-2">
               {socialLinks.map((social, index) => (
                 <a
-  key={index}
-  href={social.href}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="w-10 h-10 bg-white/10 hover:bg-gold rounded-lg flex items-center justify-center transition-colors group"
-  aria-label={social.label}
->
-              
+                  key={index}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 bg-white/10 hover:bg-gold rounded-lg flex items-center justify-center transition-colors group"
+                  aria-label={social.label}
+                >
                   <social.icon className="w-5 h-5 text-white group-hover:text-black transition-colors" />
                 </a>
               ))}
@@ -134,50 +132,75 @@ export default function Footer() {
           </div>
 
           {/* Contact Info */}
-          <div>
+          <div className="text-right">
             <h4 className="font-bold text-lg mb-6 text-gold">تواصل معنا</h4>
+
             <ul className="space-y-4">
+              {/* Phone */}
               <li>
                 <a
                   href="tel:+966550604837"
-                  className="flex items-center gap-3 text-white/70 hover:text-gold transition-colors"
+                  className="flex items-center justify-end gap-3 text-white/70 hover:text-gold transition-colors"
                 >
-                  <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
-                    <Phone className="w-5 h-5" />
-                  </div>
-                  <div>
+                  <div className="text-right leading-tight">
                     <p className="text-sm text-white/50">اتصل بنا</p>
-                    <p className="font-semibold">055 060 4837</p>
+                    <p dir="ltr" className="font-semibold whitespace-nowrap tabular-nums">
+                      055 060 4837
+                    </p>
+                  </div>
+
+                  <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
+                    <Phone className="w-5 h-5" />
                   </div>
                 </a>
               </li>
+
+              {/* Email */}
               <li>
                 <a
                   href="mailto:info@pybcco.com"
-                  className="flex items-center gap-3 text-white/70 hover:text-gold transition-colors"
+                  className="flex items-center justify-end gap-3 text-white/70 hover:text-gold transition-colors"
                 >
-                  <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <div>
+                  <div className="text-right leading-tight">
                     <p className="text-sm text-white/50">البريد الإلكتروني</p>
-                    <p className="font-semibold">info@pybcco.com</p>
+                    <p dir="ltr" className="font-semibold whitespace-nowrap">
+                      info@pybcco.com
+                    </p>
+                  </div>
+
+                  <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
+                    <Mail className="w-5 h-5" />
                   </div>
                 </a>
               </li>
+
+              {/* Address */}
               <li>
-                <div className="flex items-center gap-3 text-white/70">
-                  <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
-                    <MapPin className="w-5 h-5" />
-                  </div>
-                  <div>
+                <div className="flex items-center justify-end gap-3 text-white/70">
+                  <div className="text-right leading-tight">
                     <p className="text-sm text-white/50">العنوان</p>
                     <p className="font-semibold">شارع الوشم، المعذر، الرياض</p>
+                  </div>
+
+                  <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
+                    <MapPin className="w-5 h-5" />
                   </div>
                 </div>
               </li>
             </ul>
           </div>
+        </div>
+
+        {/* QR Code */}
+        <div className="mt-10 flex flex-col items-center gap-3">
+          <p className="text-sm text-white/70">امسح الكود لزيارة بروفايل الشركة</p>
+
+          <img
+            src="/assets/qr.png"
+            alt="QR Code"
+            className="w-32 h-32 object-contain rounded-md bg-white p-2"
+            loading="lazy"
+          />
         </div>
       </div>
 
@@ -199,17 +222,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-{/* QR Code */}
-<div className="mt-10 flex flex-col items-center gap-3">
-  <p className="text-sm text-white/70">امسح الكود لزيارة بروفايل الشركة</p>
-
-  <img
-    src="/assets/qr.png"
-    alt="QR Code"
-    className="w-32 h-32 object-contain rounded-md bg-white p-2"
-    loading="lazy"
-  />
-</div>
 
       {/* Scroll to Top Button */}
       <Button
