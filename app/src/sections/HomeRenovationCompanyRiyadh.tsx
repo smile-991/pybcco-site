@@ -11,77 +11,205 @@ export default function HomeRenovationCompanyRiyadh() {
       "شركة ترميم منازل بالرياض تقدم خدمات تجديد شامل، إصلاح تشققات، دهانات، جبس، سباكة وكهرباء حسب المعاينة. إشراف هندسي وجودة تنفيذ عالية.";
     document.head.appendChild(meta);
 
+    // ✅ FAQ Schema (SEO)
+    const faqSchema = document.createElement("script");
+    faqSchema.type = "application/ld+json";
+    faqSchema.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "ما الفرق بين ترميم منزل وتجديد منزل؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "الترميم يركز على إصلاح الأعطال ومعالجة التشققات والرطوبة وإعادة التأهيل، بينما التجديد يشمل تحديث الديكورات والتشطيبات وقد يتضمن تغيير مطابخ وحمامات وأرضيات.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "هل تقدمون معاينة مجانية داخل الرياض؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نعم، نوفر معاينة وتقييم مجاني داخل الرياض لتحديد حالة المنزل ونطاق الأعمال ثم تقديم عرض سعر واضح حسب المعاينة.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "ما هي الأعمال التي تشملها خدمة ترميم المنازل؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "تشمل عادة إصلاح التشققات، معالجة الرطوبة والتسربات، دهانات داخلية وخارجية، جبس وإصلاحات أسقف، وتحديث مطابخ وحمامات وأرضيات حسب الحاجة.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "هل يمكن ترميم جزء محدد فقط من المنزل؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نعم، يمكن تنفيذ ترميم جزئي مثل معالجة رطوبة، دهانات، إصلاح جبس، تجديد حمام أو مطبخ، أو تغيير أرضيات حسب الاتفاق.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "كم مدة ترميم المنزل عادة؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "تختلف حسب مساحة المنزل ونطاق الأعمال، وغالباً تتراوح بين عدة أيام إلى عدة أسابيع، ويتم تحديد جدول زمني بعد المعاينة.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "هل يوجد إشراف هندسي على أعمال الترميم؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نعم، لدينا إشراف هندسي ومراقبة جودة لضبط التنفيذ والمواد والالتزام بالمواصفات حتى التسليم.",
+          },
+        },
+      ],
+    });
+    document.head.appendChild(faqSchema);
+
     return () => {
       document.head.removeChild(meta);
+      document.head.removeChild(faqSchema);
     };
   }, []);
 
   return (
     <div className="min-h-screen bg-black text-white" dir="rtl">
-
       {/* HERO (full width background image + container content) */}
-<section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-  {/* Background image */}
-  <img
-    src="/images/home-renovation-hero.jpg"
-    alt="ترميم منازل بالرياض"
-    className="absolute inset-0 h-full w-full object-cover"
-    loading="eager"
-  />
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background image */}
+        <img
+          src="/images/home-renovation-hero.jpg"
+          alt="ترميم منازل بالرياض"
+          className="absolute inset-0 h-full w-full object-cover"
+          loading="eager"
+        />
 
-  {/* Dark overlay */}
-  <div className="absolute inset-0 bg-black/65" />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/65" />
 
-  {/* Optional gold glow */}
-  <div
-    className="absolute inset-0 opacity-25 blur-3xl"
-    style={{
-      background:
-        "radial-gradient(circle at top, rgba(245, 158, 11, 0.25), transparent 60%)",
-    }}
-  />
+        {/* Optional gold glow */}
+        <div
+          className="absolute inset-0 opacity-25 blur-3xl"
+          style={{
+            background:
+              "radial-gradient(circle at top, rgba(245, 158, 11, 0.25), transparent 60%)",
+          }}
+        />
 
-  {/* Content */}
-  <div className="container mx-auto px-4 text-center relative z-10">
-    <h1 className="text-4xl md:text-5xl font-extrabold text-gold">
-      شركة ترميم منازل بالرياض وتجديد شامل
-    </h1>
+        {/* Content */}
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gold">
+            شركة ترميم منازل بالرياض وتجديد شامل
+          </h1>
 
-    <p className="mt-6 text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
-      تقدم{" "}
-      <a href="/" className="text-gold font-bold hover:underline">
-        بنيان الهرم للمقاولات
-      </a>{" "}
-      خدمات ترميم منازل بالرياض تشمل معالجة التشققات، إصلاح الأضرار، تجديد الواجهات،
-      وتحديث كامل للمنازل القديمة بإشراف هندسي وجودة تنفيذ عالية.
-    </p>
+          <p className="mt-6 text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            تقدم{" "}
+            <a href="/" className="text-gold font-bold hover:underline">
+              بنيان الهرم للمقاولات
+            </a>{" "}
+            خدمات ترميم منازل بالرياض تشمل معالجة التشققات، إصلاح الأضرار، تجديد
+            الواجهات، وتحديث كامل للمنازل القديمة بإشراف هندسي وجودة تنفيذ عالية.
+          </p>
 
-    <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-      <Button
-        className="bg-gold text-black font-bold px-8 py-6 text-lg"
-        onClick={() => (window.location.href = "tel:+966550604837")}
-      >
-        اتصال مباشر
-      </Button>
-    </div>
-    <section className="container mx-auto px-4 mt-8 max-w-4xl relative z-20">
-  <div className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-sm">
-    <h2 className="text-2xl font-bold text-gold mb-4 text-right">
-      خدمات ترميم المنازل تشمل:
-    </h2>
+          <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+            <Button
+              className="bg-gold text-black font-bold px-8 py-6 text-lg"
+              onClick={() => (window.location.href = "tel:+966550604837")}
+            >
+              اتصال مباشر
+            </Button>
+          </div>
 
-    <ul className="space-y-3 text-white/80 text-right">
-      <li>✔️ إصلاح تشققات الجدران والأسقف</li>
-      <li>✔️ معالجة رطوبة وتسربات</li>
-      <li>✔️ تجديد دهانات وواجهات</li>
-      <li>✔️ تحديث مطابخ وحمامات</li>
-      <li>✔️ إعادة تأهيل كاملة حسب حالة المنزل</li>
-    </ul>
-  </div>
-</section>
-  </div>
-</section>
-      
+          <section className="container mx-auto px-4 mt-8 max-w-4xl relative z-20">
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-sm">
+              <h2 className="text-2xl font-bold text-gold mb-4 text-right">
+                خدمات ترميم المنازل تشمل:
+              </h2>
+
+              <ul className="space-y-3 text-white/80 text-right">
+                <li>✔️ إصلاح تشققات الجدران والأسقف</li>
+                <li>✔️ معالجة رطوبة وتسربات</li>
+                <li>✔️ تجديد دهانات وواجهات</li>
+                <li>✔️ تحديث مطابخ وحمامات</li>
+                <li>✔️ إعادة تأهيل كاملة حسب حالة المنزل</li>
+              </ul>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      {/* ✅ FAQ VISIBLE (قبل الروابط الداخلية) */}
+      <section className="container mx-auto px-4 py-14 text-right max-w-4xl">
+        <h2 className="text-2xl sm:text-3xl font-bold text-center">
+          الأسئلة الشائعة حول <span className="text-gold">ترميم المنازل بالرياض</span>
+        </h2>
+
+        <div className="mt-8 space-y-6 text-white/80 leading-relaxed">
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              ما الفرق بين ترميم منزل وتجديد منزل؟
+            </h3>
+            <p>
+              الترميم يركز على إصلاح الأعطال ومعالجة التشققات والرطوبة وإعادة
+              التأهيل، بينما التجديد يشمل تحديث الديكورات والتشطيبات وقد يتضمن
+              تغيير مطابخ وحمامات وأرضيات.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              هل تقدمون معاينة مجانية داخل الرياض؟
+            </h3>
+            <p>
+              نعم، نوفر معاينة وتقييم مجاني داخل الرياض لتحديد حالة المنزل ونطاق
+              الأعمال ثم تقديم عرض سعر واضح حسب المعاينة.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              ما هي الأعمال التي تشملها خدمة ترميم المنازل؟
+            </h3>
+            <p>
+              تشمل عادة إصلاح التشققات، معالجة الرطوبة والتسربات، دهانات داخلية
+              وخارجية، جبس وإصلاحات أسقف، وتحديث مطابخ وحمامات وأرضيات حسب الحاجة.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              هل يمكن ترميم جزء محدد فقط من المنزل؟
+            </h3>
+            <p>
+              نعم، يمكن تنفيذ ترميم جزئي مثل معالجة رطوبة، دهانات، إصلاح جبس،
+              تجديد حمام أو مطبخ، أو تغيير أرضيات حسب الاتفاق.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-bold text-white mb-2">كم مدة ترميم المنزل عادة؟</h3>
+            <p>
+              تختلف حسب مساحة المنزل ونطاق الأعمال، وغالباً تتراوح بين عدة أيام إلى
+              عدة أسابيع، ويتم تحديد جدول زمني بعد المعاينة.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              هل يوجد إشراف هندسي على أعمال الترميم؟
+            </h3>
+            <p>
+              نعم، لدينا إشراف هندسي ومراقبة جودة لضبط التنفيذ والمواد والالتزام
+              بالمواصفات حتى التسليم.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* INTERNAL LINKS */}
       <section className="container mx-auto px-4 pb-14">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
@@ -112,7 +240,6 @@ export default function HomeRenovationCompanyRiyadh() {
           ))}
         </div>
       </section>
-
     </div>
   );
 }
