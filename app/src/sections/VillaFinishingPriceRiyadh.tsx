@@ -459,6 +459,61 @@ export default function VillaFinishingPriceRiyadh() {
           <li>✔️ مستوى التشطيب المطلوب</li>
         </ul>
       </section>
+{/* FAQ SECTION */}
+<section className="container mx-auto px-4 py-14 text-right max-w-4xl">
+  <h2 className="text-2xl md:text-3xl font-bold text-gold mb-6">
+    الأسئلة الشائعة حول تكلفة التشطيب في الرياض
+  </h2>
+
+  <div className="space-y-6 text-white/80 leading-relaxed">
+
+    <div>
+      <h3 className="font-bold text-white mb-2">
+        كم سعر تشطيب المتر في الرياض؟
+      </h3>
+      <p>
+        يبدأ سعر تشطيب المتر في الرياض من 450 ريال للمستوى التجاري ويصل إلى 800 ريال للمستوى الفاخر حسب نوع المواد ونطاق العمل.
+      </p>
+    </div>
+
+    <div>
+      <h3 className="font-bold text-white mb-2">
+        هل الأسعار في الحاسبة نهائية؟
+      </h3>
+      <p>
+        الأسعار تقديرية لتكوين تصور أولي، ويتم اعتماد السعر النهائي بعد المعاينة وتحديد التفاصيل الفنية بدقة.
+      </p>
+    </div>
+
+    <div>
+      <h3 className="font-bold text-white mb-2">
+        هل السعر شامل المواد والعمالة؟
+      </h3>
+      <p>
+        نعم، أسعار المقطوعية تشمل المواد والعمالة حسب المستوى المختار (تجاري – قياسي – فاخر).
+      </p>
+    </div>
+
+    <div>
+      <h3 className="font-bold text-white mb-2">
+        كم مدة تشطيب فيلا في الرياض؟
+      </h3>
+      <p>
+        غالباً تتراوح مدة تشطيب الفيلا بين 4 إلى 12 أسبوع حسب المساحة ونوع التشطيب وتوفر المواد.
+      </p>
+    </div>
+
+    <div>
+      <h3 className="font-bold text-white mb-2">
+        هل تقدمون معاينة مجانية داخل الرياض؟
+      </h3>
+      <p>
+        نعم، نوفر معاينة مجانية داخل مدينة الرياض لتقييم المشروع وتقديم عرض سعر نهائي واضح.
+      </p>
+    </div>
+
+  </div>
+</section>
 
       {/* INTERNAL LINKS */}
       <section className="container mx-auto px-4 pb-14">
