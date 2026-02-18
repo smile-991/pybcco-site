@@ -1,39 +1,79 @@
-import { Phone, Mail, MapPin, Linkedin, Twitter, ArrowUp } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Phone, Mail, MapPin, Linkedin, Twitter, ArrowUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const quickLinks = [
-  { name: 'الرئيسية', href: '#hero' },
-  { name: 'من نحن', href: '#about' },
-  { name: 'خدماتنا', href: '#services' },
-  { name: 'مشاريعنا', href: '#projects' },
-  { name: 'فريق العمل', href: '#team' },
-  { name: 'تواصل معنا', href: '#contact' },
+  { name: "الرئيسية", href: "#hero" },
+  { name: "من نحن", href: "#about" },
+  { name: "خدماتنا", href: "#services" },
+  { name: "مشاريعنا", href: "#projects" },
+  { name: "فريق العمل", href: "#team" },
+  { name: "تواصل معنا", href: "#contact" },
 ];
 
 const services = [
-  'المقاولات العامة',
-  'أعمال التشطيب',
-  'هياكل الحديد',
-  'أعمدة الإنارة',
-  'الإشراف الهندسي',
-  'ورش النجارة',
+  "المقاولات العامة",
+  "أعمال التشطيب",
+  "هياكل الحديد",
+  "أعمدة الإنارة",
+  "الإشراف الهندسي",
+  "ورش النجارة",
 ];
 
 const socialLinks = [
-  { icon: Linkedin, href: 'https://www.linkedin.com/company/pybcco/', label: 'LinkedIn' },
-  { icon: Twitter, href: 'https://x.com/pybcco', label: 'X' },
+  { icon: Linkedin, href: "https://www.linkedin.com/company/pybcco/", label: "LinkedIn" },
+  { icon: Twitter, href: "https://x.com/pybcco", label: "X" },
 ];
 
+function ContactRow({
+  icon: Icon,
+  label,
+  value,
+  href,
+  ltrValue,
+}: {
+  icon: any;
+  label: string;
+  value: string;
+  href?: string;
+  ltrValue?: boolean;
+}) {
+  const Content = (
+    <div className="flex items-center gap-3">
+      <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
+        <Icon className="w-5 h-5" />
+      </div>
+
+      <div className="min-w-0 text-right">
+        <p className="text-sm text-white/50 leading-5">{label}</p>
+        <p
+          className="font-semibold text-white/80 leading-6 break-words"
+          dir={ltrValue ? "ltr" : "rtl"}
+        >
+          {value}
+        </p>
+      </div>
+    </div>
+  );
+
+  return (
+    <li>
+      {href ? (
+        <a href={href} className="block text-white/70 hover:text-gold transition-colors">
+          {Content}
+        </a>
+      ) : (
+        <div className="text-white/70">{Content}</div>
+      )}
+    </li>
+  );
+}
+
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    const el = document.querySelector(href);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -44,7 +84,7 @@ export default function Footer() {
           className="absolute inset-0"
           style={{
             backgroundImage: `radial-gradient(circle at 2px 2px, #fff 1px, transparent 0)`,
-            backgroundSize: '40px 40px',
+            backgroundSize: "40px 40px",
           }}
         />
       </div>
@@ -74,18 +114,17 @@ export default function Footer() {
               المقاولات والتشطيبات حول المملكة العربية السعودية.
             </p>
 
-            {/* Social Links */}
             <div className="flex gap-2">
-              {socialLinks.map((social, index) => (
+              {socialLinks.map((s, i) => (
                 <a
-                  key={index}
-                  href={social.href}
+                  key={i}
+                  href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 bg-white/10 hover:bg-gold rounded-lg flex items-center justify-center transition-colors group"
-                  aria-label={social.label}
+                  aria-label={s.label}
                 >
-                  <social.icon className="w-5 h-5 text-white group-hover:text-black transition-colors" />
+                  <s.icon className="w-5 h-5 text-white group-hover:text-black transition-colors" />
                 </a>
               ))}
             </div>
@@ -95,8 +134,8 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-6 text-gold">روابط سريعة</h4>
             <ul className="space-y-3">
-              {quickLinks.map((link, index) => (
-                <li key={index}>
+              {quickLinks.map((link, i) => (
+                <li key={i}>
                   <a
                     href={link.href}
                     onClick={(e) => {
@@ -116,78 +155,47 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-6 text-gold">خدماتنا</h4>
             <ul className="space-y-3">
-              {services.map((service, index) => (
-                <li key={index}>
+              {services.map((s, i) => (
+                <li key={i}>
                   <a
                     href="#services"
                     onClick={(e) => {
                       e.preventDefault();
-                      scrollToSection('#services');
+                      scrollToSection("#services");
                     }}
                     className="text-white/70 hover:text-gold transition-colors"
                   >
-                    {service}
+                    {s}
                   </a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Contact */}
           <div>
             <h4 className="font-bold text-lg mb-6 text-gold">تواصل معنا</h4>
+
             <ul className="space-y-4">
-              {/* Phone */}
-              <li>
-                <a
-                  href="tel:+966550604837"
-                  className="flex items-center gap-3 text-white/70 hover:text-gold transition-colors"
-                >
-                  <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
-                    <Phone className="w-5 h-5" />
-                  </div>
-
-                  <div className="flex-1 text-right">
-                    <p className="text-sm text-white/50">اتصل بنا</p>
-                    <p dir="ltr" className="font-semibold whitespace-nowrap tabular-nums">
-                      055 060 4837
-                    </p>
-                  </div>
-                </a>
-              </li>
-
-              {/* Email */}
-              <li>
-                <a
-                  href="mailto:info@pybcco.com"
-                  className="flex items-center gap-3 text-white/70 hover:text-gold transition-colors"
-                >
-                  <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
-                    <Mail className="w-5 h-5" />
-                  </div>
-
-                  <div className="flex-1 text-right">
-                    <p className="text-sm text-white/50">البريد الإلكتروني</p>
-                    <p dir="ltr" className="font-semibold whitespace-nowrap">
-                      info@pybcco.com
-                    </p>
-                  </div>
-                </a>
-              </li>
-
-              {/* Address */}
-              <li>
-                <div className="flex items-center gap-3 text-white/70">
-                  <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
-                    <MapPin className="w-5 h-5" />
-                  </div>
-
-                  <div className="flex-1 text-right">
-                    <p className="text-sm text-white/50">العنوان</p>
-                    <p className="font-semibold">شارع الوشم، المعذر، الرياض</p>
-                  </div>
-                </div>
-              </li>
+              <ContactRow
+                icon={Phone}
+                label="اتصل بنا"
+                value="055 060 4837"
+                href="tel:+966550604837"
+                ltrValue
+              />
+              <ContactRow
+                icon={Mail}
+                label="البريد الإلكتروني"
+                value="info@pybcco.com"
+                href="mailto:info@pybcco.com"
+                ltrValue
+              />
+              <ContactRow
+                icon={MapPin}
+                label="العنوان"
+                value="شارع الوشم، المعذر، الرياض"
+              />
             </ul>
           </div>
         </div>
@@ -212,10 +220,9 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* QR Code */}
+      {/* QR */}
       <div className="mt-10 flex flex-col items-center gap-3">
         <p className="text-sm text-white/70">امسح الكود لزيارة بروفايل الشركة</p>
-
         <img
           src="/assets/qr.png"
           alt="QR Code"
@@ -224,7 +231,7 @@ export default function Footer() {
         />
       </div>
 
-      {/* Scroll to Top Button */}
+      {/* Scroll to Top */}
       <Button
         onClick={scrollToTop}
         size="icon"
