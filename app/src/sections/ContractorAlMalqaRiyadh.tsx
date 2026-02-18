@@ -1,84 +1,104 @@
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
+const ALMALQA_FAQS = [
+  {
+    q: "كم سعر تشطيب فيلا في حي الملقا بالرياض؟",
+    a: "تختلف التكلفة حسب المساحة ومستوى التشطيب (تجاري/قياسي/فاخر). يمكنك استخدام حاسبة الأسعار بالموقع للحصول على تقدير مبدئي، ثم يتم تثبيت السعر بعد المعاينة.",
+  },
+  {
+    q: "هل تقدمون معاينة مجانية داخل حي الملقا؟",
+    a: "نعم، نوفر معاينة ميدانية مجانية داخل حي الملقا لتحديد نطاق العمل بدقة قبل إصدار عرض السعر.",
+  },
+  {
+    q: "هل تنفذون بناء عظم في حي الملقا؟",
+    a: "نعم، ننفذ أعمال بناء العظم حسب المخططات المعتمدة مع إشراف هندسي ومتابعة جودة في جميع المراحل.",
+  },
+  {
+    q: "هل تنفذون تشطيب فلل تسليم مفتاح في الملقا؟",
+    a: "نعم، نقدم تشطيب فلل تسليم مفتاح في حي الملقا بحسب المستوى المطلوب، مع إدارة للمشروع وإشراف هندسي حتى التسليم.",
+  },
+  {
+    q: "هل يمكن تنفيذ تشطيب جزئي فقط (حمامات/مطبخ/دهان)؟",
+    a: "نعم، ننفذ التشطيب الجزئي حسب احتياجك، ويتم تحديد البنود المطلوبة بدقة خلال المعاينة.",
+  },
+  {
+    q: "هل الأسعار تشمل المواد والعمالة؟",
+    a: "حسب نوع العرض والاتفاق (مقطوعية شاملة أو بنود تفصيلية). نوضح ذلك صراحة في عرض السعر بعد المعاينة.",
+  },
+  {
+    q: "كم مدة تنفيذ تشطيب فيلا عادةً في الملقا؟",
+    a: "المدة تعتمد على مساحة المشروع ونطاق العمل وتوفر المواد. بعد المعاينة نضع جدول زمني واضح ومراحل تسليم محددة.",
+  },
+  {
+    q: "هل يوجد إشراف هندسي ومراقبة جودة؟",
+    a: "نعم، لدينا إشراف هندسي ومراقبين لضبط الجودة والالتزام بالمواصفات والمراحل حتى التسليم النهائي.",
+  },
+  {
+    q: "هل تتعاملون مع أعمال الكهرباء والسباكة ضمن التشطيب؟",
+    a: "نعم، ننفذ أعمال الكهرباء والسباكة ضمن نطاق التشطيب أو الترميم حسب الاتفاق ونتائج المعاينة.",
+  },
+  {
+    q: "هل تقدمون ترميم وتجديد فلل قديمة في حي الملقا؟",
+    a: "نعم، نقدم ترميم وتجديد شامل حسب حالة المبنى، مثل معالجة شروخ ورطوبة، تجديد دهانات وجبس وأرضيات وتحديثات كاملة حسب الحاجة.",
+  },
+  {
+    q: "كيف أضمن أن التشطيب سيكون مطابق للمستوى المتفق عليه؟",
+    a: "نثبت المستوى في العرض (تجاري/قياسي/فاخر)، ونلتزم بالمواصفات ونقاط الاستلام لكل مرحلة، مع متابعة تنفيذ ومراقبة جودة حتى التسليم.",
+  },
+  {
+    q: "كيف أبدأ بسرعة وأخذ تقدير مبدئي؟",
+    a: "ابدأ بإرسال مساحة المشروع ونوع العمل (تشطيب/عظم/ترميم) عبر واتساب، أو افتح الحاسبة بالموقع للحصول على تقدير مبدئي، ثم نحدد موعد معاينة.",
+  },
+];
+
 export default function ContractorAlMalqaRiyadh() {
   useEffect(() => {
-  document.title =
-    "مقاول تشطيب وبناء في حي الملقا بالرياض | بنيان الهرم PYBCCO";
+    document.title = "مقاول تشطيب وبناء في حي الملقا بالرياض | بنيان الهرم PYBCCO";
 
-  const meta = document.createElement("meta");
-  meta.name = "description";
-  meta.content =
-    "مقاول تشطيب وبناء في حي الملقا بالرياض: تشطيب فلل وشقق، بناء عظم، ترميم وتجديد حسب المعاينة. إشراف هندسي، جودة تنفيذ، والتزام بالوقت.";
-  document.head.appendChild(meta);
+    const meta = document.createElement("meta");
+    meta.name = "description";
+    meta.content =
+      "مقاول تشطيب وبناء في حي الملقا بالرياض: تشطيب فلل وشقق، بناء عظم، ترميم وتجديد حسب المعاينة. إشراف هندسي، جودة تنفيذ، والتزام بالوقت.";
+    document.head.appendChild(meta);
 
-  // Service Schema
-  const serviceSchema = document.createElement("script");
-  serviceSchema.type = "application/ld+json";
-  serviceSchema.text = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: "مقاول تشطيب وبناء في حي الملقا بالرياض",
-    areaServed: { "@type": "City", name: "Riyadh" },
-    provider: {
-      "@type": "LocalBusiness",
-      name: "PYBCCO – بنيان الهرم للمقاولات",
-      telephone: "+966550604837",
-      url: "https://www.pybcco.com"
-    }
-  });
-  document.head.appendChild(serviceSchema);
-
-  // FAQ Schema
-  const faqSchema = document.createElement("script");
-  faqSchema.type = "application/ld+json";
-  faqSchema.text = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: "كم تكلفة تشطيب فيلا في حي الملقا بالرياض؟",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "تختلف التكلفة حسب المساحة ومستوى التشطيب (تجاري، قياسي، فاخر). يمكن استخدام حاسبة الأسعار بالموقع لمعرفة تقدير مبدئي قبل المعاينة."
-        }
+    // Service Schema
+    const serviceSchema = document.createElement("script");
+    serviceSchema.type = "application/ld+json";
+    serviceSchema.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: "مقاول تشطيب وبناء في حي الملقا بالرياض",
+      areaServed: { "@type": "City", name: "Riyadh" },
+      provider: {
+        "@type": "LocalBusiness",
+        name: "PYBCCO – بنيان الهرم للمقاولات",
+        telephone: "+966550604837",
+        url: "https://www.pybcco.com",
       },
-      {
-        "@type": "Question",
-        name: "هل تقدمون بناء عظم في حي الملقا؟",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "نعم، ننفذ بناء عظم في حي الملقا حسب المخططات المعتمدة مع إشراف هندسي وجودة تنفيذ."
-        }
-      },
-      {
-        "@type": "Question",
-        name: "هل يوجد معاينة مجانية لمشاريع الملقا؟",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "نعم، نوفر معاينة ميدانية مجانية داخل حي الملقا لتحديد نطاق العمل بدقة قبل تقديم عرض السعر."
-        }
-      },
-      {
-        "@type": "Question",
-        name: "ما مدة تنفيذ مشروع تشطيب في الملقا؟",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "مدة التنفيذ تعتمد على حجم المشروع ونطاق العمل، ويتم تحديد جدول زمني واضح بعد المعاينة."
-        }
-      }
-    ]
-  });
-  document.head.appendChild(faqSchema);
+    });
+    document.head.appendChild(serviceSchema);
 
-  return () => {
-    document.head.removeChild(meta);
-    document.head.removeChild(serviceSchema);
-    document.head.removeChild(faqSchema);
-  };
-}, []);
+    // ✅ FAQ Schema (مطابق للFAQ الظاهر)
+    const faqSchema = document.createElement("script");
+    faqSchema.type = "application/ld+json";
+    faqSchema.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: ALMALQA_FAQS.map((x) => ({
+        "@type": "Question",
+        name: x.q,
+        acceptedAnswer: { "@type": "Answer", text: x.a },
+      })),
+    });
+    document.head.appendChild(faqSchema);
 
+    return () => {
+      document.head.removeChild(meta);
+      document.head.removeChild(serviceSchema);
+      document.head.removeChild(faqSchema);
+    };
+  }, []);
 
   const track = (eventName: string) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -87,7 +107,6 @@ export default function ContractorAlMalqaRiyadh() {
   };
 
   const WA_NUMBER = "966550604837";
-
   const waPrefill = (text: string) =>
     `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
 
@@ -114,7 +133,6 @@ export default function ContractorAlMalqaRiyadh() {
     <div className="min-h-screen bg-black text-white" dir="rtl">
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
-        {/* Background image (Hero) */}
         <img
           src="/images/almalqa.jpg"
           alt="حي الملقا الرياض"
@@ -122,10 +140,8 @@ export default function ContractorAlMalqaRiyadh() {
           loading="eager"
         />
 
-        {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/65" />
 
-        {/* Optional gold glow */}
         <div
           className="absolute inset-0 opacity-25 blur-3xl"
           style={{
@@ -134,7 +150,6 @@ export default function ContractorAlMalqaRiyadh() {
           }}
         />
 
-        {/* Content */}
         <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-4xl md:text-5xl font-extrabold text-gold text-center">
             مقاول تشطيب وبناء في حي الملقا بالرياض
@@ -151,9 +166,7 @@ export default function ContractorAlMalqaRiyadh() {
             والتزام بالوقت حتى التسليم.
           </p>
 
-          {/* Top CTA Buttons (3 buttons as requested) */}
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-            {/* WhatsApp */}
             <Button
               className="bg-gold hover:bg-gold/90 text-black font-bold px-8 py-6 text-lg"
               onClick={() => {
@@ -166,7 +179,6 @@ export default function ContractorAlMalqaRiyadh() {
               طلب معاينة مجانية (واتساب)
             </Button>
 
-            {/* Direct Call (fixed - no outline) */}
             <Button
               className="bg-gold hover:bg-gold/90 text-black font-bold px-8 py-6 text-lg"
               onClick={() => {
@@ -177,7 +189,6 @@ export default function ContractorAlMalqaRiyadh() {
               اتصال مباشر
             </Button>
 
-            {/* Open Calculator Now (as requested) */}
             <Button
               className="bg-gold hover:bg-gold/90 text-black font-bold px-8 py-6 text-lg"
               onClick={() => {
@@ -189,7 +200,6 @@ export default function ContractorAlMalqaRiyadh() {
             </Button>
           </div>
 
-          {/* Cards inside hero */}
           <div className="mt-10 grid md:grid-cols-2 gap-6 text-right max-w-5xl mx-auto">
             <div className="bg-white/5 p-6 rounded-xl border border-gold/20 backdrop-blur-sm">
               <h3 className="text-xl font-bold text-gold mb-3">تسعير واضح</h3>
@@ -225,7 +235,7 @@ export default function ContractorAlMalqaRiyadh() {
         </div>
       </section>
 
-      {/* SEO LONG CONTENT (Strong + Long) */}
+      {/* SEO LONG CONTENT */}
       <section className="container mx-auto px-4 py-14">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
           لماذا يختار سكان <span className="text-gold">حي الملقا</span> بنيان الهرم؟
@@ -239,56 +249,37 @@ export default function ContractorAlMalqaRiyadh() {
             قراراً عشوائياً. العميل في الملقا عادة يبحث عن ثلاثة أمور واضحة:
             جودة التنفيذ، وضوح التسعير، والالتزام بالوقت. نحن في{" "}
             <strong className="text-gold">PYBCCO – بنيان الهرم للمقاولات</strong>{" "}
-            بنينا طريقة عمل تحقق هذه النقاط عملياً على أرض الواقع، وليس فقط كلام
-            تسويقي.
+            بنينا طريقة عمل تحقق هذه النقاط عملياً على أرض الواقع.
           </p>
 
           <p>
-            أولاً: نبدأ دائماً بـ <strong className="text-gold">معاينة ميدانية</strong>{" "}
-            لتحديد نطاق العمل بدقة، لأن المشاريع تختلف: هل هو تشطيب كامل لفيلا
-            جديدة؟ أم{" "}
-            <strong className="text-gold">ترميم وتجديد</strong> لجزء من المبنى؟
-            أم{" "}
-            <strong className="text-gold">بناء عظم</strong> مع تجهيزات أساسية؟
-            بعد المعاينة نحدد بنداً بنداً ما المطلوب، ونختصر عليك القرارات
-            المعقدة بأكثر شكل واضح، ثم نضع خطة تنفيذ وجداول زمنية منطقية.
+            نبدأ دائماً بـ <strong className="text-gold">معاينة ميدانية</strong>{" "}
+            لتحديد نطاق العمل بدقة، ثم نضع خطة تنفيذ وجداول زمنية منطقية.
+            نختصر عليك القرارات المعقدة بأوضح شكل، ونحدد المطلوب بنداً بنداً.
           </p>
 
           <p>
-            ثانياً: الجودة عندنا ليست “شعار”. نحن نعتمد نظام متابعة يضمن:
-            استلام مراحل العمل (بالمعايير)، والتأكد من مطابقة المواد للمستوى
-            المتفق عليه، وتوثيق التقدم بشكل مستمر. وهذا يهم جداً في حي الملقا لأن
-            أغلب العملاء يركزون على التفاصيل: الاستقامة، الزوايا، العزل،
-            التشطيبات النهائية، وتناسق الأعمال بين البنود. لذلك نؤمن أن{" "}
-            <strong className="text-gold">التفاصيل هي الفرق</strong>.
+            الجودة عندنا ليست شعار. نعتمد نظام متابعة يضمن استلام مراحل العمل،
+            ومطابقة المواد للمستوى المتفق عليه، وتوثيق التقدم بشكل مستمر.
+            لأن التفاصيل في شمال الرياض هي الفارق الحقيقي.
           </p>
 
           <p>
-            ثالثاً: نراعي طبيعة شمال الرياض من حيث المخططات الحديثة ومتطلبات
-            التشطيب، لذلك خدماتنا في الملقا تشمل بشكل شائع:{" "}
+            خدماتنا في الملقا تشمل:{" "}
             <strong className="text-gold">تشطيب فلل</strong>،{" "}
             <strong className="text-gold">تشطيب شقق</strong>،{" "}
-            <strong className="text-gold">ترميم واجهات</strong>،{" "}
-            <strong className="text-gold">أعمال جبس ودهانات</strong>،{" "}
-            <strong className="text-gold">أرضيات وبلاط</strong>،{" "}
+            <strong className="text-gold">ترميم وتجديد</strong>،{" "}
+            <strong className="text-gold">دهانات وجبس</strong>،{" "}
+            <strong className="text-gold">أرضيات</strong>،{" "}
             <strong className="text-gold">كهرباء وسباكة</strong> حسب المعاينة،
-            وأعمال عزل حسب الحاجة. الفكرة الأساسية: ننجز مشروعك كحزمة متكاملة
-            بدلاً من تشتيت العمل بين عدة جهات.
+            وأعمال عزل حسب الحاجة.
           </p>
 
           <p>
-            وإذا كنت تريد تقدير تكلفة مبدئي بسرعة قبل المعاينة، جهزنا لك{" "}
+            وإذا تريد تقدير مبدئي قبل المعاينة، جهزنا{" "}
             <strong className="text-gold">حاسبة أسعار</strong> داخل الموقع تساعدك
             على فهم النطاق العام حسب المساحة والمستوى، ثم نثبت التفاصيل عند
-            المعاينة. هذا الأسلوب يختصر وقت طويل على العميل ويزيد وضوح القرار.
-          </p>
-
-          <p>
-            باختصار: إذا كنت تبحث عن{" "}
-            <strong className="text-gold">مقاول في الملقا بالرياض</strong> يعطيك
-            وضوح في السعر، وخطة تنفيذ، وإشراف، وجودة تسليم — فأنت في المكان
-            الصحيح. تواصل معنا، أرسل مساحة مشروعك ونوع العمل، ونحدد لك موعد معاينة
-            ونبدأ.
+            المعاينة.
           </p>
         </div>
       </section>
@@ -384,50 +375,26 @@ export default function ContractorAlMalqaRiyadh() {
         </div>
       </section>
 
-{/* FAQ Section */}
-<section className="container mx-auto px-4 py-16">
-  <h2 className="text-2xl sm:text-3xl font-bold text-center">
-    أسئلة شائعة حول <span className="text-gold">مقاول حي الملقا</span>
-  </h2>
+      {/* ✅ FAQ (12 سؤال ظاهر + مطابق للـSchema) */}
+      <section className="container mx-auto px-4 pb-14">
+        <h2 className="text-2xl sm:text-3xl font-bold text-center">
+          أسئلة شائعة حول <span className="text-gold">مقاول حي الملقا</span>
+        </h2>
 
-  <div className="mt-10 space-y-6 max-w-4xl mx-auto text-right">
+        <div className="mt-10 space-y-6 max-w-4xl mx-auto text-right">
+          {ALMALQA_FAQS.map((x, i) => (
+            <div
+              key={i}
+              className="bg-white/5 border border-white/10 rounded-2xl p-6"
+            >
+              <h3 className="text-lg font-bold text-gold">{x.q}</h3>
+              <p className="mt-2 text-white/80 leading-relaxed">{x.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
-    <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-      <h3 className="text-lg font-bold text-gold">
-        كم سعر تشطيب فيلا في حي الملقا؟
-      </h3>
-      <p className="mt-2 text-white/80 leading-relaxed">
-        تختلف الأسعار حسب المساحة ومستوى التشطيب (تجاري – قياسي – فاخر).
-        يمكن استخدام حاسبة الأسعار بالموقع للحصول على تقدير مبدئي،
-        ثم يتم تحديد السعر النهائي بعد المعاينة.
-      </p>
-    </div>
-
-    <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-      <h3 className="text-lg font-bold text-gold">
-        هل تقدمون بناء عظم في الملقا؟
-      </h3>
-      <p className="mt-2 text-white/80 leading-relaxed">
-        نعم، ننفذ أعمال البناء العظم حسب المخططات المعتمدة،
-        مع إشراف هندسي كامل ومتابعة جودة في جميع المراحل.
-      </p>
-    </div>
-
-    <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-      <h3 className="text-lg font-bold text-gold">
-        هل المعاينة مجانية داخل حي الملقا؟
-      </h3>
-      <p className="mt-2 text-white/80 leading-relaxed">
-        نعم، نوفر معاينة ميدانية مجانية لتقييم الموقع بدقة
-        وتحديد نطاق العمل قبل إصدار عرض السعر.
-      </p>
-    </div>
-
-  </div>
-</section>
-
-
-      {/* CTA BOTTOM (Buttons fixed - no outline) */}
+      {/* CTA BOTTOM */}
       <section className="container mx-auto px-4 pb-20">
         <div className="bg-gradient-to-b from-white/10 to-white/5 border border-white/10 rounded-2xl p-8 text-center">
           <h3 className="text-2xl font-bold">جاهز تبدأ مشروعك في الملقا؟</h3>
