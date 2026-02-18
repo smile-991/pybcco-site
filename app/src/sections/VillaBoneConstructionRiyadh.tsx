@@ -12,17 +12,75 @@ export default function VillaBoneConstructionRiyadh() {
       "مقاول عظم بالرياض لبناء فلل عظم حسب المخططات والمواصفات، إشراف هندسي كامل، التزام بالجدول الزمني وجودة التنفيذ. تواصل الآن مع بنيان الهرم.";
     document.head.appendChild(meta);
 
+    // ✅ FAQ Schema (SEO)
+    const faqSchema = document.createElement("script");
+    faqSchema.type = "application/ld+json";
+    faqSchema.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "ما المقصود ببناء عظم للفلل؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "بناء العظم هو تنفيذ الهيكل الإنشائي للفيلا حسب المخططات، ويشمل أعمال الحفر والقواعد والميدات والأعمدة والأسقف وجدران البلوك وتجهيز المبنى لمرحلة التشطيب.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "هل تنفذون بناء العظم حسب المخططات والمواصفات؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نعم، يتم تنفيذ العظم حسب المخططات المعتمدة والمواصفات المطلوبة، مع متابعة جودة مستمرة والتزام بنقاط الاستلام لكل مرحلة.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "هل يوجد إشراف هندسي على بناء العظم؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نعم، لدينا إشراف هندسي ومراقبة تنفيذ لضبط الجودة والالتزام بالمخططات والمواد والجدول الزمني حتى تسليم العظم.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "كم مدة بناء العظم لفيلا في الرياض؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "تختلف المدة حسب مساحة الفيلا وعدد الأدوار ونطاق الأعمال، وغالباً تتراوح بين 6 إلى 16 أسبوع، ويتم تحديد جدول زمني بعد المعاينة ومراجعة المخططات.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "هل يشمل بناء العظم العزل؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "يشمل العزل الأساسي حسب المواصفات ونطاق المشروع، ويتم تحديد تفاصيل العزل المطلوب بعد المعاينة ومراجعة المخططات.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "كيف يتم تسعير بناء العظم؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "يتم التسعير بناءً على المساحة ونوع الهيكل وعدد الأدوار والمواصفات ونطاق الأعمال، ويتم تثبيت السعر النهائي بعد الاطلاع على المخططات والمعاينة.",
+          },
+        },
+      ],
+    });
+    document.head.appendChild(faqSchema);
+
     return () => {
       document.head.removeChild(meta);
+      document.head.removeChild(faqSchema);
     };
   }, []);
 
   return (
     <div className="min-h-screen bg-black text-white" dir="rtl">
-      
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-
         {/* Background Image */}
         <img
           src="/images/VillaBoneConstructionRiyadh.jpg"
@@ -50,7 +108,8 @@ export default function VillaBoneConstructionRiyadh() {
           </h1>
 
           <p className="mt-6 text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            ننفّذ أعمال <span className="text-gold font-bold">بناء فلل عظم بالرياض</span>{" "}
+            ننفّذ أعمال{" "}
+            <span className="text-gold font-bold">بناء فلل عظم بالرياض</span>{" "}
             حسب المخططات والمواصفات، مع إشراف هندسي كامل ومتابعة جودة مستمرة.
             التزام بالجدول الزمني وتنفيذ احترافي يضمن لك قاعدة قوية قبل التشطيب.
           </p>
@@ -102,6 +161,76 @@ export default function VillaBoneConstructionRiyadh() {
         </div>
       </section>
 
+      {/* ✅ FAQ VISIBLE (قبل الروابط الداخلية) */}
+      <section className="container mx-auto px-4 pb-14 text-right max-w-4xl">
+        <h2 className="text-2xl sm:text-3xl font-bold text-center">
+          الأسئلة الشائعة حول <span className="text-gold">بناء العظم بالرياض</span>
+        </h2>
+
+        <div className="mt-8 space-y-6 text-white/80 leading-relaxed">
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              ما المقصود ببناء عظم للفلل؟
+            </h3>
+            <p>
+              بناء العظم هو تنفيذ الهيكل الإنشائي للفيلا حسب المخططات، ويشمل أعمال
+              الحفر والقواعد والميدات والأعمدة والأسقف وجدران البلوك وتجهيز المبنى
+              لمرحلة التشطيب.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              هل تنفذون بناء العظم حسب المخططات والمواصفات؟
+            </h3>
+            <p>
+              نعم، يتم تنفيذ العظم حسب المخططات المعتمدة والمواصفات المطلوبة، مع
+              متابعة جودة مستمرة والتزام بنقاط الاستلام لكل مرحلة.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              هل يوجد إشراف هندسي على بناء العظم؟
+            </h3>
+            <p>
+              نعم، لدينا إشراف هندسي ومراقبة تنفيذ لضبط الجودة والالتزام بالمخططات
+              والمواد والجدول الزمني حتى تسليم العظم.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              كم مدة بناء العظم لفيلا في الرياض؟
+            </h3>
+            <p>
+              تختلف المدة حسب مساحة الفيلا وعدد الأدوار ونطاق الأعمال، وغالباً
+              تتراوح بين 6 إلى 16 أسبوع، ويتم تحديد جدول زمني بعد المعاينة ومراجعة
+              المخططات.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              هل يشمل بناء العظم العزل؟
+            </h3>
+            <p>
+              يشمل العزل الأساسي حسب المواصفات ونطاق المشروع، ويتم تحديد تفاصيل
+              العزل المطلوب بعد المعاينة ومراجعة المخططات.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-bold text-white mb-2">كيف يتم تسعير بناء العظم؟</h3>
+            <p>
+              يتم التسعير بناءً على المساحة ونوع الهيكل وعدد الأدوار والمواصفات
+              ونطاق الأعمال، ويتم تثبيت السعر النهائي بعد الاطلاع على المخططات
+              والمعاينة.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* INTERNAL LINKS */}
       <section className="container mx-auto px-4 pb-14">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
@@ -128,7 +257,6 @@ export default function VillaBoneConstructionRiyadh() {
           ))}
         </div>
       </section>
-
     </div>
   );
 }
