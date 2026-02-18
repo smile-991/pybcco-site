@@ -26,8 +26,68 @@ export default function VillaFinishingPriceRiyadh() {
       "احسب تكلفة التشطيب التقديرية في الرياض 2026 عبر حاسبة تفاعلية حسب المساحة والمستوى ونوع العمل (تشطيب/عظم). الأسعار تقديرية وقد تختلف حسب المعاينة.";
     document.head.appendChild(meta);
 
+    // ✅ FAQ Schema (SEO)
+    const faqSchema = document.createElement("script");
+    faqSchema.type = "application/ld+json";
+    faqSchema.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "كم سعر تشطيب المتر في الرياض؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "سعر تشطيب المتر في الرياض يبدأ من 450 ريال للمستوى التجاري ويصل إلى 800 ريال للمستوى الفاخر حسب نوع المواد ونطاق العمل.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "هل الأسعار في الحاسبة نهائية؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "الأسعار تقديرية لتكوين تصور واضح، ويتم اعتماد السعر النهائي بعد المعاينة وتثبيت نطاق العمل والمواد.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "هل السعر شامل المواد والعمالة؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نعم، أسعار المقطوعية تشمل المواد والعمالة حسب المستوى المختار (تجاري/قياسي/فاخر).",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "ما الفرق بين التشطيب التجاري والقياسي والفاخر؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "الفرق يكون في جودة المواد وتفاصيل التنفيذ ونوعية التشطيبات والإكسسوارات، وكل مستوى يناسب ميزانية مختلفة.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "كم مدة تشطيب فيلا في الرياض عادة؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "مدة تشطيب الفيلا غالباً تتراوح بين 4 إلى 12 أسبوع حسب المساحة ونوع التشطيب وتوفر المواد.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "هل تقدمون معاينة مجانية داخل الرياض؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نعم، نوفر معاينة مجانية داخل مدينة الرياض لتقييم المشروع وتحديد السعر النهائي بدقة.",
+          },
+        },
+      ],
+    });
+    document.head.appendChild(faqSchema);
+
     return () => {
       document.head.removeChild(meta);
+      document.head.removeChild(faqSchema);
     };
   }, []);
 
@@ -84,8 +144,8 @@ export default function VillaFinishingPriceRiyadh() {
           </h1>
 
           <p className="mt-6 text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            أدخل بيانات مشروعك واحصل على رقم تقديري سريع حسب المساحة والمستوى ونوع العمل —{" "}
-            <span className="text-gold font-bold">بدون عرض سعر المتر</span>.
+            أدخل بيانات مشروعك واحصل على رقم تقديري سريع حسب المساحة والمستوى ونوع
+            العمل — <span className="text-gold font-bold">بدون عرض سعر المتر</span>.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
@@ -121,7 +181,8 @@ export default function VillaFinishingPriceRiyadh() {
               </div>
 
               <h2 className="mt-3 text-2xl md:text-3xl font-extrabold">
-                احسب <span className="text-gold">التكلفة التقديرية (للمقطوعة)</span>
+                احسب{" "}
+                <span className="text-gold">التكلفة التقديرية (للمقطوعة)</span>
               </h2>
 
               <p className="mt-3 text-white/70">
@@ -309,7 +370,8 @@ export default function VillaFinishingPriceRiyadh() {
                 )}
 
                 <div className="mt-4 text-xs text-white/60 leading-relaxed">
-                  * الرقم أعلاه تقديري ويعتمد على البيانات المُدخلة فقط. السعر النهائي يُحدد بعد المعاينة.
+                  * الرقم أعلاه تقديري ويعتمد على البيانات المُدخلة فقط. السعر
+                  النهائي يُحدد بعد المعاينة.
                 </div>
 
                 <div className="mt-5 flex flex-col md:flex-row gap-3">
@@ -415,7 +477,10 @@ export default function VillaFinishingPriceRiyadh() {
             { title: "ترميم فلل بالرياض", href: "/villa-renovation-riyadh" },
             { title: "تشطيب شقق بالرياض", href: "/apartment-finishing-riyadh" },
             { title: "بناء عظم بالرياض", href: "/villa-bone-construction-riyadh" },
-            { title: "مقاول ترميم منازل بالرياض", href: "/home-renovation-company-riyadh" },
+            {
+              title: "مقاول ترميم منازل بالرياض",
+              href: "/home-renovation-company-riyadh",
+            },
           ].map((x, i) => (
             <a
               key={i}
