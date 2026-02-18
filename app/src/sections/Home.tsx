@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Calculator,
@@ -70,8 +70,8 @@ const SERVICES = [
 const STATS = [
   { value: "90+", label: "مشروع منفذ" },
   { value: "12+", label: "سنة خبرة" },
-  { value: "19", label: "مدينة" },
   { value: "الرياض", label: "نطاق العمل" },
+  { value: "2013", label: "تأسيس" },
 ];
 
 function scrollToId(id: string) {
@@ -81,7 +81,6 @@ function scrollToId(id: string) {
 
 function GalleryTabs() {
   const [cat, setCat] = useState<GalleryCat>("finishing");
-
   const items = useMemo(() => GALLERY[cat].items.slice(0, 6), [cat]);
 
   return (
@@ -135,6 +134,86 @@ function GalleryTabs() {
 }
 
 export default function Home() {
+  // ✅ SEO (بدون تعجيق)
+  useEffect(() => {
+    document.title = "شركة مقاولات بالرياض | بنيان الهرم للمقاولات";
+
+    const meta = document.createElement("meta");
+    meta.name = "description";
+    meta.content =
+      "شركة بنيان الهرم للمقاولات بالرياض: تنفيذ بناء عظم وتشطيب وترميم وتسليم مفتاح بإشراف هندسي. احسب التكلفة عبر الحاسبة واطلب معاينة مجانية.";
+    document.head.appendChild(meta);
+
+    // ✅ LocalBusiness Schema (مهم للـ SEO المحلي)
+    const ld = document.createElement("script");
+    ld.type = "application/ld+json";
+    ld.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": ["LocalBusiness", "ConstructionCompany"],
+      name: "بنيان الهرم للمقاولات",
+      alternateName: "PYBCCO",
+      url: "https://pybcco.com/",
+      telephone: "+966550604837",
+      areaServed: { "@type": "City", name: "Riyadh" },
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Riyadh",
+        addressCountry: "SA",
+      },
+      sameAs: [],
+    });
+    document.head.appendChild(ld);
+
+    // ✅ FAQ Schema (مخفي بصرياً - بس جوجل بيستفيد)
+    const faq = document.createElement("script");
+    faq.type = "application/ld+json";
+    faq.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "هل تقدمون معاينة مجانية داخل الرياض؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نعم، نوفر معاينة مبدئية داخل الرياض حسب موقع المشروع ونطاق العمل قبل تقديم عرض السعر.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "هل تقدمون تشطيب تسليم مفتاح؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نعم، نقدم تشطيب تسليم مفتاح للفلل والشقق حسب المستوى المطلوب وبإشراف هندسي.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "هل يمكنني حساب التكلفة قبل المعاينة؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نعم، يمكنك استخدام حاسبة التكلفة في الموقع للحصول على تقدير مبدئي سريع حسب المساحة والمستوى.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "ما هي الخدمات التي تقدمونها؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نقدم بناء عظم، تشطيب فلل وشقق، ترميم وتجديد، وإدارة مشاريع داخل الرياض.",
+          },
+        },
+      ],
+    });
+    document.head.appendChild(faq);
+
+    return () => {
+      document.head.removeChild(meta);
+      document.head.removeChild(ld);
+      document.head.removeChild(faq);
+    };
+  }, []);
+
   const heroImage =
     GALLERY.finishing.items[0]?.src ?? "/projects/finishing/finishing-01.jpg";
 
@@ -148,7 +227,7 @@ export default function Home() {
         <div className="absolute inset-0">
           <img
             src={heroImage}
-            alt="Hero"
+            alt="شركة مقاولات بالرياض"
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/85" />
@@ -159,7 +238,7 @@ export default function Home() {
             <div className="inline-flex items-center gap-2 bg-gold/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
               <span className="w-2 h-2 bg-gold rounded-full" />
               <span className="text-gold text-sm font-medium">
-                شركة مقاولات معتمدة منذ 2013
+                شركة مقاولات بالرياض
               </span>
             </div>
 
@@ -212,7 +291,6 @@ export default function Home() {
               ))}
             </div>
 
-            {/* ✅ استخدام scrollToId (بدون أخطاء) */}
             <div className="mt-10 text-white/60 text-sm">
               <button
                 type="button"
@@ -235,8 +313,8 @@ export default function Home() {
             </h2>
 
             <p className="mt-3 text-gray-600 leading-relaxed max-w-2xl">
-              أداة احترافية تمنحك تقديرًا سريعًا لتكلفة التشطيب قبل المعاينة — بدون
-              انتظار — وبإمكانك إنشاء عرض سعرك بنفسك ثم التواصل معنا مباشرة.
+              تقدير سريع قبل المعاينة — ثم تواصل معنا لتأكيد التفاصيل بزيارة
+              ميدانية.
             </p>
 
             <div className="mt-6 flex flex-col sm:flex-row gap-3">
@@ -419,7 +497,7 @@ export default function Home() {
         <Contact />
       </section>
 
-      {/* SEO Section */}
+      {/* SEO نص بسيط */}
       <section id="seo" className="section-padding bg-white">
         <div className="container-custom px-4">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900">
