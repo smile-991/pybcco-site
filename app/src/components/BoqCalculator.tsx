@@ -135,9 +135,6 @@ export default function BoqCalculator({
     <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-5">
       <div className="flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
         <div className="text-lg font-bold">تفصيل البنود (اختياري)</div>
-        <div className="text-xs text-white/60">
-          يتم تطبيق مستوى التسعير تلقائياً: تجاري −10% | قياسي | فاخر +15%
-        </div>
       </div>
 
       {/* Filters */}
