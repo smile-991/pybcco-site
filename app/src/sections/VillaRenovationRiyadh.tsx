@@ -17,29 +17,89 @@ export default function VillaRenovationRiyadh() {
     serviceSchema.text = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "ترميم فلل بالرياض",
-      "serviceType": "Villa renovation / Maintenance / Refurbishment",
-      "url": "https://www.pybcco.com/villa-renovation-riyadh",
-      "areaServed": { "@type": "City", "name": "Riyadh" },
-      "provider": {
+      name: "ترميم فلل بالرياض",
+      serviceType: "Villa renovation / Maintenance / Refurbishment",
+      url: "https://www.pybcco.com/villa-renovation-riyadh",
+      areaServed: { "@type": "City", name: "Riyadh" },
+      provider: {
         "@type": ["LocalBusiness", "ConstructionCompany"],
-        "name": "PYBCCO – بنيان الهرم للمقاولات",
-        "url": "https://www.pybcco.com/",
-        "telephone": "+966550604837",
-        "address": {
+        name: "PYBCCO – بنيان الهرم للمقاولات",
+        url: "https://www.pybcco.com/",
+        telephone: "+966550604837",
+        address: {
           "@type": "PostalAddress",
-          "streetAddress": "Al Washm St, Al Murabba",
-          "addressLocality": "Riyadh",
-          "postalCode": "12345",
-          "addressCountry": "SA"
-        }
-      }
+          streetAddress: "Al Washm St, Al Murabba",
+          addressLocality: "Riyadh",
+          postalCode: "12345",
+          addressCountry: "SA",
+        },
+      },
     });
     document.head.appendChild(serviceSchema);
+
+    // ✅ FAQ Schema (SEO) — مطابق للـFAQ الظاهر
+    const faqSchema = document.createElement("script");
+    faqSchema.type = "application/ld+json";
+    faqSchema.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "ما هي خدمات ترميم الفلل التي تقدمونها في الرياض؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نقدم ترميم شامل حسب حالة الفيلا يشمل الدهانات، الجبس، الأرضيات، السباكة، الكهرباء، العزل، معالجة الرطوبة والتشققات، وتجديد الحمامات والمطابخ.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "هل تقدمون معاينة مجانية قبل الترميم؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نعم، نوفر معاينة وتقييم مجاني داخل الرياض لتحديد نطاق الأعمال وتقديم توصيات واضحة وعرض سعر حسب الحالة.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "هل يمكن ترميم جزء من الفيلا فقط؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نعم، يمكن تنفيذ ترميم جزئي مثل معالجة رطوبة، دهانات، تجديد حمامات أو مطبخ، إصلاحات جبس أو أرضيات حسب الاتفاق.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "كم مدة ترميم الفيلا عادة؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "تختلف المدة حسب حجم الفيلا ونطاق الأعمال، وغالباً تتراوح بين 2 إلى 8 أسابيع، ويتم تحديد جدول زمني بعد المعاينة.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "هل يوجد إشراف هندسي على أعمال الترميم؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نعم، لدينا إشراف هندسي ومراقبين لضبط الجودة والالتزام بالمواصفات وخطة التنفيذ حتى التسليم.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "هل تشمل أعمال الترميم العزل ومعالجة التسربات؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "نعم، ننفذ العزل ومعالجة التسربات والرطوبة حسب التشخيص، مثل عزل الأسطح ودورات المياه وإصلاح مصادر التسرب.",
+          },
+        },
+      ],
+    });
+    document.head.appendChild(faqSchema);
 
     return () => {
       document.head.removeChild(meta);
       document.head.removeChild(serviceSchema);
+      document.head.removeChild(faqSchema);
     };
   }, []);
 
@@ -81,10 +141,11 @@ export default function VillaRenovationRiyadh() {
           </h1>
 
           <p className="mt-6 text-lg text-gray-300 leading-relaxed text-center max-w-3xl mx-auto">
-            نقدم خدمات <span className="text-gold font-bold">ترميم الفلل بالرياض</span>{" "}
-            وتجديدها بالكامل حسب حالة المبنى والمعاينة الميدانية، مع إشراف هندسي كامل
-            والتزام بالوقت وجودة التنفيذ. نخدم جميع أحياء الرياض وننفذ أعمال الترميم
-            الداخلية والخارجية من الصفر حتى التسليم.
+            نقدم خدمات{" "}
+            <span className="text-gold font-bold">ترميم الفلل بالرياض</span>{" "}
+            وتجديدها بالكامل حسب حالة المبنى والمعاينة الميدانية، مع إشراف هندسي
+            كامل والتزام بالوقت وجودة التنفيذ. نخدم جميع أحياء الرياض وننفذ أعمال
+            الترميم الداخلية والخارجية من الصفر حتى التسليم.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
@@ -114,7 +175,9 @@ export default function VillaRenovationRiyadh() {
           {/* Cards داخل الهيرو */}
           <div className="mt-10 grid md:grid-cols-2 gap-6 text-right max-w-5xl mx-auto">
             <div className="bg-white/5 p-6 rounded-xl border border-gold/20 backdrop-blur-sm">
-              <h3 className="text-xl font-bold text-gold mb-3">معاينة وتقييم مجاني</h3>
+              <h3 className="text-xl font-bold text-gold mb-3">
+                معاينة وتقييم مجاني
+              </h3>
               <p className="text-white/80">
                 نحدد نطاق الأعمال ونقدم توصيات واضحة قبل بدء التنفيذ.
               </p>
@@ -161,10 +224,86 @@ export default function VillaRenovationRiyadh() {
             "تغيير أرضيات وسيراميك وبلاط",
             "إعادة تأهيل حمامات ومطابخ وتجديد كامل",
           ].map((item, i) => (
-            <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-6 text-right">
+            <div
+              key={i}
+              className="bg-white/5 border border-white/10 rounded-2xl p-6 text-right"
+            >
               <div className="text-white/85 leading-relaxed">{item}</div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ✅ FAQ VISIBLE (قبل الروابط الداخلية) */}
+      <section
+        className="container mx-auto px-4 pb-14 text-right max-w-4xl"
+        dir="rtl"
+      >
+        <h2 className="text-2xl sm:text-3xl font-bold text-center">
+          الأسئلة الشائعة حول <span className="text-gold">ترميم الفلل بالرياض</span>
+        </h2>
+
+        <div className="mt-8 space-y-6 text-white/80 leading-relaxed">
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              ما هي خدمات ترميم الفلل التي تقدمونها في الرياض؟
+            </h3>
+            <p>
+              نقدم ترميم شامل حسب حالة الفيلا يشمل الدهانات، الجبس، الأرضيات،
+              السباكة، الكهرباء، العزل، معالجة الرطوبة والتشققات، وتجديد الحمامات
+              والمطابخ.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              هل تقدمون معاينة مجانية قبل الترميم؟
+            </h3>
+            <p>
+              نعم، نوفر معاينة وتقييم مجاني داخل الرياض لتحديد نطاق الأعمال وتقديم
+              توصيات واضحة وعرض سعر حسب الحالة.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              هل يمكن ترميم جزء من الفيلا فقط؟
+            </h3>
+            <p>
+              نعم، يمكن تنفيذ ترميم جزئي مثل معالجة رطوبة، دهانات، تجديد حمامات أو
+              مطبخ، إصلاحات جبس أو أرضيات حسب الاتفاق.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              كم مدة ترميم الفيلا عادة؟
+            </h3>
+            <p>
+              تختلف المدة حسب حجم الفيلا ونطاق الأعمال، وغالباً تتراوح بين 2 إلى 8
+              أسابيع، ويتم تحديد جدول زمني بعد المعاينة.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              هل يوجد إشراف هندسي على أعمال الترميم؟
+            </h3>
+            <p>
+              نعم، لدينا إشراف هندسي ومراقبين لضبط الجودة والالتزام بالمواصفات
+              وخطة التنفيذ حتى التسليم.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              هل تشمل أعمال الترميم العزل ومعالجة التسربات؟
+            </h3>
+            <p>
+              نعم، ننفذ العزل ومعالجة التسربات والرطوبة حسب التشخيص، مثل عزل الأسطح
+              ودورات المياه وإصلاح مصادر التسرب.
+            </p>
+          </div>
         </div>
       </section>
 
