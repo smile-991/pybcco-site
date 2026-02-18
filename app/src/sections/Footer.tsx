@@ -38,20 +38,21 @@ function ContactRow({
   ltrValue?: boolean;
 }) {
   const Content = (
-    <div className="flex flex-row-reverse items-start gap-3 w-full">
-      <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
-        <Icon className="w-5 h-5" />
-      </div>
-
-      <div className="min-w-0 text-right flex-1">
+    <div className="flex items-start justify-between gap-3 w-full">
+      {/* Text */}
+      <div className="flex-1 text-right">
         <p className="text-sm text-white/50 leading-5">{label}</p>
         <p
-          className="font-semibold text-white/80 leading-6 break-words text-right"
+          className="font-semibold text-white/80 leading-6 break-words"
           dir={ltrValue ? "ltr" : "rtl"}
-          style={{ unicodeBidi: "plaintext" as any }}
         >
           {value}
         </p>
+      </div>
+
+      {/* Icon */}
+      <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
+        <Icon className="w-5 h-5" />
       </div>
     </div>
   );
