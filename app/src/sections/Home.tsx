@@ -222,9 +222,11 @@ export default function Home() {
             </div>
 
             <h1 className="text-white font-extrabold leading-tight tracking-wide text-4xl sm:text-5xl lg:text-6xl text-center mb-6">
-              شركة <span className="text-gold/90">بنيان الهرم</span>{" "}
-              <span className="whitespace-nowrap">للمقاولات</span>
-            </h1>
+  شركة مقاولات بالرياض{" "}
+  <span className="text-gold/90">بنيان الهرم</span>{" "}
+  <span className="whitespace-nowrap">PYBCCO</span>
+</h1>
+
 
             <p className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed text-center">
               تنفيذ بناء وتشطيب وترميم في الرياض بإشراف هندسي، عقود واضحة، وجدول
