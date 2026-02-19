@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import BoqCalculator from "@/components/BoqCalculator";
 import SeoHead from "@/components/SeoHead";
@@ -18,7 +18,6 @@ function formatSAR(value: number) {
 }
 
 export default function VillaFinishingPriceRiyadh() {
-  // ✅ SEO (بدل useEffect اليدوي)
   const title = "حاسبة تكلفة التشطيب بالرياض 2026 | بنيان الهرم";
   const description =
     "احسب تكلفة التشطيب التقديرية في الرياض 2026 عبر حاسبة تفاعلية حسب المساحة والمستوى ونوع العمل (تشطيب/عظم). الأسعار تقديرية وقد تختلف حسب المعاينة.";
@@ -82,24 +81,8 @@ export default function VillaFinishingPriceRiyadh() {
   const webPageSchema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: "حاسبة تكلفة التشطيب بالرياض",
+    name: "حاسبة تكلفة التشطيب بالرياض 2026",
     url: canonical,
-  };
-
-  const localBusinessSchema = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: "بنيان الهرم للمقاولات",
-    alternateName: "PYBCCO",
-    url: "https://pybcco.com",
-    telephone: "+966550604837",
-    areaServed: { "@type": "City", name: "Riyadh" },
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Riyadh",
-      addressCountry: "SA",
-    },
-    image: "https://pybcco.com/images/VillaFinishingPriceRiyadh.jpg",
   };
 
   const [workType, setWorkType] = useState<WorkType>("finishing");
@@ -135,7 +118,7 @@ export default function VillaFinishingPriceRiyadh() {
         description={description}
         canonical={canonical}
         ogImage="https://pybcco.com/images/VillaFinishingPriceRiyadh.jpg"
-        jsonLd={[webPageSchema, faqSchema, localBusinessSchema]}
+        jsonLd={[webPageSchema, faqSchema]}
       />
 
       {/* HERO */}
@@ -190,7 +173,9 @@ export default function VillaFinishingPriceRiyadh() {
 
       {/* CALCULATOR */}
       <section id="calc" className="container mx-auto px-4 py-14">
+        {/* ✅ فصلناها لقسمين واضحين */}
         <div className="max-w-4xl mx-auto space-y-6">
+          {/* ✅ القسم الأساسي: المقطوعية */}
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-7">
             <div className="text-center">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-4 py-1 text-xs text-white/70">
@@ -220,7 +205,9 @@ export default function VillaFinishingPriceRiyadh() {
               </div>
             </div>
 
+            {/* Inputs */}
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* نوع العمل */}
               <div className="rounded-xl border border-white/10 bg-black/30 p-4">
                 <div className="text-sm text-white/70 mb-2">نوع العمل</div>
                 <div className="flex gap-2">
@@ -256,6 +243,7 @@ export default function VillaFinishingPriceRiyadh() {
                 </div>
               </div>
 
+              {/* المستوى */}
               <div className="rounded-xl border border-white/10 bg-black/30 p-4">
                 <div className="text-sm text-white/70 mb-2">المستوى</div>
                 <div className="grid grid-cols-3 gap-2">
@@ -306,6 +294,7 @@ export default function VillaFinishingPriceRiyadh() {
                 </div>
               </div>
 
+              {/* المساحة */}
               <div className="rounded-xl border border-white/10 bg-black/30 p-4 md:col-span-2">
                 <div className="text-sm text-white/70 mb-2">المساحة (م²)</div>
                 <input
@@ -326,6 +315,7 @@ export default function VillaFinishingPriceRiyadh() {
               </div>
             </div>
 
+            {/* Totals */}
             <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
               <div className="rounded-xl border border-white/10 bg-black/30 p-4">
                 <div className="text-xs text-white/60">إجمالي المقطوعية</div>
@@ -406,6 +396,7 @@ export default function VillaFinishingPriceRiyadh() {
             )}
           </div>
 
+          {/* ✅ Divider واضح */}
           <div className="flex items-center gap-3 px-1">
             <div className="h-px flex-1 bg-white/10" />
             <div className="text-xs text-white/60">
@@ -414,6 +405,7 @@ export default function VillaFinishingPriceRiyadh() {
             <div className="h-px flex-1 bg-white/10" />
           </div>
 
+          {/* ✅ قسم البنود التفصيلية */}
           <div
             className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-7"
             id="boq"
@@ -432,7 +424,7 @@ export default function VillaFinishingPriceRiyadh() {
                 variant="secondary"
                 onClick={() => {
                   setExtrasTotal(0);
-                  setBoqResetKey((k) => k + 1);
+                  setBoqResetKey((k) => k + 1); // remount BoqCalculator (clears summary + inputs)
                   setShowResult(true);
                 }}
                 className="bg-white/10 border border-white/15 text-white hover:bg-white/15"
