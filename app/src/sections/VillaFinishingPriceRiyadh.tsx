@@ -173,9 +173,8 @@ export default function VillaFinishingPriceRiyadh() {
 
       {/* CALCULATOR */}
       <section id="calc" className="container mx-auto px-4 py-14">
-        {/* ✅ فصلناها لقسمين واضحين */}
         <div className="max-w-4xl mx-auto space-y-6">
-          {/* ✅ القسم الأساسي: المقطوعية */}
+          {/* القسم الأساسي: المقطوعية */}
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-7">
             <div className="text-center">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-4 py-1 text-xs text-white/70">
@@ -396,7 +395,7 @@ export default function VillaFinishingPriceRiyadh() {
             )}
           </div>
 
-          {/* ✅ Divider واضح */}
+          {/* Divider */}
           <div className="flex items-center gap-3 px-1">
             <div className="h-px flex-1 bg-white/10" />
             <div className="text-xs text-white/60">
@@ -405,43 +404,78 @@ export default function VillaFinishingPriceRiyadh() {
             <div className="h-px flex-1 bg-white/10" />
           </div>
 
-          {/* ✅ قسم البنود التفصيلية */}
+          {/* ✅ قسم البنود التفصيلية (موبايل مغلق / ديسكتوب مفتوح) */}
           <div
             className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-7"
             id="boq"
           >
-            <div className="flex items-start justify-between gap-3 flex-col md:flex-row">
-              <div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-4 py-1 text-xs text-white/70">
-                  اختياري
-                </div>
-                <div className="mt-2 text-xl font-extrabold">
-                  بنود تفصيلية وإضافات فوق المقطوعية
+            {/* Mobile: Collapsed by default */}
+            <details className="md:hidden">
+              <summary className="cursor-pointer select-none text-lg font-extrabold text-gold">
+                عرض البنود التفصيلية والإضافات (اختياري)
+              </summary>
+
+              <div className="mt-4">
+                <Button
+                  variant="secondary"
+                  onClick={() => {
+                    setExtrasTotal(0);
+                    setBoqResetKey((k) => k + 1);
+                    setShowResult(true);
+                  }}
+                  className="w-full bg-white/10 border border-white/15 text-white hover:bg-white/15"
+                >
+                  تصفير إضافات البنود
+                </Button>
+
+                <div className="mt-5">
+                  <BoqCalculator
+                    key={boqResetKey}
+                    level={level}
+                    onTotalChange={(total) => {
+                      setExtrasTotal(total);
+                      setShowResult(true);
+                    }}
+                  />
                 </div>
               </div>
+            </details>
 
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  setExtrasTotal(0);
-                  setBoqResetKey((k) => k + 1); // remount BoqCalculator (clears summary + inputs)
-                  setShowResult(true);
-                }}
-                className="bg-white/10 border border-white/15 text-white hover:bg-white/15"
-              >
-                تصفير إضافات البنود
-              </Button>
-            </div>
+            {/* Desktop: Same as before */}
+            <div className="hidden md:block">
+              <div className="flex items-start justify-between gap-3 flex-col md:flex-row">
+                <div>
+                  <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-4 py-1 text-xs text-white/70">
+                    اختياري
+                  </div>
+                  <div className="mt-2 text-xl font-extrabold">
+                    بنود تفصيلية وإضافات فوق المقطوعية
+                  </div>
+                </div>
 
-            <div className="mt-5">
-              <BoqCalculator
-                key={boqResetKey}
-                level={level}
-                onTotalChange={(total) => {
-                  setExtrasTotal(total);
-                  setShowResult(true);
-                }}
-              />
+                <Button
+                  variant="secondary"
+                  onClick={() => {
+                    setExtrasTotal(0);
+                    setBoqResetKey((k) => k + 1);
+                    setShowResult(true);
+                  }}
+                  className="bg-white/10 border border-white/15 text-white hover:bg-white/15"
+                >
+                  تصفير إضافات البنود
+                </Button>
+              </div>
+
+              <div className="mt-5">
+                <BoqCalculator
+                  key={boqResetKey}
+                  level={level}
+                  onTotalChange={(total) => {
+                    setExtrasTotal(total);
+                    setShowResult(true);
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -496,6 +530,16 @@ export default function VillaFinishingPriceRiyadh() {
             <p>
               نعم، أسعار المقطوعية تشمل المواد والعمالة حسب المستوى المختار (تجاري
               – قياسي – فاخر).
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              ما الفرق بين التشطيب التجاري والقياسي والفاخر؟
+            </h3>
+            <p>
+              الفرق يكون في جودة المواد وتفاصيل التنفيذ ونوعية التشطيبات
+              والإكسسوارات، وكل مستوى يناسب ميزانية مختلفة.
             </p>
           </div>
 
