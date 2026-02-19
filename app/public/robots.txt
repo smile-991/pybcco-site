@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.pybcco.com/sitemap.xml
+Sitemap: https://www.pybcco.com/sitemap.xmlUser-agent: *
+Allow: /
+
+Sitemap: https://pybcco.com/sitemap.xml
