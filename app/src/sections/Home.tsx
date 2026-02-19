@@ -74,8 +74,27 @@ const STATS = [
   { value: "2013", label: "تأسيس" },
 ];
 
-function scrollToId(id: string) {
-  const el = document.querySelector(id);
+const FAQ_ITEMS = [
+  {
+    q: "هل تقدمون معاينة مجانية داخل الرياض؟",
+    a: "نعم، نوفر معاينة مبدئية داخل الرياض حسب موقع المشروع ونطاق العمل قبل تقديم عرض السعر.",
+  },
+  {
+    q: "هل تقدمون تشطيب تسليم مفتاح؟",
+    a: "نعم، نقدم تشطيب تسليم مفتاح للفلل والشقق حسب المستوى المطلوب وبإشراف هندسي.",
+  },
+  {
+    q: "هل يمكنني حساب التكلفة قبل المعاينة؟",
+    a: "نعم، يمكنك استخدام حاسبة التكلفة في الموقع للحصول على تقدير مبدئي سريع حسب المساحة والمستوى.",
+  },
+  {
+    q: "ما هي الخدمات التي تقدمونها؟",
+    a: "نقدم بناء عظم، تشطيب فلل وشقق، ترميم وتجديد، وإدارة مشاريع داخل الرياض.",
+  },
+];
+
+function scrollToId(selector: string) {
+  const el = document.querySelector(selector);
   if (el) el.scrollIntoView({ behavior: "smooth" });
 }
 
@@ -134,7 +153,6 @@ function GalleryTabs() {
 }
 
 export default function Home() {
-  // ✅ SEO (بدون تعجيق)
   useEffect(() => {
     document.title = "شركة مقاولات بالرياض | بنيان الهرم للمقاولات";
 
@@ -144,7 +162,6 @@ export default function Home() {
       "شركة بنيان الهرم للمقاولات بالرياض: تنفيذ بناء عظم وتشطيب وترميم وتسليم مفتاح بإشراف هندسي. احسب التكلفة عبر الحاسبة واطلب معاينة مجانية.";
     document.head.appendChild(meta);
 
-    // ✅ LocalBusiness Schema (مهم للـ SEO المحلي)
     const ld = document.createElement("script");
     ld.type = "application/ld+json";
     ld.text = JSON.stringify({
@@ -160,50 +177,25 @@ export default function Home() {
         addressLocality: "Riyadh",
         addressCountry: "SA",
       },
-      sameAs: [],
+      // 🔁 بدّل الروابط بروابط حساباتك الحقيقية
+      sameAs: [
+        "https://www.linkedin.com/company/pybcco", // placeholder
+        "https://x.com/pybcco", // placeholder
+        "https://sites.google.com/view/bunian-alharam-riyadh/home",
+      ],
     });
     document.head.appendChild(ld);
 
-    // ✅ FAQ Schema (مخفي بصرياً - بس جوجل بيستفيد)
     const faq = document.createElement("script");
     faq.type = "application/ld+json";
     faq.text = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "هل تقدمون معاينة مجانية داخل الرياض؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "نعم، نوفر معاينة مبدئية داخل الرياض حسب موقع المشروع ونطاق العمل قبل تقديم عرض السعر.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل تقدمون تشطيب تسليم مفتاح؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "نعم، نقدم تشطيب تسليم مفتاح للفلل والشقق حسب المستوى المطلوب وبإشراف هندسي.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل يمكنني حساب التكلفة قبل المعاينة؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "نعم، يمكنك استخدام حاسبة التكلفة في الموقع للحصول على تقدير مبدئي سريع حسب المساحة والمستوى.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "ما هي الخدمات التي تقدمونها؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "نقدم بناء عظم، تشطيب فلل وشقق، ترميم وتجديد، وإدارة مشاريع داخل الرياض.",
-          },
-        },
-      ],
+      mainEntity: FAQ_ITEMS.map((x) => ({
+        "@type": "Question",
+        name: x.q,
+        acceptedAnswer: { "@type": "Answer", text: x.a },
+      })),
     });
     document.head.appendChild(faq);
 
@@ -362,7 +354,9 @@ export default function Home() {
                   <div className="w-11 h-11 rounded-2xl bg-gold/15 flex items-center justify-center">
                     <s.icon className="w-5 h-5 text-gold" />
                   </div>
-                  <h3 className="text-lg font-extrabold text-gray-900">{s.title}</h3>
+                  <h3 className="text-lg font-extrabold text-gray-900">
+                    {s.title}
+                  </h3>
                 </div>
 
                 <p className="mt-3 text-gray-600 leading-relaxed">{s.desc}</p>
@@ -460,6 +454,35 @@ export default function Home() {
       {/* الشركاء */}
       <section id="partners">
         <Partners />
+      </section>
+
+      {/* FAQ (ظاهر) — مهم جداً لأنه مربوط بالـ Schema */}
+      <section id="faq" className="section-padding bg-white">
+        <div className="container-custom px-4">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 text-center">
+              أسئلة شائعة عن <span className="text-gold">شركة مقاولات بالرياض</span>
+            </h2>
+
+            <div className="mt-8 grid md:grid-cols-2 gap-6">
+              {FAQ_ITEMS.map((x, i) => (
+                <div key={i} className="bg-gray-50 rounded-2xl p-6 shadow-sm">
+                  <div className="text-gray-900 font-extrabold">{x.q}</div>
+                  <div className="mt-2 text-gray-700 leading-relaxed">{x.a}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 text-center">
+              <Button
+                onClick={() => window.open(WA_LINK, "_blank")}
+                className="bg-gold hover:bg-gold/90 text-black font-bold px-8"
+              >
+                اطلب معاينة الآن
+              </Button>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* CTA ختامي */}
