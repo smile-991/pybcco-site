@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GALLERY, type GalleryCat } from "../data/gallery";
 
 type Cat = GalleryCat;
@@ -39,10 +39,26 @@ function SmartImage({
 }
 
 export default function ProjectsGallery() {
-  const [cat, setCat] = useState<Cat>("entertainment");
+  // ✅ الأفضل نخلي الافتراضي تشطيب
+  const [cat, setCat] = useState<Cat>("finishing");
 
   const title = GALLERY[cat].title;
   const items = GALLERY[cat].items;
+
+  // ✅ SEO بسيط مثل باقي الصفحات
+  useEffect(() => {
+    document.title = "معرض مشاريع بنيان الهرم | تشطيب وعظم وترميم بالرياض";
+
+    const meta = document.createElement("meta");
+    meta.name = "description";
+    meta.content =
+      "شاهد معرض مشاريع بنيان الهرم للمقاولات بالرياض: تشطيب فلل وشقق، بناء عظم، وأعمال ترفيه. نماذج حقيقية وصور من أرض الواقع.";
+    document.head.appendChild(meta);
+
+    return () => {
+      document.head.removeChild(meta);
+    };
+  }, []);
 
   return (
     <main dir="rtl" className="bg-white">
@@ -85,9 +101,7 @@ export default function ProjectsGallery() {
               })}
             </div>
 
-            <div className="text-center mt-2 text-sm text-gray-600">
-              {title}
-            </div>
+            <div className="text-center mt-2 text-sm text-gray-600">{title}</div>
           </div>
 
           {/* Grid */}
@@ -103,7 +117,7 @@ export default function ProjectsGallery() {
                 <SmartImage
                   src={img.src}
                   alt={img.alt}
-                  className="w-full h-40 md:h-52 lg:h-56 object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                  className="w-full h-44 md:h-52 lg:h-56 object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                 />
               </div>
             ))}
