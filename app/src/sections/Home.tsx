@@ -249,7 +249,7 @@ export default function Home() {
                 variant="outline"
                 className="text-gold bg-transparent hover:bg-white/10 px-8 py-6 text-lg w-full sm:w-auto"
               >
-                <Link to="/villa-finishing-price-riyadh#boq">
+                <Link to="/villa-finishing-price-riyadh">
                   <Calculator className="w-5 h-5 ml-2" />
                   احسب التكلفة
                 </Link>
@@ -304,7 +304,7 @@ export default function Home() {
                 size="lg"
                 className="bg-gold hover:bg-gold/90 text-black font-bold px-8 w-full sm:w-auto"
               >
-                <Link to="/villa-finishing-price-riyadh#boq">ابدأ الحسبة الآن</Link>
+                <Link to="/villa-finishing-price-riyadh">ابدأ الحسبة الآن</Link>
               </Button>
 
               <Button
@@ -488,7 +488,7 @@ export default function Home() {
                 size="lg"
                 className="bg-gold hover:bg-gold/90 text-black font-bold w-full sm:w-auto"
               >
-                <Link to="/villa-finishing-price-riyadh#boq">احسب التكلفة</Link>
+                <Link to="/villa-finishing-price-riyadh">احسب التكلفة</Link>
               </Button>
 
               <Button

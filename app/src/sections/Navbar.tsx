@@ -165,7 +165,7 @@ export default function Navbar() {
                   : "border-gold text-gold bg-transparent hover:bg-white/10"
               }`}
             >
-              <a href="/villa-finishing-price-riyadh#boq">
+              <a href="/villa-finishing-price-riyadh">
                 <Calculator className="w-4 h-4 ml-2" />
                 احسب التكلفة
               </a>
@@ -239,7 +239,7 @@ export default function Navbar() {
                     variant="outline"
                     className="w-full border-gold text-gold hover:bg-white/10 font-bold mb-3 whitespace-nowrap"
                   >
-                    <a href="/villa-finishing-price-riyadh#boq" onClick={() => setIsOpen(false)}>
+                    <a href="/villa-finishing-price-riyadh" onClick={() => setIsOpen(false)}>
                       <Calculator className="w-5 h-5 ml-2" />
                       احسب التكلفة
                     </a>
