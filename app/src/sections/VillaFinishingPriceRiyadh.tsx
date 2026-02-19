@@ -93,6 +93,9 @@ export default function VillaFinishingPriceRiyadh() {
   const [extrasTotal, setExtrasTotal] = useState<number>(0);
   const [boqResetKey, setBoqResetKey] = useState(0);
 
+  // ✅ Mobile UX: اختيار المسار
+  const [mobileMode, setMobileMode] = useState<"lumpsum" | "boq">("lumpsum");
+
   const areaNumber = useMemo(() => {
     const n = Number(area);
     if (!Number.isFinite(n)) return 0;
@@ -129,9 +132,7 @@ export default function VillaFinishingPriceRiyadh() {
           className="absolute inset-0 h-full w-full object-cover"
           loading="eager"
         />
-
         <div className="absolute inset-0 bg-black/65" />
-
         <div
           className="absolute inset-0 opacity-25 blur-3xl"
           style={{
@@ -174,8 +175,94 @@ export default function VillaFinishingPriceRiyadh() {
       {/* CALCULATOR */}
       <section id="calc" className="container mx-auto px-4 py-14">
         <div className="max-w-4xl mx-auto space-y-6">
-          {/* القسم الأساسي: المقطوعية */}
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-7">
+
+          {/* ✅ Mobile Step Header (Tabs + Level) */}
+          <div className="md:hidden rounded-2xl border border-white/10 bg-white/5 p-4">
+            <div className="text-sm text-white/70 mb-3">
+              اختر طريقة الحساب ثم المستوى
+            </div>
+
+            {/* Tabs */}
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setMobileMode("lumpsum")}
+                className={`rounded-xl px-3 py-3 text-sm font-bold border transition ${
+                  mobileMode === "lumpsum"
+                    ? "border-white/30 bg-white/10 text-white"
+                    : "border-white/10 bg-black/20 text-white/80 hover:bg-white/5"
+                }`}
+              >
+                المقطوعة
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setMobileMode("boq")}
+                className={`rounded-xl px-3 py-3 text-sm font-bold border transition ${
+                  mobileMode === "boq"
+                    ? "border-white/30 bg-white/10 text-white"
+                    : "border-white/10 bg-black/20 text-white/80 hover:bg-white/5"
+                }`}
+              >
+                بنود تفصيلية
+              </button>
+            </div>
+
+            {/* Level */}
+            <div className="mt-4 rounded-xl border border-white/10 bg-black/20 p-3">
+              <div className="text-xs text-white/60 mb-2">المستوى</div>
+              <div className="grid grid-cols-3 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setLevel("commercial")}
+                  className={`rounded-lg px-2 py-2 text-xs font-bold border ${
+                    level === "commercial"
+                      ? "border-white/30 bg-white/10"
+                      : "border-white/10 bg-transparent hover:bg-white/5"
+                  }`}
+                >
+                  تجاري
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLevel("standard")}
+                  className={`rounded-lg px-2 py-2 text-xs font-bold border ${
+                    level === "standard"
+                      ? "border-white/30 bg-white/10"
+                      : "border-white/10 bg-transparent hover:bg-white/5"
+                  }`}
+                >
+                  قياسي
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLevel("luxury")}
+                  className={`rounded-lg px-2 py-2 text-xs font-bold border ${
+                    level === "luxury"
+                      ? "border-white/30 bg-white/10"
+                      : "border-white/10 bg-transparent hover:bg-white/5"
+                  }`}
+                >
+                  فاخر
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-3 text-xs text-white/60">
+              {mobileMode === "lumpsum"
+                ? "اخترت المقطوعة: تدخل المساحة ونوع العمل ويظهر الإجمالي."
+                : "اخترت البنود التفصيلية: تدخل الكميات للبنود وتحصل على إجمالي الإضافات."}
+            </div>
+          </div>
+
+          {/* ✅ القسم الأساسي: المقطوعية */}
+          <div
+            className={`rounded-2xl border border-white/10 bg-white/5 p-5 md:p-7 ${
+              // موبايل: نخفيه إذا المستخدم اختار "بنود تفصيلية"
+              mobileMode === "boq" ? "md:block hidden" : ""
+            }`}
+          >
             <div className="text-center">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-4 py-1 text-xs text-white/70">
                 القسم الأساسي
@@ -190,7 +277,17 @@ export default function VillaFinishingPriceRiyadh() {
                 اختر نوع العمل والمستوى، ثم أدخل المساحة واضغط “احسب”.
               </p>
 
-              <div className="mt-4">
+              <div className="mt-4 md:hidden">
+                <button
+                  type="button"
+                  onClick={() => setMobileMode("boq")}
+                  className="text-xs text-white/60 hover:text-white underline underline-offset-4"
+                >
+                  تريد بنود تفصيلية بدل المقطوعة؟ اضغط هنا
+                </button>
+              </div>
+
+              <div className="mt-4 hidden md:block">
                 <button
                   type="button"
                   onClick={() => {
@@ -242,8 +339,8 @@ export default function VillaFinishingPriceRiyadh() {
                 </div>
               </div>
 
-              {/* المستوى */}
-              <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+              {/* المستوى (ديسكتوب) */}
+              <div className="hidden md:block rounded-xl border border-white/10 bg-black/30 p-4">
                 <div className="text-sm text-white/70 mb-2">المستوى</div>
                 <div className="grid grid-cols-3 gap-2">
                   <button
@@ -395,53 +492,55 @@ export default function VillaFinishingPriceRiyadh() {
             )}
           </div>
 
-          {/* Divider */}
-          <div className="flex items-center gap-3 px-1">
-            <div className="h-px flex-1 bg-white/10" />
-            <div className="text-xs text-white/60">
-              قسم منفصل: البنود التفصيلية (اختياري)
-            </div>
-            <div className="h-px flex-1 bg-white/10" />
-          </div>
-
-          {/* ✅ قسم البنود التفصيلية (موبايل مغلق / ديسكتوب مفتوح) */}
+          {/* ✅ قسم البنود التفصيلية */}
           <div
-            className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-7"
+            className={`rounded-2xl border border-white/10 bg-white/5 p-5 md:p-7`}
             id="boq"
           >
-            {/* Mobile: Collapsed by default */}
-            <details className="md:hidden">
-              <summary className="cursor-pointer select-none text-lg font-extrabold text-gold">
-                عرض البنود التفصيلية والإضافات (اختياري)
-              </summary>
+            {/* موبايل: يظهر فقط إذا اختار "بنود تفصيلية" */}
+            <div className={`md:hidden ${mobileMode === "boq" ? "" : "hidden"}`}>
+              <div className="text-center mb-4">
+                <div className="text-xl font-extrabold">
+                  البنود التفصيلية <span className="text-gold">(اختياري)</span>
+                </div>
+                <div className="mt-2 text-xs text-white/60">
+                  استخدمها إذا عندك إضافات فوق المقطوعة أو تريد تسعير بنود محددة.
+                </div>
 
-              <div className="mt-4">
-                <Button
-                  variant="secondary"
-                  onClick={() => {
-                    setExtrasTotal(0);
-                    setBoqResetKey((k) => k + 1);
+                <button
+                  type="button"
+                  onClick={() => setMobileMode("lumpsum")}
+                  className="mt-3 text-xs text-white/60 hover:text-white underline underline-offset-4"
+                >
+                  رجوع للمقطوعة
+                </button>
+              </div>
+
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  setExtrasTotal(0);
+                  setBoqResetKey((k) => k + 1);
+                  setShowResult(true);
+                }}
+                className="w-full bg-white/10 border border-white/15 text-white hover:bg-white/15"
+              >
+                تصفير إضافات البنود
+              </Button>
+
+              <div className="mt-5">
+                <BoqCalculator
+                  key={boqResetKey}
+                  level={level}
+                  onTotalChange={(total) => {
+                    setExtrasTotal(total);
                     setShowResult(true);
                   }}
-                  className="w-full bg-white/10 border border-white/15 text-white hover:bg-white/15"
-                >
-                  تصفير إضافات البنود
-                </Button>
-
-                <div className="mt-5">
-                  <BoqCalculator
-                    key={boqResetKey}
-                    level={level}
-                    onTotalChange={(total) => {
-                      setExtrasTotal(total);
-                      setShowResult(true);
-                    }}
-                  />
-                </div>
+                />
               </div>
-            </details>
+            </div>
 
-            {/* Desktop: Same as before */}
+            {/* ديسكتوب: كما كان */}
             <div className="hidden md:block">
               <div className="flex items-start justify-between gap-3 flex-col md:flex-row">
                 <div>
@@ -477,6 +576,9 @@ export default function VillaFinishingPriceRiyadh() {
                 />
               </div>
             </div>
+
+            {/* ✅ مهم: نخلي الـ DOM موجود حتى لو مخفي موبايل، وهذا آمن لجوجل */}
+            <div className="hidden" aria-hidden="true" />
           </div>
         </div>
       </section>
