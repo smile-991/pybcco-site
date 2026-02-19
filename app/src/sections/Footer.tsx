@@ -1,6 +1,19 @@
 import { Phone, Mail, MapPin, Linkedin, Twitter, ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+// ✅ NAP رسمي موحّد
+const PHONE_LOCAL = "055 060 4837";
+const PHONE_TEL = "+966550604837";
+const EMAIL_PUBLIC = "info@pybcco.com";
+
+const ADDRESS_AR =
+  "شارع الوشم، حي المربع، الرياض 12345، المملكة العربية السعودية";
+const ADDRESS_EN = "Al Washm St, Al Murabba, Riyadh 12345, Saudi Arabia";
+
+const MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  ADDRESS_EN
+)}`;
+
 const quickLinks = [
   { name: "الرئيسية", href: "#hero" },
   { name: "من نحن", href: "#about" },
@@ -20,7 +33,11 @@ const services = [
 ];
 
 const socialLinks = [
-  { icon: Linkedin, href: "https://www.linkedin.com/company/pybcco/", label: "LinkedIn" },
+  {
+    icon: Linkedin,
+    href: "https://www.linkedin.com/company/pybcco/",
+    label: "LinkedIn",
+  },
   { icon: Twitter, href: "https://x.com/pybcco", label: "X" },
 ];
 
@@ -38,7 +55,10 @@ function ContactRow({
   ltrValue?: boolean;
 }) {
   const Content = (
-    <div className="flex flex-row-reverse items-start gap-3 w-full text-right" dir="rtl">
+    <div
+      className="flex flex-row-reverse items-start gap-3 w-full text-right"
+      dir="rtl"
+    >
       {/* Icon (يمين) */}
       <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
         <Icon className="w-5 h-5" />
@@ -60,7 +80,12 @@ function ContactRow({
   return (
     <li className="w-full m-0 p-0">
       {href ? (
-        <a href={href} className="block w-full text-white/70 hover:text-gold transition-colors">
+        <a
+          href={href}
+          className="block w-full text-white/70 hover:text-gold transition-colors"
+          target={href.startsWith("http") ? "_blank" : undefined}
+          rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+        >
           {Content}
         </a>
       ) : (
@@ -178,23 +203,27 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-6 text-gold">تواصل معنا</h4>
 
-            {/* ✅ أهم سطرين: list-none + p-0 m-0 */}
             <ul className="space-y-4 list-none p-0 m-0" dir="rtl">
               <ContactRow
                 icon={Phone}
                 label="اتصل بنا"
-                value="055 060 4837"
-                href="tel:+966550604837"
+                value={PHONE_LOCAL}
+                href={`tel:${PHONE_TEL}`}
                 ltrValue
               />
               <ContactRow
                 icon={Mail}
                 label="البريد الإلكتروني"
-                value="info@pybcco.com"
-                href="mailto:info@pybcco.com"
+                value={EMAIL_PUBLIC}
+                href={`mailto:${EMAIL_PUBLIC}`}
                 ltrValue
               />
-              <ContactRow icon={MapPin} label="العنوان" value="شارع الوشم، المعذر، الرياض" />
+              <ContactRow
+                icon={MapPin}
+                label="العنوان"
+                value={ADDRESS_AR}
+                href={MAPS_LINK}
+              />
             </ul>
           </div>
         </div>
