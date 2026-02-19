@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GALLERY, type GalleryCat } from "../data/gallery";
+import SeoHead from "@/components/SeoHead";
 
 type Cat = GalleryCat;
 
@@ -45,23 +46,56 @@ export default function ProjectsGallery() {
   const title = GALLERY[cat].title;
   const items = GALLERY[cat].items;
 
-  // ✅ SEO بسيط مثل باقي الصفحات
-  useEffect(() => {
-    document.title = "معرض مشاريع بنيان الهرم | تشطيب وعظم وترميم بالرياض";
-
-    const meta = document.createElement("meta");
-    meta.name = "description";
-    meta.content =
-      "شاهد معرض مشاريع بنيان الهرم للمقاولات بالرياض: تشطيب فلل وشقق، بناء عظم، وأعمال ترفيه. نماذج حقيقية وصور من أرض الواقع.";
-    document.head.appendChild(meta);
-
-    return () => {
-      document.head.removeChild(meta);
-    };
-  }, []);
+  const pageTitle = "معرض مشاريع بنيان الهرم | تشطيب وعظم وترميم بالرياض";
+  const pageDescription =
+    "شاهد معرض مشاريع بنيان الهرم للمقاولات بالرياض: تشطيب فلل وشقق، بناء عظم، وأعمال ترفيه. نماذج حقيقية وصور من أرض الواقع.";
+  const canonical = "https://pybcco.com/projects";
+  const ogImage = "https://pybcco.com/og.jpg"; // خليه og.jpg إذا ما عندك صورة خاصة للمعرض
 
   return (
     <main dir="rtl" className="bg-white">
+      <SeoHead
+        title={pageTitle}
+        description={pageDescription}
+        canonical={canonical}
+        ogImage={ogImage}
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "@id": `${canonical}#webpage`,
+            name: pageTitle,
+            description: pageDescription,
+            url: canonical,
+            inLanguage: "ar-SA",
+            isPartOf: {
+              "@type": "WebSite",
+              "@id": "https://pybcco.com/#website",
+              url: "https://pybcco.com/",
+              name: "بنيان الهرم للمقاولات",
+            },
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "الرئيسية",
+                item: "https://pybcco.com/",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "معرض المشاريع",
+                item: canonical,
+              },
+            ],
+          },
+        ]}
+      />
+
       <section className="pt-28 pb-10">
         <div className="container-custom px-4">
           <div className="text-center">
