@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import BoqCalculator from "@/components/BoqCalculator";
+import SeoHead from "@/components/SeoHead";
 
 type WorkType = "finishing" | "bone";
 type Level = "commercial" | "standard" | "luxury";
@@ -17,79 +18,89 @@ function formatSAR(value: number) {
 }
 
 export default function VillaFinishingPriceRiyadh() {
-  useEffect(() => {
-    document.title = "حاسبة تكلفة التشطيب بالرياض 2026 | بنيان الهرم";
+  // ✅ SEO (بدل useEffect اليدوي)
+  const title = "حاسبة تكلفة التشطيب بالرياض 2026 | بنيان الهرم";
+  const description =
+    "احسب تكلفة التشطيب التقديرية في الرياض 2026 عبر حاسبة تفاعلية حسب المساحة والمستوى ونوع العمل (تشطيب/عظم). الأسعار تقديرية وقد تختلف حسب المعاينة.";
+  const canonical = "https://pybcco.com/villa-finishing-price-riyadh";
 
-    const meta = document.createElement("meta");
-    meta.name = "description";
-    meta.content =
-      "احسب تكلفة التشطيب التقديرية في الرياض 2026 عبر حاسبة تفاعلية حسب المساحة والمستوى ونوع العمل (تشطيب/عظم). الأسعار تقديرية وقد تختلف حسب المعاينة.";
-    document.head.appendChild(meta);
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "كم سعر تشطيب المتر في الرياض؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "سعر تشطيب المتر في الرياض يبدأ من 450 ريال للمستوى التجاري ويصل إلى 800 ريال للمستوى الفاخر حسب نوع المواد ونطاق العمل.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "هل الأسعار في الحاسبة نهائية؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "الأسعار تقديرية لتكوين تصور واضح، ويتم اعتماد السعر النهائي بعد المعاينة وتثبيت نطاق العمل والمواد.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "هل السعر شامل المواد والعمالة؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "نعم، أسعار المقطوعية تشمل المواد والعمالة حسب المستوى المختار (تجاري/قياسي/فاخر).",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "ما الفرق بين التشطيب التجاري والقياسي والفاخر؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "الفرق يكون في جودة المواد وتفاصيل التنفيذ ونوعية التشطيبات والإكسسوارات، وكل مستوى يناسب ميزانية مختلفة.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "كم مدة تشطيب فيلا في الرياض عادة؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "مدة تشطيب الفيلا غالباً تتراوح بين 4 إلى 12 أسبوع حسب المساحة ونوع التشطيب وتوفر المواد.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "هل تقدمون معاينة مجانية داخل الرياض؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "نعم، نوفر معاينة مجانية داخل مدينة الرياض لتقييم المشروع وتحديد السعر النهائي بدقة.",
+        },
+      },
+    ],
+  };
 
-    // ✅ FAQ Schema (SEO)
-    const faqSchema = document.createElement("script");
-    faqSchema.type = "application/ld+json";
-    faqSchema.text = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "كم سعر تشطيب المتر في الرياض؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "سعر تشطيب المتر في الرياض يبدأ من 450 ريال للمستوى التجاري ويصل إلى 800 ريال للمستوى الفاخر حسب نوع المواد ونطاق العمل.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل الأسعار في الحاسبة نهائية؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "الأسعار تقديرية لتكوين تصور واضح، ويتم اعتماد السعر النهائي بعد المعاينة وتثبيت نطاق العمل والمواد.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل السعر شامل المواد والعمالة؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "نعم، أسعار المقطوعية تشمل المواد والعمالة حسب المستوى المختار (تجاري/قياسي/فاخر).",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "ما الفرق بين التشطيب التجاري والقياسي والفاخر؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "الفرق يكون في جودة المواد وتفاصيل التنفيذ ونوعية التشطيبات والإكسسوارات، وكل مستوى يناسب ميزانية مختلفة.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "كم مدة تشطيب فيلا في الرياض عادة؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "مدة تشطيب الفيلا غالباً تتراوح بين 4 إلى 12 أسبوع حسب المساحة ونوع التشطيب وتوفر المواد.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل تقدمون معاينة مجانية داخل الرياض؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "نعم، نوفر معاينة مجانية داخل مدينة الرياض لتقييم المشروع وتحديد السعر النهائي بدقة.",
-          },
-        },
-      ],
-    });
-    document.head.appendChild(faqSchema);
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "حاسبة تكلفة التشطيب بالرياض",
+    url: canonical,
+  };
 
-    return () => {
-      document.head.removeChild(meta);
-      document.head.removeChild(faqSchema);
-    };
-  }, []);
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: "بنيان الهرم للمقاولات",
+    alternateName: "PYBCCO",
+    url: "https://pybcco.com",
+    telephone: "+966550604837",
+    areaServed: { "@type": "City", name: "Riyadh" },
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Riyadh",
+      addressCountry: "SA",
+    },
+    image: "https://pybcco.com/images/VillaFinishingPriceRiyadh.jpg",
+  };
 
   const [workType, setWorkType] = useState<WorkType>("finishing");
   const [level, setLevel] = useState<Level>("standard");
@@ -119,6 +130,14 @@ export default function VillaFinishingPriceRiyadh() {
 
   return (
     <div className="min-h-screen bg-black text-white" dir="rtl">
+      <SeoHead
+        title={title}
+        description={description}
+        canonical={canonical}
+        ogImage="https://pybcco.com/images/VillaFinishingPriceRiyadh.jpg"
+        jsonLd={[webPageSchema, faqSchema, localBusinessSchema]}
+      />
+
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <img
@@ -171,9 +190,7 @@ export default function VillaFinishingPriceRiyadh() {
 
       {/* CALCULATOR */}
       <section id="calc" className="container mx-auto px-4 py-14">
-        {/* ✅ فصلناها لقسمين واضحين */}
         <div className="max-w-4xl mx-auto space-y-6">
-          {/* ✅ القسم الأساسي: المقطوعية */}
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-7">
             <div className="text-center">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-4 py-1 text-xs text-white/70">
@@ -203,9 +220,7 @@ export default function VillaFinishingPriceRiyadh() {
               </div>
             </div>
 
-            {/* Inputs */}
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* نوع العمل */}
               <div className="rounded-xl border border-white/10 bg-black/30 p-4">
                 <div className="text-sm text-white/70 mb-2">نوع العمل</div>
                 <div className="flex gap-2">
@@ -241,7 +256,6 @@ export default function VillaFinishingPriceRiyadh() {
                 </div>
               </div>
 
-              {/* المستوى */}
               <div className="rounded-xl border border-white/10 bg-black/30 p-4">
                 <div className="text-sm text-white/70 mb-2">المستوى</div>
                 <div className="grid grid-cols-3 gap-2">
@@ -292,7 +306,6 @@ export default function VillaFinishingPriceRiyadh() {
                 </div>
               </div>
 
-              {/* المساحة */}
               <div className="rounded-xl border border-white/10 bg-black/30 p-4 md:col-span-2">
                 <div className="text-sm text-white/70 mb-2">المساحة (م²)</div>
                 <input
@@ -313,7 +326,6 @@ export default function VillaFinishingPriceRiyadh() {
               </div>
             </div>
 
-            {/* Totals */}
             <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
               <div className="rounded-xl border border-white/10 bg-black/30 p-4">
                 <div className="text-xs text-white/60">إجمالي المقطوعية</div>
@@ -394,7 +406,6 @@ export default function VillaFinishingPriceRiyadh() {
             )}
           </div>
 
-          {/* ✅ Divider واضح */}
           <div className="flex items-center gap-3 px-1">
             <div className="h-px flex-1 bg-white/10" />
             <div className="text-xs text-white/60">
@@ -403,7 +414,6 @@ export default function VillaFinishingPriceRiyadh() {
             <div className="h-px flex-1 bg-white/10" />
           </div>
 
-          {/* ✅ قسم البنود التفصيلية */}
           <div
             className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-7"
             id="boq"
@@ -422,7 +432,7 @@ export default function VillaFinishingPriceRiyadh() {
                 variant="secondary"
                 onClick={() => {
                   setExtrasTotal(0);
-                  setBoqResetKey((k) => k + 1); // remount BoqCalculator (clears summary + inputs)
+                  setBoqResetKey((k) => k + 1);
                   setShowResult(true);
                 }}
                 className="bg-white/10 border border-white/15 text-white hover:bg-white/15"
@@ -459,61 +469,65 @@ export default function VillaFinishingPriceRiyadh() {
           <li>✔️ مستوى التشطيب المطلوب</li>
         </ul>
       </section>
-{/* FAQ SECTION */}
-<section className="container mx-auto px-4 py-14 text-right max-w-4xl">
-  <h2 className="text-2xl md:text-3xl font-bold text-gold mb-6">
-    الأسئلة الشائعة حول تكلفة التشطيب في الرياض
-  </h2>
 
-  <div className="space-y-6 text-white/80 leading-relaxed">
+      {/* FAQ SECTION */}
+      <section className="container mx-auto px-4 py-14 text-right max-w-4xl">
+        <h2 className="text-2xl md:text-3xl font-bold text-gold mb-6">
+          الأسئلة الشائعة حول تكلفة التشطيب في الرياض
+        </h2>
 
-    <div>
-      <h3 className="font-bold text-white mb-2">
-        كم سعر تشطيب المتر في الرياض؟
-      </h3>
-      <p>
-        يبدأ سعر تشطيب المتر في الرياض من 450 ريال للمستوى التجاري ويصل إلى 800 ريال للمستوى الفاخر حسب نوع المواد ونطاق العمل.
-      </p>
-    </div>
+        <div className="space-y-6 text-white/80 leading-relaxed">
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              كم سعر تشطيب المتر في الرياض؟
+            </h3>
+            <p>
+              يبدأ سعر تشطيب المتر في الرياض من 450 ريال للمستوى التجاري ويصل إلى
+              800 ريال للمستوى الفاخر حسب نوع المواد ونطاق العمل.
+            </p>
+          </div>
 
-    <div>
-      <h3 className="font-bold text-white mb-2">
-        هل الأسعار في الحاسبة نهائية؟
-      </h3>
-      <p>
-        الأسعار تقديرية لتكوين تصور أولي، ويتم اعتماد السعر النهائي بعد المعاينة وتحديد التفاصيل الفنية بدقة.
-      </p>
-    </div>
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              هل الأسعار في الحاسبة نهائية؟
+            </h3>
+            <p>
+              الأسعار تقديرية لتكوين تصور أولي، ويتم اعتماد السعر النهائي بعد
+              المعاينة وتحديد التفاصيل الفنية بدقة.
+            </p>
+          </div>
 
-    <div>
-      <h3 className="font-bold text-white mb-2">
-        هل السعر شامل المواد والعمالة؟
-      </h3>
-      <p>
-        نعم، أسعار المقطوعية تشمل المواد والعمالة حسب المستوى المختار (تجاري – قياسي – فاخر).
-      </p>
-    </div>
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              هل السعر شامل المواد والعمالة؟
+            </h3>
+            <p>
+              نعم، أسعار المقطوعية تشمل المواد والعمالة حسب المستوى المختار (تجاري
+              – قياسي – فاخر).
+            </p>
+          </div>
 
-    <div>
-      <h3 className="font-bold text-white mb-2">
-        كم مدة تشطيب فيلا في الرياض؟
-      </h3>
-      <p>
-        غالباً تتراوح مدة تشطيب الفيلا بين 4 إلى 12 أسبوع حسب المساحة ونوع التشطيب وتوفر المواد.
-      </p>
-    </div>
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              كم مدة تشطيب فيلا في الرياض؟
+            </h3>
+            <p>
+              غالباً تتراوح مدة تشطيب الفيلا بين 4 إلى 12 أسبوع حسب المساحة ونوع
+              التشطيب وتوفر المواد.
+            </p>
+          </div>
 
-    <div>
-      <h3 className="font-bold text-white mb-2">
-        هل تقدمون معاينة مجانية داخل الرياض؟
-      </h3>
-      <p>
-        نعم، نوفر معاينة مجانية داخل مدينة الرياض لتقييم المشروع وتقديم عرض سعر نهائي واضح.
-      </p>
-    </div>
-
-  </div>
-</section>
+          <div>
+            <h3 className="font-bold text-white mb-2">
+              هل تقدمون معاينة مجانية داخل الرياض؟
+            </h3>
+            <p>
+              نعم، نوفر معاينة مجانية داخل مدينة الرياض لتقييم المشروع وتقديم عرض
+              سعر نهائي واضح.
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* INTERNAL LINKS */}
       <section className="container mx-auto px-4 pb-14">

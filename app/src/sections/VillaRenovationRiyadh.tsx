@@ -1,120 +1,104 @@
-import { useEffect } from "react";
+import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
+import SeoHead from "@/components/SeoHead";
+
+const SITE = "https://www.pybcco.com";
+
+const FAQS = [
+  {
+    q: "ما هي خدمات ترميم الفلل التي تقدمونها في الرياض؟",
+    a: "نقدم ترميم شامل حسب حالة الفيلا يشمل الدهانات، الجبس، الأرضيات، السباكة، الكهرباء، العزل، معالجة الرطوبة والتشققات، وتجديد الحمامات والمطابخ.",
+  },
+  {
+    q: "هل تقدمون معاينة مجانية قبل الترميم؟",
+    a: "نعم، نوفر معاينة وتقييم داخل الرياض لتحديد نطاق الأعمال وتقديم توصيات واضحة وعرض سعر حسب الحالة.",
+  },
+  {
+    q: "هل يمكن ترميم جزء من الفيلا فقط؟",
+    a: "نعم، يمكن تنفيذ ترميم جزئي مثل معالجة رطوبة، دهانات، تجديد حمامات أو مطبخ، إصلاحات جبس أو أرضيات حسب الاتفاق.",
+  },
+  {
+    q: "كم مدة ترميم الفيلا عادة؟",
+    a: "تختلف المدة حسب حجم الفيلا ونطاق الأعمال، وغالباً تتراوح بين 2 إلى 8 أسابيع، ويتم تحديد جدول زمني بعد المعاينة.",
+  },
+  {
+    q: "هل يوجد إشراف هندسي على أعمال الترميم؟",
+    a: "نعم، لدينا إشراف هندسي ومراقبين لضبط الجودة والالتزام بالمواصفات وخطة التنفيذ حتى التسليم.",
+  },
+  {
+    q: "هل تشمل أعمال الترميم العزل ومعالجة التسربات؟",
+    a: "نعم، ننفذ العزل ومعالجة التسربات والرطوبة حسب التشخيص، مثل عزل الأسطح ودورات المياه وإصلاح مصادر التسرب.",
+  },
+];
 
 export default function VillaRenovationRiyadh() {
-  useEffect(() => {
-    document.title = "ترميم فلل بالرياض | صيانة وتجديد شامل - بنيان الهرم";
+  const title = "ترميم فلل بالرياض | صيانة وتجديد شامل - بنيان الهرم";
+  const description =
+    "ترميم فلل بالرياض وتجديد شامل (دهانات، جبس، أرضيات، سباكة، كهرباء، عزل) حسب المعاينة. إشراف هندسي والتزام بالوقت. اطلب معاينة الآن.";
+  const canonical = `${SITE}/villa-renovation-riyadh`;
+  const ogImage = `${SITE}/images/VillaRenovationRiyadh.jpg`;
 
-    const meta = document.createElement("meta");
-    meta.name = "description";
-    meta.content =
-      "ترميم فلل بالرياض وتجديد شامل (دهانات، جبس، أرضيات، سباكة، كهرباء، عزل) حسب المعاينة. إشراف هندسي والتزام بالوقت. اطلب معاينة مجانية الآن.";
-    document.head.appendChild(meta);
+  const jsonLd = useMemo(() => {
+    const webpageSchema = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: title,
+      url: canonical,
+      description,
+    };
 
-    // Service Schema (Page-specific)
-    const serviceSchema = document.createElement("script");
-    serviceSchema.type = "application/ld+json";
-    serviceSchema.text = JSON.stringify({
+    const serviceSchema = {
       "@context": "https://schema.org",
       "@type": "Service",
       name: "ترميم فلل بالرياض",
       serviceType: "Villa renovation / Maintenance / Refurbishment",
-      url: "https://www.pybcco.com/villa-renovation-riyadh",
+      url: canonical,
       areaServed: { "@type": "City", name: "Riyadh" },
       provider: {
         "@type": ["LocalBusiness", "ConstructionCompany"],
         name: "PYBCCO – بنيان الهرم للمقاولات",
-        url: "https://www.pybcco.com/",
+        url: SITE,
         telephone: "+966550604837",
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: "Al Washm St, Al Murabba",
-          addressLocality: "Riyadh",
-          postalCode: "12345",
-          addressCountry: "SA",
-        },
       },
-    });
-    document.head.appendChild(serviceSchema);
+    };
 
-    // ✅ FAQ Schema (SEO) — مطابق للـFAQ الظاهر
-    const faqSchema = document.createElement("script");
-    faqSchema.type = "application/ld+json";
-    faqSchema.text = JSON.stringify({
+    const faqSchema = {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "ما هي خدمات ترميم الفلل التي تقدمونها في الرياض؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "نقدم ترميم شامل حسب حالة الفيلا يشمل الدهانات، الجبس، الأرضيات، السباكة، الكهرباء، العزل، معالجة الرطوبة والتشققات، وتجديد الحمامات والمطابخ.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل تقدمون معاينة مجانية قبل الترميم؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "نعم، نوفر معاينة وتقييم مجاني داخل الرياض لتحديد نطاق الأعمال وتقديم توصيات واضحة وعرض سعر حسب الحالة.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل يمكن ترميم جزء من الفيلا فقط؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "نعم، يمكن تنفيذ ترميم جزئي مثل معالجة رطوبة، دهانات، تجديد حمامات أو مطبخ، إصلاحات جبس أو أرضيات حسب الاتفاق.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "كم مدة ترميم الفيلا عادة؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "تختلف المدة حسب حجم الفيلا ونطاق الأعمال، وغالباً تتراوح بين 2 إلى 8 أسابيع، ويتم تحديد جدول زمني بعد المعاينة.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل يوجد إشراف هندسي على أعمال الترميم؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "نعم، لدينا إشراف هندسي ومراقبين لضبط الجودة والالتزام بالمواصفات وخطة التنفيذ حتى التسليم.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل تشمل أعمال الترميم العزل ومعالجة التسربات؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "نعم، ننفذ العزل ومعالجة التسربات والرطوبة حسب التشخيص، مثل عزل الأسطح ودورات المياه وإصلاح مصادر التسرب.",
-          },
-        },
-      ],
-    });
-    document.head.appendChild(faqSchema);
-
-    return () => {
-      document.head.removeChild(meta);
-      document.head.removeChild(serviceSchema);
-      document.head.removeChild(faqSchema);
+      mainEntity: FAQS.map((x) => ({
+        "@type": "Question",
+        name: x.q,
+        acceptedAnswer: { "@type": "Answer", text: x.a },
+      })),
     };
-  }, []);
+
+    return [webpageSchema, serviceSchema, faqSchema];
+  }, [canonical, description, title]);
+
+  const WA_NUMBER = "966550604837";
+  const waPrefill = (text: string) =>
+    `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
 
   const track = (eventName: string) => {
-    // Optional Analytics event tracking if gtag exists
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const w = window as any;
     if (typeof w.gtag === "function") w.gtag("event", eventName);
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* HERO (full width background image + content) */}
+    <div className="min-h-screen bg-black text-white" dir="rtl">
+      <SeoHead
+        title={title}
+        description={description}
+        canonical={canonical}
+        ogImage={ogImage}
+        ogType="website"
+        twitterCard="summary_large_image"
+        jsonLd={jsonLd}
+      />
+
+      {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
-        {/* Background image */}
         <img
           src="/images/VillaRenovationRiyadh.jpg"
           alt="ترميم فلل بالرياض"
@@ -122,10 +106,8 @@ export default function VillaRenovationRiyadh() {
           loading="eager"
         />
 
-        {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/65" />
 
-        {/* Optional gold glow */}
         <div
           className="absolute inset-0 opacity-25 blur-3xl"
           style={{
@@ -134,7 +116,6 @@ export default function VillaRenovationRiyadh() {
           }}
         />
 
-        {/* Content */}
         <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-4xl md:text-5xl font-extrabold text-gold text-center">
             ترميم فلل بالرياض وتجديد شامل حسب المعاينة
@@ -143,85 +124,135 @@ export default function VillaRenovationRiyadh() {
           <p className="mt-6 text-lg text-gray-300 leading-relaxed text-center max-w-3xl mx-auto">
             نقدم خدمات{" "}
             <span className="text-gold font-bold">ترميم الفلل بالرياض</span>{" "}
-            وتجديدها بالكامل حسب حالة المبنى والمعاينة الميدانية، مع إشراف هندسي
-            كامل والتزام بالوقت وجودة التنفيذ. نخدم جميع أحياء الرياض وننفذ أعمال
-            الترميم الداخلية والخارجية من الصفر حتى التسليم.
+            وتجديدها بالكامل حسب حالة المبنى والمعاينة الميدانية، مع{" "}
+            <span className="text-gold font-bold">إشراف هندسي</span> وخطة واضحة
+            والتزام بالوقت وجودة التنفيذ. نخدم جميع أحياء الرياض وننفذ أعمال
+            الترميم الداخلية والخارجية حتى التسليم.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <Button
               className="bg-gold text-black font-bold px-8 py-6 text-lg hover:bg-gold/90 transition"
               onClick={() => {
-                track("request_free_inspection");
-                window.location.href =
-                  "https://wa.me/966550604837?text=%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%B7%D9%84%D8%A8%20%D9%85%D8%B9%D8%A7%D9%8A%D9%86%D8%A9%20%D9%85%D8%AC%D8%A7%D9%86%D9%8A%D8%A9%20%D9%84%D8%AA%D8%B1%D9%85%D9%8A%D9%85%20%D9%81%D9%8A%D9%84%D8%A7%20%D8%A8%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6";
+                track("whatsapp_click_renovation_hero");
+                window.location.href = waPrefill(
+                  "أريد طلب معاينة لمشروع ترميم فيلا بالرياض. الموقع/الحي: — مساحة الفيلا: — المشكلة الأساسية (رطوبة/تشققات/تجديد كامل/حمامات/مطبخ):"
+                );
               }}
             >
-              طلب معاينة مجانية (واتساب)
+              طلب معاينة (واتساب)
             </Button>
 
-            {/* ✅ صار نفس زر المعاينة */}
             <Button
               className="bg-gold text-black font-bold px-8 py-6 text-lg hover:bg-gold/90 transition"
               onClick={() => {
-                track("call_from_renovation_page");
+                track("call_from_renovation_hero");
                 window.location.href = "tel:+966550604837";
               }}
             >
               اتصال مباشر
             </Button>
+
+            <Button
+              className="bg-white/10 border border-white/15 text-white font-bold px-8 py-6 text-lg hover:bg-white/15"
+              onClick={() => {
+                const el = document.getElementById("services");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              استعرض خدمات الترميم
+            </Button>
           </div>
 
-          {/* Cards داخل الهيرو */}
+          {/* Cards */}
           <div className="mt-10 grid md:grid-cols-2 gap-6 text-right max-w-5xl mx-auto">
-            <div className="bg-white/5 p-6 rounded-xl border border-gold/20 backdrop-blur-sm">
-              <h3 className="text-xl font-bold text-gold mb-3">
-                معاينة وتقييم مجاني
-              </h3>
-              <p className="text-white/80">
-                نحدد نطاق الأعمال ونقدم توصيات واضحة قبل بدء التنفيذ.
-              </p>
-            </div>
-
-            <div className="bg-white/5 p-6 rounded-xl border border-gold/20 backdrop-blur-sm">
-              <h3 className="text-xl font-bold text-gold mb-3">إشراف هندسي</h3>
-              <p className="text-white/80">
-                مهندسون ومراقبون لضبط الجودة والالتزام بالمواصفات.
-              </p>
-            </div>
-
-            <div className="bg-white/5 p-6 rounded-xl border border-gold/20 backdrop-blur-sm">
-              <h3 className="text-xl font-bold text-gold mb-3">ترميم شامل</h3>
-              <p className="text-white/80">
-                دهانات، جبس، أرضيات، سباكة، كهرباء، عزل… حسب حالة الفيلا.
-              </p>
-            </div>
-
-            <div className="bg-white/5 p-6 rounded-xl border border-gold/20 backdrop-blur-sm">
-              <h3 className="text-xl font-bold text-gold mb-3">التزام بالوقت</h3>
-              <p className="text-white/80">
-                خطة واضحة وجدول زمني وتقارير متابعة حتى التسليم.
-              </p>
-            </div>
+            {[
+              {
+                title: "معاينة وتقييم",
+                desc: "نحدد نطاق الأعمال ونقدم توصيات واضحة قبل بدء التنفيذ.",
+              },
+              {
+                title: "إشراف هندسي",
+                desc: "مهندسون ومراقبون لضبط الجودة والالتزام بالمواصفات.",
+              },
+              {
+                title: "ترميم شامل",
+                desc: "دهانات، جبس، أرضيات، سباكة، كهرباء، عزل… حسب الحالة.",
+              },
+              {
+                title: "التزام بالوقت",
+                desc: "خطة واضحة وجدول زمني وتقارير متابعة حتى التسليم.",
+              },
+            ].map((x, i) => (
+              <div
+                key={i}
+                className="bg-white/5 p-6 rounded-xl border border-gold/20 backdrop-blur-sm"
+              >
+                <h3 className="text-xl font-bold text-gold mb-3">{x.title}</h3>
+                <p className="text-white/80">{x.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* SERVICES */}
+      {/* LONG SEO CONTENT */}
       <section className="container mx-auto px-4 py-14">
+        <div className="max-w-5xl mx-auto text-right space-y-5 text-white/80 leading-relaxed">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center">
+            متى تحتاج <span className="text-gold">ترميم فيلا بالرياض</span>؟
+          </h2>
+
+          <p>
+            كثير من الفلل في الرياض تحتاج ترميم لأسباب مثل{" "}
+            <strong className="text-gold">الرطوبة</strong> أو{" "}
+            <strong className="text-gold">التشققات</strong> أو{" "}
+            <strong className="text-gold">تجديد الحمامات والمطابخ</strong> أو
+            إعادة توزيع الإضاءة والديكورات. نحن نبدأ بمعاينة لتحديد السبب الحقيقي
+            ثم نقترح الحل الأنسب (معالجة/تجديد/عزل) بدل “ترقيع” مؤقت.
+          </p>
+
+          <p>
+            أسلوبنا في الترميم يعتمد على: تحديد نطاق العمل، اختيار المواد حسب
+            المستوى، تنفيذ منظم بمراحل استلام، وتوثيق التقدم. هذا يقلل الأخطاء
+            ويضمن مطابقة النتائج للمستوى المتفق عليه.
+          </p>
+
+          <p>
+            إذا كان مشروعك يحتاج تشطيب كامل بدل ترميم جزئي، يمكنك زيارة صفحة{" "}
+            <a
+              href="/villa-finishing-riyadh"
+              className="text-gold font-bold hover:underline"
+            >
+              تشطيب فلل بالرياض
+            </a>{" "}
+            أو استخدام{" "}
+            <a
+              href="/villa-finishing-price-riyadh"
+              className="text-gold font-bold hover:underline"
+            >
+              حاسبة الأسعار
+            </a>{" "}
+            لأخذ تصور مبدئي قبل المعاينة.
+          </p>
+        </div>
+      </section>
+
+      {/* SERVICES */}
+      <section id="services" className="container mx-auto px-4 pb-14">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
           خدمات <span className="text-gold">ترميم الفلل</span> التي نقدمها
         </h2>
 
         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
           {[
-            "ترميم واجهات وتشطيبات خارجية",
+            "ترميم واجهات وتشطيبات خارجية حسب الحالة",
             "صيانة ومعالجة رطوبة وتسربات (حسب التشخيص)",
             "دهانات داخلية وخارجية + معالجات تشققات",
             "جبس بورد وديكورات وإصلاحات أسقف",
             "أعمال كهرباء وسباكة وتجديد نقاط (حسب المعاينة)",
             "عزل أسطح ودورات مياه (حسب الحاجة)",
-            "تغيير أرضيات وسيراميك وبلاط",
+            "تغيير أرضيات وسيراميك وبورسلان حسب الاختيار",
             "إعادة تأهيل حمامات ومطابخ وتجديد كامل",
           ].map((item, i) => (
             <div
@@ -234,76 +265,22 @@ export default function VillaRenovationRiyadh() {
         </div>
       </section>
 
-      {/* ✅ FAQ VISIBLE (قبل الروابط الداخلية) */}
-      <section
-        className="container mx-auto px-4 pb-14 text-right max-w-4xl"
-        dir="rtl"
-      >
+      {/* FAQ (VISIBLE + MATCHES SCHEMA) */}
+      <section className="container mx-auto px-4 pb-14 text-right max-w-5xl mx-auto">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
           الأسئلة الشائعة حول <span className="text-gold">ترميم الفلل بالرياض</span>
         </h2>
 
-        <div className="mt-8 space-y-6 text-white/80 leading-relaxed">
-          <div>
-            <h3 className="font-bold text-white mb-2">
-              ما هي خدمات ترميم الفلل التي تقدمونها في الرياض؟
-            </h3>
-            <p>
-              نقدم ترميم شامل حسب حالة الفيلا يشمل الدهانات، الجبس، الأرضيات،
-              السباكة، الكهرباء، العزل، معالجة الرطوبة والتشققات، وتجديد الحمامات
-              والمطابخ.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-bold text-white mb-2">
-              هل تقدمون معاينة مجانية قبل الترميم؟
-            </h3>
-            <p>
-              نعم، نوفر معاينة وتقييم مجاني داخل الرياض لتحديد نطاق الأعمال وتقديم
-              توصيات واضحة وعرض سعر حسب الحالة.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-bold text-white mb-2">
-              هل يمكن ترميم جزء من الفيلا فقط؟
-            </h3>
-            <p>
-              نعم، يمكن تنفيذ ترميم جزئي مثل معالجة رطوبة، دهانات، تجديد حمامات أو
-              مطبخ، إصلاحات جبس أو أرضيات حسب الاتفاق.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-bold text-white mb-2">
-              كم مدة ترميم الفيلا عادة؟
-            </h3>
-            <p>
-              تختلف المدة حسب حجم الفيلا ونطاق الأعمال، وغالباً تتراوح بين 2 إلى 8
-              أسابيع، ويتم تحديد جدول زمني بعد المعاينة.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-bold text-white mb-2">
-              هل يوجد إشراف هندسي على أعمال الترميم؟
-            </h3>
-            <p>
-              نعم، لدينا إشراف هندسي ومراقبين لضبط الجودة والالتزام بالمواصفات
-              وخطة التنفيذ حتى التسليم.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-bold text-white mb-2">
-              هل تشمل أعمال الترميم العزل ومعالجة التسربات؟
-            </h3>
-            <p>
-              نعم، ننفذ العزل ومعالجة التسربات والرطوبة حسب التشخيص، مثل عزل الأسطح
-              ودورات المياه وإصلاح مصادر التسرب.
-            </p>
-          </div>
+        <div className="mt-10 space-y-6">
+          {FAQS.map((x, i) => (
+            <div
+              key={i}
+              className="bg-white/5 border border-white/10 rounded-2xl p-6"
+            >
+              <h3 className="text-lg font-bold text-gold">{x.q}</h3>
+              <p className="mt-2 text-white/80 leading-relaxed">{x.a}</p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -343,22 +320,26 @@ export default function VillaRenovationRiyadh() {
         <div className="bg-gradient-to-b from-white/10 to-white/5 border border-white/10 rounded-2xl p-8 text-center">
           <h3 className="text-2xl font-bold">جاهز ترمم فيلتك؟</h3>
           <p className="mt-3 text-white/70">
-            اطلب معاينة مجانية، ونحدد نطاق الأعمال ونقدم عرض سعر واضح حسب حالة الفيلا.
+            أرسل تفاصيل بسيطة عن الحالة (رطوبة/تشققات/تجديد كامل) ونرتّب معاينة ونقدّم عرض سعر واضح.
           </p>
 
           <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
             <Button
-              className="bg-gold text-black font-bold px-8 py-6 text-lg hover:opacity-90 transition"
-              onClick={() => (window.location.href = "https://wa.me/966550604837")}
+              className="bg-gold text-black font-bold px-8 py-6 text-lg hover:bg-gold/90 transition"
+              onClick={() => {
+                track("whatsapp_click_renovation_bottom");
+                window.location.href = waPrefill(
+                  "أريد عرض سعر لترميم فيلا بالرياض. الموقع/الحي: — مساحة الفيلا: — الحالة: — المطلوب (حمامات/مطبخ/دهانات/عزل/تجديد كامل):"
+                );
+              }}
             >
               واتساب الآن
             </Button>
 
-            {/* ✅ صار نفس زر واتساب */}
             <Button
               className="bg-gold text-black font-bold px-8 py-6 text-lg hover:bg-gold/90 transition"
               onClick={() => {
-                track("call_from_renovation_page_bottom");
+                track("call_from_renovation_bottom");
                 window.location.href = "tel:+966550604837";
               }}
             >
