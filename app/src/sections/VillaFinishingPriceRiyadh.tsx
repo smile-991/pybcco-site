@@ -113,6 +113,23 @@ export default function VillaFinishingPriceRiyadh() {
     () => baseTotal + extrasTotal,
     [baseTotal, extrasTotal]
   );
+  const levelLabel =
+  level === "commercial" ? "تجاري" : level === "standard" ? "قياسي" : "فاخر";
+
+const workLabel = workType === "finishing" ? "تشطيب" : "عظم";
+
+const waText = encodeURIComponent(
+  `السلام عليكم، أريد عرض سعر من بنيان الهرم (PYBCCO).\n` +
+    `نوع العمل: ${workLabel}\n` +
+    `المستوى: ${levelLabel}\n` +
+    `المساحة: ${areaNumber || 0} م²\n` +
+    `إجمالي المقطوعة: ${formatSAR(baseTotal)} ريال\n` +
+    `إضافات البنود: ${formatSAR(extrasTotal)} ريال\n` +
+    `الإجمالي النهائي: ${formatSAR(grandTotal)} ريال\n` +
+    `رابط الحاسبة: ${canonical}`
+);
+
+const waLink = `https://wa.me/966550604837?text=${waText}`;
 
   return (
     <div className="min-h-screen bg-black text-white" dir="rtl">
@@ -700,6 +717,28 @@ export default function VillaFinishingPriceRiyadh() {
           ))}
         </div>
       </section>
+      {/* ✅ Mobile Sticky Total (shows only on mobile) */}
+{(areaNumber > 0 || extrasTotal > 0) && (
+  <div className="md:hidden fixed bottom-3 left-3 right-3 z-50">
+    <div className="rounded-2xl border border-white/10 bg-black/75 backdrop-blur-md p-3 flex items-center justify-between gap-3">
+      <div className="text-xs text-white/70">
+        الإجمالي الحالي
+        <div className="text-base font-extrabold text-gold">
+          {formatSAR(grandTotal)} ريال
+        </div>
+      </div>
+
+      <a
+        href={waLink}
+        target="_blank"
+        rel="noreferrer"
+        className="rounded-xl bg-gold px-4 py-3 text-sm font-extrabold text-black"
+      >
+        واتساب عرض السعر
+      </a>
+    </div>
+  </div>
+)}
     </div>
   );
 }
