@@ -14,19 +14,23 @@ export default function Hero() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const y = window.scrollY || 0;
-      setScrollY(y);
+  const y = window.scrollY || 0;
+  setScrollY(y);
 
-      if (heroRef.current) {
-        const parallaxElements =
-          heroRef.current.querySelectorAll(".parallax");
+  // ✅ عطّل الـ parallax بالموبايل لتسريع الأداء
+  const isMobile = window.matchMedia("(max-width: 767px)").matches;
+  if (isMobile) return;
 
-        parallaxElements.forEach((el) => {
-          (el as HTMLElement).style.transform =
-            `translateY(${y * 0.5}px)`;
-        });
-      }
-    };
+  if (heroRef.current) {
+    const parallaxElements =
+      heroRef.current.querySelectorAll(".parallax");
+
+    parallaxElements.forEach((el) => {
+      (el as HTMLElement).style.transform =
+        `translateY(${y * 0.5}px)`;
+    });
+  }
+};
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
