@@ -21,16 +21,17 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 
+// ✅ NAP موحّد رسمي (لا تغيّر الصيغ بين الصفحات والمنصات)
 const PHONE_LOCAL = "055 060 4837";
 const PHONE_INTL = "+966 55 060 4837";
 const PHONE_TEL = "+966550604837";
 
-const EMAIL_MAIN = "m.h.jabasini@pybcco.com";
-const EMAIL_INFO = "info@pybcco.com";
+const EMAIL_PUBLIC = "info@pybcco.com";
 
-// العنوان مطابق Google Business حسب كلامك
-const ADDRESS_EN = "Al Washm St, Al Murabba, Riyadh 12345";
-const ADDRESS_AR = "شارع الوشم، المربع، الرياض 12345";
+// ✅ العنوان مطابق (مع حي + دولة لرفع دقة الخرائط والتطابق مع GBP)
+const ADDRESS_EN = "Al Washm St, Al Murabba, Riyadh 12345, Saudi Arabia";
+const ADDRESS_AR =
+  "شارع الوشم، حي المربع، الرياض 12345، المملكة العربية السعودية";
 
 // رابط خريطة يعتمد على العنوان (بدل دبوس مختلف)
 const MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -54,9 +55,9 @@ const contactInfo = [
   {
     icon: Mail,
     title: "البريد الإلكتروني",
-    value: EMAIL_MAIN,
-    subValue: EMAIL_INFO,
-    href: `mailto:${EMAIL_INFO}`,
+    value: EMAIL_PUBLIC,
+    subValue: "للاستفسارات والعروض",
+    href: `mailto:${EMAIL_PUBLIC}`,
     dir: "ltr" as const,
   },
   {
@@ -120,7 +121,7 @@ export default function Contact() {
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content graphical-Type": "application/json" } as any,
+        headers: { "Content-Type": "application/json" }, // ✅ تصحيح الهيدر
         body: JSON.stringify(formData),
       });
 
