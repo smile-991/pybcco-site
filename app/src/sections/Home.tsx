@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Calculator,
@@ -11,6 +11,8 @@ import {
   MapPin,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+import SeoHead from "@/components/SeoHead";
 
 import Contact from "./Contact";
 import Team from "./Team";
@@ -153,64 +155,49 @@ function GalleryTabs() {
 }
 
 export default function Home() {
-  useEffect(() => {
-    document.title = "شركة مقاولات بالرياض | بنيان الهرم للمقاولات";
-
-    const meta = document.createElement("meta");
-    meta.name = "description";
-    meta.content =
-      "شركة بنيان الهرم للمقاولات بالرياض: تنفيذ بناء عظم وتشطيب وترميم وتسليم مفتاح بإشراف هندسي. احسب التكلفة عبر الحاسبة واطلب معاينة مجانية.";
-    document.head.appendChild(meta);
-
-    const ld = document.createElement("script");
-    ld.type = "application/ld+json";
-    ld.text = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": ["LocalBusiness", "ConstructionCompany"],
-      name: "بنيان الهرم للمقاولات",
-      alternateName: "PYBCCO",
-      url: "https://pybcco.com/",
-      telephone: "+966550604837",
-      areaServed: { "@type": "City", name: "Riyadh" },
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Riyadh",
-        addressCountry: "SA",
-      },
-      // 🔁 بدّل الروابط بروابط حساباتك الحقيقية
-      sameAs: [
-        "https://www.linkedin.com/company/pybcco", // placeholder
-        "https://x.com/pybcco", // placeholder
-        "https://sites.google.com/view/bunian-alharam-riyadh/home",
-      ],
-    });
-    document.head.appendChild(ld);
-
-    const faq = document.createElement("script");
-    faq.type = "application/ld+json";
-    faq.text = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: FAQ_ITEMS.map((x) => ({
-        "@type": "Question",
-        name: x.q,
-        acceptedAnswer: { "@type": "Answer", text: x.a },
-      })),
-    });
-    document.head.appendChild(faq);
-
-    return () => {
-      document.head.removeChild(meta);
-      document.head.removeChild(ld);
-      document.head.removeChild(faq);
-    };
-  }, []);
-
   const heroImage =
     GALLERY.finishing.items[0]?.src ?? "/projects/finishing/finishing-01.jpg";
 
   return (
     <main dir="rtl">
+      <SeoHead
+        title="شركة مقاولات بالرياض | بنيان الهرم للمقاولات"
+        description="شركة بنيان الهرم للمقاولات بالرياض: تنفيذ بناء عظم وتشطيب وترميم وتسليم مفتاح بإشراف هندسي. احسب التكلفة عبر الحاسبة واطلب معاينة مجانية."
+        canonical="https://pybcco.com/"
+        ogImage="https://pybcco.com/images/og-home.jpg"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": ["LocalBusiness", "ConstructionCompany"],
+            name: "بنيان الهرم للمقاولات",
+            alternateName: "PYBCCO",
+            url: "https://pybcco.com/",
+            telephone: "+966550604837",
+            areaServed: { "@type": "City", name: "Riyadh" },
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: "Riyadh",
+              addressCountry: "SA",
+            },
+            // 🔁 بدّل الروابط بروابط حساباتك الحقيقية
+            sameAs: [
+              "https://www.linkedin.com/company/pybcco",
+              "https://x.com/pybcco",
+              "https://sites.google.com/view/bunian-alharam-riyadh/home",
+            ],
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: FAQ_ITEMS.map((x) => ({
+              "@type": "Question",
+              name: x.q,
+              acceptedAnswer: { "@type": "Answer", text: x.a },
+            })),
+          },
+        ]}
+      />
+
       {/* HERO */}
       <section
         id="hero"
@@ -456,7 +443,7 @@ export default function Home() {
         <Partners />
       </section>
 
-      {/* FAQ (ظاهر) — مهم جداً لأنه مربوط بالـ Schema */}
+      {/* FAQ (ظاهر) — مربوط بالـ Schema */}
       <section id="faq" className="section-padding bg-white">
         <div className="container-custom px-4">
           <div className="max-w-5xl mx-auto">
