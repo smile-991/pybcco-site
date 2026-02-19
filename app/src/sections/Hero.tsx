@@ -122,7 +122,7 @@ export default function Hero() {
             </Button>
 
             <Button
-              onClick={() => (window.location.href = "/villa-finishing-price-riyadh#boq")}
+              onClick={() => (window.location.href = "/villa-finishing-price-riyadh")}
               size="lg"
               className="bg-gold/80 hover:bg-gold text-black font-bold px-8 py-5 text-base md:text-lg w-full sm:w-auto"
             >
