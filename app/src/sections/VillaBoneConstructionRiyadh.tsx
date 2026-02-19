@@ -1,87 +1,82 @@
-import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import SeoHead from "@/components/SeoHead";
+
+const BONE_FAQS = [
+  {
+    q: "ما المقصود ببناء عظم للفلل؟",
+    a: "بناء العظم هو تنفيذ الهيكل الإنشائي للفيلا حسب المخططات، ويشمل أعمال الحفر والقواعد والميدات والأعمدة والأسقف وجدران البلوك وتجهيز المبنى لمرحلة التشطيب.",
+  },
+  {
+    q: "هل تنفذون بناء العظم حسب المخططات والمواصفات؟",
+    a: "نعم، يتم تنفيذ العظم حسب المخططات المعتمدة والمواصفات المطلوبة، مع متابعة جودة مستمرة والتزام بنقاط الاستلام لكل مرحلة.",
+  },
+  {
+    q: "هل يوجد إشراف هندسي على بناء العظم؟",
+    a: "نعم، لدينا إشراف هندسي ومراقبة تنفيذ لضبط الجودة والالتزام بالمخططات والمواد والجدول الزمني حتى تسليم العظم.",
+  },
+  {
+    q: "كم مدة بناء العظم لفيلا في الرياض؟",
+    a: "تختلف المدة حسب مساحة الفيلا وعدد الأدوار ونطاق الأعمال، وغالباً تتراوح بين 6 إلى 16 أسبوع، ويتم تحديد جدول زمني بعد المعاينة ومراجعة المخططات.",
+  },
+  {
+    q: "هل يشمل بناء العظم العزل؟",
+    a: "يشمل العزل الأساسي حسب المواصفات ونطاق المشروع، ويتم تحديد تفاصيل العزل المطلوب بعد المعاينة ومراجعة المخططات.",
+  },
+  {
+    q: "كيف يتم تسعير بناء العظم؟",
+    a: "يتم التسعير بناءً على المساحة ونوع الهيكل وعدد الأدوار والمواصفات ونطاق الأعمال، ويتم تثبيت السعر النهائي بعد الاطلاع على المخططات والمعاينة.",
+  },
+];
 
 export default function VillaBoneConstructionRiyadh() {
-  useEffect(() => {
-    document.title =
-      "مقاول عظم بالرياض | بناء فلل عظم بإشراف هندسي - بنيان الهرم";
+  const title = "مقاول عظم بالرياض | بناء فلل عظم بإشراف هندسي - بنيان الهرم";
+  const description =
+    "مقاول عظم بالرياض لبناء فلل عظم حسب المخططات والمواصفات، إشراف هندسي كامل، التزام بالجدول الزمني وجودة التنفيذ. تواصل الآن مع بنيان الهرم.";
+  const canonical = "https://pybcco.com/villa-bone-construction-riyadh";
+  const ogImage = "https://pybcco.com/images/VillaBoneConstructionRiyadh.jpg";
 
-    const meta = document.createElement("meta");
-    meta.name = "description";
-    meta.content =
-      "مقاول عظم بالرياض لبناء فلل عظم حسب المخططات والمواصفات، إشراف هندسي كامل، التزام بالجدول الزمني وجودة التنفيذ. تواصل الآن مع بنيان الهرم.";
-    document.head.appendChild(meta);
-
-    // ✅ FAQ Schema (SEO)
-    const faqSchema = document.createElement("script");
-    faqSchema.type = "application/ld+json";
-    faqSchema.text = JSON.stringify({
+  const jsonLd = [
+    // Service Schema
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: "بناء فلل عظم بالرياض",
+      serviceType: "Villa shell construction (Bone Construction)",
+      areaServed: { "@type": "City", name: "Riyadh" },
+      provider: {
+        "@type": ["LocalBusiness", "ConstructionCompany"],
+        name: "PYBCCO – بنيان الهرم للمقاولات",
+        url: "https://pybcco.com",
+        telephone: "+966550604837",
+      },
+      url: canonical,
+    },
+    // FAQ Schema (مطابق للـ FAQ الظاهر)
+    {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "ما المقصود ببناء عظم للفلل؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "بناء العظم هو تنفيذ الهيكل الإنشائي للفيلا حسب المخططات، ويشمل أعمال الحفر والقواعد والميدات والأعمدة والأسقف وجدران البلوك وتجهيز المبنى لمرحلة التشطيب.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل تنفذون بناء العظم حسب المخططات والمواصفات؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "نعم، يتم تنفيذ العظم حسب المخططات المعتمدة والمواصفات المطلوبة، مع متابعة جودة مستمرة والتزام بنقاط الاستلام لكل مرحلة.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل يوجد إشراف هندسي على بناء العظم؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "نعم، لدينا إشراف هندسي ومراقبة تنفيذ لضبط الجودة والالتزام بالمخططات والمواد والجدول الزمني حتى تسليم العظم.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "كم مدة بناء العظم لفيلا في الرياض؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "تختلف المدة حسب مساحة الفيلا وعدد الأدوار ونطاق الأعمال، وغالباً تتراوح بين 6 إلى 16 أسبوع، ويتم تحديد جدول زمني بعد المعاينة ومراجعة المخططات.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل يشمل بناء العظم العزل؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "يشمل العزل الأساسي حسب المواصفات ونطاق المشروع، ويتم تحديد تفاصيل العزل المطلوب بعد المعاينة ومراجعة المخططات.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "كيف يتم تسعير بناء العظم؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "يتم التسعير بناءً على المساحة ونوع الهيكل وعدد الأدوار والمواصفات ونطاق الأعمال، ويتم تثبيت السعر النهائي بعد الاطلاع على المخططات والمعاينة.",
-          },
-        },
-      ],
-    });
-    document.head.appendChild(faqSchema);
-
-    return () => {
-      document.head.removeChild(meta);
-      document.head.removeChild(faqSchema);
-    };
-  }, []);
+      mainEntity: BONE_FAQS.map((x) => ({
+        "@type": "Question",
+        name: x.q,
+        acceptedAnswer: { "@type": "Answer", text: x.a },
+      })),
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-black text-white" dir="rtl">
+      <SeoHead
+        title={title}
+        description={description}
+        canonical={canonical}
+        ogImage={ogImage}
+        ogType="website"
+        twitterCard="summary_large_image"
+        jsonLd={jsonLd}
+      />
+
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image */}
         <img
           src="/images/VillaBoneConstructionRiyadh.jpg"
           alt="بناء فلل عظم بالرياض"
@@ -89,10 +84,8 @@ export default function VillaBoneConstructionRiyadh() {
           loading="eager"
         />
 
-        {/* Dark Overlay */}
         <div className="absolute inset-0 bg-black/65" />
 
-        {/* Gold Glow */}
         <div
           className="absolute inset-0 opacity-25 blur-3xl"
           style={{
@@ -101,8 +94,7 @@ export default function VillaBoneConstructionRiyadh() {
           }}
         />
 
-        {/* Content */}
-        <div className="container mx-auto px-4 text-center relative z-10">
+        <div className="container mx-auto px-4 text-center relative z-10 pt-24">
           <h1 className="text-4xl md:text-5xl font-extrabold text-gold">
             مقاول عظم بالرياض لبناء فلل عظم بإشراف هندسي
           </h1>
@@ -123,7 +115,6 @@ export default function VillaBoneConstructionRiyadh() {
             </Button>
 
             <Button
-              variant="secondary"
               className="bg-white text-black font-bold px-8 py-6 text-lg"
               onClick={() =>
                 (window.location.href =
@@ -161,73 +152,19 @@ export default function VillaBoneConstructionRiyadh() {
         </div>
       </section>
 
-      {/* ✅ FAQ VISIBLE (قبل الروابط الداخلية) */}
+      {/* FAQ VISIBLE */}
       <section className="container mx-auto px-4 pb-14 text-right max-w-4xl">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
           الأسئلة الشائعة حول <span className="text-gold">بناء العظم بالرياض</span>
         </h2>
 
         <div className="mt-8 space-y-6 text-white/80 leading-relaxed">
-          <div>
-            <h3 className="font-bold text-white mb-2">
-              ما المقصود ببناء عظم للفلل؟
-            </h3>
-            <p>
-              بناء العظم هو تنفيذ الهيكل الإنشائي للفيلا حسب المخططات، ويشمل أعمال
-              الحفر والقواعد والميدات والأعمدة والأسقف وجدران البلوك وتجهيز المبنى
-              لمرحلة التشطيب.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-bold text-white mb-2">
-              هل تنفذون بناء العظم حسب المخططات والمواصفات؟
-            </h3>
-            <p>
-              نعم، يتم تنفيذ العظم حسب المخططات المعتمدة والمواصفات المطلوبة، مع
-              متابعة جودة مستمرة والتزام بنقاط الاستلام لكل مرحلة.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-bold text-white mb-2">
-              هل يوجد إشراف هندسي على بناء العظم؟
-            </h3>
-            <p>
-              نعم، لدينا إشراف هندسي ومراقبة تنفيذ لضبط الجودة والالتزام بالمخططات
-              والمواد والجدول الزمني حتى تسليم العظم.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-bold text-white mb-2">
-              كم مدة بناء العظم لفيلا في الرياض؟
-            </h3>
-            <p>
-              تختلف المدة حسب مساحة الفيلا وعدد الأدوار ونطاق الأعمال، وغالباً
-              تتراوح بين 6 إلى 16 أسبوع، ويتم تحديد جدول زمني بعد المعاينة ومراجعة
-              المخططات.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-bold text-white mb-2">
-              هل يشمل بناء العظم العزل؟
-            </h3>
-            <p>
-              يشمل العزل الأساسي حسب المواصفات ونطاق المشروع، ويتم تحديد تفاصيل
-              العزل المطلوب بعد المعاينة ومراجعة المخططات.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-bold text-white mb-2">كيف يتم تسعير بناء العظم؟</h3>
-            <p>
-              يتم التسعير بناءً على المساحة ونوع الهيكل وعدد الأدوار والمواصفات
-              ونطاق الأعمال، ويتم تثبيت السعر النهائي بعد الاطلاع على المخططات
-              والمعاينة.
-            </p>
-          </div>
+          {BONE_FAQS.map((x, i) => (
+            <div key={i}>
+              <h3 className="font-bold text-white mb-2">{x.q}</h3>
+              <p>{x.a}</p>
+            </div>
+          ))}
         </div>
       </section>
 
