@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import SeoHead from "@/components/SeoHead";
 
 const ALMALQA_FAQS = [
   {
@@ -53,53 +53,6 @@ const ALMALQA_FAQS = [
 ];
 
 export default function ContractorAlMalqaRiyadh() {
-  useEffect(() => {
-    document.title = "مقاول تشطيب وبناء في حي الملقا بالرياض | بنيان الهرم PYBCCO";
-
-    const meta = document.createElement("meta");
-    meta.name = "description";
-    meta.content =
-      "مقاول تشطيب وبناء في حي الملقا بالرياض: تشطيب فلل وشقق، بناء عظم، ترميم وتجديد حسب المعاينة. إشراف هندسي، جودة تنفيذ، والتزام بالوقت.";
-    document.head.appendChild(meta);
-
-    // Service Schema
-    const serviceSchema = document.createElement("script");
-    serviceSchema.type = "application/ld+json";
-    serviceSchema.text = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Service",
-      name: "مقاول تشطيب وبناء في حي الملقا بالرياض",
-      areaServed: { "@type": "City", name: "Riyadh" },
-      provider: {
-        "@type": "LocalBusiness",
-        name: "PYBCCO – بنيان الهرم للمقاولات",
-        telephone: "+966550604837",
-        url: "https://www.pybcco.com",
-      },
-    });
-    document.head.appendChild(serviceSchema);
-
-    // ✅ FAQ Schema (مطابق للFAQ الظاهر)
-    const faqSchema = document.createElement("script");
-    faqSchema.type = "application/ld+json";
-    faqSchema.text = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: ALMALQA_FAQS.map((x) => ({
-        "@type": "Question",
-        name: x.q,
-        acceptedAnswer: { "@type": "Answer", text: x.a },
-      })),
-    });
-    document.head.appendChild(faqSchema);
-
-    return () => {
-      document.head.removeChild(meta);
-      document.head.removeChild(serviceSchema);
-      document.head.removeChild(faqSchema);
-    };
-  }, []);
-
   const track = (eventName: string) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const w = window as any;
@@ -129,8 +82,52 @@ export default function ContractorAlMalqaRiyadh() {
     "تفاصيل تشطيب وإتقان تنفيذ في حي الملقا بالرياض",
   ];
 
+  const title =
+    "مقاول تشطيب وبناء في حي الملقا بالرياض | بنيان الهرم PYBCCO";
+  const description =
+    "مقاول تشطيب وبناء في حي الملقا بالرياض: تشطيب فلل وشقق، بناء عظم، ترميم وتجديد حسب المعاينة. إشراف هندسي، جودة تنفيذ، والتزام بالوقت.";
+  const canonical = "https://pybcco.com/contractor-almalqa-riyadh";
+
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "مقاول تشطيب وبناء في حي الملقا بالرياض",
+    areaServed: { "@type": "City", name: "Riyadh" },
+    provider: {
+      "@type": "LocalBusiness",
+      name: "PYBCCO – بنيان الهرم للمقاولات",
+      telephone: "+966550604837",
+      url: "https://www.pybcco.com",
+    },
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: ALMALQA_FAQS.map((x) => ({
+      "@type": "Question",
+      name: x.q,
+      acceptedAnswer: { "@type": "Answer", text: x.a },
+    })),
+  };
+
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "مقاول تشطيب وبناء في حي الملقا بالرياض",
+    url: canonical,
+  };
+
   return (
     <div className="min-h-screen bg-black text-white" dir="rtl">
+      <SeoHead
+        title={title}
+        description={description}
+        canonical={canonical}
+        ogImage="https://pybcco.com/images/almalqa.jpg"
+        jsonLd={[webPageSchema, serviceSchema, faqSchema]}
+      />
+
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
         <img
