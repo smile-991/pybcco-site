@@ -35,7 +35,7 @@ export default function VillaFinishingRiyadh() {
         title="تشطيب فلل بالرياض | شركة بنيان الهرم للمقاولات"
         description="شركة تشطيب فلل بالرياض تسليم مفتاح، عمالة على الكفالة، إشراف هندسي كامل، أسعار تبدأ من 450 ريال للمتر. تواصل الآن مع بنيان الهرم."
         canonical="https://pybcco.com/villa-finishing-riyadh"
-        ogImage="https://pybcco.com/images/VillaFinishingRiyadh.jpg"
+        ogImage="https://pybcco.com/images/VillaFinishingRiyadh.webp"
         jsonLd={[
           {
             "@context": "https://schema.org",
@@ -59,7 +59,7 @@ export default function VillaFinishingRiyadh() {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
         {/* Background image */}
         <img
-          src="/images/VillaFinishingRiyadh.jpg"
+          src="/images/VillaFinishingRiyadh.webp"
           alt="تشطيب فلل بالرياض"
           className="absolute inset-0 h-full w-full object-cover object-center"
           loading="eager"

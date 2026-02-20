@@ -36,7 +36,7 @@ export default function ConstructionCompanyRiyadh() {
   const description =
     "شركة بنيان الهرم للمقاولات بالرياض: تنفيذ مشاريع، تشطيب فلل وشقق تسليم مفتاح، ترميم وصيانة، بناء عظم، وإشراف هندسي كامل. التزام بالمواعيد وجودة عالية. تواصل الآن.";
   const canonical = `${SITE}/construction-company-riyadh`;
-  const ogImage = `${SITE}/images/ConstructionCompanyRiyadh.jpg`;
+  const ogImage = `${SITE}/images/ConstructionCompanyRiyadh.webp`;
 
   const jsonLd = useMemo(() => {
     const faqSchema = {
@@ -100,7 +100,7 @@ export default function ConstructionCompanyRiyadh() {
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
         <img
-          src="/images/ConstructionCompanyRiyadh.jpg"
+          src="/images/ConstructionCompanyRiyadh.webp"
           alt="شركة مقاولات بالرياض"
           className="absolute inset-0 h-full w-full object-cover object-bottom"
           loading="eager"

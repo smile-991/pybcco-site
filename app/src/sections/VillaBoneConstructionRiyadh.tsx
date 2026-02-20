@@ -33,7 +33,7 @@ export default function VillaBoneConstructionRiyadh() {
   const description =
     "مقاول عظم بالرياض لبناء فلل عظم حسب المخططات والمواصفات، إشراف هندسي كامل، التزام بالجدول الزمني وجودة التنفيذ. تواصل الآن مع بنيان الهرم.";
   const canonical = "https://pybcco.com/villa-bone-construction-riyadh";
-  const ogImage = "https://pybcco.com/images/VillaBoneConstructionRiyadh.jpg";
+  const ogImage = "https://pybcco.com/images/VillaBoneConstructionRiyadh.webp";
 
   const jsonLd = [
     // Service Schema
@@ -78,7 +78,7 @@ export default function VillaBoneConstructionRiyadh() {
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <img
-          src="/images/VillaBoneConstructionRiyadh.jpg"
+          src="/images/VillaBoneConstructionRiyadh.webp"
           alt="بناء فلل عظم بالرياض"
           className="absolute inset-0 h-full w-full object-cover"
           loading="eager"

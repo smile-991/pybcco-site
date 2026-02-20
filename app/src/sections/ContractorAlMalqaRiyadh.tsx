@@ -65,12 +65,12 @@ export default function ContractorAlMalqaRiyadh() {
 
   // ✅ صور الملقا (كما عندك داخل public/images)
   const galleryImages = [
-    "/images/almalqa-4.jpg",
-    "/images/almalqa-3.jpg",
-    "/images/almalqa-1.jpg",
-    "/images/almalqa-5.jpg",
-    "/images/almalqa-6.jpg",
-    "/images/almalqa-2.jpg",
+    "/images/almalqa-4.webp",
+    "/images/almalqa-3.webp",
+    "/images/almalqa-1.webp",
+    "/images/almalqa-5.webp",
+    "/images/almalqa-6.webp",
+    "/images/almalqa-2.webp",
   ];
 
   const galleryAlt = [
@@ -124,14 +124,14 @@ export default function ContractorAlMalqaRiyadh() {
         title={title}
         description={description}
         canonical={canonical}
-        ogImage="https://pybcco.com/images/almalqa.jpg"
+        ogImage="https://pybcco.com/images/almalqa.webp"
         jsonLd={[webPageSchema, serviceSchema, faqSchema]}
       />
 
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
         <img
-          src="/images/almalqa.jpg"
+          src="/images/almalqa.webp"
           alt="حي الملقا الرياض"
           className="absolute inset-0 h-full w-full object-cover object-center"
           loading="eager"

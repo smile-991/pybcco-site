@@ -36,7 +36,7 @@ export default function ApartmentFinishingRiyadh() {
   const description =
     "شركة بنيان الهرم تقدم خدمات تشطيب شقق بالرياض تسليم مفتاح: دهانات، جبس، أرضيات، سباكة وكهرباء حسب الاتفاق. جودة عالية والتزام بالمواعيد. اطلب معاينة الآن.";
   const canonical = `${SITE}/apartment-finishing-riyadh`;
-  const ogImage = `${SITE}/images/ApartmentFinishingRiyadh.jpg`;
+  const ogImage = `${SITE}/images/ApartmentFinishingRiyadh.webp`;
 
   const jsonLd = useMemo(() => {
     const webpageSchema = {
@@ -100,7 +100,7 @@ export default function ApartmentFinishingRiyadh() {
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
         <img
-          src="/images/ApartmentFinishingRiyadh.jpg"
+          src="/images/ApartmentFinishingRiyadh.webp"
           alt="تشطيب شقق بالرياض"
           className="absolute inset-0 h-full w-full object-cover object-center"
           loading="eager"

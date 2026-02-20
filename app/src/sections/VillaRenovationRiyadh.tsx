@@ -36,7 +36,7 @@ export default function VillaRenovationRiyadh() {
   const description =
     "ترميم فلل بالرياض وتجديد شامل (دهانات، جبس، أرضيات، سباكة، كهرباء، عزل) حسب المعاينة. إشراف هندسي والتزام بالوقت. اطلب معاينة الآن.";
   const canonical = `${SITE}/villa-renovation-riyadh`;
-  const ogImage = `${SITE}/images/VillaRenovationRiyadh.jpg`;
+  const ogImage = `${SITE}/images/VillaRenovationRiyadh.webp`;
 
   const jsonLd = useMemo(() => {
     const webpageSchema = {
@@ -100,7 +100,7 @@ export default function VillaRenovationRiyadh() {
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
         <img
-          src="/images/VillaRenovationRiyadh.jpg"
+          src="/images/VillaRenovationRiyadh.webp"
           alt="ترميم فلل بالرياض"
           className="absolute inset-0 h-full w-full object-cover object-center"
           loading="eager"

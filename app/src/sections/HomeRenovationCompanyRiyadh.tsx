@@ -33,7 +33,7 @@ export default function HomeRenovationCompanyRiyadh() {
   const description =
     "شركة ترميم منازل بالرياض تقدم خدمات تجديد شامل، إصلاح تشققات، دهانات، جبس، سباكة وكهرباء حسب المعاينة. إشراف هندسي وجودة تنفيذ عالية.";
   const canonical = "https://pybcco.com/home-renovation-company-riyadh";
-  const ogImage = "https://pybcco.com/images/home-renovation-hero.jpg";
+  const ogImage = "https://pybcco.com/images/home-renovation-hero.webp";
 
   const jsonLd = [
     // Service Schema
@@ -79,7 +79,7 @@ export default function HomeRenovationCompanyRiyadh() {
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <img
-          src="/images/home-renovation-hero.jpg"
+          src="/images/home-renovation-hero.webp"
           alt="ترميم منازل بالرياض"
           className="absolute inset-0 h-full w-full object-cover"
           loading="eager"

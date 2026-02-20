@@ -137,14 +137,14 @@ const waLink = `https://wa.me/966550604837?text=${waText}`;
         title={title}
         description={description}
         canonical={canonical}
-        ogImage="https://pybcco.com/images/VillaFinishingPriceRiyadh.jpg"
+        ogImage="https://pybcco.com/images/VillaFinishingPriceRiyadh.webp"
         jsonLd={[webPageSchema, faqSchema]}
       />
 
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <img
-          src="/images/VillaFinishingPriceRiyadh.jpg"
+          src="/images/VillaFinishingPriceRiyadh.webp"
           alt="حاسبة تكلفة التشطيب بالرياض"
           className="absolute inset-0 h-full w-full object-cover"
           loading="eager"
