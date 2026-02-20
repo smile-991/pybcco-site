@@ -13,6 +13,17 @@ const navLinks = [
   { name: "جميع المشاريع", href: "/projects", type: "route" as const },
 ];
 
+// ✅ روابط المتجر (Navbar Dropdown)
+const storeLinks = [
+  { name: "واجهة المتجر", href: "/decor" },
+  { name: "بديل الخشب", href: "/decor/wood" },
+  { name: "بديل الرخام", href: "/decor/marble" },
+  { name: "بديل الشيبورد", href: "/decor/wpc" },
+  { name: "بانوهات فوم", href: "/decor/foam-panels" },
+  { name: "فوم صخري", href: "/decor/rock-foam" },
+  { name: "صفائح حجرية", href: "/decor/stone-sheets" },
+];
+
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -67,8 +78,14 @@ export default function Navbar() {
               alt="بنيان الهرم للمقاولات"
               className="w-12 h-12 object-contain"
             />
-            <div className={`hidden sm:block ${isScrolled ? "text-black" : "text-white"}`}>
-              <div className="font-bold text-lg leading-tight whitespace-nowrap">بنيان الهرم</div>
+            <div
+              className={`hidden sm:block ${
+                isScrolled ? "text-black" : "text-white"
+              }`}
+            >
+              <div className="font-bold text-lg leading-tight whitespace-nowrap">
+                بنيان الهرم
+              </div>
               <p className="text-xs opacity-80 whitespace-nowrap">للمقاولات</p>
             </div>
           </a>
@@ -91,6 +108,35 @@ export default function Navbar() {
               </a>
             ))}
 
+            {/* ===== المتجر Dropdown (Desktop) ===== */}
+            <div className="relative group">
+              <button
+                type="button"
+                className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
+                  isScrolled ? "text-gray-800" : "text-white"
+                }`}
+              >
+                المتجر
+                <span className="text-xs">▾</span>
+              </button>
+
+              <div className="absolute right-0 mt-2 w-64 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden">
+                {storeLinks.map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      goTo(item.href);
+                    }}
+                    className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 transition whitespace-nowrap"
+                  >
+                    {item.name}
+                  </a>
+                ))}
+              </div>
+            </div>
+
             {/* ===== مناطق عملنا Dropdown (Desktop) ===== */}
             <div className="relative group">
               <button
@@ -106,6 +152,10 @@ export default function Navbar() {
               <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                 <a
                   href="/contractor-almalqa-riyadh"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    goTo("/contractor-almalqa-riyadh");
+                  }}
                   className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 rounded-xl transition whitespace-nowrap"
                 >
                   حي الملقا
@@ -136,10 +186,16 @@ export default function Navbar() {
                 rel="noopener noreferrer"
                 aria-label="X"
                 className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
-                  isScrolled ? "bg-black/5 hover:bg-black/10" : "bg-white/10 hover:bg-white/20"
+                  isScrolled
+                    ? "bg-black/5 hover:bg-black/10"
+                    : "bg-white/10 hover:bg-white/20"
                 }`}
               >
-                <Twitter className={`w-4 h-4 ${isScrolled ? "text-gray-800" : "text-white"}`} />
+                <Twitter
+                  className={`w-4 h-4 ${
+                    isScrolled ? "text-gray-800" : "text-white"
+                  }`}
+                />
               </a>
 
               <a
@@ -148,10 +204,16 @@ export default function Navbar() {
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
                 className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
-                  isScrolled ? "bg-black/5 hover:bg-black/10" : "bg-white/10 hover:bg-white/20"
+                  isScrolled
+                    ? "bg-black/5 hover:bg-black/10"
+                    : "bg-white/10 hover:bg-white/20"
                 }`}
               >
-                <Linkedin className={`w-4 h-4 ${isScrolled ? "text-gray-800" : "text-white"}`} />
+                <Linkedin
+                  className={`w-4 h-4 ${
+                    isScrolled ? "text-gray-800" : "text-white"
+                  }`}
+                />
               </a>
             </div>
 
@@ -182,15 +244,26 @@ export default function Navbar() {
           {/* ===== Mobile Menu ===== */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild className="lg:hidden">
-              <Button variant="ghost" size="icon" className={isScrolled ? "text-black" : "text-white"}>
+              <Button
+                variant="ghost"
+                size="icon"
+                className={isScrolled ? "text-black" : "text-white"}
+              >
                 <Menu className="w-6 h-6" />
               </Button>
             </SheetTrigger>
 
-            <SheetContent side="right" className="w-80 bg-black text-white border-white/10">
+            <SheetContent
+              side="right"
+              className="w-80 bg-black text-white border-white/10"
+            >
               <div className="flex flex-col h-full">
                 <div className="flex items-center gap-3 mb-8">
-                  <img src="/logo.png" alt="بنيان الهرم للمقاولات" className="w-10 h-10 object-contain" />
+                  <img
+                    src="/logo.png"
+                    alt="بنيان الهرم للمقاولات"
+                    className="w-10 h-10 object-contain"
+                  />
                   <div>
                     <div className="font-bold">بنيان الهرم</div>
                     <p className="text-xs text-white/60">للمقاولات</p>
@@ -212,17 +285,44 @@ export default function Navbar() {
                     </a>
                   ))}
 
+                  {/* ===== المتجر (Mobile) ===== */}
+                  <div className="mt-2 pt-2 border-t border-white/10">
+                    <div className="px-4 py-2 text-xs text-white/60 whitespace-nowrap">
+                      المتجر
+                    </div>
+
+                    {storeLinks.map((item) => (
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          goTo(item.href);
+                        }}
+                        className="px-4 py-3 text-white hover:bg-gold/10 hover:text-gold rounded-lg transition whitespace-nowrap"
+                      >
+                        {item.name}
+                      </a>
+                    ))}
+                  </div>
+
                   <a
                     href="/contractor-almalqa-riyadh"
-                    onClick={() => setIsOpen(false)}
-                    className="px-4 py-3 text-white hover:bg-gold/10 hover:text-gold rounded-lg transition whitespace-nowrap"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      goTo("/contractor-almalqa-riyadh");
+                    }}
+                    className="mt-2 px-4 py-3 text-white hover:bg-gold/10 hover:text-gold rounded-lg transition whitespace-nowrap"
                   >
                     مناطق عملنا – حي الملقا
                   </a>
                 </nav>
 
                 <div className="mt-auto pt-6 border-t border-white/10">
-                  <a href="tel:+966550604837" className="flex items-center gap-3 mb-4 text-white">
+                  <a
+                    href="tel:+966550604837"
+                    className="flex items-center gap-3 mb-4 text-white"
+                  >
                     <div className="w-10 h-10 bg-gold/20 rounded-lg flex items-center justify-center">
                       <Phone className="w-5 h-5 text-gold" />
                     </div>
@@ -239,13 +339,19 @@ export default function Navbar() {
                     variant="outline"
                     className="w-full border-gold text-gold hover:bg-white/10 font-bold mb-3 whitespace-nowrap"
                   >
-                    <a href="/villa-finishing-price-riyadh" onClick={() => setIsOpen(false)}>
+                    <a
+                      href="/villa-finishing-price-riyadh"
+                      onClick={() => setIsOpen(false)}
+                    >
                       <Calculator className="w-5 h-5 ml-2" />
                       احسب التكلفة
                     </a>
                   </Button>
 
-                  <Button onClick={() => goTo("#contact")} className="w-full bg-gold hover:bg-gold/90 text-black font-bold whitespace-nowrap">
+                  <Button
+                    onClick={() => goTo("#contact")}
+                    className="w-full bg-gold hover:bg-gold/90 text-black font-bold whitespace-nowrap"
+                  >
                     طلب عرض سعر
                   </Button>
 
