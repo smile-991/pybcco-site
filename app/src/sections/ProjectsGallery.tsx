@@ -20,12 +20,31 @@ function SmartImage({
   className?: string;
 }) {
   const [currentSrc, setCurrentSrc] = useState(src);
+  const [tried, setTried] = useState<{ webp?: boolean; jpg?: boolean; jpeg?: boolean }>({});
+
+  const toWebp = (s: string) => s.replace(/\.(jpg|jpeg|png)$/i, ".webp");
+  const toJpg = (s: string) => s.replace(/\.(webp|jpeg|png)$/i, ".jpg");
+  const toJpeg = (s: string) => s.replace(/\.(webp|jpg|png)$/i, ".jpeg");
 
   const handleError = () => {
-    if (currentSrc.endsWith(".jpg"))
-      setCurrentSrc(currentSrc.replace(/\.jpg$/i, ".jpeg"));
-    else if (currentSrc.endsWith(".jpeg"))
-      setCurrentSrc(currentSrc.replace(/\.jpeg$/i, ".jpg"));
+    // 1) جرّب webp أولاً
+    if (!tried.webp && !currentSrc.toLowerCase().endsWith(".webp")) {
+      setTried((p) => ({ ...p, webp: true }));
+      setCurrentSrc(toWebp(currentSrc));
+      return;
+    }
+    // 2) جرّب jpg
+    if (!tried.jpg && !currentSrc.toLowerCase().endsWith(".jpg")) {
+      setTried((p) => ({ ...p, jpg: true }));
+      setCurrentSrc(toJpg(currentSrc));
+      return;
+    }
+    // 3) جرّب jpeg
+    if (!tried.jpeg && !currentSrc.toLowerCase().endsWith(".jpeg")) {
+      setTried((p) => ({ ...p, jpeg: true }));
+      setCurrentSrc(toJpeg(currentSrc));
+      return;
+    }
   };
 
   return (
@@ -33,6 +52,7 @@ function SmartImage({
       src={currentSrc}
       alt={alt}
       loading="lazy"
+      decoding="async"
       onError={handleError}
       className={className}
     />
@@ -40,7 +60,6 @@ function SmartImage({
 }
 
 export default function ProjectsGallery() {
-  // ✅ الأفضل نخلي الافتراضي تشطيب
   const [cat, setCat] = useState<Cat>("finishing");
 
   const title = GALLERY[cat].title;
@@ -49,7 +68,7 @@ export default function ProjectsGallery() {
   const pageTitle = "معرض مشاريع بنيان الهرم | تشطيب وعظم وترميم بالرياض";
   const pageDescription =
     "شاهد معرض مشاريع بنيان الهرم للمقاولات بالرياض: تشطيب فلل وشقق، بناء عظم، وأعمال ترفيه. نماذج حقيقية وصور من أرض الواقع.";
-  const canonical = "https://pybcco.com/projects";
+  const canonical = "https://pybcco.com/projects-gallery";
   const ogImage = "https://pybcco.com/og.jpg"; // خليه og.jpg إذا ما عندك صورة خاصة للمعرض
 
   return (

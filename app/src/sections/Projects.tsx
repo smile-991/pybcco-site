@@ -1,179 +1,239 @@
-import { useEffect, useRef, useState } from 'react';
-import { MapPin, CheckCircle2, ArrowLeft, ExternalLink } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { useEffect, useMemo, useRef, useState } from "react";
+import { MapPin, CheckCircle2, ArrowLeft, ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
+
+/** ✅ SmartImage: local ext fallback (webp -> jpg -> jpeg) */
+function SmartImage({
+  src,
+  alt,
+  className,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) {
+  const [currentSrc, setCurrentSrc] = useState(src);
+  const [step, setStep] = useState(0);
+
+  // هل هو ملف محلي داخل public؟ (بيبلش بـ / )
+  const isLocal = currentSrc.startsWith("/");
+
+  const clean = currentSrc.split("?")[0].toLowerCase();
+  const hasExt =
+    clean.endsWith(".webp") || clean.endsWith(".jpg") || clean.endsWith(".jpeg") || clean.endsWith(".png");
+
+  const swapExt = (s: string, next: "webp" | "jpg" | "jpeg") =>
+    s.replace(/\.(webp|jpg|jpeg|png)$/i, `.${next}`);
+
+  const handleError = () => {
+    // روابط مثل Unsplash ما فيها امتداد واضح → لا تعمل fallback
+    if (!isLocal || !hasExt) return;
+
+    if (step === 0 && !clean.endsWith(".webp")) {
+      setCurrentSrc(swapExt(currentSrc, "webp"));
+      setStep(1);
+      return;
+    }
+    if (step <= 1 && !clean.endsWith(".jpg")) {
+      setCurrentSrc(swapExt(currentSrc, "jpg"));
+      setStep(2);
+      return;
+    }
+    if (step <= 2 && !clean.endsWith(".jpeg")) {
+      setCurrentSrc(swapExt(currentSrc, "jpeg"));
+      setStep(3);
+      return;
+    }
+  };
+
+  return (
+    <img
+      src={currentSrc}
+      alt={alt}
+      loading="lazy"
+      decoding="async"
+      onError={handleError}
+      className={className}
+    />
+  );
+}
 
 const projects = [
   {
     id: 1,
-    name: 'GARANADA BUSINESS PARK',
-    category: 'تجاري',
-    location: 'الرياض',
-    client: 'AL LATIFIA TRADING',
-    scope: 'توريد وتركيب الإضاءة',
-    value: '1,120,000 ريال',
-    status: 'منتهي',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80',
+    name: "GARANADA BUSINESS PARK",
+    category: "تجاري",
+    location: "الرياض",
+    client: "AL LATIFIA TRADING",
+    scope: "توريد وتركيب الإضاءة",
+    value: "1,120,000 ريال",
+    status: "منتهي",
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=900&q=80",
   },
   {
     id: 2,
-    name: 'مشروع NAZAHA',
-    category: 'حكومي',
-    location: 'الرياض',
-    client: 'Abdul Aziz Al Hajj',
-    scope: 'توريد وتركيب الإضاءة',
-    value: '1,875,804 ريال',
-    status: 'منتهي',
-    image: 'https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=600&q=80',
+    name: "مشروع NAZAHA",
+    category: "حكومي",
+    location: "الرياض",
+    client: "Abdul Aziz Al Hajj",
+    scope: "توريد وتركيب الإضاءة",
+    value: "1,875,804 ريال",
+    status: "منتهي",
+    image: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=900&q=80",
   },
   {
     id: 3,
-    name: 'مستشفى نبأ الصحة',
-    category: 'صحي',
-    location: 'الرياض',
-    client: 'AL KAYAN AL ARABIA TECH',
-    scope: 'توريد وتركيب الإضاءة',
-    value: '1,498,785 ريال',
-    status: 'منتهي',
-    image: 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?w=600&q=80',
+    name: "مستشفى نبأ الصحة",
+    category: "صحي",
+    location: "الرياض",
+    client: "AL KAYAN AL ARABIA TECH",
+    scope: "توريد وتركيب الإضاءة",
+    value: "1,498,785 ريال",
+    status: "منتهي",
+    image: "https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?w=900&q=80",
   },
   {
     id: 4,
-    name: 'فيلات مدارا',
-    category: 'سكني',
-    location: 'الرياض / العليا',
-    client: 'Madara',
-    scope: 'مقاول رئيسي (تشطيب)',
-    value: '4,000,000 ريال',
-    status: 'منتهي',
-    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80',
+    name: "فيلات مدارا",
+    category: "سكني",
+    location: "الرياض / العليا",
+    client: "Madara",
+    scope: "مقاول رئيسي (تشطيب)",
+    value: "4,000,000 ريال",
+    status: "منتهي",
+    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&q=80",
   },
   {
     id: 5,
-    name: 'فيلات الحمراء',
-    category: 'سكني',
-    location: 'الرياض / الحمراء',
-    client: 'Dar Alhandassa',
-    scope: 'مقاول رئيسي',
-    value: '4,000,000 ريال',
-    status: 'منتهي',
-    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80',
+    name: "فيلات الحمراء",
+    category: "سكني",
+    location: "الرياض / الحمراء",
+    client: "Dar Alhandassa",
+    scope: "مقاول رئيسي",
+    value: "4,000,000 ريال",
+    status: "منتهي",
+    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=80",
   },
   {
     id: 6,
-    name: 'مزارع الزلفي',
-    category: 'زراعي',
-    location: 'الرياض / الزلفي',
-    client: 'KHALIF EL KHALIF',
-    scope: 'مقاول رئيسي (المباني الرئيسية)',
-    value: '1,910,523 ريال',
-    status: 'منتهي',
-    image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80',
+    name: "مزارع الزلفي",
+    category: "زراعي",
+    location: "الرياض / الزلفي",
+    client: "KHALIF EL KHALIF",
+    scope: "مقاول رئيسي (المباني الرئيسية)",
+    value: "1,910,523 ريال",
+    status: "منتهي",
+    image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900&q=80",
   },
   {
     id: 7,
-    name: 'ستاربكس',
-    category: 'تجاري',
-    location: 'الرياض / السليمانية',
-    client: 'Aljazeera Hyper market',
-    scope: 'مقاول رئيسي (إنشاء وتشطيب)',
-    value: '1,023,439 ريال',
-    status: 'منتهي',
-    image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&q=80',
+    name: "ستاربكس",
+    category: "تجاري",
+    location: "الرياض / السليمانية",
+    client: "Aljazeera Hyper market",
+    scope: "مقاول رئيسي (إنشاء وتشطيب)",
+    value: "1,023,439 ريال",
+    status: "منتهي",
+    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=900&q=80",
   },
   {
     id: 8,
-    name: 'مطاعم توم توم',
-    category: 'تجاري',
-    location: 'الرياض',
-    client: 'TOM TOM RESTAURANT',
-    scope: 'مقاول رئيسي (أعمال التشطيب)',
-    value: '11,000,000 ريال',
-    status: 'منتهي',
-    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80',
+    name: "مطاعم توم توم",
+    category: "تجاري",
+    location: "الرياض",
+    client: "TOM TOM RESTAURANT",
+    scope: "مقاول رئيسي (أعمال التشطيب)",
+    value: "11,000,000 ريال",
+    status: "منتهي",
+    image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=80",
   },
   {
     id: 9,
-    name: 'مبنى 4 أدوار',
-    category: 'تجاري',
-    location: 'الرياض / السليمانية',
-    client: 'SAAD EL MEGRNY',
-    scope: 'مقاول رئيسي (إنشاء وتشطيب)',
-    value: '10,000,000 ريال',
-    status: 'منتهي',
-    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80',
+    name: "مبنى 4 أدوار",
+    category: "تجاري",
+    location: "الرياض / السليمانية",
+    client: "SAAD EL MEGRNY",
+    scope: "مقاول رئيسي (إنشاء وتشطيب)",
+    value: "10,000,000 ريال",
+    status: "منتهي",
+    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&q=80",
   },
   {
     id: 10,
-    name: 'مجمع 40 فيلا و20 مبنى',
-    category: 'سكني',
-    location: 'الرياض / الملقا',
-    client: 'Gulf Real Estate company',
-    scope: 'مقاول رئيسي (تنسيق المواقع)',
-    value: '1,800,000 ريال',
-    status: 'منتهي',
-    image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&q=80',
+    name: "مجمع 40 فيلا و20 مبنى",
+    category: "سكني",
+    location: "الرياض / الملقا",
+    client: "Gulf Real Estate company",
+    scope: "مقاول رئيسي (تنسيق المواقع)",
+    value: "1,800,000 ريال",
+    status: "منتهي",
+    image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=900&q=80",
   },
   {
     id: 11,
-    name: 'محل كانون',
-    category: 'تجاري',
-    location: 'الرياض وجدة',
-    client: 'CANON',
-    scope: 'مقاول رئيسي (أعمال التشطيب)',
-    value: '1,085,000 ريال',
-    status: 'منتهي',
-    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&q=80',
+    name: "محل كانون",
+    category: "تجاري",
+    location: "الرياض وجدة",
+    client: "CANON",
+    scope: "مقاول رئيسي (أعمال التشطيب)",
+    value: "1,085,000 ريال",
+    status: "منتهي",
+    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=900&q=80",
   },
   {
     id: 12,
-    name: 'مسجد النهضة',
-    category: 'ديني',
-    location: 'الرياض',
-    client: 'HARMONI',
-    scope: 'توريد الإضاءة',
-    value: '594,508 ريال',
-    status: 'منتهي',
-    image: 'https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=600&q=80',
+    name: "مسجد النهضة",
+    category: "ديني",
+    location: "الرياض",
+    client: "HARMONI",
+    scope: "توريد الإضاءة",
+    value: "594,508 ريال",
+    status: "منتهي",
+    image: "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=900&q=80",
   },
-];
+] as const;
 
-const categories = ['الكل', 'سكني', 'تجاري', 'حكومي', 'صحي', 'ديني', 'زراعي'];
+const categories = ["الكل", "سكني", "تجاري", "حكومي", "صحي", "ديني", "زراعي"];
 
 const cities = [
-  'الرياض',
-  'جدة',
-  'الدمام',
-  'الأحساء',
-  'مكة المكرمة',
-  'المدينة المنورة',
-  'أبها',
-  'جازان',
-  'شروة',
-  'ظهران الجنوب',
-  'الحقو-بيش',
-  'ينبع',
-  'العلا',
-  'بريدة',
-  'الطائف',
-  'حائل',
-  'تبوك',
-  'نجران',
-  'عرعر',
+  "الرياض",
+  "جدة",
+  "الدمام",
+  "الأحساء",
+  "مكة المكرمة",
+  "المدينة المنورة",
+  "أبها",
+  "جازان",
+  "شروة",
+  "ظهران الجنوب",
+  "الحقو-بيش",
+  "ينبع",
+  "العلا",
+  "بريدة",
+  "الطائف",
+  "حائل",
+  "تبوك",
+  "نجران",
+  "عرعر",
 ];
 
 export default function Projects() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('الكل');
-  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState("الكل");
+  const [selectedProject, setSelectedProject] = useState<(typeof projects)[number] | null>(null);
+
+  // ✅ Mobile: cities collapse
+  const [showAllCities, setShowAllCities] = useState(false);
+  const visibleCities = useMemo(() => (showAllCities ? cities : cities.slice(0, 10)), [showAllCities]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -190,22 +250,19 @@ export default function Projects() {
     return () => observer.disconnect();
   }, []);
 
-  const filteredProjects =
-    selectedCategory === 'الكل'
+  const filteredProjects = useMemo(() => {
+    return selectedCategory === "الكل"
       ? projects
       : projects.filter((p) => p.category === selectedCategory);
+  }, [selectedCategory]);
 
   return (
-    <section
-      id="projects"
-      ref={sectionRef}
-      className="section-padding bg-white relative overflow-hidden"
-    >
+    <section id="projects" ref={sectionRef} className="section-padding bg-white relative overflow-hidden">
       <div className="container-custom relative z-10">
         {/* Section Header */}
         <div
           className={`text-center mb-12 transition-all duration-700 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
           <span className="inline-block bg-gold/10 text-gold-dark px-4 py-2 rounded-full text-sm font-semibold mb-4">
@@ -219,18 +276,19 @@ export default function Projects() {
           </p>
         </div>
 
-        {/* Cities Map */}
+        {/* Cities */}
         <div
           className={`mb-12 transition-all duration-700 delay-100 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
           <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
             <h3 className="text-lg font-bold text-gray-900 mb-4 text-center">
               نغطي مشاريعنا <span className="text-gold">19 مدينة</span> حول المملكة
             </h3>
+
             <div className="flex flex-wrap justify-center gap-2">
-              {cities.map((city, index) => (
+              {visibleCities.map((city, index) => (
                 <Badge
                   key={index}
                   variant="secondary"
@@ -241,25 +299,35 @@ export default function Projects() {
                 </Badge>
               ))}
             </div>
+
+            <div className="mt-4 text-center">
+              <button
+                type="button"
+                onClick={() => setShowAllCities((v) => !v)}
+                className="text-sm font-bold text-gray-700 hover:text-gold underline underline-offset-4"
+              >
+                {showAllCities ? "إخفاء المدن" : "عرض كل المدن"}
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Category Filter */}
         <div
           className={`flex flex-wrap justify-center gap-2 mb-10 transition-all duration-700 delay-200 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
           {categories.map((category) => (
             <Button
               key={category}
-              variant={selectedCategory === category ? 'default' : 'outline'}
+              variant={selectedCategory === category ? "default" : "outline"}
               size="sm"
               onClick={() => setSelectedCategory(category)}
               className={
                 selectedCategory === category
-                  ? 'bg-gold text-black hover:bg-gold/90'
-                  : 'hover:bg-gold/10 hover:text-gold'
+                  ? "bg-gold text-black hover:bg-gold/90"
+                  : "hover:bg-gold/10 hover:text-gold"
               }
             >
               {category}
@@ -273,22 +341,20 @@ export default function Projects() {
             <div
               key={project.id}
               className={`group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover-lift border border-gray-100 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
               }`}
               style={{ transitionDelay: `${300 + index * 50}ms` }}
             >
               {/* Image */}
               <div className="relative h-48 overflow-hidden">
-                <img
+                <SmartImage
                   src={project.image}
                   alt={project.name}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute top-3 right-3">
-                  <Badge className="bg-gold text-black font-semibold">
-                    {project.category}
-                  </Badge>
+                  <Badge className="bg-gold text-black font-semibold">{project.category}</Badge>
                 </div>
                 <div className="absolute bottom-3 left-3 right-3">
                   <div className="flex items-center gap-1 text-white/80 text-sm">
@@ -303,9 +369,7 @@ export default function Projects() {
                 <h3 className="font-bold text-gray-900 mb-2 group-hover:text-gold transition-colors line-clamp-1">
                   {project.name}
                 </h3>
-                <p className="text-gray-500 text-sm mb-3 line-clamp-1">
-                  {project.scope}
-                </p>
+                <p className="text-gray-500 text-sm mb-3 line-clamp-1">{project.scope}</p>
                 <div className="flex items-center justify-between">
                   <span className="text-gold font-bold text-sm">{project.value}</span>
                   <Button
@@ -326,13 +390,13 @@ export default function Projects() {
         {/* View All Button */}
         <div
           className={`text-center mt-12 transition-all duration-700 delay-500 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
           <Button
             size="lg"
             className="bg-gold hover:bg-gold/90 text-black font-bold px-8"
-            onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })}
           >
             <ExternalLink className="w-5 h-5 mr-2" />
             اطلب مشروعك الآن
@@ -347,24 +411,19 @@ export default function Projects() {
             <>
               <DialogHeader>
                 <div className="relative h-48 -mx-6 -mt-6 mb-4 overflow-hidden rounded-t-lg">
-                  <img
+                  <SmartImage
                     src={selectedProject.image}
                     alt={selectedProject.name}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   <div className="absolute top-4 right-4">
-                    <Badge className="bg-gold text-black font-semibold">
-                      {selectedProject.category}
-                    </Badge>
+                    <Badge className="bg-gold text-black font-semibold">{selectedProject.category}</Badge>
                   </div>
                 </div>
-                <DialogTitle className="text-xl font-bold text-gray-900">
-                  {selectedProject.name}
-                </DialogTitle>
-                <DialogDescription className="text-gray-600">
-                  {selectedProject.scope}
-                </DialogDescription>
+
+                <DialogTitle className="text-xl font-bold text-gray-900">{selectedProject.name}</DialogTitle>
+                <DialogDescription className="text-gray-600">{selectedProject.scope}</DialogDescription>
               </DialogHeader>
 
               <div className="space-y-4 mt-4">
@@ -375,14 +434,17 @@ export default function Projects() {
                     {selectedProject.location}
                   </span>
                 </div>
+
                 <div className="flex items-center justify-between py-2 border-b border-gray-100">
                   <span className="text-gray-500">العميل</span>
                   <span className="font-semibold text-gray-900">{selectedProject.client}</span>
                 </div>
+
                 <div className="flex items-center justify-between py-2 border-b border-gray-100">
                   <span className="text-gray-500">قيمة المشروع</span>
                   <span className="font-semibold text-gold">{selectedProject.value}</span>
                 </div>
+
                 <div className="flex items-center justify-between py-2">
                   <span className="text-gray-500">الحالة</span>
                   <span className="font-semibold text-green-600 flex items-center gap-1">
@@ -396,7 +458,7 @@ export default function Projects() {
                 className="w-full mt-6 bg-gold hover:bg-gold/90 text-black font-bold"
                 onClick={() => {
                   setSelectedProject(null);
-                  document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+                  document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
                 طلب مشروع مماثل
