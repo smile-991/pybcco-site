@@ -9,6 +9,7 @@ type SeoHeadProps = {
   ogImage?: string; // absolute URL recommended
   ogType?: string; // default: website
   twitterCard?: "summary" | "summary_large_image"; // default summary_large_image
+  robots?: string; // ✅ NEW: مثال "index,follow" أو "noindex,follow"
   jsonLd?: JsonLd | JsonLd[]; // FAQ / Service / Breadcrumb / WebPage ...
 };
 
@@ -94,10 +95,7 @@ function buildLocalBusinessJsonLd() {
       { "@type": "City", name: NAP.city_en },
       { "@type": "AdministrativeArea", name: "North Riyadh" },
     ],
-    sameAs: [
-      "https://www.linkedin.com/company/pybcco/",
-      "https://x.com/pybcco",
-    ],
+    sameAs: ["https://www.linkedin.com/company/pybcco/", "https://x.com/pybcco"],
   } as JsonLd;
 }
 
@@ -114,6 +112,7 @@ export default function SeoHead({
   ogImage,
   ogType = "website",
   twitterCard = "summary_large_image",
+  robots = "index,follow,max-image-preview:large", // ✅ default مطابق fallback
   jsonLd,
 }: SeoHeadProps) {
   useEffect(() => {
@@ -122,6 +121,9 @@ export default function SeoHead({
 
     // 2) Meta description
     upsertMetaByName("description", description);
+
+    // ✅ Robots (Dynamic)
+    upsertMetaByName("robots", robots);
 
     // 3) Canonical
     upsertLinkRel("canonical", canonical);
@@ -174,7 +176,7 @@ export default function SeoHead({
     return () => {
       removeJsonLdScripts(prefix);
     };
-  }, [title, description, canonical, ogImage, ogType, twitterCard, jsonLd]);
+  }, [title, description, canonical, ogImage, ogType, twitterCard, robots, jsonLd]);
 
   return null;
 }

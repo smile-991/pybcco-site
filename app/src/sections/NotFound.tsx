@@ -2,15 +2,16 @@ import { Link, useLocation } from "react-router-dom";
 import SeoHead from "@/components/SeoHead";
 
 export default function NotFound() {
-  const loc = useLocation();
-  const canonical = `https://pybcco.com${loc.pathname || "/"}`;
+  const location = useLocation();
+  const canonical = `https://pybcco.com${location.pathname}`;
 
   return (
-    <main dir="rtl" className="pt-28 pb-16 bg-white">
+    <main dir="rtl" className="pt-28 pb-16 bg-white min-h-[60vh]">
       <SeoHead
         title="الصفحة غير موجودة | بنيان الهرم للمقاولات"
         description="الصفحة المطلوبة غير موجودة. يمكنك العودة للصفحة الرئيسية أو التواصل معنا مباشرة."
         canonical={canonical}
+        robots="noindex,follow"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "WebPage",
@@ -21,8 +22,11 @@ export default function NotFound() {
 
       <div className="container-custom">
         <div className="max-w-2xl">
-          <h1 className="text-3xl font-extrabold text-gray-900">الصفحة غير موجودة</h1>
-          <p className="mt-3 text-gray-600 leading-8">
+          <h1 className="text-3xl font-extrabold text-gray-900">
+            الصفحة غير موجودة
+          </h1>
+
+          <p className="mt-4 text-gray-600 leading-8">
             يبدو أن الرابط غير صحيح أو تم تغيير الصفحة.
           </p>
 
@@ -51,8 +55,11 @@ export default function NotFound() {
             </a>
           </div>
 
-          <p className="mt-6 text-sm text-gray-500">
-            الرابط الحالي: <span dir="ltr">{loc.pathname}</span>
+          <p className="mt-6 text-sm text-gray-400">
+            الرابط الحالي:
+            <span dir="ltr" className="ml-2">
+              {location.pathname}
+            </span>
           </p>
         </div>
       </div>
