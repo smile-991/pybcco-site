@@ -1,5 +1,43 @@
-import { useEffect, useRef, useState } from 'react';
-import { Handshake, Building2, Star } from 'lucide-react';
+import { useEffect, useRef, useState } from "react";
+import { Handshake, Building2, Star } from "lucide-react";
+
+const LOGOS = [
+  "kafd",
+  "kaec",
+  "kkia",
+  "mcdonalds",
+  "nesma",
+  "mbl",
+  "built",
+  "salini",
+  "sela",
+  "tarfeeh",
+  "derrah",
+  "marco",
+];
+
+function SmartLogo({ name }: { name: string }) {
+  const [src, setSrc] = useState(`/clients/${name}.webp`);
+  const [triedPng, setTriedPng] = useState(false);
+
+  return (
+    <img
+      src={src}
+      alt={`شعار ${name}`}
+      className="h-14 w-auto object-contain opacity-95 hover:opacity-100 transition-all duration-300"
+      loading="lazy"
+      decoding="async"
+      onError={() => {
+        // إذا webp فشل لأي سبب، جرّب png (احتياط)
+        if (!triedPng && src.toLowerCase().endsWith(".webp")) {
+          setTriedPng(true);
+          setSrc(`/clients/${name}.png`);
+        }
+      }}
+    />
+  );
+}
+
 export default function Partners() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -15,9 +53,7 @@ export default function Partners() {
       { threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+    if (sectionRef.current) observer.observe(sectionRef.current);
 
     return () => observer.disconnect();
   }, []);
@@ -30,7 +66,11 @@ export default function Partners() {
     >
       <div className="container-custom relative z-10">
         {/* Section Header */}
-        <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div
+          className={`text-center mb-16 transition-all duration-700 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
+        >
           <span className="inline-block bg-gold/10 text-gold-dark px-4 py-2 rounded-full text-sm font-semibold mb-4">
             شركاؤنا
           </span>
@@ -43,7 +83,11 @@ export default function Partners() {
         </div>
 
         {/* Stats */}
-        <div className={`grid grid-cols-3 gap-6 mb-16 max-w-3xl mx-auto transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div
+          className={`grid grid-cols-3 gap-6 mb-16 max-w-3xl mx-auto transition-all duration-700 delay-100 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
+        >
           <div className="bg-white rounded-2xl p-6 text-center shadow-lg border border-gray-100">
             <Handshake className="w-10 h-10 text-gold mx-auto mb-3" />
             <div className="text-3xl font-bold text-gray-900 mb-1">15+</div>
@@ -61,54 +105,45 @@ export default function Partners() {
           </div>
         </div>
 
-{/* Clients Logos */}
-<div
-  className={`mt-12 transition-all duration-700 delay-200 ${
-    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-  }`}
->
-  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center">
-    {[
-      "kafd.png",
-      "kaec.png",
-      "kkia.png",
-      "mcdonalds.png",
-      "nesma.png",
-      "mbl.png",
-      "built.png",
-      "salini.png",
-      "sela.png",
-      "tarfeeh.png",
-      "derrah.png",
-      "marco.png",
-    ].map((logo, index) => (
-      <div
-        key={index}
-        className="bg-white rounded-2xl p-6 flex items-center justify-center shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300"
-      >
-        <img
-  src={`/clients/${logo}`}
-  alt="Client Logo"
-  className="h-14 w-auto object-contain opacity-95 hover:opacity-100 transition-all duration-300"
-  loading="lazy"
-/>
-      </div>
-    ))}
-  </div>
-</div>
+        {/* Clients Logos */}
+        <div
+          className={`mt-12 transition-all duration-700 delay-200 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}
+        >
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center">
+            {LOGOS.map((name, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-2xl p-6 flex items-center justify-center shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300"
+              >
+                <SmartLogo name={name} />
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* Become Partner CTA */}
-        <div className={`mt-16 text-center transition-all duration-700 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div
+          className={`mt-16 text-center transition-all duration-700 delay-700 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
+        >
           <div className="bg-gradient-to-r from-gold/20 to-gold/5 rounded-2xl p-8 max-w-2xl mx-auto border border-gold/20">
             <Handshake className="w-16 h-16 text-gold mx-auto mb-4" />
             <h3 className="text-2xl font-bold text-gray-900 mb-3">
               كن شريكاً في النجاح
             </h3>
             <p className="text-gray-600 mb-6">
-              نرحب بالشراكات الاستراتيجية مع الشركات والمؤسسات التي تبحث عن جودة عالية وخبرة موثوقة
+              نرحب بالشراكات الاستراتيجية مع الشركات والمؤسسات التي تبحث عن جودة
+              عالية وخبرة موثوقة
             </p>
             <button
-              onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() =>
+                document
+                  .querySelector("#contact")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
               className="bg-gold hover:bg-gold/90 text-black font-bold px-8 py-3 rounded-xl transition-colors"
             >
               تواصل معنا للشراكة
