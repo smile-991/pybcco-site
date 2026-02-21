@@ -30,7 +30,6 @@
       content="شركة مقاولات بالرياض: بناء عظم، تشطيب، ترميم، وتسليم مفتاح بإشراف هندسي. اطلب معاينة الآن."
     />
     <meta property="og:url" content="https://pybcco.com/" />
-    <!-- إذا ما عندك الصورة حالياً، اتركها أو ارفع og.jpg لاحقاً -->
     <meta property="og:image" content="https://pybcco.com/og.jpg" />
     <meta property="og:image:alt" content="بنيان الهرم للمقاولات - PYBCCO" />
 
@@ -43,34 +42,10 @@
     />
     <meta name="twitter:image" content="https://pybcco.com/og.jpg" />
 
-    <!-- ✅ Structured Data (NAP موحّد) -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "GeneralContractor",
-        "@id": "https://pybcco.com/#localbusiness",
-        "name": "بنيان الهرم للمقاولات - PYBCCO",
-        "alternateName": "Bunyan Al Haram Contracting – PYBCCO",
-        "url": "https://pybcco.com/",
-        "telephone": "+966550604837",
-        "email": "info@pybcco.com",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Al Washm St, Al Murabba",
-          "addressLocality": "Riyadh",
-          "addressRegion": "Riyadh Province",
-          "postalCode": "12345",
-          "addressCountry": "SA"
-        },
-        "areaServed": [{ "@type": "City", "name": "Riyadh" }],
-        "sameAs": [
-          "https://www.linkedin.com/company/pybcco/",
-          "https://x.com/pybcco",
-          "https://sites.google.com/view/bunian-alharam-riyadh/home",
-          "https://wa.me/966550604837"
-        ]
-      }
-    </script>
+    <!-- ✅ ملاحظة:
+         لا تضع Structured Data (JSON-LD) هنا
+         لأن SeoHead.tsx هو المصدر الوحيد للـ Schema لتجنب duplication/conflict.
+    -->
 
     <!-- Google tag (gtag.js) -->
     <script
