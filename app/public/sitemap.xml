@@ -54,4 +54,19 @@
     <priority>0.9</priority>
   </url>
 
+  <!-- ✅ Store -->
+  <url>
+    <loc>https://pybcco.com/decor</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/decor/wood</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>
