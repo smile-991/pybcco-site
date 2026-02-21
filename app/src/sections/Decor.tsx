@@ -23,7 +23,7 @@ export default function Decor() {
   };
 
   return (
-    <main dir="rtl" className="min-h-screen bg-white">
+    <main dir="rtl" className="bg-gradient-to-b from-white via-gray-50 to-gray-100">
       <SeoHead
         title="المتجر | بنيان الهرم للمقاولات"
         description="مواد ديكورية محلية بالرياض: بديل خشب، بديل رخام، بانوهات، صفائح حجرية — توريد أو توريد + تركيب."
@@ -40,12 +40,28 @@ export default function Decor() {
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <a
-              href="/decor/wood"
-              className="rounded-2xl border p-5 hover:shadow-md transition"
-            >
-              <div className="font-bold text-lg">بديل الخشب</div>
-              <div className="text-sm text-gray-600 mt-1">ألواح PVC — توريد + تركيب</div>
-            </a>
+  href="/decor/wood"
+  className="relative rounded-2xl overflow-hidden shadow-lg group h-44"
+>
+  {/* Background Image */}
+  <div
+    className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+    style={{ backgroundImage: "url('/decor/wood/F4B.webp')" }}
+  />
+
+  {/* Overlay */}
+  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition" />
+
+  {/* Content */}
+  <div className="relative p-6 text-white flex flex-col justify-end h-full">
+    <div className="text-xl font-extrabold">
+      بديل الخشب
+    </div>
+    <div className="text-sm mt-1 opacity-90">
+      ألواح PVC — توريد + تركيب
+    </div>
+  </div>
+</a>
 
             <div className="rounded-2xl border p-5 opacity-60">
               <div className="font-bold text-lg">بديل الرخام</div>
