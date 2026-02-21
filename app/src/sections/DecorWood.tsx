@@ -142,7 +142,6 @@ export default function DecorWood() {
         code: "N005",
         mainCandidates: candidates(
           "/decor/wood/N005-683x1024.webp",
-          "/decor/wood/N005-768x768.webp",
           "/decor/wood/N005-150-768x768.webp"
         ),
       },
