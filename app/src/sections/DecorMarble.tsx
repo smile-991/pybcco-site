@@ -703,7 +703,43 @@ export default function DecorMarble() {
               );
             })}
           </div>
+{/* دليل الشراء والتركيب */}
+<section className="mt-16 bg-white rounded-2xl shadow-sm border p-6 md:p-8">
+  <h2 className="text-2xl font-extrabold text-gray-900 mb-4">
+    بديل الرخام بالرياض – دليل الشراء والتركيب
+  </h2>
 
+  <p className="text-gray-700 leading-8">
+    بديل الرخام PVC يمنح شكل الرخام الطبيعي بعروق واضحة ولمسة أنيقة تناسب
+    الجدران الداخلية وخلف الشاشات والمداخل وغرف المعيشة. يتميز بخفة الوزن
+    وسهولة التنظيف ومقاومة الرطوبة، ما يجعله خيارًا عمليًا وأنيقًا في نفس الوقت.
+  </p>
+
+  <p className="text-gray-700 leading-8 mt-4">
+    سعر اللوح <strong>95 ريال</strong> شامل الضريبة، وسعر التركيب
+    <strong> 60 ريال للمتر المربع</strong>. المقاس القياسي
+    <strong> 290 × 120 سم</strong> بسماكة <strong>3 مم</strong> مع ضمان
+    <strong> 5 سنوات</strong> ضد عيوب التصنيع.
+  </p>
+
+  <div className="mt-6 space-y-3 text-gray-800">
+    <h3 className="font-bold">هل بديل الرخام مناسب للحمامات والمطابخ؟</h3>
+    <p className="text-gray-600">
+      نعم، مقاوم للماء وسهل التنظيف عند تركيبه بطريقة صحيحة مع معالجة الفواصل.
+    </p>
+
+    <h3 className="font-bold mt-4">ما الفرق بينه وبين الرخام الطبيعي؟</h3>
+    <p className="text-gray-600">
+      أخف وزنًا وأسهل تركيبًا وأقل تكلفة، مع مظهر قريب جدًا من الرخام الحقيقي.
+    </p>
+
+    <h3 className="font-bold mt-4">متى أختار ملمس خشن أو بارز؟</h3>
+    <p className="text-gray-600">
+      الملمس الخشن يعطي طابع فخم ويخفي آثار اللمس، أما الملمس البارز فيعطي عمقًا
+      أكبر لعروق الرخام.
+    </p>
+  </div>
+</section>
           {/* FAQ (غير مزعج: details) */}
           <section className="mt-14">
             <h2 className="text-2xl font-extrabold text-gray-900">أسئلة شائعة عن بديل الرخام</h2>
