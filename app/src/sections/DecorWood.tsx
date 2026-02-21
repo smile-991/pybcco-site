@@ -140,7 +140,7 @@ export default function DecorWood() {
         name: "بديل الخشب – N005",
         code: "N005",
         mainCandidates: candidates(
-          "/decor/wood/N005-683x1024.webp",
+          "/decor/wood/N005_MAIN.webp",
           "/decor/wood/N005-150-768x768.webp"
         ),
       },
@@ -149,7 +149,7 @@ export default function DecorWood() {
         name: "بديل الخشب – N006 (أسود)",
         code: "N006",
         mainCandidates: candidates(
-          "/decor/wood/N006-683x1024.webp",
+          "/decor/wood/N006_MAIN.webp",
           "/decor/wood/N006-150-768x768.webp"
         ),
       },
@@ -167,7 +167,7 @@ export default function DecorWood() {
         name: "بديل الخشب – N008",
         code: "N008",
         mainCandidates: candidates(
-          "/decor/wood/N008-683x1024.webp",
+          "/decor/wood/N008_MAIN.webp",
           "/decor/wood/N008-150-768x768.webp"
         ),
       },
@@ -176,7 +176,7 @@ export default function DecorWood() {
         name: "بديل الخشب – N009",
         code: "N009",
         mainCandidates: candidates(
-          "/decor/wood/N009-768x768.webp",
+          "/decor/wood/N009_MAIN.webp",
           "/decor/wood/N009-150-768x768.webp"
         ),
       },
