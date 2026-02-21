@@ -1,393 +1,245 @@
 import { useMemo, useState } from "react";
-import SeoHead from "@/components/SeoHead";
+import { Link } from "react-router-dom";
+import { CheckCircle2, Calculator, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-type OrderType = "supply" | "supply_install";
+import SeoHead from "@/components/SeoHead";
 
 type Product = {
-  code: string;          // مثل N006
-  title: string;         // مثل بديل خشب PVC - لون أسود (اختياري)
-  imgMain: string;       // صورة اللوح / أوضح صورة للمنتج
-  imgScene: string;      // صورة التطبيق/الغرفة
+  id: string;          // مثل N006 أو F1
+  name: string;        // اسم يظهر للعميل
+  code: string;        // كود داخلي
+  main: string;        // صورة أساسية
+  thumb?: string;      // صورة مصغرة (اختياري)
+  second?: string;     // صورة ثانية (اختياري)
 };
 
-const WA_NUMBER = "966550604837";
+const WHATSAPP =
+  "https://wa.me/966550604837?text=" +
+  encodeURIComponent("السلام عليكم، أريد الاستفسار عن بديل الخشب (لوح 290×20) + التركيب.");
 
-const PRICE_SAR = 22; // شامل الضريبة
-const INSTALL_SAR = 25; // تركيب/لوح
-const SIZE_TEXT = "290×20 سم";
+const PRICE_BOARD_SAR = 22; // شامل الضريبة
+const INSTALL_BOARD_SAR = 25; // شامل الضريبة
+const DIMENSIONS = "290 × 20 سم";
+const MATERIAL = "PVC عالي الكثافة";
+const ORIGIN = "صناعة صينية ممتازة";
+const WARRANTY = "5 سنوات ضد عيوب التصنيع وتغيّر اللون";
 
-function waLink(message: string) {
-  return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+function Img({
+  src,
+  alt,
+  className,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) {
+  const [failed, setFailed] = useState(false);
+  if (failed) {
+    return (
+      <div className={`bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-500 ${className}`}>
+        صورة غير متاحة
+      </div>
+    );
+  }
+  return (
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      className={className}
+      onError={() => setFailed(true)}
+    />
+  );
 }
 
 export default function DecorWood() {
-  // ✅ عدّل القائمة حسب أسماء صورك الفعلية (صورتين لكل منتج)
-  const PRODUCTS: Product[] = [
-  // N000 (استثناء: الأساسي فيه -1- حسب كلامك)
-  {
-    code: "N000",
-    title: "بديل خشب PVC",
-    imgMain: "/decor/wood/N000-1-150-10-768x768.webp",
-    imgScene: "/decor/wood/N000-150-10-768x768.webp",
-  },
+  const products: Product[] = useMemo(
+    () => [
+      // ===== N Series (الأساسي: اللي ما فيه 150) =====
+      { id: "N002", name: "بديل الخشب – N002", code: "N002", main: "/decor/wood/N002-150-768x768.webp", thumb: "/decor/wood/N002-1-768x768.webp" },
+      { id: "N003", name: "بديل الخشب – N003", code: "N003", main: "/decor/wood/N003-768x768.webp", thumb: "/decor/wood/N003-150-768x768.webp" },
+      { id: "N004", name: "بديل الخشب – N004", code: "N004", main: "/decor/wood/N004-768x768.webp", thumb: "/decor/wood/N004-150-768x768.webp" },
+      { id: "N005", name: "بديل الخشب – N005", code: "N005", main: "/decor/wood/N005-683x1024.webp", thumb: "/decor/wood/N005-150-768x768.webp" },
+      { id: "N006", name: "بديل الخشب – N006 (أسود)", code: "N006", main: "/decor/wood/N006-683x1024.webp", thumb: "/decor/wood/N006-150-768x768.webp" },
+      { id: "N007", name: "بديل الخشب – N007", code: "N007", main: "/decor/wood/N007-768x768.webp", thumb: "/decor/wood/N007-150-768x768.webp" },
+      { id: "N008", name: "بديل الخشب – N008", code: "N008", main: "/decor/wood/N008-683x1024.webp", thumb: "/decor/wood/N008-150-768x768.webp" },
+      { id: "N009", name: "بديل الخشب – N009", code: "N009", main: "/decor/wood/N009-768x768.webp", thumb: "/decor/wood/N009-150-768x768.webp" },
+      { id: "N010", name: "بديل الخشب – N010", code: "N010", main: "/decor/wood/N010-768x768.webp", thumb: "/decor/wood/N010-150-768x768.webp" },
+      { id: "N011", name: "بديل الخشب – N011", code: "N011", main: "/decor/wood/N011-768x768.webp", thumb: "/decor/wood/N011-150-768x768.webp" },
+      { id: "N012", name: "بديل الخشب – N012", code: "N012", main: "/decor/wood/N012-683x1024.webp", thumb: "/decor/wood/N012-150-768x768.webp" },
+      { id: "N013", name: "بديل الخشب – N013", code: "N013", main: "/decor/wood/N013-683x1024.webp", thumb: "/decor/wood/N013-150-768x768.webp" },
+      { id: "N014", name: "بديل الخشب – N014", code: "N014", main: "/decor/wood/N014-768x768.webp", thumb: "/decor/wood/N014-150-768x768.webp" },
+      { id: "N015", name: "بديل الخشب – N015", code: "N015", main: "/decor/wood/N015-683x1024.webp", thumb: "/decor/wood/N015-150-768x768.webp" },
+      { id: "N016", name: "بديل الخشب – N016", code: "N016", main: "/decor/wood/N016-683x1024.webp", thumb: "/decor/wood/N016-150-768x768.webp" },
+      { id: "N017", name: "بديل الخشب – N017", code: "N017", main: "/decor/wood/N017-768x512.webp", thumb: "/decor/wood/N017-150-768x768.webp" },
+      { id: "N018", name: "بديل الخشب – N018", code: "N018", main: "/decor/wood/N018-683x1024.webp", thumb: "/decor/wood/N018-150-768x768.webp" },
 
-  // من N001 إلى N018: الأساسي = بدون 150
-  { code: "N001", title: "بديل خشب PVC", imgMain: "/decor/wood/N001-768x768.webp", imgScene: "/decor/wood/N001-150-768x768.webp" },
-
-  { code: "N002", title: "بديل خشب PVC", imgMain: "/decor/wood/N002-1-768x768.webp", imgScene: "/decor/wood/N002-150-768x768.webp" },
-
-  { code: "N003", title: "بديل خشب PVC", imgMain: "/decor/wood/N003-768x768.webp", imgScene: "/decor/wood/N003-150-768x768.webp" },
-
-  { code: "N004", title: "بديل خشب PVC", imgMain: "/decor/wood/N004-768x768.webp", imgScene: "/decor/wood/N004-150-768x768.webp" },
-
-  { code: "N005", title: "بديل خشب PVC", imgMain: "/decor/wood/N005-683x1024.webp", imgScene: "/decor/wood/N005-150-768x768.webp" },
-
-  { code: "N006", title: "بديل خشب PVC", imgMain: "/decor/wood/N006-683x1024.webp", imgScene: "/decor/wood/N006-150-768x768.webp" },
-
-  { code: "N007", title: "بديل خشب PVC", imgMain: "/decor/wood/N007-768x768.webp", imgScene: "/decor/wood/N007-150-768x768.webp" },
-
-  { code: "N008", title: "بديل خشب PVC", imgMain: "/decor/wood/N008-683x1024.webp", imgScene: "/decor/wood/N008-150-768x768.webp" },
-
-  { code: "N009", title: "بديل خشب PVC", imgMain: "/decor/wood/N009-768x768.webp", imgScene: "/decor/wood/N009-150-768x768.webp" },
-
-  { code: "N010", title: "بديل خشب PVC", imgMain: "/decor/wood/N010-768x768.webp", imgScene: "/decor/wood/N010-150-768x768.webp" },
-
-  { code: "N011", title: "بديل خشب PVC", imgMain: "/decor/wood/N011-768x768.webp", imgScene: "/decor/wood/N011-150-768x768.webp" },
-
-  { code: "N012", title: "بديل خشب PVC", imgMain: "/decor/wood/N012-683x1024.webp", imgScene: "/decor/wood/N012-150-768x768.webp" },
-
-  { code: "N013", title: "بديل خشب PVC", imgMain: "/decor/wood/N013-683x1024.webp", imgScene: "/decor/wood/N013-150-768x768.webp" },
-
-  { code: "N014", title: "بديل خشب PVC", imgMain: "/decor/wood/N014-768x768.webp", imgScene: "/decor/wood/N014-150-768x768.webp" },
-
-  { code: "N015", title: "بديل خشب PVC", imgMain: "/decor/wood/N015-683x1024.webp", imgScene: "/decor/wood/N015-150-768x768.webp" },
-
-  { code: "N016", title: "بديل خشب PVC", imgMain: "/decor/wood/N016-683x1024.webp", imgScene: "/decor/wood/N016-150-768x768.webp" },
-
-  { code: "N017", title: "بديل خشب PVC", imgMain: "/decor/wood/N017-768x512.webp", imgScene: "/decor/wood/N017-150-768x768.webp" },
-
-  { code: "N018", title: "بديل خشب PVC", imgMain: "/decor/wood/N018-683x1024.webp", imgScene: "/decor/wood/N018-150-768x768.webp" },
-
-  // ===== F series =====
-  // F006 واضح: بدون 150 = أساسي
-  { code: "F006", title: "بديل خشب PVC", imgMain: "/decor/wood/F006-768x768.webp", imgScene: "/decor/wood/F006-150-768x768.webp" },
-
-  // F008-16 واضح
-  { code: "F008-16", title: "بديل خشب PVC", imgMain: "/decor/wood/F008-16-768x768.webp", imgScene: "/decor/wood/F008-16-150-768x768.webp" },
-
-  // F025 واضح
-  { code: "F025", title: "بديل خشب PVC", imgMain: "/decor/wood/F025-683x1024.webp", imgScene: "/decor/wood/F025-150-683x1024.webp" },
-
-  // F029 واضح
-  { code: "F029", title: "بديل خشب PVC", imgMain: "/decor/wood/F029-683x1024.webp", imgScene: "/decor/wood/F029-150-768x768.webp" },
-
-  // F0 و F011: عندك الملفين الاثنين فيهم 150 (ما في “بدون 150”) → ما في طريقة آمنة نعرف الأساسي.
-  // رح أضعهم مؤقتًا كما هم، وأفضل حل: تعيد تسميتهم لتحديد main/scene.
-  { code: "F0", title: "بديل خشب PVC", imgMain: "/decor/wood/F0-150-156-768x768.webp", imgScene: "/decor/wood/F0-156-150-768x768.webp" },
-
-  { code: "F011", title: "بديل خشب PVC", imgMain: "/decor/wood/F011-8-150-768x768.webp", imgScene: "/decor/wood/F011-150-8-768x768.webp" },
-];
-  const [open, setOpen] = useState(false);
-  const [active, setActive] = useState<Product | null>(null);
-
-  const [qty, setQty] = useState<number>(10);
-  const [orderType, setOrderType] = useState<OrderType>("supply");
-
-  const total = useMemo(() => {
-    const supply = qty * PRICE_SAR;
-    const install = orderType === "supply_install" ? qty * INSTALL_SAR : 0;
-    return supply + install;
-  }, [qty, orderType]);
-
-  const openModal = (p: Product) => {
-    setActive(p);
-    setQty(10);
-    setOrderType("supply");
-    setOpen(true);
-  };
-
-  const closeModal = () => {
-    setOpen(false);
-    setActive(null);
-  };
-
-  const message = useMemo(() => {
-    if (!active) return "";
-    const typeText = orderType === "supply" ? "توريد فقط" : "توريد + تركيب";
-    const base =
-      `السلام عليكم، أريد بديل خشب PVC (كود ${active.code}).\n` +
-      `الكمية: ${qty} لوح.\n` +
-      `الطلب: ${typeText}.\n` +
-      `المقاس: ${SIZE_TEXT}.\n` +
-      `السعر: ${PRICE_SAR} ريال/لوح (شامل الضريبة).\n` +
-      `التركيب: ${INSTALL_SAR} ريال/لوح.\n` +
-      `الموقع: الرياض.\n` +
-      `فضلاً أرسلوا لي المدة المتاحة للتوريد/التركيب.`;
-    return base;
-  }, [active, qty, orderType]);
+      // ===== F Series (B هو الأساسي) =====
+      { id: "F1", name: "بديل الخشب – F1", code: "F1", main: "/decor/wood/F1B.webp", second: "/decor/wood/F1A.webp" },
+      { id: "F2", name: "بديل الخشب – F2", code: "F2", main: "/decor/wood/F2B.webp", second: "/decor/wood/F2A.webp" },
+      { id: "F3", name: "بديل الخشب – F3", code: "F3", main: "/decor/wood/F3B.webp", second: "/decor/wood/F3A.webp" },
+      { id: "F4", name: "بديل الخشب – F4", code: "F4", main: "/decor/wood/F4B.webp", second: "/decor/wood/F4A.webp" },
+      { id: "F5", name: "بديل الخشب – F5", code: "F5", main: "/decor/wood/F5B.webp", second: "/decor/wood/F5A.webp" },
+      { id: "F6", name: "بديل الخشب – F6", code: "F6", main: "/decor/wood/F6B.webp", second: "/decor/wood/F6A.webp" },
+      { id: "F7", name: "بديل الخشب – F7", code: "F7", main: "/decor/wood/F7B.webp", second: "/decor/wood/F7A.webp" },
+      { id: "F8", name: "بديل الخشب – F8", code: "F8", main: "/decor/wood/F8B.webp", second: "/decor/wood/F8A.webp" },
+    ],
+    []
+  );
 
   return (
-    <main dir="rtl" className="min-h-screen bg-white">
+    <>
       <SeoHead
-        title="بديل الخشب بالرياض | المتجر - بنيان الهرم للمقاولات"
-        description="بديل خشب PVC بالرياض — مقاس 290×20 سم — 22 ريال/لوح شامل الضريبة — تركيب 25 ريال/لوح — طلب سريع عبر واتساب."
+        title="متجر الديكور – بديل الخشب | بنيان الهرم للمقاولات (PYBCCO)"
+        description="بديل الخشب PVC عالي الجودة بمقاس 290×20 سم. سعر اللوح 22 ريال شامل الضريبة، وسعر التركيب 25 ريال شامل الضريبة."
         canonical="https://pybcco.com/decor/wood"
       />
 
-      {/* Hero */}
-      <section className="pt-28 pb-10">
+      <main className="pt-28 pb-16">
         <div className="container-custom">
-          <div className="flex flex-col gap-3">
-            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900">
-              بديل الخشب (PVC) بالرياض
-            </h1>
-            <p className="text-gray-600 max-w-3xl leading-relaxed">
-              ألواح بديل خشب بمظهر فاخر ومتانة عالية — مناسبة للجدران الداخلية وخلف الشاشات والمداخل.
-              <span className="font-semibold text-gray-900"> الأسعار واضحة</span> وطلب سريع عبر واتساب، مع خيار{" "}
-              <span className="font-semibold text-gray-900">توريد + تركيب بإشراف مقاول</span>.
-            </p>
+          {/* Breadcrumb */}
+          <div className="text-sm text-gray-500 mb-6">
+            <Link to="/" className="hover:text-gray-800">الرئيسية</Link>
+            <span className="mx-2">/</span>
+            <Link to="/decor" className="hover:text-gray-800">المتجر</Link>
+            <span className="mx-2">/</span>
+            <span className="text-gray-800 font-semibold">بديل الخشب</span>
+          </div>
 
-            {/* Trust Bar */}
-            <div className="mt-2 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              <div className="rounded-2xl border border-gray-200 p-4">
-                <div className="text-sm text-gray-500">السعر</div>
-                <div className="font-bold text-gray-900">{PRICE_SAR} ريال/لوح</div>
-                <div className="text-xs text-gray-500 mt-1">شامل الضريبة</div>
-              </div>
+          {/* Header */}
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-8">
+            <div>
+              <h1 className="text-3xl font-extrabold text-gray-900">بديل الخشب (PVC)</h1>
+              <p className="text-gray-600 mt-2 leading-relaxed">
+                لوح ديكور يحاكي الخشب الطبيعي بدقة عالية، مناسب للصالات والغرف والمداخل وخلف الشاشات.
+              </p>
+            </div>
 
-              <div className="rounded-2xl border border-gray-200 p-4">
-                <div className="text-sm text-gray-500">التركيب</div>
-                <div className="font-bold text-gray-900">{INSTALL_SAR} ريال/لوح</div>
-                <div className="text-xs text-gray-500 mt-1">عند الطلب</div>
-              </div>
-
-              <div className="rounded-2xl border border-gray-200 p-4">
-                <div className="text-sm text-gray-500">المقاس</div>
-                <div className="font-bold text-gray-900">{SIZE_TEXT}</div>
-                <div className="text-xs text-gray-500 mt-1">لكل الألوان</div>
-              </div>
-
-              <div className="rounded-2xl border border-gray-200 p-4">
-                <div className="text-sm text-gray-500">الضمان</div>
-                <div className="font-bold text-gray-900">5 سنوات</div>
-                <div className="text-xs text-gray-500 mt-1">ضد عيوب التصنيع وتغيّر اللون</div>
-              </div>
+            <div className="flex gap-3">
+              <Button asChild variant="outline" className="font-bold">
+                <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
+                  استفسار واتساب
+                </a>
+              </Button>
+              <Button asChild className="bg-gold hover:bg-gold/90 text-black font-bold">
+                <a href="tel:+966550604837">
+                  <Phone className="w-4 h-4 ml-2" />
+                  اتصال
+                </a>
+              </Button>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Grid */}
-      <section className="pb-16">
-        <div className="container-custom">
-          <div className="flex items-end justify-between gap-4 mb-6">
-            <h2 className="text-xl font-bold text-gray-900">كل الألوان المتوفرة</h2>
-            <p className="text-sm text-gray-500 whitespace-nowrap">
-              اضغط على أي منتج للتفاصيل والطلب
-            </p>
+          {/* Specs strip */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
+            <div className="rounded-2xl border border-gray-200 p-4">
+              <div className="text-xs text-gray-500">سعر اللوح (شامل الضريبة)</div>
+              <div className="text-xl font-extrabold mt-1">{PRICE_BOARD_SAR} ريال</div>
+            </div>
+            <div className="rounded-2xl border border-gray-200 p-4">
+              <div className="text-xs text-gray-500">سعر التركيب (شامل الضريبة)</div>
+              <div className="text-xl font-extrabold mt-1">{INSTALL_BOARD_SAR} ريال</div>
+            </div>
+            <div className="rounded-2xl border border-gray-200 p-4">
+              <div className="text-xs text-gray-500">المقاس</div>
+              <div className="text-xl font-extrabold mt-1">{DIMENSIONS}</div>
+            </div>
+            <div className="rounded-2xl border border-gray-200 p-4">
+              <div className="text-xs text-gray-500">الضمان</div>
+              <div className="text-xl font-extrabold mt-1">{WARRANTY}</div>
+            </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {PRODUCTS.map((p) => (
-              <button
-                key={p.code}
-                type="button"
-                onClick={() => openModal(p)}
-                className="text-right rounded-2xl border border-gray-200 overflow-hidden hover:shadow-md transition bg-white"
-              >
-                <div className="aspect-[4/3] bg-gray-50 overflow-hidden">
-                  <img
-                    src={p.imgMain}
-                    alt={`بديل خشب PVC ${p.code}`}
+          {/* Quality bullets */}
+          <div className="rounded-2xl bg-gray-50 border border-gray-200 p-6 mb-10">
+            <h2 className="text-lg font-extrabold text-gray-900 mb-4">مواصفات الجودة</h2>
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-gray-700">
+              {[
+                `الخامة: ${MATERIAL} (${ORIGIN})`,
+                "مقاوم للرطوبة والخدوش",
+                "تنظيف سهل (مسح فقط)",
+                "تركيب بالسيلكون بدون مسامير",
+                "مناسب للغرف والصالونات والمداخل وخلف الشاشات",
+                "ثبات لون وملمس مع طبقة حماية سطحية",
+              ].map((t) => (
+                <li key={t} className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-gold mt-0.5" />
+                  <span>{t}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {products.map((p) => (
+              <article key={p.id} className="rounded-2xl border border-gray-200 overflow-hidden bg-white shadow-sm hover:shadow-md transition">
+                <div className="aspect-[4/3] bg-gray-100">
+                  <Img
+                    src={p.main}
+                    alt={p.name}
                     className="w-full h-full object-cover"
-                    loading="lazy"
                   />
                 </div>
 
-                <div className="p-4">
+                <div className="p-5">
                   <div className="flex items-center justify-between gap-3">
-                    <div className="font-bold text-gray-900">بديل خشب PVC</div>
-                    <div className="text-xs text-gray-500">{p.code}</div>
+                    <h3 className="font-extrabold text-gray-900">{p.name}</h3>
+                    <span className="text-xs px-2 py-1 rounded-full bg-black/5 text-gray-700 whitespace-nowrap">
+                      {p.code}
+                    </span>
                   </div>
 
-                  <div className="mt-2 flex items-center justify-between gap-3">
-                    <div className="font-extrabold text-gray-900">
-                      {PRICE_SAR} ر.س <span className="text-xs text-gray-500 font-normal">/ لوح (شامل)</span>
+                  <div className="text-sm text-gray-600 mt-2">
+                    المقاس: {DIMENSIONS}
+                  </div>
+
+                  <div className="flex items-center justify-between mt-4">
+                    <div>
+                      <div className="text-xs text-gray-500">سعر اللوح</div>
+                      <div className="text-lg font-extrabold">{PRICE_BOARD_SAR} ريال</div>
                     </div>
-                    <div className="text-xs text-gray-500">{SIZE_TEXT}</div>
+                    <div className="text-right">
+                      <div className="text-xs text-gray-500">التركيب</div>
+                      <div className="text-lg font-extrabold">{INSTALL_BOARD_SAR} ريال</div>
+                    </div>
                   </div>
 
-                  <div className="mt-3 text-xs text-gray-500">
-                    تركيب متوفر: <span className="font-semibold text-gray-800">{INSTALL_SAR} ر.س/لوح</span>
+                  <div className="mt-5 flex gap-3">
+                    <Button asChild className="flex-1 bg-gold hover:bg-gold/90 text-black font-bold">
+                      <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
+                        طلب/استفسار
+                      </a>
+                    </Button>
+
+                    <Button asChild variant="outline" className="font-bold">
+                      <a href="/villa-finishing-price-riyadh">
+                        <Calculator className="w-4 h-4 ml-2" />
+                        احسب
+                      </a>
+                    </Button>
                   </div>
+
+                  {(p.thumb || p.second) && (
+                    <div className="mt-4 grid grid-cols-2 gap-3">
+                      {p.thumb && (
+                        <div className="aspect-[4/3] bg-gray-100 rounded-xl overflow-hidden border border-gray-200">
+                          <Img src={p.thumb} alt={`${p.name} - صورة إضافية`} className="w-full h-full object-cover" />
+                        </div>
+                      )}
+                      {p.second && (
+                        <div className="aspect-[4/3] bg-gray-100 rounded-xl overflow-hidden border border-gray-200">
+                          <Img src={p.second} alt={`${p.name} - صورة إضافية`} className="w-full h-full object-cover" />
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
-              </button>
+              </article>
             ))}
           </div>
-
-          {/* CTA bottom */}
-          <div className="mt-10 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between rounded-2xl border border-gray-200 p-5">
-            <div>
-              <div className="font-bold text-gray-900">تريد توريد + تركيب لمشروع كامل؟</div>
-              <div className="text-sm text-gray-600 mt-1">
-                ارسل لنا المساحة أو عدد الألواح وسنرجع لك بتأكيد الكميات والموعد.
-              </div>
-            </div>
-
-            <Button
-              asChild
-              className="bg-gold hover:bg-gold/90 text-black font-bold whitespace-nowrap"
-            >
-              <a href={waLink("السلام عليكم، أريد عرض سعر بديل خشب (توريد أو توريد + تركيب) بالرياض.")} target="_blank" rel="noopener noreferrer">
-                طلب عبر واتساب
-              </a>
-            </Button>
-          </div>
         </div>
-      </section>
-
-      {/* Modal */}
-      {open && active && (
-        <div
-          className="fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
-          onClick={closeModal}
-          role="dialog"
-          aria-modal="true"
-        >
-          <div
-            className="w-full max-w-4xl bg-white rounded-2xl overflow-hidden shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between px-5 py-4 border-b">
-              <div>
-                <div className="font-extrabold text-gray-900">بديل خشب PVC — {active.code}</div>
-                <div className="text-sm text-gray-500 mt-1">
-                  {PRICE_SAR} ريال/لوح (شامل الضريبة) — تركيب {INSTALL_SAR} ريال/لوح — {SIZE_TEXT}
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={closeModal}
-                className="w-10 h-10 rounded-xl border border-gray-200 hover:bg-gray-50 transition"
-                aria-label="إغلاق"
-              >
-                ✕
-              </button>
-            </div>
-
-            <div className="grid gap-0 lg:grid-cols-2">
-              {/* Images */}
-              <div className="bg-gray-50 p-4">
-                <div className="grid gap-3">
-                  <div className="rounded-2xl overflow-hidden border border-gray-200 bg-white">
-                    <img
-                      src={active.imgMain}
-                      alt={`بديل خشب ${active.code} - المنتج`}
-                      className="w-full h-[280px] object-cover"
-                    />
-                  </div>
-
-                  <div className="rounded-2xl overflow-hidden border border-gray-200 bg-white">
-                    <img
-                      src={active.imgScene}
-                      alt={`بديل خشب ${active.code} - تطبيق`}
-                      className="w-full h-[280px] object-cover"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Order */}
-              <div className="p-5">
-                <div className="font-bold text-gray-900 text-lg">طلب سريع</div>
-                <p className="text-sm text-gray-600 mt-2 leading-relaxed">
-                  اختر نوع الطلب وأدخل الكمية (بعدد الألواح). سيتم إرسال رسالة جاهزة عبر واتساب.
-                </p>
-
-                <div className="mt-5 grid gap-4">
-                  {/* Order Type */}
-                  <div className="rounded-2xl border border-gray-200 p-4">
-                    <div className="text-sm font-semibold text-gray-900 mb-3">نوع الطلب</div>
-                    <div className="flex flex-col gap-2">
-                      <label className="flex items-center gap-3">
-                        <input
-                          type="radio"
-                          name="orderType"
-                          checked={orderType === "supply"}
-                          onChange={() => setOrderType("supply")}
-                        />
-                        <span className="text-sm text-gray-800">توريد فقط</span>
-                      </label>
-                      <label className="flex items-center gap-3">
-                        <input
-                          type="radio"
-                          name="orderType"
-                          checked={orderType === "supply_install"}
-                          onChange={() => setOrderType("supply_install")}
-                        />
-                        <span className="text-sm text-gray-800">توريد + تركيب</span>
-                      </label>
-                    </div>
-                  </div>
-
-                  {/* Qty */}
-                  <div className="rounded-2xl border border-gray-200 p-4">
-                    <div className="text-sm font-semibold text-gray-900 mb-3">الكمية (لوح)</div>
-                    <div className="flex items-center gap-3">
-                      <input
-                        type="number"
-                        min={1}
-                        value={qty}
-                        onChange={(e) => setQty(Math.max(1, Number(e.target.value || 1)))}
-                        className="w-28 rounded-xl border border-gray-200 px-3 py-2 text-gray-900"
-                      />
-                      <div className="text-sm text-gray-600">لوح</div>
-                    </div>
-                  </div>
-
-                  {/* Total */}
-                  <div className="rounded-2xl border border-gray-200 p-4">
-                    <div className="text-sm font-semibold text-gray-900 mb-1">تقدير سريع</div>
-                    <div className="text-sm text-gray-600">
-                      توريد: {qty} × {PRICE_SAR} = <span className="font-bold text-gray-900">{qty * PRICE_SAR} ر.س</span>
-                    </div>
-                    {orderType === "supply_install" && (
-                      <div className="text-sm text-gray-600 mt-1">
-                        تركيب: {qty} × {INSTALL_SAR} = <span className="font-bold text-gray-900">{qty * INSTALL_SAR} ر.س</span>
-                      </div>
-                    )}
-                    <div className="mt-2 text-lg font-extrabold text-gray-900">
-                      الإجمالي: {total} ر.س
-                    </div>
-                  </div>
-
-                  <Button
-                    asChild
-                    className="w-full bg-gold hover:bg-gold/90 text-black font-bold whitespace-nowrap"
-                  >
-                    <a href={waLink(message)} target="_blank" rel="noopener noreferrer">
-                      إرسال الطلب عبر واتساب
-                    </a>
-                  </Button>
-
-                  <div className="text-xs text-gray-500 leading-relaxed">
-                    * الأسعار المعروضة شاملة ضريبة القيمة المضافة.  
-                    * التوريد داخل الرياض، وموعد التركيب حسب الجدولة وتأكيد الموقع.
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="px-5 py-4 border-t bg-white">
-              <div className="text-sm text-gray-600">
-                استخدامات مقترحة: غرف النوم — خلف الشاشات — المداخل — الصالات — المطاعم والمقاهي — الأعمدة.
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </main>
+      </main>
+    </>
   );
 }
