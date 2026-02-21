@@ -14,7 +14,8 @@ import VillaBoneConstructionRiyadh from "./sections/VillaBoneConstructionRiyadh"
 import ApartmentFinishingRiyadh from "./sections/ApartmentFinishingRiyadh";
 import HomeRenovationCompanyRiyadh from "./sections/HomeRenovationCompanyRiyadh";
 import ContractorAlMalqaRiyadh from "./sections/ContractorAlMalqaRiyadh";
-
+import Decor from "@/sections/Decor";
+import DecorWood from "@/sections/DecorWood";
 import { Toaster } from "@/components/ui/sonner";
 
 export default function App() {
@@ -46,7 +47,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<ProjectsGallery />} />
-
+<Route path="/decor" element={<Decor />} />
+<Route path="/decor/wood" element={<DecorWood />} />
         <Route path="/villa-finishing-riyadh" element={<VillaFinishingRiyadh />} />
         <Route path="/villa-renovation-riyadh" element={<VillaRenovationRiyadh />} />
         <Route path="/construction-company-riyadh" element={<ConstructionCompanyRiyadh />} />

@@ -23,24 +23,71 @@ function waLink(message: string) {
 
 export default function DecorWood() {
   // ✅ عدّل القائمة حسب أسماء صورك الفعلية (صورتين لكل منتج)
-  const PRODUCTS: Product[] = useMemo(
-    () => [
-      // مثال:
-      // { code: "N001", title: "بديل خشب PVC", imgMain: "/decor/wood/150-N001.webp", imgScene: "/decor/wood/N001-room.webp" },
+  const PRODUCTS: Product[] = [
+  // N000 (استثناء: الأساسي فيه -1- حسب كلامك)
+  {
+    code: "N000",
+    title: "بديل خشب PVC",
+    imgMain: "/decor/wood/N000-1-150-10-768x768.webp",
+    imgScene: "/decor/wood/N000-150-10-768x768.webp",
+  },
 
-      // ضع كل الموديلات الموجودة عندك هنا:
-      { code: "N001", title: "بديل خشب PVC", imgMain: "/decor/wood/150-N001.webp", imgScene: "/decor/wood/N001.webp" },
-      { code: "N002", title: "بديل خشب PVC", imgMain: "/decor/wood/150-N002.webp", imgScene: "/decor/wood/N002.webp" },
-      { code: "N003", title: "بديل خشب PVC", imgMain: "/decor/wood/150-N003.webp", imgScene: "/decor/wood/N003.webp" },
-      { code: "N004", title: "بديل خشب PVC", imgMain: "/decor/wood/150-N004.webp", imgScene: "/decor/wood/N004.webp" },
-      { code: "N005", title: "بديل خشب PVC", imgMain: "/decor/wood/150-N005.webp", imgScene: "/decor/wood/N005.webp" },
-      { code: "N006", title: "بديل خشب PVC", imgMain: "/decor/wood/150-N006.webp", imgScene: "/decor/wood/N006.webp" },
+  // من N001 إلى N018: الأساسي = بدون 150
+  { code: "N001", title: "بديل خشب PVC", imgMain: "/decor/wood/N001-768x768.webp", imgScene: "/decor/wood/N001-150-768x768.webp" },
 
-      // كمّل الباقي بنفس النمط…
-    ],
-    []
-  );
+  { code: "N002", title: "بديل خشب PVC", imgMain: "/decor/wood/N002-1-768x768.webp", imgScene: "/decor/wood/N002-150-768x768.webp" },
 
+  { code: "N003", title: "بديل خشب PVC", imgMain: "/decor/wood/N003-768x768.webp", imgScene: "/decor/wood/N003-150-768x768.webp" },
+
+  { code: "N004", title: "بديل خشب PVC", imgMain: "/decor/wood/N004-768x768.webp", imgScene: "/decor/wood/N004-150-768x768.webp" },
+
+  { code: "N005", title: "بديل خشب PVC", imgMain: "/decor/wood/N005-683x1024.webp", imgScene: "/decor/wood/N005-150-768x768.webp" },
+
+  { code: "N006", title: "بديل خشب PVC", imgMain: "/decor/wood/N006-683x1024.webp", imgScene: "/decor/wood/N006-150-768x768.webp" },
+
+  { code: "N007", title: "بديل خشب PVC", imgMain: "/decor/wood/N007-768x768.webp", imgScene: "/decor/wood/N007-150-768x768.webp" },
+
+  { code: "N008", title: "بديل خشب PVC", imgMain: "/decor/wood/N008-683x1024.webp", imgScene: "/decor/wood/N008-150-768x768.webp" },
+
+  { code: "N009", title: "بديل خشب PVC", imgMain: "/decor/wood/N009-768x768.webp", imgScene: "/decor/wood/N009-150-768x768.webp" },
+
+  { code: "N010", title: "بديل خشب PVC", imgMain: "/decor/wood/N010-768x768.webp", imgScene: "/decor/wood/N010-150-768x768.webp" },
+
+  { code: "N011", title: "بديل خشب PVC", imgMain: "/decor/wood/N011-768x768.webp", imgScene: "/decor/wood/N011-150-768x768.webp" },
+
+  { code: "N012", title: "بديل خشب PVC", imgMain: "/decor/wood/N012-683x1024.webp", imgScene: "/decor/wood/N012-150-768x768.webp" },
+
+  { code: "N013", title: "بديل خشب PVC", imgMain: "/decor/wood/N013-683x1024.webp", imgScene: "/decor/wood/N013-150-768x768.webp" },
+
+  { code: "N014", title: "بديل خشب PVC", imgMain: "/decor/wood/N014-768x768.webp", imgScene: "/decor/wood/N014-150-768x768.webp" },
+
+  { code: "N015", title: "بديل خشب PVC", imgMain: "/decor/wood/N015-683x1024.webp", imgScene: "/decor/wood/N015-150-768x768.webp" },
+
+  { code: "N016", title: "بديل خشب PVC", imgMain: "/decor/wood/N016-683x1024.webp", imgScene: "/decor/wood/N016-150-768x768.webp" },
+
+  { code: "N017", title: "بديل خشب PVC", imgMain: "/decor/wood/N017-768x512.webp", imgScene: "/decor/wood/N017-150-768x768.webp" },
+
+  { code: "N018", title: "بديل خشب PVC", imgMain: "/decor/wood/N018-683x1024.webp", imgScene: "/decor/wood/N018-150-768x768.webp" },
+
+  // ===== F series =====
+  // F006 واضح: بدون 150 = أساسي
+  { code: "F006", title: "بديل خشب PVC", imgMain: "/decor/wood/F006-768x768.webp", imgScene: "/decor/wood/F006-150-768x768.webp" },
+
+  // F008-16 واضح
+  { code: "F008-16", title: "بديل خشب PVC", imgMain: "/decor/wood/F008-16-768x768.webp", imgScene: "/decor/wood/F008-16-150-768x768.webp" },
+
+  // F025 واضح
+  { code: "F025", title: "بديل خشب PVC", imgMain: "/decor/wood/F025-683x1024.webp", imgScene: "/decor/wood/F025-150-683x1024.webp" },
+
+  // F029 واضح
+  { code: "F029", title: "بديل خشب PVC", imgMain: "/decor/wood/F029-683x1024.webp", imgScene: "/decor/wood/F029-150-768x768.webp" },
+
+  // F0 و F011: عندك الملفين الاثنين فيهم 150 (ما في “بدون 150”) → ما في طريقة آمنة نعرف الأساسي.
+  // رح أضعهم مؤقتًا كما هم، وأفضل حل: تعيد تسميتهم لتحديد main/scene.
+  { code: "F0", title: "بديل خشب PVC", imgMain: "/decor/wood/F0-150-156-768x768.webp", imgScene: "/decor/wood/F0-156-150-768x768.webp" },
+
+  { code: "F011", title: "بديل خشب PVC", imgMain: "/decor/wood/F011-8-150-768x768.webp", imgScene: "/decor/wood/F011-150-8-768x768.webp" },
+];
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<Product | null>(null);
 
