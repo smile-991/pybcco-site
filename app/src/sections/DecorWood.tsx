@@ -1,6 +1,6 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { CheckCircle2, Calculator, Phone } from "lucide-react";
+import { CheckCircle2, Calculator, Phone, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SeoHead from "@/components/SeoHead";
 
@@ -18,11 +18,11 @@ const SITE_URL = "https://pybcco.com";
 const WHATSAPP =
   "https://wa.me/966550604837?text=" +
   encodeURIComponent(
-    "السلام عليكم، أريد الاستفسار عن بديل الخشب (لوح 290×20) + التركيب. الرجاء إرسال المتوفر والأسعار."
+    "السلام عليكم، أريد الاستفسار عن بديل الخشب (لوح 290×20 سم) + تركيب بالمتر الطولي. الرجاء إرسال المتوفر."
   );
 
 const PRICE_BOARD_SAR = 22; // شامل الضريبة
-const INSTALL_BOARD_SAR = 25; // شامل الضريبة
+const INSTALL_PER_METER_SAR = 25; // شامل الضريبة (متر طولي)
 const DIMENSIONS = "290 × 20 سم";
 const MATERIAL = "PVC عالي الكثافة";
 const ORIGIN = "صناعة صينية ممتازة";
@@ -36,7 +36,11 @@ const FAQS = [
   },
   {
     q: "هل السعر شامل الضريبة؟",
-    a: "نعم، سعر اللوح 22 ريال شامل الضريبة، وسعر التركيب 25 ريال للوح شامل الضريبة.",
+    a: `نعم، سعر اللوح ${PRICE_BOARD_SAR} ريال شامل الضريبة. والتركيب ${INSTALL_PER_METER_SAR} ريال لكل متر طولي ويُحتسب حسب الطول المركّب.`,
+  },
+  {
+    q: "كيف يتم احتساب التركيب؟",
+    a: `يتم احتساب التركيب بالمتر الطولي. مثال: إذا تم تركيب 2 متر طولي من اللوح، يكون الحساب 2 × ${INSTALL_PER_METER_SAR} ريال.`,
   },
   {
     q: "هل يمكن طلب توريد فقط بدون تركيب؟",
@@ -48,7 +52,7 @@ const FAQS = [
   },
   {
     q: "هل يوجد ضمان؟",
-    a: "نعم، ضمان 5 سنوات ضد عيوب التصنيع وتغيّر اللون وفق شروط الاستخدام والتركيب الصحيح.",
+    a: `نعم، ضمان ${WARRANTY} وفق شروط الاستخدام والتركيب الصحيح.`,
   },
 ];
 
@@ -56,10 +60,12 @@ function Img({
   src,
   alt,
   className,
+  onClick,
 }: {
   src: string;
   alt: string;
   className?: string;
+  onClick?: () => void;
 }) {
   const [failed, setFailed] = useState(false);
 
@@ -78,8 +84,9 @@ function Img({
       src={src}
       alt={alt}
       loading="lazy"
-      className={className}
+      className={`${className} ${onClick ? "cursor-zoom-in" : ""}`}
       onError={() => setFailed(true)}
+      onClick={onClick}
     />
   );
 }
@@ -221,7 +228,34 @@ export default function DecorWood() {
     []
   );
 
-  // ✅ Product Schema على شكل ItemList (مناسب لصفحة فيها منتجات كثيرة)
+  // Lightbox
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxSrc, setLightboxSrc] = useState<string>("");
+  const [lightboxAlt, setLightboxAlt] = useState<string>("");
+
+  const openLightbox = (src: string, alt: string) => {
+    setLightboxSrc(src);
+    setLightboxAlt(alt);
+    setLightboxOpen(true);
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+    setLightboxSrc("");
+    setLightboxAlt("");
+  };
+
+  useEffect(() => {
+    if (!lightboxOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lightboxOpen]);
+
+  // ✅ Product Schema: ItemList (السعر = سعر اللوح فقط)
   const productItemListJsonLd = useMemo(() => {
     return {
       "@context": "https://schema.org",
@@ -237,8 +271,8 @@ export default function DecorWood() {
           "@type": "Product",
           name: p.name,
           sku: p.code,
-          image: `${SITE_URL}${p.main}`,
-          description: `لوح بديل خشب PVC عالي الجودة بمقاس ${DIMENSIONS}. سعر اللوح ${PRICE_BOARD_SAR} ريال شامل الضريبة، وسعر التركيب ${INSTALL_BOARD_SAR} ريال شامل الضريبة.`,
+          image: [`${SITE_URL}${p.main}`],
+          description: `لوح بديل خشب PVC عالي الجودة بمقاس ${DIMENSIONS}. سعر اللوح ${PRICE_BOARD_SAR} ريال شامل الضريبة.`,
           brand: { "@type": "Brand", name: "PYBCCO" },
           offers: {
             "@type": "Offer",
@@ -257,7 +291,7 @@ export default function DecorWood() {
     };
   }, [products]);
 
-  // ✅ FAQ Schema (مطابق للمحتوى الظاهر)
+  // ✅ FAQ Schema
   const faqJsonLd = useMemo(() => {
     return {
       "@context": "https://schema.org",
@@ -276,9 +310,8 @@ export default function DecorWood() {
   return (
     <>
       <SeoHead
-        // ✅ CTR محسّن + واضح للمستخدم + قوي لجوجل
-        title="بديل الخشب PVC بالرياض | سعر اللوح 22 ريال شامل الضريبة + تركيب 25 ريال – PYBCCO"
-        description="بديل الخشب PVC عالي الجودة بمقاس 290×20 سم. سعر اللوح 22 ريال شامل الضريبة وسعر التركيب 25 ريال. توصيل داخل الرياض + خيار توريد أو توريد + تركيب بإشراف مقاول."
+        title={`بديل الخشب PVC بالرياض | سعر اللوح ${PRICE_BOARD_SAR} ريال شامل الضريبة – تركيب ${INSTALL_PER_METER_SAR} ريال/م طولي | PYBCCO`}
+        description={`بديل الخشب PVC عالي الجودة بمقاس 290×20 سم. سعر اللوح ${PRICE_BOARD_SAR} ريال شامل الضريبة. التركيب ${INSTALL_PER_METER_SAR} ريال لكل متر طولي (يُحتسب حسب الطول المركّب). توصيل داخل الرياض + خيار توريد أو توريد + تركيب.`}
         canonical="https://pybcco.com/decor/wood"
       />
 
@@ -312,16 +345,18 @@ export default function DecorWood() {
           {/* Header */}
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-8">
             <div>
-              <h1 className="text-3xl font-extrabold text-gray-900">بديل الخشب (PVC)</h1>
+              <h1 className="text-3xl font-extrabold text-gray-900">
+                بديل الخشب (PVC)
+              </h1>
               <p className="text-gray-600 mt-2 leading-relaxed">
-                لوح ديكور يحاكي الخشب الطبيعي بدقة عالية، مناسب للصالات والغرف والمداخل وخلف الشاشات.
+                لوح ديكور يحاكي الخشب الطبيعي بدقة عالية، مناسب للصالات والغرف
+                والمداخل وخلف الشاشات.
               </p>
 
-              {/* ✅ Trust strip صغير (Conversion) */}
               <div className="mt-3 text-sm text-gray-700">
                 <span className="font-bold">ضمان:</span> {WARRANTY} •{" "}
                 <span className="font-bold">المقاس:</span> {DIMENSIONS} •{" "}
-                <span className="font-bold">متوفر داخل الرياض</span>
+                <span className="font-bold">التركيب:</span> {INSTALL_PER_METER_SAR} ريال/م طولي
               </div>
             </div>
 
@@ -331,7 +366,10 @@ export default function DecorWood() {
                   استفسار واتساب
                 </a>
               </Button>
-              <Button asChild className="bg-gold hover:bg-gold/90 text-black font-bold">
+              <Button
+                asChild
+                className="bg-gold hover:bg-gold/90 text-black font-bold"
+              >
                 <a href="tel:+966550604837">
                   <Phone className="w-4 h-4 ml-2" />
                   اتصال
@@ -344,25 +382,41 @@ export default function DecorWood() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
             <div className="rounded-2xl border border-gray-200 p-4">
               <div className="text-xs text-gray-500">سعر اللوح (شامل الضريبة)</div>
-              <div className="text-xl font-extrabold mt-1">{PRICE_BOARD_SAR} ريال</div>
+              <div className="text-xl font-extrabold mt-1">
+                {PRICE_BOARD_SAR} ريال
+              </div>
             </div>
+
             <div className="rounded-2xl border border-gray-200 p-4">
-              <div className="text-xs text-gray-500">سعر التركيب (شامل الضريبة)</div>
-              <div className="text-xl font-extrabold mt-1">{INSTALL_BOARD_SAR} ريال</div>
+              <div className="text-xs text-gray-500">
+                سعر التركيب (يُضاف على المتر الطولي)
+              </div>
+              <div className="text-xl font-extrabold mt-1">
+                {INSTALL_PER_METER_SAR} ريال/م
+              </div>
+              <div className="text-[12px] text-gray-500 mt-1">
+                يُحتسب حسب الطول المركّب (مثال: 2م = {2 * INSTALL_PER_METER_SAR} ريال)
+              </div>
             </div>
+
             <div className="rounded-2xl border border-gray-200 p-4">
               <div className="text-xs text-gray-500">المقاس</div>
               <div className="text-xl font-extrabold mt-1">{DIMENSIONS}</div>
             </div>
+
             <div className="rounded-2xl border border-gray-200 p-4">
               <div className="text-xs text-gray-500">الضمان</div>
-              <div className="text-base font-extrabold mt-1 leading-snug">{WARRANTY}</div>
+              <div className="text-base font-extrabold mt-1 leading-snug">
+                {WARRANTY}
+              </div>
             </div>
           </div>
 
           {/* Quality bullets */}
           <div className="rounded-2xl bg-gray-50 border border-gray-200 p-6 mb-10">
-            <h2 className="text-lg font-extrabold text-gray-900 mb-4">مواصفات الجودة</h2>
+            <h2 className="text-lg font-extrabold text-gray-900 mb-4">
+              مواصفات الجودة
+            </h2>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-gray-700">
               {[
                 `الخامة: ${MATERIAL} (${ORIGIN})`,
@@ -389,7 +443,12 @@ export default function DecorWood() {
                 className="rounded-2xl border border-gray-200 overflow-hidden bg-white shadow-sm hover:shadow-md transition"
               >
                 <div className="aspect-[4/3] bg-gray-100">
-                  <Img src={p.main} alt={p.name} className="w-full h-full object-cover" />
+                  <Img
+                    src={p.main}
+                    alt={p.name}
+                    className="w-full h-full object-cover"
+                    onClick={() => openLightbox(p.main, p.name)}
+                  />
                 </div>
 
                 <div className="p-5">
@@ -408,21 +467,33 @@ export default function DecorWood() {
                     </div>
                   </div>
 
-                  <div className="text-sm text-gray-600 mt-2">المقاس: {DIMENSIONS}</div>
+                  <div className="text-sm text-gray-600 mt-2">
+                    المقاس: {DIMENSIONS}
+                  </div>
 
                   <div className="flex items-center justify-between mt-4">
                     <div>
                       <div className="text-xs text-gray-500">سعر اللوح</div>
-                      <div className="text-lg font-extrabold">{PRICE_BOARD_SAR} ريال</div>
+                      <div className="text-lg font-extrabold">
+                        {PRICE_BOARD_SAR} ريال
+                      </div>
                     </div>
                     <div className="text-right">
                       <div className="text-xs text-gray-500">التركيب</div>
-                      <div className="text-lg font-extrabold">{INSTALL_BOARD_SAR} ريال</div>
+                      <div className="text-lg font-extrabold">
+                        {INSTALL_PER_METER_SAR} ريال/م
+                      </div>
+                      <div className="text-[11px] text-gray-500 mt-1">
+                        يُضاف حسب الطول المركّب
+                      </div>
                     </div>
                   </div>
 
                   <div className="mt-5 flex gap-3">
-                    <Button asChild className="flex-1 bg-gold hover:bg-gold/90 text-black font-bold">
+                    <Button
+                      asChild
+                      className="flex-1 bg-gold hover:bg-gold/90 text-black font-bold"
+                    >
                       <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
                         طلب/استفسار
                       </a>
@@ -444,6 +515,7 @@ export default function DecorWood() {
                             src={p.thumb}
                             alt={`${p.name} - صورة إضافية`}
                             className="w-full h-full object-cover"
+                            onClick={() => openLightbox(p.thumb!, `${p.name} - صورة إضافية`)}
                           />
                         </div>
                       )}
@@ -453,6 +525,7 @@ export default function DecorWood() {
                             src={p.second}
                             alt={`${p.name} - صورة إضافية`}
                             className="w-full h-full object-cover"
+                            onClick={() => openLightbox(p.second!, `${p.name} - صورة إضافية`)}
                           />
                         </div>
                       )}
@@ -463,15 +536,14 @@ export default function DecorWood() {
             ))}
           </div>
 
-          {/* FAQ Section (ظاهر + Schema مطابق) */}
+          {/* FAQ Section */}
           <section className="mt-14">
-            <h2 className="text-2xl font-extrabold text-gray-900">أسئلة شائعة عن بديل الخشب</h2>
+            <h2 className="text-2xl font-extrabold text-gray-900">
+              أسئلة شائعة عن بديل الخشب
+            </h2>
             <div className="mt-6 grid gap-4">
               {FAQS.map((f) => (
-                <details
-                  key={f.q}
-                  className="rounded-2xl border border-gray-200 bg-white p-5"
-                >
+                <details key={f.q} className="rounded-2xl border border-gray-200 bg-white p-5">
                   <summary className="font-bold text-gray-900 cursor-pointer">
                     {f.q}
                   </summary>
@@ -482,7 +554,7 @@ export default function DecorWood() {
           </section>
         </div>
 
-        {/* ✅ Sticky CTA للموبايل فقط (Conversion) */}
+        {/* Sticky CTA للموبايل */}
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur border-t border-gray-200 lg:hidden">
           <div className="container-custom py-3 flex gap-3">
             <a
@@ -502,6 +574,43 @@ export default function DecorWood() {
             </a>
           </div>
         </div>
+
+        {/* Lightbox */}
+        {lightboxOpen && (
+          <div
+            className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={closeLightbox}
+            role="dialog"
+            aria-modal="true"
+          >
+            <div
+              className="relative max-w-5xl w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                type="button"
+                onClick={closeLightbox}
+                className="absolute -top-12 right-0 text-white/90 hover:text-white flex items-center gap-2"
+                aria-label="إغلاق"
+              >
+                <X className="w-6 h-6" />
+                <span className="text-sm">إغلاق</span>
+              </button>
+
+              <div className="bg-black rounded-2xl overflow-hidden border border-white/10">
+                <img
+                  src={lightboxSrc}
+                  alt={lightboxAlt}
+                  className="w-full h-auto max-h-[80vh] object-contain"
+                />
+              </div>
+
+              <div className="mt-3 text-center text-white/80 text-sm">
+                {lightboxAlt}
+              </div>
+            </div>
+          </div>
+        )}
       </main>
     </>
   );
