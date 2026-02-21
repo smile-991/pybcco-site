@@ -114,7 +114,6 @@ export default function DecorWood() {
         code: "N002",
         mainCandidates: candidates(
           "/decor/wood/N002-1-768x768.webp",
-          "/decor/wood/N002-768x768.webp",
           "/decor/wood/N002-150-768x768.webp"
         ),
       },
@@ -151,7 +150,6 @@ export default function DecorWood() {
         code: "N006",
         mainCandidates: candidates(
           "/decor/wood/N006-683x1024.webp",
-          "/decor/wood/N006-768x768.webp",
           "/decor/wood/N006-150-768x768.webp"
         ),
       },
@@ -170,7 +168,6 @@ export default function DecorWood() {
         code: "N008",
         mainCandidates: candidates(
           "/decor/wood/N008-683x1024.webp",
-          "/decor/wood/N008-768x768.webp",
           "/decor/wood/N008-150-768x768.webp"
         ),
       },
@@ -207,7 +204,6 @@ export default function DecorWood() {
         code: "N012",
         mainCandidates: candidates(
           "/decor/wood/N012-683x1024.webp",
-          "/decor/wood/N012-768x768.webp",
           "/decor/wood/N012-150-768x768.webp"
         ),
       },
@@ -217,7 +213,6 @@ export default function DecorWood() {
         code: "N013",
         mainCandidates: candidates(
           "/decor/wood/N013-683x1024.webp",
-          "/decor/wood/N013-768x768.webp",
           "/decor/wood/N013-150-768x768.webp"
         ),
       },
@@ -236,7 +231,6 @@ export default function DecorWood() {
         code: "N015",
         mainCandidates: candidates(
           "/decor/wood/N015-683x1024.webp",
-          "/decor/wood/N015-768x768.webp",
           "/decor/wood/N015-150-768x768.webp"
         ),
       },
@@ -246,7 +240,6 @@ export default function DecorWood() {
         code: "N016",
         mainCandidates: candidates(
           "/decor/wood/N016-683x1024.webp",
-          "/decor/wood/N016-768x768.webp",
           "/decor/wood/N016-150-768x768.webp"
         ),
       },
@@ -256,7 +249,6 @@ export default function DecorWood() {
         code: "N017",
         mainCandidates: candidates(
           "/decor/wood/N017-768x512.webp",
-          "/decor/wood/N017-768x768.webp",
           "/decor/wood/N017-150-768x768.webp"
         ),
       },
@@ -266,7 +258,6 @@ export default function DecorWood() {
         code: "N018",
         mainCandidates: candidates(
           "/decor/wood/N018-683x1024.webp",
-          "/decor/wood/N018-768x768.webp",
           "/decor/wood/N018-150-768x768.webp"
         ),
       },
