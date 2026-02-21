@@ -57,6 +57,7 @@ export default function App() {
         <Route path="/apartment-finishing-riyadh" element={<ApartmentFinishingRiyadh />} />
         <Route path="/home-renovation-company-riyadh" element={<HomeRenovationCompanyRiyadh />} />
         <Route path="/contractor-almalqa-riyadh" element={<ContractorAlMalqaRiyadh />} />
+        <Route path="*" element={<Home />} />
       </Routes>
 
       <Footer />
