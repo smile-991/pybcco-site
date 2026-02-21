@@ -72,12 +72,21 @@ export default function Navbar() {
               goTo("#hero");
             }}
             className="flex items-center gap-3"
+            aria-label="بنيان الهرم للمقاولات - PYBCCO"
           >
+            {/* ✅ نص براند موجود دائماً (SEO + Accessibility) */}
+            <span className="sr-only">بنيان الهرم للمقاولات - PYBCCO</span>
+
             <img
-              src="/logo.png"
+              src="/assets/logo.png"
               alt="بنيان الهرم للمقاولات"
               className="w-12 h-12 object-contain"
+              width={48}
+              height={48}
+              loading="eager"
+              decoding="async"
             />
+
             <div
               className={`hidden sm:block ${
                 isScrolled ? "text-black" : "text-white"
@@ -248,6 +257,7 @@ export default function Navbar() {
                 variant="ghost"
                 size="icon"
                 className={isScrolled ? "text-black" : "text-white"}
+                aria-label="Open menu"
               >
                 <Menu className="w-6 h-6" />
               </Button>
@@ -260,9 +270,13 @@ export default function Navbar() {
               <div className="flex flex-col h-full">
                 <div className="flex items-center gap-3 mb-8">
                   <img
-                    src="/logo.png"
+                    src="/assets/logo.png"
                     alt="بنيان الهرم للمقاولات"
                     className="w-10 h-10 object-contain"
+                    width={40}
+                    height={40}
+                    loading="eager"
+                    decoding="async"
                   />
                   <div>
                     <div className="font-bold">بنيان الهرم</div>
