@@ -84,7 +84,7 @@ export default function Decor() {
 
             {/* ===== بانوهات فوم (لسا لاحقاً) ===== */}
             <div className="rounded-2xl border p-5 opacity-60 bg-white">
-              <div className="font-bold text-lg">بانوهات فوم</div>
+              <div className="font-bold text-lg">بديل شيبورد</div>
               <div className="text-sm text-gray-600 mt-1">قريبًا</div>
             </div>
           </div>
