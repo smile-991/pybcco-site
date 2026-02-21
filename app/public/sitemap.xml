@@ -69,4 +69,11 @@
     <priority>0.7</priority>
   </url>
 
+  <url>
+    <loc>https://pybcco.com/decor/marble</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
 </urlset>
