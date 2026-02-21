@@ -19,9 +19,6 @@ const storeLinks = [
   { name: "بديل الخشب", href: "/decor/wood" },
   { name: "بديل الرخام", href: "/decor/marble" },
   { name: "بديل الشيبورد", href: "/decor/wpc" },
-  { name: "بانوهات فوم", href: "/decor/foam-panels" },
-  { name: "فوم صخري", href: "/decor/rock-foam" },
-  { name: "صفائح حجرية", href: "/decor/stone-sheets" },
 ];
 
 export default function Navbar() {
