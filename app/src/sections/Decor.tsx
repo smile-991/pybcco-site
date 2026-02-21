@@ -39,36 +39,51 @@ export default function Decor() {
           </p>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <a
-  href="/decor/wood"
-  className="relative rounded-2xl overflow-hidden shadow-lg group h-44"
->
-  {/* Background Image */}
-  <div
-    className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-    style={{ backgroundImage: "url('/decor/wood/F4B.webp')" }}
-  />
+            {/* ===== بديل الخشب ===== */}
+            <a href="/decor/wood" className="relative rounded-2xl overflow-hidden shadow-lg group h-44">
+              {/* Background Image */}
+              <div
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                style={{ backgroundImage: "url('/decor/wood/F4B.webp')" }}
+              />
 
-  {/* Overlay */}
-  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition" />
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition" />
 
-  {/* Content */}
-  <div className="relative p-6 text-white flex flex-col justify-end h-full">
-    <div className="text-xl font-extrabold">
-      بديل الخشب
-    </div>
-    <div className="text-sm mt-1 opacity-90">
-      ألواح PVC — توريد + تركيب
-    </div>
-  </div>
-</a>
+              {/* Badge */}
+              <div className="absolute top-4 right-4 z-10">
+                <span className="text-[11px] px-2 py-1 rounded-full bg-gold/90 text-black font-extrabold whitespace-nowrap">
+                  الأكثر طلباً
+                </span>
+              </div>
 
-            <div className="rounded-2xl border p-5 opacity-60">
-              <div className="font-bold text-lg">بديل الرخام</div>
-              <div className="text-sm text-gray-600 mt-1">قريبًا</div>
-            </div>
+              {/* Content */}
+              <div className="relative p-6 text-white flex flex-col justify-end h-full">
+                <div className="text-xl font-extrabold">بديل الخشب</div>
+                <div className="text-sm mt-1 opacity-90">ألواح PVC — توريد + تركيب</div>
+              </div>
+            </a>
 
-            <div className="rounded-2xl border p-5 opacity-60">
+            {/* ===== بديل الرخام ===== */}
+            <a href="/decor/marble" className="relative rounded-2xl overflow-hidden shadow-lg group h-44">
+              {/* Background Image */}
+              <div
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                style={{ backgroundImage: "url('/decor/marble/K1.webp')" }}
+              />
+
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition" />
+
+              {/* Content */}
+              <div className="relative p-6 text-white flex flex-col justify-end h-full">
+                <div className="text-xl font-extrabold">بديل الرخام</div>
+                <div className="text-sm mt-1 opacity-90">ألواح 290×120 — توريد + تركيب</div>
+              </div>
+            </a>
+
+            {/* ===== بانوهات فوم (لسا لاحقاً) ===== */}
+            <div className="rounded-2xl border p-5 opacity-60 bg-white">
               <div className="font-bold text-lg">بانوهات فوم</div>
               <div className="text-sm text-gray-600 mt-1">قريبًا</div>
             </div>
