@@ -1,13 +1,34 @@
 import SeoHead from "@/components/SeoHead";
 import { Button } from "@/components/ui/button";
 
+const SITE_URL = "https://pybcco.com";
+
 export default function Decor() {
+  const canonical = `${SITE_URL}/decor`;
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "الرئيسية", item: SITE_URL + "/" },
+      { "@type": "ListItem", position: 2, name: "المتجر", item: canonical },
+    ],
+  };
+
+  const collectionJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "المتجر | PYBCCO",
+    url: canonical,
+  };
+
   return (
     <main dir="rtl" className="min-h-screen bg-white">
       <SeoHead
         title="المتجر | بنيان الهرم للمقاولات"
         description="مواد ديكورية محلية بالرياض: بديل خشب، بديل رخام، بانوهات، صفائح حجرية — توريد أو توريد + تركيب."
-        canonical="https://pybcco.com/decor"
+        canonical={canonical}
+        jsonLd={[breadcrumbJsonLd, collectionJsonLd]}
       />
 
       <section className="pt-28 pb-12">
@@ -18,7 +39,10 @@ export default function Decor() {
           </p>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <a href="/decor/wood" className="rounded-2xl border p-5 hover:shadow-md transition">
+            <a
+              href="/decor/wood"
+              className="rounded-2xl border p-5 hover:shadow-md transition"
+            >
               <div className="font-bold text-lg">بديل الخشب</div>
               <div className="text-sm text-gray-600 mt-1">ألواح PVC — توريد + تركيب</div>
             </a>

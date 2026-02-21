@@ -1,6 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { CheckCircle2, Calculator, Phone, X, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  CheckCircle2,
+  Calculator,
+  Phone,
+  X,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SeoHead from "@/components/SeoHead";
 
@@ -8,9 +15,8 @@ type Product = {
   id: string; // مثل N006 أو F1
   name: string;
   code: string;
-  // بدل main ثابت: نخليها قائمة خيارات (الأذكى)
   mainCandidates: string[];
-  extraCandidates?: string[]; // صور إضافية (اختياري)
+  extraCandidates?: string[];
 };
 
 const SITE_URL = "https://pybcco.com";
@@ -22,7 +28,7 @@ const WHATSAPP =
   );
 
 const PRICE_BOARD_SAR = 22; // سعر اللوح (شامل الضريبة)
-const INSTALL_PER_METER_SAR = 25; // ✅ التركيب بالمتر الطولي (شامل الضريبة)
+const INSTALL_PER_METER_SAR = 25; // التركيب بالمتر الطولي (شامل الضريبة)
 
 const DIMENSIONS = "290 × 20 سم";
 const MATERIAL = "PVC عالي الكثافة";
@@ -89,17 +95,13 @@ function SmartImg({
       loading="lazy"
       className={className}
       onClick={onClick}
-      onError={() => {
-        // جرّب الصورة اللي بعدها
-        setIdx((prev) => prev + 1);
-      }}
+      onError={() => setIdx((prev) => prev + 1)}
     />
   );
 }
 
 /** ✅ مساعد: يبني قائمة مرشحات للصور حسب وجود أكثر من مقاس */
 function candidates(...paths: string[]) {
-  // نشيل أي قيم فاضية + نتأكد ما في تكرار
   const clean = paths.filter(Boolean);
   return Array.from(new Set(clean));
 }
@@ -107,7 +109,6 @@ function candidates(...paths: string[]) {
 export default function DecorWood() {
   const products: Product[] = useMemo(
     () => [
-      // ===== N Series =====
       {
         id: "N002",
         name: "بديل الخشب – N002",
@@ -262,7 +263,7 @@ export default function DecorWood() {
         ),
       },
 
-      // ===== F Series (B = main, A = extra) =====
+      // ===== F Series =====
       {
         id: "F1",
         name: "بديل الخشب – F1",
@@ -338,8 +339,7 @@ export default function DecorWood() {
 
   const prevImg = () =>
     setLightboxIndex((i) => (i - 1 + lightboxImages.length) % lightboxImages.length);
-  const nextImg = () =>
-    setLightboxIndex((i) => (i + 1) % lightboxImages.length);
+  const nextImg = () => setLightboxIndex((i) => (i + 1) % lightboxImages.length);
 
   useEffect(() => {
     if (!lightboxOpen) return;
@@ -401,21 +401,36 @@ export default function DecorWood() {
     };
   }, []);
 
+  // ✅ Breadcrumb Schema
+  const breadcrumbJsonLd = useMemo(() => {
+    return {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "الرئيسية", item: `${SITE_URL}/` },
+        { "@type": "ListItem", position: 2, name: "المتجر", item: `${SITE_URL}/decor` },
+        { "@type": "ListItem", position: 3, name: "بديل الخشب", item: `${SITE_URL}/decor/wood` },
+      ],
+    };
+  }, []);
+
+  // ✅ WebPage Schema (خفيف)
+  const webPageJsonLd = useMemo(() => {
+    return {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: "بديل الخشب PVC بالرياض | متجر PYBCCO",
+      url: `${SITE_URL}/decor/wood`,
+    };
+  }, []);
+
   return (
     <>
       <SeoHead
         title="بديل الخشب PVC بالرياض | سعر اللوح 22 ريال شامل الضريبة + تركيب 25 ريال/م ط – PYBCCO"
         description="بديل الخشب PVC عالي الجودة بمقاس 290×20 سم. سعر اللوح 22 ريال شامل الضريبة. التركيب 25 ريال لكل متر طولي. توصيل داخل الرياض + خيار توريد أو توريد + تركيب بإشراف مقاول."
         canonical="https://pybcco.com/decor/wood"
-      />
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productItemListJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        jsonLd={[productItemListJsonLd, faqJsonLd, breadcrumbJsonLd, webPageJsonLd]}
       />
 
       {/* Lightbox */}
@@ -426,10 +441,7 @@ export default function DecorWood() {
           aria-modal="true"
           onClick={closeLightbox}
         >
-          <div
-            className="relative w-full max-w-5xl"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="relative w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
             <button
               type="button"
               onClick={closeLightbox}
@@ -480,11 +492,15 @@ export default function DecorWood() {
 
       <main className="pt-28 pb-28">
         <div className="container-custom">
-          {/* Breadcrumb */}
+          {/* Breadcrumb UI */}
           <div className="text-sm text-gray-500 mb-6">
-            <Link to="/" className="hover:text-gray-800">الرئيسية</Link>
+            <Link to="/" className="hover:text-gray-800">
+              الرئيسية
+            </Link>
             <span className="mx-2">/</span>
-            <Link to="/decor" className="hover:text-gray-800">المتجر</Link>
+            <Link to="/decor" className="hover:text-gray-800">
+              المتجر
+            </Link>
             <span className="mx-2">/</span>
             <span className="text-gray-800 font-semibold">بديل الخشب</span>
           </div>
@@ -492,9 +508,12 @@ export default function DecorWood() {
           {/* Header */}
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-8">
             <div>
-              <h1 className="text-3xl font-extrabold text-gray-900">بديل الخشب (PVC)</h1>
+              <h1 className="text-3xl font-extrabold text-gray-900">
+                بديل الخشب (PVC)
+              </h1>
               <p className="text-gray-600 mt-2 leading-relaxed">
-                لوح ديكور يحاكي الخشب الطبيعي بدقة عالية، مناسب للصالات والغرف والمداخل وخلف الشاشات.
+                لوح ديكور يحاكي الخشب الطبيعي بدقة عالية، مناسب للصالات والغرف
+                والمداخل وخلف الشاشات.
               </p>
 
               <div className="mt-3 text-sm text-gray-700">
@@ -504,13 +523,16 @@ export default function DecorWood() {
               </div>
 
               <div className="mt-2 text-xs text-gray-500">
-                ملاحظة: <span className="font-bold">التركيب يُحسب بالمتر الطولي</span> (مثال: تركيب 2م = 50 ريال).
+                ملاحظة: <span className="font-bold">التركيب يُحسب بالمتر الطولي</span>{" "}
+                (مثال: تركيب 2م = 50 ريال).
               </div>
             </div>
 
             <div className="flex gap-3">
               <Button asChild variant="outline" className="font-bold">
-                <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">استفسار واتساب</a>
+                <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
+                  استفسار واتساب
+                </a>
               </Button>
               <Button asChild className="bg-gold hover:bg-gold/90 text-black font-bold">
                 <a href="tel:+966550604837">
@@ -529,7 +551,9 @@ export default function DecorWood() {
             </div>
             <div className="rounded-2xl border border-gray-200 p-4">
               <div className="text-xs text-gray-500">التركيب (يُضاف على المتر الطولي)</div>
-              <div className="text-xl font-extrabold mt-1">{INSTALL_PER_METER_SAR} ريال/م ط</div>
+              <div className="text-xl font-extrabold mt-1">
+                {INSTALL_PER_METER_SAR} ريال/م ط
+              </div>
             </div>
             <div className="rounded-2xl border border-gray-200 p-4">
               <div className="text-xs text-gray-500">المقاس</div>
@@ -564,10 +588,7 @@ export default function DecorWood() {
           {/* Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {products.map((p, idx) => {
-              const allImgs = candidates(
-                ...p.mainCandidates,
-                ...(p.extraCandidates || [])
-              );
+              const allImgs = candidates(...p.mainCandidates, ...(p.extraCandidates || []));
 
               return (
                 <article
@@ -609,7 +630,9 @@ export default function DecorWood() {
                       </div>
                       <div className="text-right">
                         <div className="text-xs text-gray-500">التركيب</div>
-                        <div className="text-lg font-extrabold">{INSTALL_PER_METER_SAR} ريال/م ط</div>
+                        <div className="text-lg font-extrabold">
+                          {INSTALL_PER_METER_SAR} ريال/م ط
+                        </div>
                       </div>
                     </div>
 
@@ -632,7 +655,6 @@ export default function DecorWood() {
                       </Button>
                     </div>
 
-                    {/* Thumbs/Extras */}
                     {allImgs.length > 1 && (
                       <div className="mt-4 grid grid-cols-2 gap-3">
                         {allImgs.slice(1, 3).map((img, i) => (
