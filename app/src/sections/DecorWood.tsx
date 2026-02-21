@@ -54,39 +54,188 @@ function Img({
 
 export default function DecorWood() {
   const products: Product[] = useMemo(
-    () => [
-      // ===== N Series (الأساسي: اللي ما فيه 150) =====
-      { id: "N002", name: "بديل الخشب – N002", code: "N002", main: "/decor/wood/N002-150-768x768.webp", thumb: "/decor/wood/N002-1-768x768.webp" },
-      { id: "N003", name: "بديل الخشب – N003", code: "N003", main: "/decor/wood/N003-768x768.webp", thumb: "/decor/wood/N003-150-768x768.webp" },
-      { id: "N004", name: "بديل الخشب – N004", code: "N004", main: "/decor/wood/N004-768x768.webp", thumb: "/decor/wood/N004-150-768x768.webp" },
-      { id: "N005", name: "بديل الخشب – N005", code: "N005", main: "/decor/wood/N005-683x1024.webp", thumb: "/decor/wood/N005-150-768x768.webp" },
-      { id: "N006", name: "بديل الخشب – N006 (أسود)", code: "N006", main: "/decor/wood/N006-683x1024.webp", thumb: "/decor/wood/N006-150-768x768.webp" },
-      { id: "N007", name: "بديل الخشب – N007", code: "N007", main: "/decor/wood/N007-768x768.webp", thumb: "/decor/wood/N007-150-768x768.webp" },
-      { id: "N008", name: "بديل الخشب – N008", code: "N008", main: "/decor/wood/N008-683x1024.webp", thumb: "/decor/wood/N008-150-768x768.webp" },
-      { id: "N009", name: "بديل الخشب – N009", code: "N009", main: "/decor/wood/N009-768x768.webp", thumb: "/decor/wood/N009-150-768x768.webp" },
-      { id: "N010", name: "بديل الخشب – N010", code: "N010", main: "/decor/wood/N010-768x768.webp", thumb: "/decor/wood/N010-150-768x768.webp" },
-      { id: "N011", name: "بديل الخشب – N011", code: "N011", main: "/decor/wood/N011-768x768.webp", thumb: "/decor/wood/N011-150-768x768.webp" },
-      { id: "N012", name: "بديل الخشب – N012", code: "N012", main: "/decor/wood/N012-683x1024.webp", thumb: "/decor/wood/N012-150-768x768.webp" },
-      { id: "N013", name: "بديل الخشب – N013", code: "N013", main: "/decor/wood/N013-683x1024.webp", thumb: "/decor/wood/N013-150-768x768.webp" },
-      { id: "N014", name: "بديل الخشب – N014", code: "N014", main: "/decor/wood/N014-768x768.webp", thumb: "/decor/wood/N014-150-768x768.webp" },
-      { id: "N015", name: "بديل الخشب – N015", code: "N015", main: "/decor/wood/N015-683x1024.webp", thumb: "/decor/wood/N015-150-768x768.webp" },
-      { id: "N016", name: "بديل الخشب – N016", code: "N016", main: "/decor/wood/N016-683x1024.webp", thumb: "/decor/wood/N016-150-768x768.webp" },
-      { id: "N017", name: "بديل الخشب – N017", code: "N017", main: "/decor/wood/N017-768x512.webp", thumb: "/decor/wood/N017-150-768x768.webp" },
-      { id: "N018", name: "بديل الخشب – N018", code: "N018", main: "/decor/wood/N018-683x1024.webp", thumb: "/decor/wood/N018-150-768x768.webp" },
+  () => [
+    // ===== N Series =====
+    {
+      id: "N002",
+      name: "بديل الخشب – N002",
+      code: "N002",
+      main: "/decor/wood/N002-1-768x768.webp",
+      thumb: "/decor/wood/N002-150-768x768.webp",
+    },
+    {
+      id: "N003",
+      name: "بديل الخشب – N003",
+      code: "N003",
+      main: "/decor/wood/N003-768x768.webp",
+      thumb: "/decor/wood/N003-150-768x768.webp",
+    },
+    {
+      id: "N004",
+      name: "بديل الخشب – N004",
+      code: "N004",
+      main: "/decor/wood/N004-768x768.webp",
+      thumb: "/decor/wood/N004-150-768x768.webp",
+    },
+    {
+      id: "N005",
+      name: "بديل الخشب – N005",
+      code: "N005",
+      main: "/decor/wood/N005-683x1024.webp",
+      thumb: "/decor/wood/N005-150-768x768.webp",
+    },
+    {
+      id: "N006",
+      name: "بديل الخشب – N006 (أسود)",
+      code: "N006",
+      main: "/decor/wood/N006-683x1024.webp",
+      thumb: "/decor/wood/N006-150-768x768.webp",
+    },
+    {
+      id: "N007",
+      name: "بديل الخشب – N007",
+      code: "N007",
+      main: "/decor/wood/N007-768x768.webp",
+      thumb: "/decor/wood/N007-150-768x768.webp",
+    },
+    {
+      id: "N008",
+      name: "بديل الخشب – N008",
+      code: "N008",
+      main: "/decor/wood/N008-683x1024.webp",
+      thumb: "/decor/wood/N008-150-768x768.webp",
+    },
+    {
+      id: "N009",
+      name: "بديل الخشب – N009",
+      code: "N009",
+      main: "/decor/wood/N009-768x768.webp",
+      thumb: "/decor/wood/N009-150-768x768.webp",
+    },
+    {
+      id: "N010",
+      name: "بديل الخشب – N010",
+      code: "N010",
+      main: "/decor/wood/N010-768x768.webp",
+      thumb: "/decor/wood/N010-150-768x768.webp",
+    },
+    {
+      id: "N011",
+      name: "بديل الخشب – N011",
+      code: "N011",
+      main: "/decor/wood/N011-768x768.webp",
+      thumb: "/decor/wood/N011-150-768x768.webp",
+    },
+    {
+      id: "N012",
+      name: "بديل الخشب – N012",
+      code: "N012",
+      main: "/decor/wood/N012-683x1024.webp",
+      thumb: "/decor/wood/N012-150-768x768.webp",
+    },
+    {
+      id: "N013",
+      name: "بديل الخشب – N013",
+      code: "N013",
+      main: "/decor/wood/N013-683x1024.webp",
+      thumb: "/decor/wood/N013-150-768x768.webp",
+    },
+    {
+      id: "N014",
+      name: "بديل الخشب – N014",
+      code: "N014",
+      main: "/decor/wood/N014-768x768.webp",
+      thumb: "/decor/wood/N014-150-768x768.webp",
+    },
+    {
+      id: "N015",
+      name: "بديل الخشب – N015",
+      code: "N015",
+      main: "/decor/wood/N015-683x1024.webp",
+      thumb: "/decor/wood/N015-150-768x768.webp",
+    },
+    {
+      id: "N016",
+      name: "بديل الخشب – N016",
+      code: "N016",
+      main: "/decor/wood/N016-683x1024.webp",
+      thumb: "/decor/wood/N016-150-768x768.webp",
+    },
+    {
+      id: "N017",
+      name: "بديل الخشب – N017",
+      code: "N017",
+      main: "/decor/wood/N017-768x512.webp",
+      thumb: "/decor/wood/N017-150-768x768.webp",
+    },
+    {
+      id: "N018",
+      name: "بديل الخشب – N018",
+      code: "N018",
+      main: "/decor/wood/N018-683x1024.webp",
+      thumb: "/decor/wood/N018-150-768x768.webp",
+    },
 
-      // ===== F Series (B هو الأساسي) =====
-      { id: "F1", name: "بديل الخشب – F1", code: "F1", main: "/decor/wood/F1B.webp", second: "/decor/wood/F1A.webp" },
-      { id: "F2", name: "بديل الخشب – F2", code: "F2", main: "/decor/wood/F2B.webp", second: "/decor/wood/F2A.webp" },
-      { id: "F3", name: "بديل الخشب – F3", code: "F3", main: "/decor/wood/F3B.webp", second: "/decor/wood/F3A.webp" },
-      { id: "F4", name: "بديل الخشب – F4", code: "F4", main: "/decor/wood/F4B.webp", second: "/decor/wood/F4A.webp" },
-      { id: "F5", name: "بديل الخشب – F5", code: "F5", main: "/decor/wood/F5B.webp", second: "/decor/wood/F5A.webp" },
-      { id: "F6", name: "بديل الخشب – F6", code: "F6", main: "/decor/wood/F6B.webp", second: "/decor/wood/F6A.webp" },
-      { id: "F7", name: "بديل الخشب – F7", code: "F7", main: "/decor/wood/F7B.webp", second: "/decor/wood/F7A.webp" },
-      { id: "F8", name: "بديل الخشب – F8", code: "F8", main: "/decor/wood/F8B.webp", second: "/decor/wood/F8A.webp" },
-    ],
-    []
-  );
-
+    // ===== F Series (B = main, A = second) =====
+    {
+      id: "F1",
+      name: "بديل الخشب – F1",
+      code: "F1",
+      main: "/decor/wood/F1B.webp",
+      second: "/decor/wood/F1A.webp",
+    },
+    {
+      id: "F2",
+      name: "بديل الخشب – F2",
+      code: "F2",
+      main: "/decor/wood/F2B.webp",
+      second: "/decor/wood/F2A.webp",
+    },
+    {
+      id: "F3",
+      name: "بديل الخشب – F3",
+      code: "F3",
+      main: "/decor/wood/F3B.webp",
+      second: "/decor/wood/F3A.webp",
+    },
+    {
+      id: "F4",
+      name: "بديل الخشب – F4",
+      code: "F4",
+      main: "/decor/wood/F4B.webp",
+      second: "/decor/wood/F4A.webp",
+    },
+    {
+      id: "F5",
+      name: "بديل الخشب – F5",
+      code: "F5",
+      main: "/decor/wood/F5B.webp",
+      second: "/decor/wood/F5A.webp",
+    },
+    {
+      id: "F6",
+      name: "بديل الخشب – F6",
+      code: "F6",
+      main: "/decor/wood/F6B.webp",
+      second: "/decor/wood/F6A.webp",
+    },
+    {
+      id: "F7",
+      name: "بديل الخشب – F7",
+      code: "F7",
+      main: "/decor/wood/F7B.webp",
+      second: "/decor/wood/F7A.webp",
+    },
+    {
+      id: "F8",
+      name: "بديل الخشب – F8",
+      code: "F8",
+      main: "/decor/wood/F8B.webp",
+      second: "/decor/wood/F8A.webp",
+    },
+  ],
+  []
+);
   return (
     <>
       <SeoHead
