@@ -4,7 +4,7 @@ import Footer from "./sections/Footer";
 import Home from "./sections/Home";
 import ProjectsGallery from "./sections/ProjectsGallery";
 import ScrollToTop from "./ScrollToTop";
-
+import DecorMarble from "@/sections/DecorMarble";
 import VillaFinishingRiyadh from "./sections/VillaFinishingRiyadh";
 import VillaRenovationRiyadh from "./sections/VillaRenovationRiyadh";
 import ConstructionCompanyRiyadh from "./sections/ConstructionCompanyRiyadh";
@@ -31,7 +31,7 @@ export default function App() {
         <Route path="/projects" element={<ProjectsGallery />} />
         <Route path="/decor" element={<Decor />} />
         <Route path="/decor/wood" element={<DecorWood />} />
-
+<Route path="/decor/marble" element={<DecorMarble />} />
         <Route path="/villa-finishing-riyadh" element={<VillaFinishingRiyadh />} />
         <Route path="/villa-renovation-riyadh" element={<VillaRenovationRiyadh />} />
         <Route path="/construction-company-riyadh" element={<ConstructionCompanyRiyadh />} />
