@@ -35,12 +35,14 @@ function Img({
 }) {
   const [failed, setFailed] = useState(false);
   if (failed) {
-    return (
-      <div className={`bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-500 ${className}`}>
-        صورة غير متاحة
-      </div>
-    );
-  }
+  return (
+    <img
+      src="/decor/wood/N003-768x768.webp"
+      alt="fallback"
+      className={className}
+    />
+  );
+}
   return (
     <img
       src={src}
