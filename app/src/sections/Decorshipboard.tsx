@@ -473,7 +473,127 @@ export default function DecorShipboard() {
             </div>
           </section>
         </div>
+{/* Shipboard SEO Guide (Collapsible) */}
+<section className="mt-14">
+  <h2 className="text-2xl font-extrabold text-gray-900">
+    بديل الشيبورد WPC بالرياض – دليل الشراء والتركيب
+  </h2>
+  <p className="mt-3 text-gray-600 leading-relaxed">
+    هذا الدليل يساعدك تختار النوع المناسب وتفهم الفروقات وطريقة احتساب السعر قبل الطلب.
+    المحتوى موجود داخل الصفحة ليُفهم سياق المنتج بشكل أوضح.
+  </p>
 
+  <div className="mt-5">
+    <details className="rounded-2xl border border-gray-200 bg-white p-5">
+      <summary className="cursor-pointer select-none font-bold text-gray-900">
+        اضغط لعرض الدليل الكامل
+      </summary>
+
+      <div className="mt-4 space-y-5 text-gray-700 leading-relaxed">
+        <p>
+          يُعتبر <strong>بديل الشيبورد WPC</strong> من الخيارات العملية لتكسية الجدران والأسقف
+          داخل الفلل والشقق والمشاريع التجارية في <strong>الرياض</strong>، لأنه يجمع بين شكل خشبي
+          عصري وسهولة في التنظيف مع ثبات أفضل من بعض البدائل الخفيفة. ويُستخدم بكثرة في
+          جدار التلفزيون، المداخل، الممرات، الصالات، وغرف النوم، وأحيانًا في أماكن شبه خارجية
+          بشرط أن تكون محمية من التعرض المباشر للماء والشمس.
+        </p>
+
+        <h3 className="text-lg font-extrabold text-gray-900">
+          ما هو بديل الشيبورد WPC؟ ولماذا يفضّله الناس في الرياض؟
+        </h3>
+        <p>
+          ألواح WPC هي مادة مركبة (Composite) تجمع عناصر خشبية مع مواد بوليمرية معالجة،
+          وهذا يعطيها <strong>صلابة أعلى</strong> وشعور أقرب للخشب من ناحية المظهر والملمس، مع
+          مقاومة أفضل للرطوبة مقارنة بالخشب الطبيعي. في الرياض تحديداً، كثير من العملاء يركزون
+          على المواد التي تعطي شكل أنيق بدون صيانة مزعجة، لذلك بديل الشيبورد صار خيار شائع
+          في التشطيبات الحديثة والديكور الداخلي.
+        </p>
+
+        <h3 className="text-lg font-extrabold text-gray-900">
+          الفرق بين بديل الخشب PVC وبديل الشيبورد WPC
+        </h3>
+        <p>
+          بشكل مبسّط: <strong>PVC</strong> غالباً أخف وأسهل في بعض التركيبات الداخلية الخفيفة،
+          بينما <strong>WPC</strong> عادةً <strong>أقوى وأصلب</strong> ويُفضّل عندما نحتاج سماكة أعلى
+          وثبات أكبر ونتيجة نهائية “أفخم” من ناحية الشكل. الاختيار الصحيح يعتمد على مكان
+          الاستخدام، مساحة الجدار، وطريقة التركيب المطلوبة.
+        </p>
+
+        <h3 className="text-lg font-extrabold text-gray-900">
+          كيف تختار بديل الشيبورد المناسب للمكان؟
+        </h3>
+        <p>
+          قبل الشراء، ركّز على 4 نقاط:
+          <br />• <strong>مكان الاستخدام</strong>: داخلي / شبه خارجي (مدخل محمي، شرفة مغلقة).
+          <br />• <strong>السماكة والمقاس</strong>: كلما زادت السماكة زادت الصلابة وثبات الشكل.
+          <br />• <strong>جودة التشطيب</strong>: ثبات اللون ونظافة سطح اللوح والقصّات.
+          <br />• <strong>طريقة التركيب</strong>: تركيب مباشر بمواد تثبيت مناسبة أو عبر شاسيه لضمان الاستقامة.
+        </p>
+
+        <h3 className="text-lg font-extrabold text-gray-900">
+          هل بديل الشيبورد يتحمّل حرارة الرياض والرطوبة؟
+        </h3>
+        <p>
+          نعم، للاستخدامات الداخلية في الرياض يكون مناسب جداً عند اختيار نوعية جيدة وتنفيذ
+          احترافي. العامل الحاسم عادة ليس اللوح وحده، بل <strong>جودة التركيب</strong> ومعالجة الزوايا
+          والفواصل واستقامة السطح. إذا كان الجدار غير مستوٍ، الأفضل استخدام شاسيه لضمان
+          نتيجة نهائية نظيفة.
+        </p>
+
+        <h3 className="text-lg font-extrabold text-gray-900">
+          كيف يتم حساب السعر والكمية؟ (توريد أو توريد + تركيب)
+        </h3>
+        <p>
+          سعر بديل الشيبورد في الرياض يتحدد حسب:
+          <strong> مساحة الجدار/السقف</strong>، <strong>عدد الألواح المطلوبة حسب المقاس</strong>،
+          <strong> نوع اللوح والسماكة</strong>، ثم <strong>التركيب</strong> (حسب طبيعة التنفيذ والتفاصيل).
+          أفضل طريقة للحصول على رقم دقيق: أرسل الأبعاد أو صورة واضحة للجدار + القياسات
+          ونحدّد لك الكمية المناسبة مع <strong>عرض سعر واضح</strong>.
+        </p>
+
+        <h3 className="text-lg font-extrabold text-gray-900">
+          هل تحتاج فني متخصص للتركيب؟
+        </h3>
+        <p>
+          التركيب قد يبدو بسيطاً، لكن النتيجة الاحترافية تعتمد على ضبط الميزان، قص الزوايا،
+          إنهاء الحواف، وتوزيع الفواصل بشكل متوازن. لذلك ننصح دائماً بفني تركيب محترف
+          خصوصاً في جدران التلفزيون والمداخل لأنها تظهر فيها العيوب بسرعة.
+        </p>
+
+        <div className="rounded-xl bg-gray-50 p-4 border border-gray-200">
+          <p className="font-bold text-gray-900 mb-2">روابط قد تهمك داخل الموقع:</p>
+          <ul className="space-y-2">
+            <li>
+              <a className="text-gold underline" href="/decor">
+                المتجر – كل الأقسام
+              </a>
+            </li>
+            <li>
+              <a className="text-gold underline" href="/decor/wood">
+                بديل الخشب PVC بالرياض
+              </a>
+            </li>
+            <li>
+              <a className="text-gold underline" href="/decor/marble">
+                بديل الرخام بالرياض
+              </a>
+            </li>
+            <li>
+              <a className="text-gold underline" href="/villa-finishing-price-riyadh">
+                احسب التكلفة – حاسبة تشطيب الفلل
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <p className="text-gray-700">
+          إذا عندك مقاس الجدار أو صورة + أبعاد، تواصل معنا ونرسل لك توصية بالنوع المناسب
+          والكمية التقريبية، مع خيار <strong>توريد</strong> أو <strong>توريد + تركيب</strong> داخل الرياض.
+        </p>
+      </div>
+    </details>
+  </div>
+</section>
         {/* Sticky CTA mobile */}
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur border-t border-gray-200 lg:hidden">
           <div className="container-custom py-3 flex gap-3">
