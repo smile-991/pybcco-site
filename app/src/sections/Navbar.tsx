@@ -18,8 +18,7 @@ const storeLinks = [
   { name: "واجهة المتجر", href: "/decor" },
   { name: "بديل الخشب", href: "/decor/wood" },
   { name: "بديل الرخام", href: "/decor/marble" },
-  { name: "بديل الشيبورد", href: "/decor/wpc" },
-];
+{ name: "بديل الشيبورد", href: "/decor/shipboard" },];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
