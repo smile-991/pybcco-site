@@ -26,7 +26,7 @@ export default function Decor() {
     <main dir="rtl" className="bg-gradient-to-b from-white via-gray-50 to-gray-100">
       <SeoHead
         title="المتجر | بنيان الهرم للمقاولات"
-        description="مواد ديكورية محلية بالرياض: بديل خشب، بديل رخام، بانوهات، صفائح حجرية — توريد أو توريد + تركيب."
+        description="مواد ديكورية محلية بالرياض: بديل خشب، بديل رخام، بديل شيبورد — توريد أو توريد + تركيب."
         canonical={canonical}
         jsonLd={[breadcrumbJsonLd, collectionJsonLd]}
       />
@@ -41,23 +41,18 @@ export default function Decor() {
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {/* ===== بديل الخشب ===== */}
             <a href="/decor/wood" className="relative rounded-2xl overflow-hidden shadow-lg group h-44">
-              {/* Background Image */}
               <div
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
                 style={{ backgroundImage: "url('/decor/wood/F4B.webp')" }}
               />
-
-              {/* Overlay */}
               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition" />
 
-              {/* Badge */}
               <div className="absolute top-4 right-4 z-10">
                 <span className="text-[11px] px-2 py-1 rounded-full bg-gold/90 text-black font-extrabold whitespace-nowrap">
                   الأكثر طلباً
                 </span>
               </div>
 
-              {/* Content */}
               <div className="relative p-6 text-white flex flex-col justify-end h-full">
                 <div className="text-xl font-extrabold">بديل الخشب</div>
                 <div className="text-sm mt-1 opacity-90">ألواح PVC — توريد + تركيب</div>
@@ -66,27 +61,31 @@ export default function Decor() {
 
             {/* ===== بديل الرخام ===== */}
             <a href="/decor/marble" className="relative rounded-2xl overflow-hidden shadow-lg group h-44">
-              {/* Background Image */}
               <div
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
                 style={{ backgroundImage: "url('/decor/marble/K1.webp')" }}
               />
-
-              {/* Overlay */}
               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition" />
 
-              {/* Content */}
               <div className="relative p-6 text-white flex flex-col justify-end h-full">
                 <div className="text-xl font-extrabold">بديل الرخام</div>
                 <div className="text-sm mt-1 opacity-90">ألواح 290×120 — توريد + تركيب</div>
               </div>
             </a>
 
-            {/* ===== بانوهات فوم (لسا لاحقاً) ===== */}
-            <div className="rounded-2xl border p-5 opacity-60 bg-white">
-              <div className="font-bold text-lg">بديل شيبورد</div>
-              <div className="text-sm text-gray-600 mt-1">قريبًا</div>
-            </div>
+            {/* ===== بديل شيبورد ===== */}
+            <a href="/decor/shipboard" className="relative rounded-2xl overflow-hidden shadow-lg group h-44">
+              <div
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                style={{ backgroundImage: "url('/decor/shipboard/22A.webp')" }}
+              />
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition" />
+
+              <div className="relative p-6 text-white flex flex-col justify-end h-full">
+                <div className="text-xl font-extrabold">بديل شيبورد</div>
+                <div className="text-sm mt-1 opacity-90">ألواح WPC — توريد + تركيب</div>
+              </div>
+            </a>
           </div>
 
           <div className="mt-10">
