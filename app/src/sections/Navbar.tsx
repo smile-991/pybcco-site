@@ -280,53 +280,64 @@ export default function Navbar() {
                   </div>
                 </div>
 
-                <nav className="flex flex-col gap-2">
-                  {navLinks.map((link) => (
-                    <a
-                      key={link.name}
-                      href={link.href}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        goTo(link.href);
-                      }}
-                      className="px-4 py-3 text-white hover:bg-gold/10 hover:text-gold rounded-lg transition whitespace-nowrap"
-                    >
-                      {link.name}
-                    </a>
-                  ))}
+                <nav className="flex flex-col gap-1">
 
-                  {/* ===== المتجر (Mobile) ===== */}
-                  <div className="mt-2 pt-2 border-t border-white/10">
-                    <div className="px-4 py-2 text-xs text-white/60 whitespace-nowrap">
-                      المتجر
-                    </div>
+  {/* ===== الروابط الرئيسية ===== */}
+  {navLinks.map((link) => (
+    <a
+      key={link.name}
+      href={link.href}
+      onClick={(e) => {
+        e.preventDefault();
+        goTo(link.href);
+      }}
+      className="px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition"
+    >
+      {link.name}
+    </a>
+  ))}
 
-                    {storeLinks.map((item) => (
-                      <a
-                        key={item.href}
-                        href={item.href}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          goTo(item.href);
-                        }}
-                        className="px-4 py-3 text-white hover:bg-gold/10 hover:text-gold rounded-lg transition whitespace-nowrap"
-                      >
-                        {item.name}
-                      </a>
-                    ))}
-                  </div>
+  {/* ===== Divider ===== */}
+  <div className="my-4 h-px bg-white/10" />
 
-                  <a
-                    href="/contractor-almalqa-riyadh"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      goTo("/contractor-almalqa-riyadh");
-                    }}
-                    className="mt-2 px-4 py-3 text-white hover:bg-gold/10 hover:text-gold rounded-lg transition whitespace-nowrap"
-                  >
-                    مناطق عملنا – حي الملقا
-                  </a>
-                </nav>
+  {/* ===== المتجر ===== */}
+  <div>
+    <div className="px-4 mb-2 text-xs tracking-wider text-white/50 uppercase">
+      المتجر
+    </div>
+
+    <div className="flex flex-col gap-1">
+      {storeLinks.map((item) => (
+        <a
+          key={item.href}
+          href={item.href}
+          onClick={(e) => {
+            e.preventDefault();
+            goTo(item.href);
+          }}
+          className="px-4 py-2 text-sm text-white/90 hover:bg-white/10 hover:text-gold rounded-lg transition"
+        >
+          {item.name}
+        </a>
+      ))}
+    </div>
+  </div>
+
+  {/* ===== مناطق العمل ===== */}
+  <div className="my-4 h-px bg-white/10" />
+
+  <a
+    href="/contractor-almalqa-riyadh"
+    onClick={(e) => {
+      e.preventDefault();
+      goTo("/contractor-almalqa-riyadh");
+    }}
+    className="px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition"
+  >
+    مناطق عملنا – حي الملقا
+  </a>
+
+</nav>
 
                 <div className="mt-auto pt-6 border-t border-white/10">
                   <a
