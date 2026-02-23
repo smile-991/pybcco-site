@@ -278,22 +278,29 @@ export default function VillaRenovationRiyadh() {
           </p>
 
           <p>
-            إذا كان مشروعك يحتاج تشطيب كامل بدل ترميم جزئي، يمكنك زيارة صفحة{" "}
-            <a
-              href="/villa-finishing-riyadh"
-              className="text-gold font-bold hover:underline"
-            >
-              تشطيب فلل بالرياض
-            </a>{" "}
-            أو استخدام{" "}
-            <a
-              href="/villa-finishing-price-riyadh"
-              className="text-gold font-bold hover:underline"
-            >
-              حاسبة الأسعار
-            </a>{" "}
-            لأخذ تصور مبدئي قبل المعاينة.
-          </p>
+  إذا كان مشروعك يحتاج تشطيب كامل بدل ترميم جزئي، يمكنك زيارة{" "}
+  <a
+    href="/villa-finishing-riyadh"
+    className="text-gold font-bold hover:underline"
+  >
+    تشطيب فلل بالرياض
+  </a>{" "}
+  أو استخدام{" "}
+  <a
+    href="/villa-finishing-price-riyadh"
+    className="text-gold font-bold hover:underline"
+  >
+    حاسبة الأسعار
+  </a>{" "}
+  لأخذ تصور مبدئي قبل المعاينة. كما يمكنك الاطلاع على{" "}
+  <a
+    href="/case-study-villa-renovation-riyadh"
+    className="text-gold font-bold hover:underline"
+  >
+    دراسة حالة ترميم فيلا بالرياض قبل وبعد
+  </a>{" "}
+  لرؤية مراحل التنفيذ الفعلية خطوة بخطوة.
+</p>
         </div>
       </section>
 
