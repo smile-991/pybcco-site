@@ -33,7 +33,6 @@ const images = {
     { src: "/casestudy/x1.webp", alt: "مرحلة الهدم وإعادة التشكيل – داخل", ratio: "land" },
     { src: "/casestudy/x2.webp", alt: "إزالة البلاط وتجهيز السطح – مطبخ/خدمات", ratio: "land" },
     { src: "/casestudy/a3.webp", alt: "تجهيز نيش/تفاصيل قبل الإنهاء", ratio: "port" },
-    { src: "/casestudy/a4.webp", alt: "نيش/قوالب قبل التشطيب النهائي", ratio: "port" },
   ] as Img[],
   execution: [
     { src: "/casestudy/b3.webp", alt: "تنفيذ داخلي – مرحلة تجهيز", ratio: "land" },
