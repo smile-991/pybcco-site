@@ -1,4 +1,13 @@
-import { Phone, Mail, MapPin, Linkedin, Twitter, Instagram, ArrowUp } from "lucide-react";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Linkedin,
+  Twitter,
+  Instagram,
+  Facebook,
+  ArrowUp,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // ===== NAP الرسمي =====
@@ -40,6 +49,8 @@ const socialLinks = [
   },
   { icon: Twitter, href: "https://x.com/pybcco", label: "X" },
   { icon: Instagram, href: "https://instagram.com/pybcco.decor", label: "Instagram" },
+  // ✅ Facebook
+  { icon: Facebook, href: "https://www.facebook.com/pybcco", label: "Facebook" },
 ];
 
 // ===== مكوّن صف التواصل =====

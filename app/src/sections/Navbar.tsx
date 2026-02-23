@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
-import { Menu, Phone, Linkedin, Twitter, Instagram, Calculator } from "lucide-react";
+import {
+  Menu,
+  Phone,
+  Linkedin,
+  Twitter,
+  Instagram,
+  Facebook,
+  Calculator,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-
 
 const navLinks = [
   { name: "الرئيسية", href: "#hero", type: "scroll" as const },
@@ -19,7 +26,8 @@ const storeLinks = [
   { name: "واجهة المتجر", href: "/decor" },
   { name: "بديل الخشب", href: "/decor/wood" },
   { name: "بديل الرخام", href: "/decor/marble" },
-{ name: "بديل الشيبورد", href: "/decor/shipboard" },];
+  { name: "بديل الشيبورد", href: "/decor/shipboard" },
+];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -221,17 +229,43 @@ export default function Navbar() {
                   }`}
                 />
               </a>
+
               <a
-  href="https://instagram.com/pybcco.decor"
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Instagram"
-  className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
-    isScrolled ? "bg-black/5 hover:bg-black/10" : "bg-white/10 hover:bg-white/20"
-  }`}
->
-  <Instagram className={`w-4 h-4 ${isScrolled ? "text-gray-800" : "text-white"}`} />
-</a>
+                href="https://instagram.com/pybcco.decor"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+                  isScrolled
+                    ? "bg-black/5 hover:bg-black/10"
+                    : "bg-white/10 hover:bg-white/20"
+                }`}
+              >
+                <Instagram
+                  className={`w-4 h-4 ${
+                    isScrolled ? "text-gray-800" : "text-white"
+                  }`}
+                />
+              </a>
+
+              {/* ✅ Facebook */}
+              <a
+                href="https://www.facebook.com/pybcco"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+                  isScrolled
+                    ? "bg-black/5 hover:bg-black/10"
+                    : "bg-white/10 hover:bg-white/20"
+                }`}
+              >
+                <Facebook
+                  className={`w-4 h-4 ${
+                    isScrolled ? "text-gray-800" : "text-white"
+                  }`}
+                />
+              </a>
             </div>
 
             {/* Calculator CTA */}
@@ -293,63 +327,61 @@ export default function Navbar() {
                 </div>
 
                 <nav className="flex flex-col gap-1">
+                  {/* ===== الروابط الرئيسية ===== */}
+                  {navLinks.map((link) => (
+                    <a
+                      key={link.name}
+                      href={link.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        goTo(link.href);
+                      }}
+                      className="px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition"
+                    >
+                      {link.name}
+                    </a>
+                  ))}
 
-  {/* ===== الروابط الرئيسية ===== */}
-  {navLinks.map((link) => (
-    <a
-      key={link.name}
-      href={link.href}
-      onClick={(e) => {
-        e.preventDefault();
-        goTo(link.href);
-      }}
-      className="px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition"
-    >
-      {link.name}
-    </a>
-  ))}
+                  {/* ===== Divider ===== */}
+                  <div className="my-4 h-px bg-white/10" />
 
-  {/* ===== Divider ===== */}
-  <div className="my-4 h-px bg-white/10" />
+                  {/* ===== المتجر ===== */}
+                  <div>
+                    <div className="px-4 mb-2 text-xs tracking-wider text-white/50 uppercase">
+                      المتجر
+                    </div>
 
-  {/* ===== المتجر ===== */}
-  <div>
-    <div className="px-4 mb-2 text-xs tracking-wider text-white/50 uppercase">
-      المتجر
-    </div>
+                    <div className="flex flex-col gap-1">
+                      {storeLinks.map((item) => (
+                        <a
+                          key={item.href}
+                          href={item.href}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            goTo(item.href);
+                          }}
+                          className="px-4 py-2 text-sm text-white/90 hover:bg-white/10 hover:text-gold rounded-lg transition"
+                        >
+                          {item.name}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
 
-    <div className="flex flex-col gap-1">
-      {storeLinks.map((item) => (
-        <a
-          key={item.href}
-          href={item.href}
-          onClick={(e) => {
-            e.preventDefault();
-            goTo(item.href);
-          }}
-          className="px-4 py-2 text-sm text-white/90 hover:bg-white/10 hover:text-gold rounded-lg transition"
-        >
-          {item.name}
-        </a>
-      ))}
-    </div>
-  </div>
+                  {/* ===== مناطق العمل ===== */}
+                  <div className="my-4 h-px bg-white/10" />
 
-  {/* ===== مناطق العمل ===== */}
-  <div className="my-4 h-px bg-white/10" />
-
-  <a
-    href="/contractor-almalqa-riyadh"
-    onClick={(e) => {
-      e.preventDefault();
-      goTo("/contractor-almalqa-riyadh");
-    }}
-    className="px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition"
-  >
-    مناطق عملنا – حي الملقا
-  </a>
-
-</nav>
+                  <a
+                    href="/contractor-almalqa-riyadh"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      goTo("/contractor-almalqa-riyadh");
+                    }}
+                    className="px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition"
+                  >
+                    مناطق عملنا – حي الملقا
+                  </a>
+                </nav>
 
                 <div className="mt-auto pt-6 border-t border-white/10">
                   <a
@@ -361,7 +393,10 @@ export default function Navbar() {
                     </div>
                     <div>
                       <p className="text-sm text-white/60">اتصل بنا</p>
-                      <p dir="ltr" className="font-bold whitespace-nowrap tabular-nums">
+                      <p
+                        dir="ltr"
+                        className="font-bold whitespace-nowrap tabular-nums"
+                      >
                         055 060 4837
                       </p>
                     </div>
@@ -408,15 +443,27 @@ export default function Navbar() {
                     >
                       <Linkedin className="w-5 h-5 text-white" />
                     </a>
+
                     <a
-  href="https://instagram.com/pybcco.decor"
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Instagram"
-  className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition"
->
-  <Instagram className="w-5 h-5 text-white" />
-</a>
+                      href="https://instagram.com/pybcco.decor"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Instagram"
+                      className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition"
+                    >
+                      <Instagram className="w-5 h-5 text-white" />
+                    </a>
+
+                    {/* ✅ Facebook */}
+                    <a
+                      href="https://www.facebook.com/pybcco"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Facebook"
+                      className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition"
+                    >
+                      <Facebook className="w-5 h-5 text-white" />
+                    </a>
                   </div>
                 </div>
               </div>
