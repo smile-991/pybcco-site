@@ -5,33 +5,6 @@ const SITE_URL = "https://pybcco.com";
 const PAGE_PATH = "/case-study-villa-renovation-riyadh";
 const CANONICAL = `${SITE_URL}${PAGE_PATH}`;
 
-const IMAGES = [
-  { src: "/casestudy/a6.webp", alt: "النتيجة النهائية للمجلس بعد التشطيب" },
-  { src: "/casestudy/main.webp", alt: "قبل وبعد تنفيذ الواجهة" },
-
-  { src: "/casestudy/a1.webp", alt: "الحالة قبل التطوير - مساحة داخلية" },
-  { src: "/casestudy/b1.webp", alt: "الحالة قبل التطوير - ممر داخلي" },
-  { src: "/casestudy/c1.webp", alt: "الحالة قبل التطوير - مساحة خارجية" },
-
-  { src: "/casestudy/x1.webp", alt: "مرحلة الهدم وإعادة التشكيل - فتح وتعديل جدار" },
-  { src: "/casestudy/x2.webp", alt: "مرحلة الهدم - إزالة التشطيبات القديمة" },
-  { src: "/casestudy/a3.webp", alt: "تجهيز النيشات والتشكيلات الجدارية" },
-  { src: "/casestudy/b4.webp", alt: "أعمال تكسير وإعادة تشكيل داخلي" },
-
-  { src: "/casestudy/b5.webp", alt: "تنفيذ الأعمال الفنية ومعالجات الجدران" },
-  { src: "/casestudy/b3.webp", alt: "تنفيذ الأعمال الداخلية وتجهيزات الموقع" },
-
-  { src: "/casestudy/c2.webp", alt: "أعمال خارجية - تجهيزات أولية" },
-  { src: "/casestudy/c3.webp", alt: "أعمال خارجية - بدء تركيب الهيكل" },
-  { src: "/casestudy/c4.webp", alt: "أعمال خارجية - تقدم تركيب الهيكل" },
-  // ملاحظة: انت ما ذكرت c5.webp ضمن القائمة النهائية. إذا موجود عندك وأضفته لاحقًا ضيفه هون.
-  { src: "/casestudy/c6.webp", alt: "النتيجة النهائية للأعمال الخارجية" },
-
-  { src: "/casestudy/b2.webp", alt: "تشطيبات الممر الداخلي - مرحلة متقدمة" },
-  { src: "/casestudy/b6.webp", alt: "النتيجة النهائية لمساحة داخلية" },
-  { src: "/casestudy/a5.webp", alt: "النتيجة النهائية - زاوية إضافية للمجلس" },
-];
-
 export default function CaseStudyVillaRiyadh() {
   const jsonLd = [
     {
