@@ -18,6 +18,7 @@ import DecorWood from "@/sections/DecorWood";
 import NotFound from "./sections/NotFound";
 import { Toaster } from "@/components/ui/sonner";
 import DecorShipboard from "./sections/Decorshipboard";
+import CaseStudyVillaRiyadh from "@/sections/CaseStudyVillaRiyadh";
 
 export default function App() {
   return (
@@ -42,6 +43,10 @@ export default function App() {
         <Route path="/home-renovation-company-riyadh" element={<HomeRenovationCompanyRiyadh />} />
         <Route path="/contractor-almalqa-riyadh" element={<ContractorAlMalqaRiyadh />} />
         <Route path="/decor/shipboard" element={<DecorShipboard />} />
+        <Route
+  path="/case-study-villa-renovation-riyadh"
+  element={<CaseStudyVillaRiyadh />}
+/>
 
         {/* ✅ 404 حقيقي بدل ما نرجع Home (لتجنب Soft 404 وتشويش جوجل) */}
         <Route path="*" element={<NotFound />} />

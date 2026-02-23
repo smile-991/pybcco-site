@@ -82,5 +82,10 @@
   <changefreq>weekly</changefreq>
   <priority>0.8</priority>
 </url>
+
+<url>
+  <loc>https://pybcco.com/case-study-villa-renovation-riyadh</loc>
+  <priority>0.7</priority>
+</url>
   
 </urlset>
