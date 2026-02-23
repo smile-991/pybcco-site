@@ -1,24 +1,26 @@
 import { Phone, Mail, MapPin, Linkedin, Twitter, ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-// ✅ NAP رسمي موحّد
+// ===== NAP الرسمي =====
 const PHONE_LOCAL = "055 060 4837";
 const PHONE_TEL = "+966550604837";
 const EMAIL_PUBLIC = "info@pybcco.com";
 
 const ADDRESS_AR =
   "شارع الوشم، حي المربع، الرياض 12345، المملكة العربية السعودية";
-const ADDRESS_EN = "Al Washm St, Al Murabba, Riyadh 12345, Saudi Arabia";
+const ADDRESS_EN =
+  "Al Washm St, Al Murabba, Riyadh 12345, Saudi Arabia";
 
 const MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
   ADDRESS_EN
 )}`;
 
+// ===== روابط الهوم =====
 const quickLinks = [
   { name: "الرئيسية", href: "#hero" },
   { name: "من نحن", href: "#about" },
   { name: "خدماتنا", href: "#services" },
-  { name: "مشاريعنا", href: "#projects" },
+  { name: "مشاريعنا", href: "#gallery" },
   { name: "فريق العمل", href: "#team" },
   { name: "تواصل معنا", href: "#contact" },
 ];
@@ -41,6 +43,7 @@ const socialLinks = [
   { icon: Twitter, href: "https://x.com/pybcco", label: "X" },
 ];
 
+// ===== مكوّن صف التواصل =====
 function ContactRow({
   icon: Icon,
   label,
@@ -59,16 +62,14 @@ function ContactRow({
       className="flex flex-row-reverse items-start gap-3 w-full text-right"
       dir="rtl"
     >
-      {/* Icon (يمين) */}
       <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
         <Icon className="w-5 h-5" />
       </div>
 
-      {/* Text */}
       <div className="flex-1 min-w-0 text-right">
         <p className="text-sm text-white/50 leading-5">{label}</p>
         <p
-          className="font-semibold text-white/80 leading-6 break-words text-right"
+          className="font-semibold text-white/80 leading-6 break-words"
           dir={ltrValue ? "ltr" : "rtl"}
         >
           {value}
@@ -78,7 +79,7 @@ function ContactRow({
   );
 
   return (
-    <li className="w-full m-0 p-0">
+    <li className="w-full">
       {href ? (
         <a
           href={href}
@@ -96,31 +97,41 @@ function ContactRow({
 }
 
 export default function Footer() {
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  // ===== Scroll Top =====
+  const scrollToTop = () =>
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
-  const scrollToSection = (href: string) => {
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+  // ===== التنقل الذكي مثل Navbar =====
+  const goTo = (href: string) => {
+    if (window.location.pathname === "/") {
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.location.href = `/${href}`;
+    }
   };
 
   return (
-    <footer className="bg-dark text-white relative overflow-hidden text-right" dir="rtl">
+    <footer
+      className="bg-dark text-white relative overflow-hidden text-right"
+      dir="rtl"
+    >
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, #fff 1px, transparent 0)`,
+            backgroundImage:
+              "radial-gradient(circle at 2px 2px, #fff 1px, transparent 0)",
             backgroundSize: "40px 40px",
           }}
         />
       </div>
 
-      {/* Main Footer */}
       <div className="container-custom relative z-10 py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* Company Info */}
-          <div className="lg:col-span-1">
+          {/* Company */}
+          <div>
             <div className="flex items-center gap-3 mb-6">
               <div className="w-14 h-14 bg-gold rounded-xl flex items-center justify-center overflow-hidden">
                 <img
@@ -137,8 +148,8 @@ export default function Footer() {
             </div>
 
             <p className="text-white/70 mb-6 leading-relaxed">
-              نبني المستقبل بإتقان وجودة عالية. خبرة تمتد لأكثر من 12 عاماً في مجال
-              المقاولات والتشطيبات حول المملكة العربية السعودية.
+              نبني المستقبل بإتقان وجودة عالية. خبرة تمتد لأكثر من 12 عاماً في
+              مجال المقاولات والتشطيبات.
             </p>
 
             <div className="flex gap-2">
@@ -159,15 +170,17 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-bold text-lg mb-6 text-gold">روابط سريعة</h4>
-            <ul className="space-y-3 list-none p-0 m-0">
+            <h4 className="font-bold text-lg mb-6 text-gold">
+              روابط سريعة
+            </h4>
+            <ul className="space-y-3">
               {quickLinks.map((link, i) => (
-                <li key={i} className="m-0 p-0">
+                <li key={i}>
                   <a
                     href={link.href}
                     onClick={(e) => {
                       e.preventDefault();
-                      scrollToSection(link.href);
+                      goTo(link.href);
                     }}
                     className="text-white/70 hover:text-gold transition-colors"
                   >
@@ -180,15 +193,17 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="font-bold text-lg mb-6 text-gold">خدماتنا</h4>
-            <ul className="space-y-3 list-none p-0 m-0">
+            <h4 className="font-bold text-lg mb-6 text-gold">
+              خدماتنا
+            </h4>
+            <ul className="space-y-3">
               {services.map((s, i) => (
-                <li key={i} className="m-0 p-0">
+                <li key={i}>
                   <a
                     href="#services"
                     onClick={(e) => {
                       e.preventDefault();
-                      scrollToSection("#services");
+                      goTo("#services");
                     }}
                     className="text-white/70 hover:text-gold transition-colors"
                   >
@@ -201,9 +216,11 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="font-bold text-lg mb-6 text-gold">تواصل معنا</h4>
+            <h4 className="font-bold text-lg mb-6 text-gold">
+              تواصل معنا
+            </h4>
 
-            <ul className="space-y-4 list-none p-0 m-0" dir="rtl">
+            <ul className="space-y-4">
               <ContactRow
                 icon={Phone}
                 label="اتصل بنا"
@@ -229,28 +246,28 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom Bar */}
+      {/* Bottom */}
       <div className="border-t border-white/10">
-        <div className="container-custom py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-white/50 text-sm text-center md:text-right">
-              © 2026 بنيان الهرم للمقاولات. جميع الحقوق محفوظة.
-            </p>
-            <div className="flex items-center gap-6">
-              <a href="#" className="text-white/50 hover:text-gold text-sm transition-colors">
-                سياسة الخصوصية
-              </a>
-              <a href="#" className="text-white/50 hover:text-gold text-sm transition-colors">
-                الشروط والأحكام
-              </a>
-            </div>
+        <div className="container-custom py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-white/50 text-sm text-center md:text-right">
+            © 2026 بنيان الهرم للمقاولات. جميع الحقوق محفوظة.
+          </p>
+          <div className="flex items-center gap-6">
+            <a href="#" className="text-white/50 hover:text-gold text-sm">
+              سياسة الخصوصية
+            </a>
+            <a href="#" className="text-white/50 hover:text-gold text-sm">
+              الشروط والأحكام
+            </a>
           </div>
         </div>
       </div>
 
       {/* QR */}
       <div className="mt-10 flex flex-col items-center gap-3">
-        <p className="text-sm text-white/70">امسح الكود لزيارة بروفايل الشركة</p>
+        <p className="text-sm text-white/70">
+          امسح الكود لزيارة بروفايل الشركة
+        </p>
         <img
           src="/assets/qr.png"
           alt="QR Code"
