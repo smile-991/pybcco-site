@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin, Linkedin, Twitter, ArrowUp } from "lucide-react";
+import { Phone, Mail, MapPin, Linkedin, Twitter, Instagram, ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // ===== NAP الرسمي =====
@@ -6,10 +6,8 @@ const PHONE_LOCAL = "055 060 4837";
 const PHONE_TEL = "+966550604837";
 const EMAIL_PUBLIC = "info@pybcco.com";
 
-const ADDRESS_AR =
-  "شارع الوشم، حي المربع، الرياض 12345، المملكة العربية السعودية";
-const ADDRESS_EN =
-  "Al Washm St, Al Murabba, Riyadh 12345, Saudi Arabia";
+const ADDRESS_AR = "شارع الوشم، حي المربع، الرياض 12345، المملكة العربية السعودية";
+const ADDRESS_EN = "Al Washm St, Al Murabba, Riyadh 12345, Saudi Arabia";
 
 const MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
   ADDRESS_EN
@@ -41,6 +39,7 @@ const socialLinks = [
     label: "LinkedIn",
   },
   { icon: Twitter, href: "https://x.com/pybcco", label: "X" },
+  { icon: Instagram, href: "https://instagram.com/pybcco.decor", label: "Instagram" },
 ];
 
 // ===== مكوّن صف التواصل =====
@@ -58,10 +57,7 @@ function ContactRow({
   ltrValue?: boolean;
 }) {
   const Content = (
-    <div
-      className="flex flex-row-reverse items-start gap-3 w-full text-right"
-      dir="rtl"
-    >
+    <div className="flex flex-row-reverse items-start gap-3 w-full text-right" dir="rtl">
       <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
         <Icon className="w-5 h-5" />
       </div>
@@ -98,8 +94,7 @@ function ContactRow({
 
 export default function Footer() {
   // ===== Scroll Top =====
-  const scrollToTop = () =>
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   // ===== التنقل الذكي مثل Navbar =====
   const goTo = (href: string) => {
@@ -112,10 +107,7 @@ export default function Footer() {
   };
 
   return (
-    <footer
-      className="bg-dark text-white relative overflow-hidden text-right"
-      dir="rtl"
-    >
+    <footer className="bg-dark text-white relative overflow-hidden text-right" dir="rtl">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
@@ -148,8 +140,8 @@ export default function Footer() {
             </div>
 
             <p className="text-white/70 mb-6 leading-relaxed">
-              نبني المستقبل بإتقان وجودة عالية. خبرة تمتد لأكثر من 12 عاماً في
-              مجال المقاولات والتشطيبات.
+              نبني المستقبل بإتقان وجودة عالية. خبرة تمتد لأكثر من 12 عاماً في مجال المقاولات
+              والتشطيبات.
             </p>
 
             <div className="flex gap-2">
@@ -170,9 +162,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-bold text-lg mb-6 text-gold">
-              روابط سريعة
-            </h4>
+            <h4 className="font-bold text-lg mb-6 text-gold">روابط سريعة</h4>
             <ul className="space-y-3">
               {quickLinks.map((link, i) => (
                 <li key={i}>
@@ -193,9 +183,7 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="font-bold text-lg mb-6 text-gold">
-              خدماتنا
-            </h4>
+            <h4 className="font-bold text-lg mb-6 text-gold">خدماتنا</h4>
             <ul className="space-y-3">
               {services.map((s, i) => (
                 <li key={i}>
@@ -216,9 +204,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="font-bold text-lg mb-6 text-gold">
-              تواصل معنا
-            </h4>
+            <h4 className="font-bold text-lg mb-6 text-gold">تواصل معنا</h4>
 
             <ul className="space-y-4">
               <ContactRow
@@ -235,12 +221,7 @@ export default function Footer() {
                 href={`mailto:${EMAIL_PUBLIC}`}
                 ltrValue
               />
-              <ContactRow
-                icon={MapPin}
-                label="العنوان"
-                value={ADDRESS_AR}
-                href={MAPS_LINK}
-              />
+              <ContactRow icon={MapPin} label="العنوان" value={ADDRESS_AR} href={MAPS_LINK} />
             </ul>
           </div>
         </div>
@@ -265,9 +246,7 @@ export default function Footer() {
 
       {/* QR */}
       <div className="mt-10 flex flex-col items-center gap-3">
-        <p className="text-sm text-white/70">
-          امسح الكود لزيارة بروفايل الشركة
-        </p>
+        <p className="text-sm text-white/70">امسح الكود لزيارة بروفايل الشركة</p>
         <img
           src="/assets/qr.png"
           alt="QR Code"
