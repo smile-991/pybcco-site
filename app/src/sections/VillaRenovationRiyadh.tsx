@@ -1,8 +1,10 @@
 import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import SeoHead from "@/components/SeoHead";
+import { Link } from "react-router-dom";
 
 const SITE = "https://www.pybcco.com";
+const CASE_STUDY_URL = "/case-study-villa-renovation-riyadh";
 
 const FAQS = [
   {
@@ -195,6 +197,63 @@ export default function VillaRenovationRiyadh() {
           </div>
         </div>
       </section>
+
+      {/* ✅ CASE STUDY (Internal Link قوي + ثقة) */}
+<section className="container mx-auto px-4 py-14">
+  <div className="max-w-5xl mx-auto rounded-3xl overflow-hidden border border-gold/20 bg-white/5 backdrop-blur-sm shadow-sm">
+    <div className="grid lg:grid-cols-2">
+      <div className="relative">
+        <div className="aspect-[16/10] lg:h-full lg:aspect-auto overflow-hidden">
+          <img
+            src="/casestudy/main.webp"
+            alt="دراسة حالة ترميم وتجديد فيلا بالرياض قبل وبعد"
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+
+        <div className="absolute top-4 right-4 flex flex-wrap gap-2">
+          <span className="bg-black/70 text-white text-xs font-bold px-3 py-1 rounded-full">
+            قبل/بعد
+          </span>
+          <span className="bg-gold text-black text-xs font-bold px-3 py-1 rounded-full">
+            دراسة حالة
+          </span>
+        </div>
+      </div>
+
+      <div className="p-6 sm:p-8 flex flex-col justify-center text-right">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+          شاهد دراسة حالة حقيقية لترميم وتجديد فيلا بالرياض (قبل/بعد)
+        </h2>
+
+        <p className="mt-3 text-white/75 leading-relaxed">
+          إذا بدك تشوف مستوى التنفيذ قبل ما تطلب معاينة: هذه دراسة حالة موثّقة
+          بالصور لمراحل العمل من البداية حتى النتيجة النهائية (تجهيزات، معالجة،
+          تشطيبات داخلية وخارجية).
+        </p>
+
+        <div className="mt-6 flex flex-col sm:flex-row gap-3">
+          <Button
+            asChild
+            className="bg-gold text-black font-bold px-6 hover:bg-gold/90"
+            onClick={() => track("open_case_study_from_renovation")}
+          >
+            <Link to={CASE_STUDY_URL}>عرض دراسة الحالة</Link>
+          </Button>
+
+          <Button
+            asChild
+            variant="outline"
+            className="text-gold bg-transparent hover:bg-white/10 px-6"
+          >
+            <Link to="/projects">مشاريع أخرى</Link>
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* LONG SEO CONTENT */}
       <section className="container mx-auto px-4 py-14">
