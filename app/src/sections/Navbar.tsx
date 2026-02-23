@@ -7,7 +7,7 @@ const navLinks = [
   { name: "الرئيسية", href: "#hero", type: "scroll" as const },
   { name: "من نحن", href: "#about", type: "scroll" as const },
   { name: "خدماتنا", href: "#services", type: "scroll" as const },
-  { name: "معرض الأعمال", href: "#gallery", type: "scroll" as const },
+  { name: "معرض الأعمال", href: "#projects", type: "scroll" as const },
   { name: "فريق العمل", href: "#team", type: "scroll" as const },
   { name: "تواصل معنا", href: "#contact", type: "scroll" as const },
   { name: "جميع المشاريع", href: "/projects", type: "route" as const },
