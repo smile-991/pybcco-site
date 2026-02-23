@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Menu, Phone, Linkedin, Twitter, Calculator } from "lucide-react";
+import { Menu, Phone, Linkedin, Twitter, Instagram, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+
 
 const navLinks = [
   { name: "الرئيسية", href: "#hero", type: "scroll" as const },
@@ -220,6 +221,17 @@ export default function Navbar() {
                   }`}
                 />
               </a>
+              <a
+  href="https://instagram.com/pybcco.decor"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Instagram"
+  className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+    isScrolled ? "bg-black/5 hover:bg-black/10" : "bg-white/10 hover:bg-white/20"
+  }`}
+>
+  <Instagram className={`w-4 h-4 ${isScrolled ? "text-gray-800" : "text-white"}`} />
+</a>
             </div>
 
             {/* Calculator CTA */}
@@ -396,6 +408,15 @@ export default function Navbar() {
                     >
                       <Linkedin className="w-5 h-5 text-white" />
                     </a>
+                    <a
+  href="https://instagram.com/pybcco.decor"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Instagram"
+  className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition"
+>
+  <Instagram className="w-5 h-5 text-white" />
+</a>
                   </div>
                 </div>
               </div>
