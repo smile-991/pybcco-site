@@ -24,6 +24,8 @@ import { GALLERY, type GalleryCat } from "../data/gallery";
 const WA_LINK =
   "https://wa.me/966550604837?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D8%A3%D8%A8%D9%8A%20%D8%A3%D8%B7%D9%84%D8%A8%20%D9%85%D8%B9%D8%A7%D9%8A%D9%86%D8%A9";
 
+const CASE_STUDY_URL = "/case-study-villa-renovation-riyadh";
+
 const SERVICES = [
   {
     title: "بناء عظم فلل",
@@ -139,7 +141,7 @@ function GalleryTabs() {
         {items.map((img, i) => (
           <div
             key={i}
-            className="group rounded-2xl overflow-hidden bg-white shadow-sm"
+            className="group rounded-2xl overflow-hidden bg-white shadow-sm border border-black/5"
           >
             <img
               src={img.src}
@@ -179,7 +181,6 @@ export default function Home() {
               addressLocality: "Riyadh",
               addressCountry: "SA",
             },
-            // 🔁 بدّل الروابط بروابط حساباتك الحقيقية
             sameAs: [
               "https://www.linkedin.com/company/pybcco",
               "https://x.com/pybcco",
@@ -222,16 +223,29 @@ export default function Home() {
             </div>
 
             <h1 className="text-white font-extrabold leading-tight tracking-wide text-4xl sm:text-5xl lg:text-6xl text-center mb-6">
-  شركة مقاولات بالرياض{" "}
-  <span className="text-gold/90">بنيان الهرم</span>{" "}
-  <span className="whitespace-nowrap">PYBCCO</span>
-</h1>
-
+              شركة مقاولات بالرياض{" "}
+              <span className="text-gold/90">بنيان الهرم</span>{" "}
+              <span className="whitespace-nowrap">PYBCCO</span>
+            </h1>
 
             <p className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed text-center">
               تنفيذ بناء وتشطيب وترميم في الرياض بإشراف هندسي، عقود واضحة، وجدول
               زمني منضبط وجودة تسليم.
             </p>
+
+            {/* ✅ رابط دراسة الحالة داخل الهيرو (قوي للسيو + ثقة) */}
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+              <Link
+                to={CASE_STUDY_URL}
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-bold text-white hover:bg-white/15 transition"
+              >
+                شاهد دراسة حالة حقيقية (قبل/بعد)
+                <span className="text-gold">←</span>
+              </Link>
+              <span className="text-white/55 text-xs">
+                صور مراحل التنفيذ + النتيجة النهائية
+              </span>
+            </div>
 
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
@@ -288,7 +302,7 @@ export default function Home() {
       {/* CTA الحاسبة */}
       <section id="calculator-cta" className="section-padding bg-white">
         <div className="container-custom px-4">
-          <div className="max-w-4xl mx-auto rounded-3xl bg-gray-50 p-6 sm:p-10 shadow-sm">
+          <div className="max-w-4xl mx-auto rounded-3xl bg-gray-50 p-6 sm:p-10 shadow-sm border border-black/5">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900">
               احسب تكلفة مشروعك خلال <span className="text-gold">دقيقة</span>
             </h2>
@@ -337,7 +351,7 @@ export default function Home() {
             {SERVICES.map((s, i) => (
               <div
                 key={i}
-                className="bg-white rounded-3xl p-6 shadow-sm hover:shadow-md transition"
+                className="bg-white rounded-3xl p-6 shadow-sm hover:shadow-md transition border border-black/5"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-11 h-11 rounded-2xl bg-gold/15 flex items-center justify-center">
@@ -385,6 +399,50 @@ export default function Home() {
             </Button>
           </div>
 
+          {/* ✅ كارد دراسة الحالة (أقوى ربط داخلي من الهوم) */}
+          <div className="mt-8">
+            <Link
+              to={CASE_STUDY_URL}
+              className="group block rounded-3xl overflow-hidden border border-black/5 bg-white shadow-sm hover:shadow-md transition"
+            >
+              <div className="grid lg:grid-cols-2">
+                <div className="relative">
+                  <div className="aspect-[16/10] lg:aspect-auto lg:h-full overflow-hidden">
+                    <img
+                      src="/casestudy/main.webp"
+                      alt="دراسة حالة تشطيب وتجديد فيلا بالرياض قبل وبعد"
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="absolute top-4 right-4 flex flex-wrap gap-2">
+                    <span className="bg-black/70 text-white text-xs font-bold px-3 py-1 rounded-full">
+                      قبل/بعد
+                    </span>
+                    <span className="bg-gold text-black text-xs font-bold px-3 py-1 rounded-full">
+                      دراسة حالة
+                    </span>
+                  </div>
+                </div>
+
+                <div className="p-6 sm:p-8 flex flex-col justify-center">
+                  <h3 className="text-xl sm:text-2xl font-extrabold text-gray-900">
+                    دراسة حالة: تشطيب وتجديد فيلا سكنية – الرياض (قبل/بعد)
+                  </h3>
+                  <p className="mt-3 text-gray-600 leading-relaxed">
+                    توثيق كامل بالصور لمراحل التنفيذ: هدم وإعادة تشكيل، تجهيزات،
+                    تشطيبات داخلية وخارجية، والنتيجة النهائية. صفحة واحدة مرتبة
+                    تساعدك تشوف مستوى التنفيذ قبل اتخاذ القرار.
+                  </p>
+
+                  <div className="mt-5 inline-flex items-center gap-2 font-extrabold text-gold-dark">
+                    عرض الدراسة الآن <span aria-hidden>←</span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </div>
+
           <GalleryTabs />
 
           <div className="mt-6 sm:hidden">
@@ -419,7 +477,10 @@ export default function Home() {
               "تسليم مفتاح حسب الاتفاق",
               "التزام بالتواصل والشفافية مع العميل",
             ].map((t, i) => (
-              <div key={i} className="bg-gray-50 rounded-2xl p-5 shadow-sm">
+              <div
+                key={i}
+                className="bg-gray-50 rounded-2xl p-5 shadow-sm border border-black/5"
+              >
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-gold mt-0.5" />
                   <div className="text-gray-900 font-semibold">{t}</div>
@@ -450,12 +511,16 @@ export default function Home() {
         <div className="container-custom px-4">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 text-center">
-              أسئلة شائعة عن <span className="text-gold">شركة مقاولات بالرياض</span>
+              أسئلة شائعة عن{" "}
+              <span className="text-gold">شركة مقاولات بالرياض</span>
             </h2>
 
             <div className="mt-8 grid md:grid-cols-2 gap-6">
               {FAQ_ITEMS.map((x, i) => (
-                <div key={i} className="bg-gray-50 rounded-2xl p-6 shadow-sm">
+                <div
+                  key={i}
+                  className="bg-gray-50 rounded-2xl p-6 shadow-sm border border-black/5"
+                >
                   <div className="text-gray-900 font-extrabold">{x.q}</div>
                   <div className="mt-2 text-gray-700 leading-relaxed">{x.a}</div>
                 </div>
