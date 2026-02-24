@@ -9,6 +9,7 @@ import {
   ArrowUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 // ===== NAP الرسمي =====
 const PHONE_LOCAL = "055 060 4837";
@@ -257,13 +258,17 @@ export default function Footer() {
 
       {/* QR */}
       <div className="mt-10 flex flex-col items-center gap-3">
-        <p className="text-sm text-white/70">امسح الكود لزيارة بروفايل الشركة</p>
-        <img
-          src="/assets/qr.webp"
-          alt="QR Code"
-          className="w-32 h-32 object-contain rounded-md bg-white p-2"
-          loading="lazy"
-        />
+        <p className="text-xs text-white/60 mt-2">
+  اضغط أو امسح الكود لفتح البروفايل
+</p>
+        <Link to="/profile" className="inline-block">
+  <img
+    src="/assets/qr.webp"
+    alt="QR Code - Profile"
+    className="w-32 h-32 object-contain rounded-md bg-white p-2 cursor-pointer hover:scale-105 transition duration-200"
+    loading="lazy"
+  />
+</Link>
       </div>
 
       {/* Scroll to Top */}
