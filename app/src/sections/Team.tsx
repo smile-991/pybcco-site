@@ -18,7 +18,7 @@ const teamMembers = [
     positionEn: 'General Manager',
     image: null,
     phone: '+966550604837',
-    email: 'tariq@bunian.com',
+    email: 'info@pybcco.com',
     bio: 'يمتلك أكثر من 15 عاماً من الخبرة في مجال المقاولات وإدارة المشاريع الكبرى. قاد الشركة منذ تأسيسها وحقق نمواً مستمراً في حجم الأعمال والمشاريع.',
     achievements: [
       'قيادة أكثر من 90 مشروعاً ناجحاً',
@@ -50,7 +50,7 @@ const teamMembers = [
     positionEn: 'Project Coordinator',
     image: null,
     phone: '+966550604837',
-    email: 'yusra@bunian.com',
+    email: 'info@pybcco.com',
     bio: 'متخصصة في تنسيق العمل بين الفرق المختلفة ومتابعة سير المشاريع. تضمن التواصل الفعال بين العملاء والفريق التنفيذي.',
     achievements: [
       'تنسيق أكثر من 30 مشروعاً',
@@ -66,7 +66,7 @@ const teamMembers = [
     positionEn: 'Senior Architect',
     image: null,
     phone: '+966550604837',
-    email: 'raghad@bunian.com',
+    email: 'info@pybcco.com',
     bio: 'مهندسة معمارية متخصصة في التصميم الداخلي والخارجي. تقدم حلولاً إبداعية تجمع بين الجمال والوظيفة.',
     achievements: [
       'تصميم أكثر من 50 مشروعاً',
@@ -82,7 +82,7 @@ const teamMembers = [
     positionEn: 'Public Relations',
     image: null,
     phone: '+966550604837',
-    email: 'ahmed@bunian.com',
+    email: 'info@pybcco.com',
     bio: 'مسؤول عن إدارة العلاقات العامة والتواصل مع العملاء والشركاء. يعمل على تعزيز صورة الشركة وبناء علاقات طويلة الأمد.',
     achievements: [
       'بناء شبكة علاقات واسعة',
@@ -98,7 +98,7 @@ const teamMembers = [
     positionEn: 'Senior Engineer',
     image: null,
     phone: '+966550604837',
-    email: 'mohammed@bunian.com',
+    email: 'info@pybcco.com',
     bio: 'مهندس إنشائي متخصص في أعمال الخرسانة والهياكل المعدنية. يمتلك خبرة عميقة في التنفيذ الإنشائي للمشاريع الكبرى.',
     achievements: [
       'إشراف على مشاريع ضخمة',
@@ -111,7 +111,7 @@ const teamMembers = [
 export default function Team() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedMember, setSelectedMember] = useState<typeof teamMembers[0] | null>(null);
+  const [selectedMember, setSelectedMember] = useState<(typeof teamMembers)[0] | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -124,10 +124,7 @@ export default function Team() {
       { threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
@@ -150,73 +147,79 @@ export default function Team() {
 
       <div className="container-custom relative z-10">
         {/* Section Header */}
-        <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <span className="inline-block bg-gold/10 text-gold-dark px-4 py-2 rounded-full text-sm font-semibold mb-4">
+        <div
+          className={`text-center mb-10 transition-all duration-700 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
+          <span className="inline-block bg-gold/10 text-gold-dark px-3 py-1.5 rounded-full text-xs font-semibold mb-3">
             فريق العمل
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
             نخبة من <span className="text-gold">المختصين والمحترفين</span>
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+          <p className="text-gray-600 max-w-2xl mx-auto text-base sm:text-lg">
             فريق عمل متخصص يضم مهندسين ومشرفين وعمال مدربين بعناية لتحقيق رؤية الشركة
           </p>
         </div>
 
         {/* Team Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {teamMembers.map((member, index) => (
             <div
               key={member.id}
-              className={`group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover-lift border border-gray-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-              style={{ transitionDelay: `${200 + index * 100}ms` }}
+              className={`group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 hover-lift border border-gray-100 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+              style={{ transitionDelay: `${200 + index * 80}ms` }}
             >
               {/* Avatar */}
-              <div className="relative pt-8 pb-4 bg-gradient-to-b from-gold/10 to-transparent">
-                <div className="w-32 h-32 mx-auto bg-gray-200 rounded-full overflow-hidden border-4 border-white shadow-lg">
+              <div className="relative pt-5 pb-3 bg-gradient-to-b from-gold/10 to-transparent">
+                <div className="w-20 h-20 mx-auto bg-gray-200 rounded-full overflow-hidden border-4 border-white shadow">
                   {member.image ? (
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="w-full h-full object-cover"
-                    />
+                    <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
                   ) : (
                     <div className="w-full h-full bg-gray-300 flex items-center justify-center">
-                      <User className="w-16 h-16 text-gray-400" />
+                      <User className="w-10 h-10 text-gray-400" />
                     </div>
                   )}
                 </div>
               </div>
 
               {/* Content */}
-              <div className="p-6 text-center">
-                <h3 className="text-xl font-bold text-gray-900 mb-1 group-hover:text-gold transition-colors">
+              <div className="p-4 text-center">
+                <h3 className="text-base font-bold text-gray-900 mb-0.5 group-hover:text-gold transition-colors">
                   {member.name}
                 </h3>
-                <p className="text-gray-500 text-sm mb-1">{member.nameEn}</p>
-                <p className="text-gold font-semibold mb-4">{member.position}</p>
+                <p className="text-gray-500 text-xs mb-1">{member.nameEn}</p>
+                <p className="text-gold font-semibold text-sm mb-3">{member.position}</p>
 
                 {/* Contact Buttons */}
                 <div className="flex justify-center gap-2">
                   <Button
                     variant="outline"
                     size="icon"
-                    className="w-10 h-10 rounded-full hover:bg-gold/10 hover:text-gold hover:border-gold"
+                    className="w-9 h-9 rounded-full hover:bg-gold/10 hover:text-gold hover:border-gold"
                     onClick={() => window.open(`tel:${member.phone}`)}
+                    aria-label={`اتصال ${member.name}`}
                   >
                     <Phone className="w-4 h-4" />
                   </Button>
                   <Button
                     variant="outline"
                     size="icon"
-                    className="w-10 h-10 rounded-full hover:bg-gold/10 hover:text-gold hover:border-gold"
+                    className="w-9 h-9 rounded-full hover:bg-gold/10 hover:text-gold hover:border-gold"
                     onClick={() => window.open(`mailto:${member.email}`)}
+                    aria-label={`إرسال بريد إلى ${member.name}`}
                   >
                     <Mail className="w-4 h-4" />
                   </Button>
                   <Button
                     variant="outline"
                     size="icon"
-                    className="w-10 h-10 rounded-full hover:bg-gold/10 hover:text-gold hover:border-gold"
+                    className="w-9 h-9 rounded-full hover:bg-gold/10 hover:text-gold hover:border-gold"
+                    aria-label={`LinkedIn ${member.name}`}
+                    onClick={() => setSelectedMember(member)}
                   >
                     <Linkedin className="w-4 h-4" />
                   </Button>
@@ -224,10 +227,10 @@ export default function Team() {
 
                 <Button
                   variant="ghost"
-                  className="mt-4 text-gold hover:text-gold-dark hover:bg-gold/10"
+                  className="mt-3 text-gold hover:text-gold-dark hover:bg-gold/10 h-9 px-3"
                   onClick={() => setSelectedMember(member)}
                 >
-                  المزيد عن {member.name.split(' ')[0]}
+                  المزيد
                 </Button>
               </div>
             </div>
@@ -235,17 +238,21 @@ export default function Team() {
         </div>
 
         {/* Join Team CTA */}
-        <div className={`mt-16 text-center transition-all duration-700 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="bg-gold/10 rounded-2xl p-8 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">
-              انضم إلى فريقنا
-            </h3>
-            <p className="text-gray-600 mb-6">
+        <div
+          className={`mt-10 text-center transition-all duration-700 delay-700 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
+          <div className="bg-gold/10 rounded-2xl p-6 max-w-2xl mx-auto">
+            <h3 className="text-xl font-bold text-gray-900 mb-2">انضم إلى فريقنا</h3>
+            <p className="text-gray-600 mb-4 text-sm sm:text-base">
               نبحث دائماً عن الكفاءات المتميزة للانضمام إلى فريقنا المتخصص
             </p>
             <Button
-              className="bg-gold hover:bg-gold/90 text-black font-bold px-8"
-              onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="bg-gold hover:bg-gold/90 text-black font-bold px-7"
+              onClick={() =>
+                document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })
+              }
             >
               تواصل معنا
             </Button>
@@ -259,7 +266,7 @@ export default function Team() {
           {selectedMember && (
             <>
               <DialogHeader className="text-center">
-                <div className="w-24 h-24 mx-auto bg-gray-200 rounded-full overflow-hidden border-4 border-gold mb-4">
+                <div className="w-20 h-20 mx-auto bg-gray-200 rounded-full overflow-hidden border-4 border-gold mb-3">
                   {selectedMember.image ? (
                     <img
                       src={selectedMember.image}
@@ -268,11 +275,11 @@ export default function Team() {
                     />
                   ) : (
                     <div className="w-full h-full bg-gray-300 flex items-center justify-center">
-                      <User className="w-12 h-12 text-gray-400" />
+                      <User className="w-10 h-10 text-gray-400" />
                     </div>
                   )}
                 </div>
-                <DialogTitle className="text-xl font-bold text-gray-900">
+                <DialogTitle className="text-lg font-bold text-gray-900">
                   {selectedMember.name}
                 </DialogTitle>
                 <DialogDescription className="text-gold font-semibold">
@@ -283,9 +290,7 @@ export default function Team() {
               <div className="mt-4 space-y-4">
                 <div>
                   <h4 className="font-bold text-gray-900 mb-2">نبذة عنه:</h4>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    {selectedMember.bio}
-                  </p>
+                  <p className="text-gray-600 text-sm leading-relaxed">{selectedMember.bio}</p>
                 </div>
 
                 <div>
@@ -300,7 +305,7 @@ export default function Team() {
                   </ul>
                 </div>
 
-                <div className="flex gap-3 pt-4">
+                <div className="flex gap-3 pt-3">
                   <Button
                     variant="outline"
                     className="flex-1"
