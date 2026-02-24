@@ -259,7 +259,7 @@ export default function Footer() {
       <div className="mt-10 flex flex-col items-center gap-3">
         <p className="text-sm text-white/70">امسح الكود لزيارة بروفايل الشركة</p>
         <img
-          src="/assets/qr.png"
+          src="/assets/qr.webp"
           alt="QR Code"
           className="w-32 h-32 object-contain rounded-md bg-white p-2"
           loading="lazy"
