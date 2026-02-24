@@ -19,6 +19,7 @@ import NotFound from "./sections/NotFound";
 import { Toaster } from "@/components/ui/sonner";
 import DecorShipboard from "./sections/Decorshipboard";
 import CaseStudyVillaRiyadh from "@/sections/CaseStudyVillaRiyadh";
+import ProfilePage from "@/sections/ProfilePage";
 
 export default function App() {
   return (
@@ -43,6 +44,7 @@ export default function App() {
         <Route path="/home-renovation-company-riyadh" element={<HomeRenovationCompanyRiyadh />} />
         <Route path="/contractor-almalqa-riyadh" element={<ContractorAlMalqaRiyadh />} />
         <Route path="/decor/shipboard" element={<DecorShipboard />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route
   path="/case-study-villa-renovation-riyadh"
   element={<CaseStudyVillaRiyadh />}
