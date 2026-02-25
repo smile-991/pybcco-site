@@ -332,7 +332,7 @@ function ClientsAndProjects({ onUnauthorized }: { onUnauthorized: () => void }) 
                 <div className="mt-2 text-sm text-gray-700">
                   Total: <b>{Number(p.total_amount || 0)} SAR</b>
                 </div>
-
+Total: <b>{Number(p.total_amount || 0)} SAR</b>
                 <div className="mt-2 text-xs text-gray-400">
                   {p.created_at || ""}
                 </div>
@@ -475,6 +475,104 @@ function CreateProject({ clientId, onCreated }: { clientId: string; onCreated: (
       setLoading(false)
     }
   }
+
+  function AddPayment({ projectId, onAdded }: { projectId: string; onAdded: () => void }) {
+  const [amount, setAmount] = useState("")
+  const [date, setDate] = useState("")
+  const [method, setMethod] = useState("")
+  const [note, setNote] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [msg, setMsg] = useState("")
+
+  const handleCreate = async () => {
+    setMsg("")
+    if (!amount) {
+      setMsg("Amount required")
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      const res = await fetch("/api/create-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          project_id: projectId,
+          amount: Number(amount),
+          date: date || null,
+          method,
+          note
+        })
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        setMsg(data?.error || "Failed to create payment")
+        return
+      }
+
+      setAmount("")
+      setDate("")
+      setMethod("")
+      setNote("")
+      setMsg("Payment added ✅")
+      onAdded()
+    } catch {
+      setMsg("Network error")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="mt-4 border-t pt-4">
+      <h4 className="font-semibold text-sm mb-2">Add Payment</h4>
+
+      <div className="grid md:grid-cols-4 gap-2">
+        <input
+          className="border rounded px-3 py-2 text-sm"
+          placeholder="Amount"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+        />
+
+        <input
+          type="date"
+          className="border rounded px-3 py-2 text-sm"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
+
+        <input
+          className="border rounded px-3 py-2 text-sm"
+          placeholder="Method"
+          value={method}
+          onChange={(e) => setMethod(e.target.value)}
+        />
+
+        <input
+          className="border rounded px-3 py-2 text-sm"
+          placeholder="Note"
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+        />
+      </div>
+
+      <button
+        onClick={handleCreate}
+        disabled={loading}
+        className="mt-3 px-4 py-2 bg-green-600 text-white rounded text-sm hover:bg-green-700 disabled:opacity-60"
+      >
+        {loading ? "Adding..." : "Add Payment"}
+      </button>
+
+      {msg && <p className="text-xs mt-2 text-gray-700">{msg}</p>}
+    </div>
+  )
+}
 
   return (
     <div className="border rounded-2xl p-4">
