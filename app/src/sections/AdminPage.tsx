@@ -8,6 +8,19 @@ type ClientRow = {
   created_at?: string
 }
 
+type ProjectRow = {
+  id: string
+  client_id: string
+  project_code?: string
+  title: string
+  address?: string | null
+  status?: string | null
+  progress_percent?: number | null
+  total_amount?: number | null
+  start_date?: string | null
+  created_at?: string
+}
+
 async function safeJson(res: Response) {
   const text = await res.text()
   if (!text) return null
@@ -24,24 +37,21 @@ export default function AdminPage() {
   const [error, setError] = useState("")
   const [busy, setBusy] = useState(false)
 
-  const checkSession = useCallback(async () => {
+  useEffect(() => {
+    checkSession()
+  }, [])
+
+  const checkSession = async () => {
     try {
       const res = await fetch("/api/admin-session", {
         method: "GET",
         credentials: "include",
-        cache: "no-store",
       })
       setAuthorized(res.ok)
-      return res.ok
     } catch {
       setAuthorized(false)
-      return false
     }
-  }, [])
-
-  useEffect(() => {
-    checkSession()
-  }, [checkSession])
+  }
 
   const handleLogin = async () => {
     setError("")
@@ -58,14 +68,11 @@ export default function AdminPage() {
       if (!res.ok) {
         const data = await safeJson(res)
         setError(data?.error || "Invalid password")
+        setBusy(false)
         return
       }
 
-      // ✅ بدل setAuthorized(true) مباشرة — نثبتها ب session check
-      const ok = await checkSession()
-      if (!ok) {
-        setError("Login succeeded but session cookie not set. Please refresh and try again.")
-      }
+      setAuthorized(true)
     } catch {
       setError("Server error")
     } finally {
@@ -119,28 +126,69 @@ export default function AdminPage() {
       <div className="max-w-6xl mx-auto space-y-8">
         <div className="bg-white shadow-xl rounded-2xl p-6 border border-gray-100">
           <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard 🔐</h1>
-          <p className="text-gray-500 text-sm mt-1">Manage clients for PYBCCO Portal</p>
+          <p className="text-gray-500 text-sm mt-1">Manage clients & projects for PYBCCO Portal</p>
         </div>
 
-        <ClientsSection onUnauthorized={() => setAuthorized(false)} />
+        <ClientsAndProjects onUnauthorized={() => setAuthorized(false)} />
       </div>
     </div>
   )
 }
 
-function ClientsSection({ onUnauthorized }: { onUnauthorized: () => void }) {
+function ClientsAndProjects({ onUnauthorized }: { onUnauthorized: () => void }) {
   const [clients, setClients] = useState<ClientRow[]>([])
-  const [listError, setListError] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [clientsError, setClientsError] = useState("")
+  const [loadingClients, setLoadingClients] = useState(false)
+
+  const [selectedClientId, setSelectedClientId] = useState<string>("")
+  const selectedClient = clients.find((c) => c.id === selectedClientId) || null
+
+  const [projects, setProjects] = useState<ProjectRow[]>([])
+  const [projectsError, setProjectsError] = useState("")
+  const [loadingProjects, setLoadingProjects] = useState(false)
 
   const loadClients = useCallback(async () => {
-    setListError("")
-    setLoading(true)
+    setClientsError("")
+    setLoadingClients(true)
 
     try {
-      const res = await fetch("/api/get-clients", {
+      const res = await fetch("/api/get-clients", { credentials: "include" })
+      if (res.status === 401 || res.status === 403) {
+        onUnauthorized()
+        return
+      }
+
+      const data = await safeJson(res)
+
+      if (!res.ok) {
+        setClientsError(data?.error || "Failed to load clients")
+        setClients([])
+        return
+      }
+
+      const list = Array.isArray(data) ? data : Array.isArray(data?.clients) ? data.clients : []
+      setClients(list)
+
+      // auto select أول عميل إذا ما في اختيار
+      if (!selectedClientId && list.length > 0) {
+        setSelectedClientId(list[0].id)
+      }
+    } catch {
+      setClientsError("Network error while loading clients")
+      setClients([])
+    } finally {
+      setLoadingClients(false)
+    }
+  }, [onUnauthorized, selectedClientId])
+
+  const loadProjects = useCallback(async (clientId: string) => {
+    if (!clientId) return
+    setProjectsError("")
+    setLoadingProjects(true)
+
+    try {
+      const res = await fetch(`/api/get-projects-by-client?client_id=${encodeURIComponent(clientId)}`, {
         credentials: "include",
-        cache: "no-store",
       })
 
       if (res.status === 401 || res.status === 403) {
@@ -151,30 +199,27 @@ function ClientsSection({ onUnauthorized }: { onUnauthorized: () => void }) {
       const data = await safeJson(res)
 
       if (!res.ok) {
-        setListError(data?.error || "Failed to load clients")
-        setClients([])
+        setProjectsError(data?.error || "Failed to load projects")
+        setProjects([])
         return
       }
 
-      if (Array.isArray(data)) {
-        setClients(data)
-      } else if (Array.isArray(data?.clients)) {
-        setClients(data.clients)
-      } else {
-        setClients([])
-        setListError("Unexpected response format from /api/get-clients")
-      }
+      setProjects(Array.isArray(data) ? data : [])
     } catch {
-      setListError("Network error while loading clients")
-      setClients([])
+      setProjectsError("Network error while loading projects")
+      setProjects([])
     } finally {
-      setLoading(false)
+      setLoadingProjects(false)
     }
   }, [onUnauthorized])
 
   useEffect(() => {
     loadClients()
   }, [loadClients])
+
+  useEffect(() => {
+    if (selectedClientId) loadProjects(selectedClientId)
+  }, [selectedClientId, loadProjects])
 
   return (
     <>
@@ -191,30 +236,110 @@ function ClientsSection({ onUnauthorized }: { onUnauthorized: () => void }) {
           </button>
         </div>
 
-        {loading && <div className="text-sm text-gray-500">Loading...</div>}
+        {loadingClients && <div className="text-sm text-gray-500">Loading...</div>}
 
-        {listError && (
+        {clientsError && (
           <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl p-3 mb-4">
-            {listError}
+            {clientsError}
           </div>
         )}
 
-        {!loading && clients.length === 0 && !listError && (
+        {!loadingClients && clients.length === 0 && !clientsError && (
           <div className="text-sm text-gray-500">No clients yet.</div>
         )}
 
         <div className="grid md:grid-cols-2 gap-6">
           {clients.map((client) => (
-            <div key={client.id} className="border rounded-xl p-4 shadow-sm">
-              <h3 className="font-semibold text-gray-900">{client.full_name}</h3>
-              <p className="text-sm text-gray-500">{client.phone}</p>
+            <button
+              key={client.id}
+              onClick={() => setSelectedClientId(client.id)}
+              className={`text-left border rounded-xl p-4 shadow-sm transition ${
+                selectedClientId === client.id ? "border-yellow-400 bg-yellow-50" : "hover:bg-gray-50"
+              }`}
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h3 className="font-semibold text-gray-900">{client.full_name}</h3>
+                  <p className="text-sm text-gray-500">{client.phone}</p>
+                </div>
+                <span className="text-xs text-gray-500">Select</span>
+              </div>
 
               <div className="mt-3 bg-gray-100 rounded-lg p-2 text-xs break-all">
                 {client.access_token || "—"}
               </div>
-            </div>
+            </button>
           ))}
         </div>
+      </div>
+
+      <div className="bg-white shadow-xl rounded-2xl p-6 border border-gray-100">
+        <div className="flex items-center justify-between gap-3 mb-4">
+          <h2 className="text-lg font-semibold">Projects</h2>
+          <button
+            onClick={() => selectedClientId && loadProjects(selectedClientId)}
+            className="px-4 py-2 rounded-xl border bg-white hover:bg-gray-50 text-sm"
+            disabled={!selectedClientId}
+          >
+            Refresh
+          </button>
+        </div>
+
+        <div className="mb-4">
+          <label className="text-sm text-gray-600">Selected Client</label>
+          <div className="mt-1 text-sm font-medium text-gray-900">
+            {selectedClient ? `${selectedClient.full_name} (${selectedClient.phone})` : "—"}
+          </div>
+        </div>
+
+        <CreateProject
+          clientId={selectedClientId}
+          onCreated={() => selectedClientId && loadProjects(selectedClientId)}
+        />
+
+        {loadingProjects && <div className="text-sm text-gray-500 mt-4">Loading projects...</div>}
+
+        {projectsError && (
+          <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl p-3 mt-4">
+            {projectsError}
+          </div>
+        )}
+
+        {!loadingProjects && projects.length === 0 && !projectsError && (
+          <div className="text-sm text-gray-500 mt-4">No projects for this client yet.</div>
+        )}
+
+        {projects.length > 0 && (
+          <div className="grid md:grid-cols-2 gap-6 mt-6">
+            {projects.map((p) => (
+              <div key={p.id} className="border rounded-xl p-4 shadow-sm">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="font-semibold text-gray-900">
+                      {p.project_code || "Project"} — {p.title}
+                    </h3>
+                    <p className="text-sm text-gray-500">{p.address || "—"}</p>
+                  </div>
+                  <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700">
+                    {p.status || "—"}
+                  </span>
+                </div>
+
+                <div className="mt-3 text-sm text-gray-700">
+                  Progress: <b>{Number(p.progress_percent || 0)}%</b>
+                </div>
+
+                <div className="mt-2 text-sm text-gray-700">
+                  Total: <b>{Number(p.total_amount || 0)} SAR</b>
+                </div>
+
+                <div className="mt-2 text-xs text-gray-400">
+                  {p.created_at || ""}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   )
@@ -290,6 +415,110 @@ function CreateClient({ onCreated }: { onCreated: () => void }) {
       </div>
 
       {msg && <p className="text-sm mt-3 text-center text-gray-700">{msg}</p>}
+    </div>
+  )
+}
+
+function CreateProject({ clientId, onCreated }: { clientId: string; onCreated: () => void }) {
+  const [title, setTitle] = useState("")
+  const [address, setAddress] = useState("")
+  const [totalAmount, setTotalAmount] = useState("")
+  const [startDate, setStartDate] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [msg, setMsg] = useState("")
+
+  const handleCreate = async () => {
+    setMsg("")
+    if (!clientId) {
+      setMsg("Select a client first.")
+      return
+    }
+    if (!title.trim()) {
+      setMsg("Project title required.")
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      const res = await fetch("/api/create-project", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          client_id: clientId,
+          title: title.trim(),
+          address: address.trim() || null,
+          total_amount: totalAmount ? Number(totalAmount) : 0,
+          start_date: startDate || null,
+          status: "active",
+          progress_percent: 0,
+        }),
+      })
+
+      const data = await safeJson(res)
+
+      if (!res.ok) {
+        setMsg(data?.error || "Failed to create project")
+        return
+      }
+
+      setTitle("")
+      setAddress("")
+      setTotalAmount("")
+      setStartDate("")
+      setMsg("Project created ✅")
+      onCreated()
+    } catch {
+      setMsg("Network error while creating project")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="border rounded-2xl p-4">
+      <h3 className="font-semibold text-gray-900">Create Project</h3>
+
+      <div className="grid md:grid-cols-4 gap-3 mt-3">
+        <input
+          className="border rounded-xl px-4 py-3"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+
+        <input
+          className="border rounded-xl px-4 py-3"
+          placeholder="Address"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+        />
+
+        <input
+          className="border rounded-xl px-4 py-3"
+          placeholder="Total Amount (SAR)"
+          value={totalAmount}
+          onChange={(e) => setTotalAmount(e.target.value)}
+        />
+
+        <input
+          className="border rounded-xl px-4 py-3"
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+      </div>
+
+      <button
+        onClick={handleCreate}
+        disabled={loading}
+        className="mt-4 w-full md:w-auto px-6 py-3 bg-yellow-500 hover:bg-yellow-600 disabled:opacity-60 text-white font-semibold rounded-xl transition"
+      >
+        {loading ? "Creating..." : "Create Project"}
+      </button>
+
+      {msg && <p className="text-sm mt-3 text-gray-700">{msg}</p>}
     </div>
   )
 }
