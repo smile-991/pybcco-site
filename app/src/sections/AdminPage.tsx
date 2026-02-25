@@ -9,7 +9,6 @@ type ClientRow = {
 }
 
 async function safeJson(res: Response) {
-  // يحميك من 204 / نص فاضي / JSON خربان
   const text = await res.text()
   if (!text) return null
   try {
@@ -25,22 +24,24 @@ export default function AdminPage() {
   const [error, setError] = useState("")
   const [busy, setBusy] = useState(false)
 
-  useEffect(() => {
-    checkSession()
-  }, [])
-
-  const checkSession = async () => {
+  const checkSession = useCallback(async () => {
     try {
       const res = await fetch("/api/admin-session", {
         method: "GET",
         credentials: "include",
+        cache: "no-store",
       })
-
       setAuthorized(res.ok)
+      return res.ok
     } catch {
       setAuthorized(false)
+      return false
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    checkSession()
+  }, [checkSession])
 
   const handleLogin = async () => {
     setError("")
@@ -57,11 +58,14 @@ export default function AdminPage() {
       if (!res.ok) {
         const data = await safeJson(res)
         setError(data?.error || "Invalid password")
-        setBusy(false)
         return
       }
 
-      setAuthorized(true)
+      // ✅ بدل setAuthorized(true) مباشرة — نثبتها ب session check
+      const ok = await checkSession()
+      if (!ok) {
+        setError("Login succeeded but session cookie not set. Please refresh and try again.")
+      }
     } catch {
       setError("Server error")
     } finally {
@@ -134,7 +138,10 @@ function ClientsSection({ onUnauthorized }: { onUnauthorized: () => void }) {
     setLoading(true)
 
     try {
-      const res = await fetch("/api/get-clients", { credentials: "include" })
+      const res = await fetch("/api/get-clients", {
+        credentials: "include",
+        cache: "no-store",
+      })
 
       if (res.status === 401 || res.status === 403) {
         onUnauthorized()
@@ -143,7 +150,6 @@ function ClientsSection({ onUnauthorized }: { onUnauthorized: () => void }) {
 
       const data = await safeJson(res)
 
-      // لازم يكون Array
       if (!res.ok) {
         setListError(data?.error || "Failed to load clients")
         setClients([])
@@ -155,7 +161,6 @@ function ClientsSection({ onUnauthorized }: { onUnauthorized: () => void }) {
       } else if (Array.isArray(data?.clients)) {
         setClients(data.clients)
       } else {
-        // أي شكل غير متوقع — ما منخليها تكسر الصفحة
         setClients([])
         setListError("Unexpected response format from /api/get-clients")
       }
@@ -202,7 +207,6 @@ function ClientsSection({ onUnauthorized }: { onUnauthorized: () => void }) {
           {clients.map((client) => (
             <div key={client.id} className="border rounded-xl p-4 shadow-sm">
               <h3 className="font-semibold text-gray-900">{client.full_name}</h3>
-
               <p className="text-sm text-gray-500">{client.phone}</p>
 
               <div className="mt-3 bg-gray-100 rounded-lg p-2 text-xs break-all">
