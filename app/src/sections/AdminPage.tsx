@@ -1,9 +1,29 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
+
+type ClientRow = {
+  id: string
+  full_name: string
+  phone: string
+  access_token?: string | null
+  created_at?: string
+}
+
+async function safeJson(res: Response) {
+  // يحميك من 204 / نص فاضي / JSON خربان
+  const text = await res.text()
+  if (!text) return null
+  try {
+    return JSON.parse(text)
+  } catch {
+    return null
+  }
+}
 
 export default function AdminPage() {
   const [authorized, setAuthorized] = useState<boolean | null>(null)
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+  const [busy, setBusy] = useState(false)
 
   useEffect(() => {
     checkSession()
@@ -13,14 +33,10 @@ export default function AdminPage() {
     try {
       const res = await fetch("/api/admin-session", {
         method: "GET",
-        credentials: "include"
+        credentials: "include",
       })
 
-      if (res.ok) {
-        setAuthorized(true)
-      } else {
-        setAuthorized(false)
-      }
+      setAuthorized(res.ok)
     } catch {
       setAuthorized(false)
     }
@@ -28,25 +44,28 @@ export default function AdminPage() {
 
   const handleLogin = async () => {
     setError("")
+    setBusy(true)
 
     try {
       const res = await fetch("/api/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ password })
+        body: JSON.stringify({ password }),
       })
 
       if (!res.ok) {
-        setError("Invalid password")
+        const data = await safeJson(res)
+        setError(data?.error || "Invalid password")
+        setBusy(false)
         return
       }
 
       setAuthorized(true)
     } catch {
       setError("Server error")
+    } finally {
+      setBusy(false)
     }
   }
 
@@ -62,14 +81,9 @@ export default function AdminPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="w-full max-w-md bg-white shadow-2xl rounded-2xl p-8 border border-gray-100">
-
           <div className="text-center mb-6">
-            <h1 className="text-2xl font-bold text-gray-900">
-              Admin Login
-            </h1>
-            <p className="text-sm text-gray-500 mt-2">
-              PYBCCO Client Portal
-            </p>
+            <h1 className="text-2xl font-bold text-gray-900">Admin Login</h1>
+            <p className="text-sm text-gray-500 mt-2">PYBCCO Client Portal</p>
           </div>
 
           <div className="space-y-4">
@@ -83,69 +97,164 @@ export default function AdminPage() {
 
             <button
               onClick={handleLogin}
-              className="w-full py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-xl transition shadow-md"
+              disabled={busy}
+              className="w-full py-3 bg-yellow-500 hover:bg-yellow-600 disabled:opacity-60 text-white font-semibold rounded-xl transition shadow-md"
             >
-              Login
+              {busy ? "Logging in..." : "Login"}
             </button>
 
-            {error && (
-              <p className="text-red-500 text-sm text-center">
-                {error}
-              </p>
-            )}
+            {error && <p className="text-red-500 text-sm text-center">{error}</p>}
           </div>
-
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-10">
+    <div className="min-h-screen bg-gray-50 p-6 md:p-10">
       <div className="max-w-6xl mx-auto space-y-8">
-
         <div className="bg-white shadow-xl rounded-2xl p-6 border border-gray-100">
-          <h1 className="text-2xl font-bold text-gray-900">
-            Admin Dashboard 🔐
-          </h1>
-          <p className="text-gray-500 text-sm mt-1">
-            Manage clients for PYBCCO Portal
-          </p>
+          <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard 🔐</h1>
+          <p className="text-gray-500 text-sm mt-1">Manage clients for PYBCCO Portal</p>
         </div>
 
-        <CreateClient />
-        <ClientsList />
-
+        <ClientsSection onUnauthorized={() => setAuthorized(false)} />
       </div>
     </div>
   )
 }
 
-function CreateClient() {
+function ClientsSection({ onUnauthorized }: { onUnauthorized: () => void }) {
+  const [clients, setClients] = useState<ClientRow[]>([])
+  const [listError, setListError] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  const loadClients = useCallback(async () => {
+    setListError("")
+    setLoading(true)
+
+    try {
+      const res = await fetch("/api/get-clients", { credentials: "include" })
+
+      if (res.status === 401 || res.status === 403) {
+        onUnauthorized()
+        return
+      }
+
+      const data = await safeJson(res)
+
+      // لازم يكون Array
+      if (!res.ok) {
+        setListError(data?.error || "Failed to load clients")
+        setClients([])
+        return
+      }
+
+      if (Array.isArray(data)) {
+        setClients(data)
+      } else if (Array.isArray(data?.clients)) {
+        setClients(data.clients)
+      } else {
+        // أي شكل غير متوقع — ما منخليها تكسر الصفحة
+        setClients([])
+        setListError("Unexpected response format from /api/get-clients")
+      }
+    } catch {
+      setListError("Network error while loading clients")
+      setClients([])
+    } finally {
+      setLoading(false)
+    }
+  }, [onUnauthorized])
+
+  useEffect(() => {
+    loadClients()
+  }, [loadClients])
+
+  return (
+    <>
+      <CreateClient onCreated={loadClients} />
+
+      <div className="bg-white shadow-xl rounded-2xl p-6 border border-gray-100">
+        <div className="flex items-center justify-between gap-3 mb-6">
+          <h2 className="text-lg font-semibold">Clients</h2>
+          <button
+            onClick={loadClients}
+            className="px-4 py-2 rounded-xl border bg-white hover:bg-gray-50 text-sm"
+          >
+            Refresh
+          </button>
+        </div>
+
+        {loading && <div className="text-sm text-gray-500">Loading...</div>}
+
+        {listError && (
+          <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl p-3 mb-4">
+            {listError}
+          </div>
+        )}
+
+        {!loading && clients.length === 0 && !listError && (
+          <div className="text-sm text-gray-500">No clients yet.</div>
+        )}
+
+        <div className="grid md:grid-cols-2 gap-6">
+          {clients.map((client) => (
+            <div key={client.id} className="border rounded-xl p-4 shadow-sm">
+              <h3 className="font-semibold text-gray-900">{client.full_name}</h3>
+
+              <p className="text-sm text-gray-500">{client.phone}</p>
+
+              <div className="mt-3 bg-gray-100 rounded-lg p-2 text-xs break-all">
+                {client.access_token || "—"}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  )
+}
+
+function CreateClient({ onCreated }: { onCreated: () => void }) {
   const [fullName, setFullName] = useState("")
   const [phone, setPhone] = useState("")
   const [loading, setLoading] = useState(false)
+  const [msg, setMsg] = useState("")
 
   const handleCreate = async () => {
-    if (!fullName || !phone) return
+    setMsg("")
+    if (!fullName.trim() || !phone.trim()) {
+      setMsg("Please enter full name and phone.")
+      return
+    }
 
     setLoading(true)
 
-    await fetch("/api/create-client", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        full_name: fullName,
-        phone
+    try {
+      const res = await fetch("/api/create-client", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ full_name: fullName.trim(), phone: phone.trim() }),
       })
-    })
 
-    setFullName("")
-    setPhone("")
-    setLoading(false)
+      const data = await safeJson(res)
 
-    window.location.reload()
+      if (!res.ok) {
+        setMsg(data?.error || "Failed to create client")
+        return
+      }
+
+      setFullName("")
+      setPhone("")
+      setMsg("Client created ✅")
+      onCreated()
+    } catch {
+      setMsg("Network error while creating client")
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -170,50 +279,13 @@ function CreateClient() {
         <button
           onClick={handleCreate}
           disabled={loading}
-          className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-xl transition"
+          className="bg-yellow-500 hover:bg-yellow-600 disabled:opacity-60 text-white font-semibold rounded-xl transition"
         >
           {loading ? "Creating..." : "Create"}
         </button>
       </div>
-    </div>
-  )
-}
 
-function ClientsList() {
-  const [clients, setClients] = useState<any[]>([])
-
-  useEffect(() => {
-    fetch("/api/get-clients", {
-      credentials: "include"
-    })
-      .then(res => res.json())
-      .then(data => setClients(data))
-  }, [])
-
-  return (
-    <div className="bg-white shadow-xl rounded-2xl p-6 border border-gray-100">
-      <h2 className="text-lg font-semibold mb-6">Clients</h2>
-
-      <div className="grid md:grid-cols-2 gap-6">
-        {clients.map((client) => (
-          <div
-            key={client.id}
-            className="border rounded-xl p-4 shadow-sm"
-          >
-            <h3 className="font-semibold text-gray-900">
-              {client.full_name}
-            </h3>
-
-            <p className="text-sm text-gray-500">
-              {client.phone}
-            </p>
-
-            <div className="mt-3 bg-gray-100 rounded-lg p-2 text-xs break-all">
-              {client.access_token}
-            </div>
-          </div>
-        ))}
-      </div>
+      {msg && <p className="text-sm mt-3 text-center text-gray-700">{msg}</p>}
     </div>
   )
 }
