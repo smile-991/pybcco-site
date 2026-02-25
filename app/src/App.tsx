@@ -21,6 +21,7 @@ import DecorShipboard from "./sections/Decorshipboard";
 import CaseStudyVillaRiyadh from "@/sections/CaseStudyVillaRiyadh";
 import ProfilePage from "@/sections/ProfilePage";
 import AdminPage from "./sections/AdminPage";
+import PortalPage from "./sections/PortalPage"
 
 export default function App() {
   return (
@@ -45,6 +46,7 @@ export default function App() {
         <Route path="/home-renovation-company-riyadh" element={<HomeRenovationCompanyRiyadh />} />
         <Route path="/contractor-almalqa-riyadh" element={<ContractorAlMalqaRiyadh />} />
         <Route path="/decor/shipboard" element={<DecorShipboard />} />
+        <Route path="/portal" element={<PortalPage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route
