@@ -22,6 +22,7 @@ import CaseStudyVillaRiyadh from "@/sections/CaseStudyVillaRiyadh";
 import ProfilePage from "@/sections/ProfilePage";
 import AdminPage from "./sections/AdminPage";
 import PortalPage from "./sections/PortalPage"
+import ProjectDetailsPage from "@/sections/ProjectDetailsPage"
 
 export default function App() {
   return (
@@ -49,6 +50,7 @@ export default function App() {
         <Route path="/portal" element={<PortalPage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/portal/projects/:id" element={<ProjectDetailsPage />} />
         <Route
   path="/case-study-villa-renovation-riyadh"
   element={<CaseStudyVillaRiyadh />}
