@@ -126,7 +126,9 @@ export default function AdminPage() {
       <div className="max-w-6xl mx-auto space-y-8">
         <div className="bg-white shadow-xl rounded-2xl p-6 border border-gray-100">
           <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard 🔐</h1>
-          <p className="text-gray-500 text-sm mt-1">Manage clients & projects for PYBCCO Portal</p>
+          <p className="text-gray-500 text-sm mt-1">
+            Manage clients & projects for PYBCCO Portal
+          </p>
         </div>
 
         <ClientsAndProjects onUnauthorized={() => setAuthorized(false)} />
@@ -169,7 +171,6 @@ function ClientsAndProjects({ onUnauthorized }: { onUnauthorized: () => void }) 
       const list = Array.isArray(data) ? data : Array.isArray(data?.clients) ? data.clients : []
       setClients(list)
 
-      // auto select أول عميل إذا ما في اختيار
       if (!selectedClientId && list.length > 0) {
         setSelectedClientId(list[0].id)
       }
@@ -181,37 +182,41 @@ function ClientsAndProjects({ onUnauthorized }: { onUnauthorized: () => void }) 
     }
   }, [onUnauthorized, selectedClientId])
 
-  const loadProjects = useCallback(async (clientId: string) => {
-    if (!clientId) return
-    setProjectsError("")
-    setLoadingProjects(true)
+  const loadProjects = useCallback(
+    async (clientId: string) => {
+      if (!clientId) return
+      setProjectsError("")
+      setLoadingProjects(true)
 
-    try {
-      const res = await fetch(`/api/get-projects-by-client?client_id=${encodeURIComponent(clientId)}`, {
-        credentials: "include",
-      })
+      try {
+        const res = await fetch(
+          `/api/get-projects-by-client?client_id=${encodeURIComponent(clientId)}`,
+          { credentials: "include" }
+        )
 
-      if (res.status === 401 || res.status === 403) {
-        onUnauthorized()
-        return
-      }
+        if (res.status === 401 || res.status === 403) {
+          onUnauthorized()
+          return
+        }
 
-      const data = await safeJson(res)
+        const data = await safeJson(res)
 
-      if (!res.ok) {
-        setProjectsError(data?.error || "Failed to load projects")
+        if (!res.ok) {
+          setProjectsError(data?.error || "Failed to load projects")
+          setProjects([])
+          return
+        }
+
+        setProjects(Array.isArray(data) ? data : [])
+      } catch {
+        setProjectsError("Network error while loading projects")
         setProjects([])
-        return
+      } finally {
+        setLoadingProjects(false)
       }
-
-      setProjects(Array.isArray(data) ? data : [])
-    } catch {
-      setProjectsError("Network error while loading projects")
-      setProjects([])
-    } finally {
-      setLoadingProjects(false)
-    }
-  }, [onUnauthorized])
+    },
+    [onUnauthorized]
+  )
 
   useEffect(() => {
     loadClients()
@@ -225,6 +230,7 @@ function ClientsAndProjects({ onUnauthorized }: { onUnauthorized: () => void }) 
     <>
       <CreateClient onCreated={loadClients} />
 
+      {/* CLIENTS */}
       <div className="bg-white shadow-xl rounded-2xl p-6 border border-gray-100">
         <div className="flex items-center justify-between gap-3 mb-6">
           <h2 className="text-lg font-semibold">Clients</h2>
@@ -254,7 +260,9 @@ function ClientsAndProjects({ onUnauthorized }: { onUnauthorized: () => void }) 
               key={client.id}
               onClick={() => setSelectedClientId(client.id)}
               className={`text-left border rounded-xl p-4 shadow-sm transition ${
-                selectedClientId === client.id ? "border-yellow-400 bg-yellow-50" : "hover:bg-gray-50"
+                selectedClientId === client.id
+                  ? "border-yellow-400 bg-yellow-50"
+                  : "hover:bg-gray-50"
               }`}
             >
               <div className="flex items-start justify-between gap-3">
@@ -273,6 +281,7 @@ function ClientsAndProjects({ onUnauthorized }: { onUnauthorized: () => void }) 
         </div>
       </div>
 
+      {/* PROJECTS */}
       <div className="bg-white shadow-xl rounded-2xl p-6 border border-gray-100">
         <div className="flex items-center justify-between gap-3 mb-4">
           <h2 className="text-lg font-semibold">Projects</h2>
@@ -297,7 +306,9 @@ function ClientsAndProjects({ onUnauthorized }: { onUnauthorized: () => void }) 
           onCreated={() => selectedClientId && loadProjects(selectedClientId)}
         />
 
-        {loadingProjects && <div className="text-sm text-gray-500 mt-4">Loading projects...</div>}
+        {loadingProjects && (
+          <div className="text-sm text-gray-500 mt-4">Loading projects...</div>
+        )}
 
         {projectsError && (
           <div className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl p-3 mt-4">
@@ -332,10 +343,14 @@ function ClientsAndProjects({ onUnauthorized }: { onUnauthorized: () => void }) 
                 <div className="mt-2 text-sm text-gray-700">
                   Total: <b>{Number(p.total_amount || 0)} SAR</b>
                 </div>
-Total: <b>{Number(p.total_amount || 0)} SAR</b>
-                <div className="mt-2 text-xs text-gray-400">
-                  {p.created_at || ""}
-                </div>
+
+                <div className="mt-2 text-xs text-gray-400">{p.created_at || ""}</div>
+
+                {/* ✅ Add Payment (Fix) */}
+                <AddPayment
+                  projectId={p.id}
+                  onAdded={() => selectedClientId && loadProjects(selectedClientId)}
+                />
               </div>
             ))}
           </div>
@@ -476,7 +491,55 @@ function CreateProject({ clientId, onCreated }: { clientId: string; onCreated: (
     }
   }
 
-  function AddPayment({ projectId, onAdded }: { projectId: string; onAdded: () => void }) {
+  return (
+    <div className="border rounded-2xl p-4">
+      <h3 className="font-semibold text-gray-900">Create Project</h3>
+
+      <div className="grid md:grid-cols-4 gap-3 mt-3">
+        <input
+          className="border rounded-xl px-4 py-3"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+
+        <input
+          className="border rounded-xl px-4 py-3"
+          placeholder="Address"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+        />
+
+        <input
+          className="border rounded-xl px-4 py-3"
+          placeholder="Total Amount (SAR)"
+          value={totalAmount}
+          onChange={(e) => setTotalAmount(e.target.value)}
+        />
+
+        <input
+          className="border rounded-xl px-4 py-3"
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+      </div>
+
+      <button
+        onClick={handleCreate}
+        disabled={loading}
+        className="mt-4 w-full md:w-auto px-6 py-3 bg-yellow-500 hover:bg-yellow-600 disabled:opacity-60 text-white font-semibold rounded-xl transition"
+      >
+        {loading ? "Creating..." : "Create Project"}
+      </button>
+
+      {msg && <p className="text-sm mt-3 text-gray-700">{msg}</p>}
+    </div>
+  )
+}
+
+/** ✅ FIX: AddPayment لازم يكون Component مستقل (مو جوّا CreateProject) */
+function AddPayment({ projectId, onAdded }: { projectId: string; onAdded: () => void }) {
   const [amount, setAmount] = useState("")
   const [date, setDate] = useState("")
   const [method, setMethod] = useState("")
@@ -502,12 +565,12 @@ function CreateProject({ clientId, onCreated }: { clientId: string; onCreated: (
           project_id: projectId,
           amount: Number(amount),
           date: date || null,
-          method,
-          note
-        })
+          method: method || null,
+          note: note || null,
+        }),
       })
 
-      const data = await res.json()
+      const data = await safeJson(res)
 
       if (!res.ok) {
         setMsg(data?.error || "Failed to create payment")
@@ -570,53 +633,6 @@ function CreateProject({ clientId, onCreated }: { clientId: string; onCreated: (
       </button>
 
       {msg && <p className="text-xs mt-2 text-gray-700">{msg}</p>}
-    </div>
-  )
-}
-
-  return (
-    <div className="border rounded-2xl p-4">
-      <h3 className="font-semibold text-gray-900">Create Project</h3>
-
-      <div className="grid md:grid-cols-4 gap-3 mt-3">
-        <input
-          className="border rounded-xl px-4 py-3"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-
-        <input
-          className="border rounded-xl px-4 py-3"
-          placeholder="Address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-
-        <input
-          className="border rounded-xl px-4 py-3"
-          placeholder="Total Amount (SAR)"
-          value={totalAmount}
-          onChange={(e) => setTotalAmount(e.target.value)}
-        />
-
-        <input
-          className="border rounded-xl px-4 py-3"
-          type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-        />
-      </div>
-
-      <button
-        onClick={handleCreate}
-        disabled={loading}
-        className="mt-4 w-full md:w-auto px-6 py-3 bg-yellow-500 hover:bg-yellow-600 disabled:opacity-60 text-white font-semibold rounded-xl transition"
-      >
-        {loading ? "Creating..." : "Create Project"}
-      </button>
-
-      {msg && <p className="text-sm mt-3 text-gray-700">{msg}</p>}
     </div>
   )
 }
