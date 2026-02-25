@@ -322,48 +322,9 @@ function ClientsAndProjects({ onUnauthorized }: { onUnauthorized: () => void }) 
 
         {projects.length > 0 && (
           <div className="grid md:grid-cols-2 gap-6 mt-6">
+            {/* ✅ تعديل عرض المشاريع حسب طلبك */}
             {projects.map((p) => (
-              <div key={p.id} className="border rounded-xl p-4 shadow-sm">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <h3 className="font-semibold text-gray-900">
-                      {p.project_code || "Project"} — {p.title}
-                    </h3>
-                    <p className="text-sm text-gray-500">{p.address || "—"}</p>
-                  </div>
-                  <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700">
-                    {p.status || "—"}
-                  </span>
-                </div>
-
-                <div className="mt-3 text-sm text-gray-700">
-                  Progress: <b>{Number(p.progress_percent || 0)}%</b>
-                </div>
-
-                <div className="mt-2 text-sm text-gray-700">
-                  Total: <b>{Number(p.total_amount || 0)} SAR</b>
-                </div>
-
-                <div className="mt-2 text-xs text-gray-400">{p.created_at || ""}</div>
-
-                {/* ✅ Add Payment */}
-                <AddPayment
-                  projectId={p.id}
-                  onAdded={() => selectedClientId && loadProjects(selectedClientId)}
-                />
-
-                {/* ✅ Add Document */}
-                <AddDocument
-                  projectId={p.id}
-                  onAdded={() => selectedClientId && loadProjects(selectedClientId)}
-                />
-
-                {/* ✅ Add Update + Optional Photo */}
-                <AddUpdate
-                  projectId={p.id}
-                  onAdded={() => selectedClientId && loadProjects(selectedClientId)}
-                />
-              </div>
+              <ProjectCard key={p.id} project={p} />
             ))}
           </div>
         )}
@@ -645,6 +606,222 @@ function AddPayment({ projectId, onAdded }: { projectId: string; onAdded: () => 
       </button>
 
       {msg && <p className="text-xs mt-2 text-gray-700">{msg}</p>}
+    </div>
+  )
+}
+
+/** ✅ ProjectCard (مضاف بعد AddPayment مباشرة حسب طلبك) */
+function ProjectCard({ project }: { project: ProjectRow }) {
+  const [tab, setTab] = useState<
+    "overview" | "payments" | "documents" | "updates"
+  >("overview")
+
+  const [payments, setPayments] = useState<any[]>([])
+  const [loadingPayments, setLoadingPayments] = useState(false)
+
+  const loadPayments = async () => {
+    setLoadingPayments(true)
+    try {
+      const res = await fetch(
+        `/api/get-project-details?project_id=${project.id}`,
+        { credentials: "include" }
+      )
+
+      if (!res.ok) {
+        setPayments([])
+        return
+      }
+
+      const data = await res.json()
+      setPayments(data?.payments || [])
+    } catch {
+      setPayments([])
+    } finally {
+      setLoadingPayments(false)
+    }
+  }
+
+  useEffect(() => {
+    if (tab === "payments") {
+      loadPayments()
+    }
+  }, [tab])
+
+  const totalPaid = payments.reduce(
+    (sum, p) => sum + Number(p.amount || 0),
+    0
+  )
+
+  const remaining =
+    Number(project.total_amount || 0) - totalPaid
+
+  return (
+    <div className="border rounded-xl p-5 shadow-sm bg-white">
+      {/* Header */}
+      <div className="flex justify-between items-start">
+        <div>
+          <h3 className="font-semibold text-lg text-gray-900">
+            {project.project_code || "Project"} — {project.title}
+          </h3>
+          <p className="text-sm text-gray-500">
+            {project.address || "—"}
+          </p>
+        </div>
+
+        <span className="text-xs bg-gray-100 px-3 py-1 rounded-full">
+          {project.status || "active"}
+        </span>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex gap-6 mt-4 border-b pb-2 text-sm">
+        <button
+          onClick={() => setTab("overview")}
+          className={
+            tab === "overview"
+              ? "font-semibold text-yellow-600"
+              : "text-gray-600"
+          }
+        >
+          Overview
+        </button>
+
+        <button
+          onClick={() => setTab("payments")}
+          className={
+            tab === "payments"
+              ? "font-semibold text-yellow-600"
+              : "text-gray-600"
+          }
+        >
+          Payments
+        </button>
+
+        <button
+          onClick={() => setTab("documents")}
+          className={
+            tab === "documents"
+              ? "font-semibold text-yellow-600"
+              : "text-gray-600"
+          }
+        >
+          Documents
+        </button>
+
+        <button
+          onClick={() => setTab("updates")}
+          className={
+            tab === "updates"
+              ? "font-semibold text-yellow-600"
+              : "text-gray-600"
+          }
+        >
+          Updates
+        </button>
+      </div>
+
+      {/* ========================= */}
+      {/* OVERVIEW */}
+      {/* ========================= */}
+      {tab === "overview" && (
+        <div className="mt-4 space-y-2 text-sm">
+          <div>
+            Progress: <b>{project.progress_percent || 0}%</b>
+          </div>
+
+          <div>
+            Total: <b>{project.total_amount || 0} SAR</b>
+          </div>
+
+          <div>
+            Paid: <b>{totalPaid} SAR</b>
+          </div>
+
+          <div>
+            Remaining:{" "}
+            <b
+              className={
+                remaining > 0
+                  ? "text-red-600"
+                  : "text-green-600"
+              }
+            >
+              {remaining} SAR
+            </b>
+          </div>
+        </div>
+      )}
+
+      {/* ========================= */}
+      {/* PAYMENTS */}
+      {/* ========================= */}
+      {tab === "payments" && (
+        <div className="mt-4">
+          <AddPayment
+            projectId={project.id}
+            onAdded={loadPayments}
+          />
+
+          {loadingPayments && (
+            <div className="text-sm text-gray-500 mt-3">
+              Loading payments...
+            </div>
+          )}
+
+          {payments.length > 0 && (
+            <div className="mt-4 space-y-2">
+              {payments.map((p) => (
+                <div
+                  key={p.id}
+                  className="border rounded-lg p-3 text-sm flex justify-between"
+                >
+                  <div>
+                    <div>{p.date || "—"}</div>
+                    <div className="text-gray-500 text-xs">
+                      {p.method || "—"}{" "}
+                      {p.note ? `— ${p.note}` : ""}
+                    </div>
+                  </div>
+
+                  <div className="font-semibold">
+                    {p.amount} SAR
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {payments.length === 0 && !loadingPayments && (
+            <div className="text-sm text-gray-500 mt-3">
+              No payments yet.
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ========================= */}
+      {/* DOCUMENTS */}
+      {/* ========================= */}
+      {tab === "documents" && (
+        <div className="mt-4">
+          <AddDocument
+            projectId={project.id}
+            onAdded={() => {}}
+          />
+        </div>
+      )}
+
+      {/* ========================= */}
+      {/* UPDATES */}
+      {/* ========================= */}
+      {tab === "updates" && (
+        <div className="mt-4">
+          <AddUpdate
+            projectId={project.id}
+            onAdded={() => {}}
+          />
+        </div>
+      )}
     </div>
   )
 }
