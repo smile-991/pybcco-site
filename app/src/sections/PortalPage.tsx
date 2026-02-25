@@ -18,11 +18,7 @@ export default function PortalPage() {
         credentials: "include"
       })
 
-      if (res.ok) {
-        setAuthorized(true)
-      } else {
-        setAuthorized(false)
-      }
+      setAuthorized(res.ok)
     } catch {
       setAuthorized(false)
     }
@@ -30,40 +26,48 @@ export default function PortalPage() {
 
   const requestOtp = async () => {
     setMessage("")
-    const res = await fetch("/api/request-otp", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ phone })
-    })
+    try {
+      const res = await fetch("/api/request-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone })
+      })
 
-    const data = await res.json()
+      const data = await res.json()
 
-    if (!res.ok) {
-      setMessage(data.error)
-      return
+      if (!res.ok) {
+        setMessage(data.error || "Something went wrong")
+        return
+      }
+
+      setStep("code")
+      setMessage("Send LOGIN on WhatsApp and enter the code sent to you.")
+    } catch {
+      setMessage("Network error")
     }
-
-    setStep("code")
-    setMessage("Send LOGIN on WhatsApp and enter the code sent to you.")
   }
 
   const verifyOtp = async () => {
     setMessage("")
-    const res = await fetch("/api/verify-otp", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ phone, code })
-    })
+    try {
+      const res = await fetch("/api/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ phone, code })
+      })
 
-    const data = await res.json()
+      const data = await res.json()
 
-    if (!res.ok) {
-      setMessage(data.error)
-      return
+      if (!res.ok) {
+        setMessage(data.error || "Invalid code")
+        return
+      }
+
+      setAuthorized(true)
+    } catch {
+      setMessage("Network error")
     }
-
-    setAuthorized(true)
   }
 
   if (authorized === null) {
@@ -141,9 +145,17 @@ function ClientProjects() {
     fetch("/api/get-client-projects", {
       credentials: "include"
     })
-      .then(res => res.json())
-      .then(data => {
+      .then(async (res) => {
+        if (!res.ok) return []
+        const data = await res.json()
+        return Array.isArray(data) ? data : []
+      })
+      .then((data) => {
         setProjects(data)
+        setLoading(false)
+      })
+      .catch(() => {
+        setProjects([])
         setLoading(false)
       })
   }, [])
@@ -179,35 +191,46 @@ function ClientProjects() {
           {projects.map((project) => (
             <div
               key={project.id}
-              className="bg-white shadow-md rounded-xl p-6 border"
+              className="bg-white shadow-lg rounded-2xl p-6 border hover:shadow-xl transition"
             >
-              <h2 className="text-lg font-semibold">
-                {project.title}
-              </h2>
+              <div className="flex justify-between items-start">
+                <div>
+                  <h2 className="text-lg font-semibold">
+                    {project.project_code || project.title}
+                  </h2>
+                  <p className="text-sm text-gray-500 mt-1">
+                    {project.title}
+                  </p>
+                </div>
 
-              <p className="text-sm text-gray-500 mt-1">
-                Status: {project.status}
-              </p>
+                <span className={`text-xs px-3 py-1 rounded-full ${
+                  project.status === "active"
+                    ? "bg-green-100 text-green-600"
+                    : "bg-gray-200 text-gray-600"
+                }`}>
+                  {project.status}
+                </span>
+              </div>
 
-              <div className="mt-4">
+              <div className="mt-5">
                 <div className="w-full bg-gray-200 rounded-full h-3">
                   <div
                     className="bg-yellow-500 h-3 rounded-full transition-all"
-                    style={{ width: `${project.progress_percent}%` }}
+                    style={{ width: `${project.progress_percent || 0}%` }}
                   />
                 </div>
                 <p className="text-xs text-gray-500 mt-1">
-                  {project.progress_percent}% Complete
+                  {project.progress_percent || 0}% Complete
                 </p>
               </div>
 
-              <div className="mt-4 text-sm text-gray-600">
-                Total: {project.total_amount} SAR
+              <div className="mt-4 text-sm text-gray-700">
+                Total: {project.total_amount || 0} SAR
               </div>
 
               <button
                 onClick={() => navigate(`/portal/projects/${project.id}`)}
-                className="mt-4 w-full bg-black text-white py-2 rounded-lg text-sm hover:bg-gray-800 transition"
+                className="mt-5 w-full bg-black text-white py-2 rounded-lg text-sm hover:bg-gray-800 transition"
               >
                 View Details
               </button>
