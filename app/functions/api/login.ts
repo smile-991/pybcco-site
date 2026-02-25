@@ -19,7 +19,13 @@ export async function onRequestPost(context: any) {
 
     return new Response(
       JSON.stringify({ success: true }),
-      { status: 200 }
+      {
+        status: 200,
+        headers: {
+          "Set-Cookie":
+            "pybcco_admin=1; HttpOnly; Secure; Path=/; SameSite=Strict; Max-Age=86400"
+        }
+      }
     )
 
   } catch (err) {
