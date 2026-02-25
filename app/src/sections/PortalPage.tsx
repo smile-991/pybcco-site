@@ -43,7 +43,7 @@ export default function PortalPage() {
     }
 
     setStep("code")
-    setMessage("Send LOGIN on WhatsApp. Enter code sent to you.")
+    setMessage("Send LOGIN on WhatsApp and enter the code sent to you.")
   }
 
   const verifyOtp = async () => {
@@ -66,7 +66,11 @@ export default function PortalPage() {
   }
 
   if (authorized === null) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    )
   }
 
   if (!authorized) {
@@ -89,7 +93,7 @@ export default function PortalPage() {
               />
               <button
                 onClick={requestOtp}
-                className="w-full bg-yellow-500 text-white py-3 rounded-xl"
+                className="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-xl transition"
               >
                 Request Code
               </button>
@@ -107,7 +111,7 @@ export default function PortalPage() {
               />
               <button
                 onClick={verifyOtp}
-                className="w-full bg-yellow-500 text-white py-3 rounded-xl"
+                className="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-xl transition"
               >
                 Verify & Login
               </button>
@@ -124,15 +128,84 @@ export default function PortalPage() {
     )
   }
 
+  return <ClientProjects />
+}
+
+function ClientProjects() {
+  const [projects, setProjects] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch("/api/get-client-projects", {
+      credentials: "include"
+    })
+      .then(res => res.json())
+      .then(data => {
+        setProjects(data)
+        setLoading(false)
+      })
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading projects...
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 p-10">
-      <div className="max-w-5xl mx-auto bg-white shadow-xl rounded-2xl p-8">
-        <h1 className="text-2xl font-bold mb-4">
-          Welcome to Your Project Portal
-        </h1>
-        <p className="text-gray-600">
-          Your projects will appear here soon.
-        </p>
+      <div className="max-w-6xl mx-auto space-y-8">
+
+        <div className="bg-white shadow-xl rounded-2xl p-6 border">
+          <h1 className="text-2xl font-bold">
+            Your Projects
+          </h1>
+          <p className="text-sm text-gray-500 mt-1">
+            Track progress and payments in real-time.
+          </p>
+        </div>
+
+        {projects.length === 0 && (
+          <div className="bg-white rounded-xl shadow-md p-6 text-center text-gray-500">
+            No projects assigned yet.
+          </div>
+        )}
+
+        <div className="grid md:grid-cols-2 gap-6">
+          {projects.map((project) => (
+            <div
+              key={project.id}
+              className="bg-white shadow-md rounded-xl p-6 border"
+            >
+              <h2 className="text-lg font-semibold">
+                {project.title}
+              </h2>
+
+              <p className="text-sm text-gray-500 mt-1">
+                Status: {project.status}
+              </p>
+
+              <div className="mt-4">
+                <div className="w-full bg-gray-200 rounded-full h-3">
+                  <div
+                    className="bg-yellow-500 h-3 rounded-full transition-all"
+                    style={{ width: `${project.progress_percent}%` }}
+                  />
+                </div>
+                <p className="text-xs text-gray-500 mt-1">
+                  {project.progress_percent}% Complete
+                </p>
+              </div>
+
+              <div className="mt-4 text-sm text-gray-600">
+                Total: {project.total_amount} SAR
+              </div>
+            </div>
+          ))}
+        </div>
+
       </div>
     </div>
   )
