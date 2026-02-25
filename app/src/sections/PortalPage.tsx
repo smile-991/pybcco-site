@@ -14,10 +14,7 @@ export default function PortalPage() {
 
   const checkSession = async () => {
     try {
-      const res = await fetch("/api/client-session", {
-        credentials: "include"
-      })
-
+      const res = await fetch("/api/client-session", { credentials: "include" })
       setAuthorized(res.ok)
     } catch {
       setAuthorized(false)
@@ -30,13 +27,13 @@ export default function PortalPage() {
       const res = await fetch("/api/request-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone })
+        body: JSON.stringify({ phone }),
       })
 
-      const data = await res.json()
+      const data = await res.json().catch(() => null)
 
       if (!res.ok) {
-        setMessage(data.error || "Something went wrong")
+        setMessage(data?.error || "Failed to request code")
         return
       }
 
@@ -54,13 +51,13 @@ export default function PortalPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ phone, code })
+        body: JSON.stringify({ phone, code }),
       })
 
-      const data = await res.json()
+      const data = await res.json().catch(() => null)
 
       if (!res.ok) {
-        setMessage(data.error || "Invalid code")
+        setMessage(data?.error || "Invalid code")
         return
       }
 
@@ -82,7 +79,6 @@ export default function PortalPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8 border">
-
           <h1 className="text-2xl font-bold text-center mb-6">
             Track Your Project
           </h1>
@@ -124,41 +120,54 @@ export default function PortalPage() {
           )}
 
           {message && (
-            <p className="text-sm text-center mt-4 text-red-500">
-              {message}
-            </p>
+            <p className="text-sm text-center mt-4 text-red-500">{message}</p>
           )}
         </div>
       </div>
     )
   }
 
-  return <ClientProjects />
+  return <ClientProjects onLogout={() => setAuthorized(false)} />
 }
 
-function ClientProjects() {
+function ClientProjects({ onLogout }: { onLogout: () => void }) {
   const [projects, setProjects] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [err, setErr] = useState("")
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetch("/api/get-client-projects", {
-      credentials: "include"
-    })
-      .then(async (res) => {
-        if (!res.ok) return []
-        const data = await res.json()
-        return Array.isArray(data) ? data : []
-      })
-      .then((data) => {
-        setProjects(data)
-        setLoading(false)
-      })
-      .catch(() => {
+    ;(async () => {
+      setErr("")
+      try {
+        const res = await fetch("/api/get-client-projects", {
+          credentials: "include",
+        })
+
+        if (res.status === 401 || res.status === 403) {
+          onLogout()
+          return
+        }
+
+        const data = await res.json().catch(() => null)
+        setProjects(Array.isArray(data) ? data : [])
+      } catch {
+        setErr("Network error while loading projects")
         setProjects([])
+      } finally {
         setLoading(false)
-      })
-  }, [])
+      }
+    })()
+  }, [onLogout])
+
+  const handleLogout = async () => {
+    await fetch("/api/client-logout", {
+      method: "POST",
+      credentials: "include",
+    }).catch(() => {})
+    onLogout()
+    window.location.href = "/portal"
+  }
 
   if (loading) {
     return (
@@ -169,19 +178,31 @@ function ClientProjects() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-10">
+    <div className="min-h-screen bg-gray-50 p-6 md:p-10">
       <div className="max-w-6xl mx-auto space-y-8">
+        <div className="bg-white shadow-xl rounded-2xl p-6 border flex items-start justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-bold">Your Projects</h1>
+            <p className="text-sm text-gray-500 mt-1">
+              Track progress and payments in real-time.
+            </p>
+          </div>
 
-        <div className="bg-white shadow-xl rounded-2xl p-6 border">
-          <h1 className="text-2xl font-bold">
-            Your Projects
-          </h1>
-          <p className="text-sm text-gray-500 mt-1">
-            Track progress and payments in real-time.
-          </p>
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 rounded-xl bg-black text-white text-sm hover:bg-gray-800 transition"
+          >
+            Logout
+          </button>
         </div>
 
-        {projects.length === 0 && (
+        {err && (
+          <div className="bg-red-50 border border-red-100 text-red-700 rounded-xl p-4 text-sm">
+            {err}
+          </div>
+        )}
+
+        {projects.length === 0 && !err && (
           <div className="bg-white rounded-xl shadow-md p-6 text-center text-gray-500">
             No projects assigned yet.
           </div>
@@ -191,28 +212,15 @@ function ClientProjects() {
           {projects.map((project) => (
             <div
               key={project.id}
-              className="bg-white shadow-lg rounded-2xl p-6 border hover:shadow-xl transition"
+              className="bg-white shadow-md rounded-xl p-6 border"
             >
-              <div className="flex justify-between items-start">
-                <div>
-                  <h2 className="text-lg font-semibold">
-                    {project.project_code || project.title}
-                  </h2>
-                  <p className="text-sm text-gray-500 mt-1">
-                    {project.title}
-                  </p>
-                </div>
+              <h2 className="text-lg font-semibold">{project.title}</h2>
 
-                <span className={`text-xs px-3 py-1 rounded-full ${
-                  project.status === "active"
-                    ? "bg-green-100 text-green-600"
-                    : "bg-gray-200 text-gray-600"
-                }`}>
-                  {project.status}
-                </span>
-              </div>
+              <p className="text-sm text-gray-500 mt-1">
+                Status: {project.status}
+              </p>
 
-              <div className="mt-5">
+              <div className="mt-4">
                 <div className="w-full bg-gray-200 rounded-full h-3">
                   <div
                     className="bg-yellow-500 h-3 rounded-full transition-all"
@@ -224,20 +232,19 @@ function ClientProjects() {
                 </p>
               </div>
 
-              <div className="mt-4 text-sm text-gray-700">
-                Total: {project.total_amount || 0} SAR
+              <div className="mt-4 text-sm text-gray-600">
+                Total: {project.total_amount} SAR
               </div>
 
               <button
                 onClick={() => navigate(`/portal/projects/${project.id}`)}
-                className="mt-5 w-full bg-black text-white py-2 rounded-lg text-sm hover:bg-gray-800 transition"
+                className="mt-4 w-full bg-black text-white py-2 rounded-lg text-sm hover:bg-gray-800 transition"
               >
                 View Details
               </button>
             </div>
           ))}
         </div>
-
       </div>
     </div>
   )
