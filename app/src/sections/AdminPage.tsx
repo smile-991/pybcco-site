@@ -346,8 +346,20 @@ function ClientsAndProjects({ onUnauthorized }: { onUnauthorized: () => void }) 
 
                 <div className="mt-2 text-xs text-gray-400">{p.created_at || ""}</div>
 
-                {/* ✅ Add Payment (Fix) */}
+                {/* ✅ Add Payment */}
                 <AddPayment
+                  projectId={p.id}
+                  onAdded={() => selectedClientId && loadProjects(selectedClientId)}
+                />
+
+                {/* ✅ Add Document */}
+                <AddDocument
+                  projectId={p.id}
+                  onAdded={() => selectedClientId && loadProjects(selectedClientId)}
+                />
+
+                {/* ✅ Add Update + Optional Photo */}
+                <AddUpdate
                   projectId={p.id}
                   onAdded={() => selectedClientId && loadProjects(selectedClientId)}
                 />
@@ -538,7 +550,7 @@ function CreateProject({ clientId, onCreated }: { clientId: string; onCreated: (
   )
 }
 
-/** ✅ FIX: AddPayment لازم يكون Component مستقل (مو جوّا CreateProject) */
+/** ✅ AddPayment Component */
 function AddPayment({ projectId, onAdded }: { projectId: string; onAdded: () => void }) {
   const [amount, setAmount] = useState("")
   const [date, setDate] = useState("")
@@ -631,6 +643,236 @@ function AddPayment({ projectId, onAdded }: { projectId: string; onAdded: () => 
       >
         {loading ? "Adding..." : "Add Payment"}
       </button>
+
+      {msg && <p className="text-xs mt-2 text-gray-700">{msg}</p>}
+    </div>
+  )
+}
+
+/** ✅ NEW: AddDocument */
+function AddDocument({
+  projectId,
+  onAdded,
+}: {
+  projectId: string
+  onAdded?: () => void
+}) {
+  const [title, setTitle] = useState("")
+  const [file, setFile] = useState<File | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [msg, setMsg] = useState("")
+
+  const handleUpload = async () => {
+    setMsg("")
+    if (!file || !title.trim()) {
+      setMsg("Title and file required")
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      const formData = new FormData()
+      formData.append("file", file)
+      formData.append("project_id", projectId)
+      formData.append("type", "document")
+
+      const uploadRes = await fetch("/api/upload-file", {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      })
+
+      const uploadData = await safeJson(uploadRes)
+
+      if (!uploadRes.ok || !uploadData?.url) {
+        setMsg(uploadData?.error || "Upload failed")
+        return
+      }
+
+      const saveRes = await fetch("/api/create-document", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          project_id: projectId,
+          title: title.trim(),
+          file_url: uploadData.url,
+        }),
+      })
+
+      const saveData = await safeJson(saveRes)
+
+      if (!saveRes.ok) {
+        setMsg(saveData?.error || "Save failed")
+        return
+      }
+
+      setTitle("")
+      setFile(null)
+      setMsg("Document uploaded ✅")
+      onAdded?.()
+    } catch {
+      setMsg("Network error")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="mt-4 border-t pt-4">
+      <h4 className="font-semibold text-sm mb-2">Add Document</h4>
+
+      <div className="grid md:grid-cols-3 gap-2">
+        <input
+          className="border rounded px-3 py-2 text-sm"
+          placeholder="Document Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+
+        <input
+          type="file"
+          className="border rounded px-3 py-2 text-sm"
+          onChange={(e) => setFile(e.target.files?.[0] || null)}
+        />
+
+        <button
+          onClick={handleUpload}
+          disabled={loading}
+          className="bg-blue-600 text-white rounded px-3 py-2 text-sm hover:bg-blue-700 disabled:opacity-60"
+        >
+          {loading ? "Uploading..." : "Upload"}
+        </button>
+      </div>
+
+      {msg && <p className="text-xs mt-2 text-gray-700">{msg}</p>}
+    </div>
+  )
+}
+
+/** ✅ NEW: AddUpdate + optional photo */
+function AddUpdate({
+  projectId,
+  onAdded,
+}: {
+  projectId: string
+  onAdded?: () => void
+}) {
+  const [title, setTitle] = useState("")
+  const [note, setNote] = useState("")
+  const [file, setFile] = useState<File | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [msg, setMsg] = useState("")
+
+  const handleCreate = async () => {
+    setMsg("")
+    if (!title.trim()) {
+      setMsg("Title required")
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      // 1) create update
+      const updateRes = await fetch("/api/create-update", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          project_id: projectId,
+          title: title.trim(),
+          note: note || null,
+        }),
+      })
+
+      const updateData = await safeJson(updateRes)
+
+      if (!updateRes.ok) {
+        setMsg(updateData?.error || "Failed to create update")
+        return
+      }
+
+      const updateId = updateData?.[0]?.id || updateData?.id
+      if (!updateId) {
+        setMsg("Update created but no updateId returned")
+        return
+      }
+
+      // 2) optional photo
+      if (file) {
+        const formData = new FormData()
+        formData.append("file", file)
+        formData.append("project_id", projectId)
+        formData.append("type", "update-photo")
+
+        const uploadRes = await fetch("/api/upload-file", {
+          method: "POST",
+          body: formData,
+          credentials: "include",
+        })
+
+        const uploadData = await safeJson(uploadRes)
+
+        if (uploadRes.ok && uploadData?.url) {
+          await fetch("/api/create-update-photo", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({
+              update_id: updateId,
+              photo_url: uploadData.url,
+            }),
+          })
+        }
+      }
+
+      setTitle("")
+      setNote("")
+      setFile(null)
+      setMsg("Update created ✅")
+      onAdded?.()
+    } catch {
+      setMsg("Network error")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="mt-4 border-t pt-4">
+      <h4 className="font-semibold text-sm mb-2">Add Update</h4>
+
+      <div className="grid md:grid-cols-4 gap-2">
+        <input
+          className="border rounded px-3 py-2 text-sm"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+
+        <input
+          className="border rounded px-3 py-2 text-sm"
+          placeholder="Note"
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+        />
+
+        <input
+          type="file"
+          className="border rounded px-3 py-2 text-sm"
+          onChange={(e) => setFile(e.target.files?.[0] || null)}
+        />
+
+        <button
+          onClick={handleCreate}
+          disabled={loading}
+          className="bg-purple-600 text-white rounded px-3 py-2 text-sm hover:bg-purple-700 disabled:opacity-60"
+        >
+          {loading ? "Saving..." : "Create"}
+        </button>
+      </div>
 
       {msg && <p className="text-xs mt-2 text-gray-700">{msg}</p>}
     </div>
