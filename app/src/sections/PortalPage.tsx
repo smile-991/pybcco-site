@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export default function PortalPage() {
   const [authorized, setAuthorized] = useState<boolean | null>(null)
@@ -134,6 +135,7 @@ export default function PortalPage() {
 function ClientProjects() {
   const [projects, setProjects] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetch("/api/get-client-projects", {
@@ -202,6 +204,13 @@ function ClientProjects() {
               <div className="mt-4 text-sm text-gray-600">
                 Total: {project.total_amount} SAR
               </div>
+
+              <button
+                onClick={() => navigate(`/portal/projects/${project.id}`)}
+                className="mt-4 w-full bg-black text-white py-2 rounded-lg text-sm hover:bg-gray-800 transition"
+              >
+                View Details
+              </button>
             </div>
           ))}
         </div>
