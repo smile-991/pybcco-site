@@ -2,15 +2,14 @@ export async function onRequestGet(context: any) {
   const { request, env } = context
   const cookie = request.headers.get("cookie") || ""
 
-  // ✅ 1) Detect admin vs client
-  // عدّل اسم الكوكي إذا عندك مختلف (مثلاً: pybcco_admin_session)
-  const adminMatch = cookie.match(/pybcco_admin=([^;]+)/)
-  const clientMatch = cookie.match(/pybcco_client=([^;]+)/)
+  // ✅ Admin cookie (نفس منطق /api/admin-session)
+  const isAdmin = cookie.includes("pybcco_admin=1")
 
-  const isAdmin = !!adminMatch
+  // ✅ Client cookie (للـ Portal)
+  const clientMatch = cookie.match(/pybcco_client=([^;]+)/)
   const accessToken = clientMatch?.[1] || null
 
-  // ✅ لازم يكون واحد منهم موجود
+  // لازم يكون Admin أو Client
   if (!isAdmin && !accessToken) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,
@@ -18,9 +17,10 @@ export async function onRequestGet(context: any) {
     })
   }
 
-  // ✅ 2) Get project id (support id OR project_id)
+  // ✅ project id (يدعم id أو project_id)
   const urlObj = new URL(request.url)
-  const projectIdRaw = urlObj.searchParams.get("project_id") || urlObj.searchParams.get("id")
+  const projectIdRaw =
+    urlObj.searchParams.get("project_id") || urlObj.searchParams.get("id")
 
   if (!projectIdRaw) {
     return new Response(JSON.stringify({ error: "Project ID required" }), {
@@ -29,13 +29,13 @@ export async function onRequestGet(context: any) {
     })
   }
 
-  // ✅ لا تعمل encodeURIComponent للـ UUID داخل eq. (ممكن يعمل مشاكل مع PostgREST)
   const projectId = projectIdRaw.trim()
 
-  // ✅ Optional: validate UUID شكلًا (يحميك من مدخلات غريبة)
-  const uuidOk = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
-    projectId
-  )
+  // ✅ Optional: UUID validation
+  const uuidOk =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+      projectId
+    )
   if (!uuidOk) {
     return new Response(JSON.stringify({ error: "Invalid project id" }), {
       status: 400,
@@ -43,33 +43,37 @@ export async function onRequestGet(context: any) {
     })
   }
 
-  // ✅ 3) Build headers for Supabase REST
-  // - Admin: use SERVICE_ROLE (bypass RLS) ✅
-  // - Client: use ANON + x-client-token (RLS) ✅
+  // ✅ Build headers for Supabase REST
+  // - Admin: SERVICE ROLE (bypass RLS)
+  // - Client: ANON + x-client-token (RLS)
   const headers: Record<string, string> = {
     Accept: "application/json",
   }
 
   if (isAdmin) {
-    // لازم يكون موجود عندك في Cloudflare env
-    // SUPABASE_SERVICE_ROLE_KEY
     if (!env.SUPABASE_SERVICE_ROLE_KEY) {
-      return new Response(JSON.stringify({ error: "Missing SUPABASE_SERVICE_ROLE_KEY" }), {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      })
+      return new Response(
+        JSON.stringify({ error: "Missing SUPABASE_SERVICE_ROLE_KEY" }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      )
     }
 
     headers.apikey = env.SUPABASE_SERVICE_ROLE_KEY
     headers.Authorization = `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}`
   } else {
-    // Client (RLS)
+    if (!env.SUPABASE_ANON_KEY) {
+      return new Response(JSON.stringify({ error: "Missing SUPABASE_ANON_KEY" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      })
+    }
+
     headers.apikey = env.SUPABASE_ANON_KEY
     headers.Authorization = `Bearer ${env.SUPABASE_ANON_KEY}`
     headers["x-client-token"] = accessToken as string
   }
 
-  // ✅ 4) Project
+  // 1) Project
   const projectRes = await fetch(
     `${env.SUPABASE_URL}/rest/v1/projects?id=eq.${projectId}&select=*`,
     { headers }
@@ -103,28 +107,29 @@ export async function onRequestGet(context: any) {
 
   const project = projects[0]
 
-  // ✅ 5) Payments (الأفضل created_at.desc بدل date.asc)
+  // 2) Payments
   const paymentsRes = await fetch(
     `${env.SUPABASE_URL}/rest/v1/payments?project_id=eq.${projectId}&order=created_at.desc&select=*`,
     { headers }
   )
   const payments = await paymentsRes.json().catch(() => [])
 
-  // ✅ 6) Documents (لو عندك uploaded_at ممتاز، وإذا لا، عدّلها لـ created_at)
+  // 3) Documents
+  // إذا ما عندك uploaded_at فعليًا بجدول documents: بدّلها لـ created_at.desc
   const documentsRes = await fetch(
     `${env.SUPABASE_URL}/rest/v1/documents?project_id=eq.${projectId}&order=uploaded_at.desc&select=*`,
     { headers }
   )
   const documents = await documentsRes.json().catch(() => [])
 
-  // ✅ 7) Updates
+  // 4) Updates
   const updatesRes = await fetch(
     `${env.SUPABASE_URL}/rest/v1/updates?project_id=eq.${projectId}&order=created_at.desc&select=*`,
     { headers }
   )
   const updates = await updatesRes.json().catch(() => [])
 
-  // ✅ 8) Update photos
+  // 5) Update photos
   const updateIds =
     Array.isArray(updates) ? updates.map((u: any) => u.id).filter(Boolean) : []
 
