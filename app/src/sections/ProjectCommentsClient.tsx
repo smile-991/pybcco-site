@@ -71,7 +71,7 @@ export default function ProjectCommentsClient({
     setSending(true)
     setError("")
     try {
-      // ✅ FIX: endpoint is singular to match: app/functions/api/post-client-comment.ts
+      // ✅ المسار الصحيح حسب اسم ملف الفنكشن عندك: post-client-comment.ts
       const res = await fetch("/api/post-client-comment", {
         method: "POST",
         headers: {
@@ -90,7 +90,6 @@ export default function ProjectCommentsClient({
         return
       }
 
-      // optimistic append
       const newItem: CommentRow | undefined = json?.item
       if (newItem?.id) setItems((prev) => [...prev, newItem])
       setMessage("")
