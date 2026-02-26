@@ -21,6 +21,36 @@ type ProjectRow = {
   created_at?: string
 }
 
+type PaymentRow = {
+  id: string
+  amount?: number | string | null
+  date?: string | null
+  method?: string | null
+  note?: string | null
+  created_at?: string | null
+}
+
+type DocumentRow = {
+  id: string
+  title?: string | null
+  file_url?: string | null
+  created_at?: string | null
+}
+
+type UpdateRow = {
+  id: string
+  title?: string | null
+  note?: string | null
+  created_at?: string | null
+}
+
+type UpdatePhotoRow = {
+  id: string
+  update_id: string
+  photo_url?: string | null
+  created_at?: string | null
+}
+
 async function safeJson(res: Response) {
   const text = await res.text()
   if (!text) return null
@@ -322,7 +352,6 @@ function ClientsAndProjects({ onUnauthorized }: { onUnauthorized: () => void }) 
 
         {projects.length > 0 && (
           <div className="grid md:grid-cols-2 gap-6 mt-6">
-            {/* ✅ تعديل عرض المشاريع حسب طلبك */}
             {projects.map((p) => (
               <ProjectCard key={p.id} project={p} />
             ))}
@@ -610,50 +639,62 @@ function AddPayment({ projectId, onAdded }: { projectId: string; onAdded: () => 
   )
 }
 
-/** ✅ ProjectCard (مضاف بعد AddPayment مباشرة حسب طلبك) */
+/** ✅ ProjectCard */
 function ProjectCard({ project }: { project: ProjectRow }) {
-  const [tab, setTab] = useState<
-    "overview" | "payments" | "documents" | "updates"
-  >("overview")
+  const [tab, setTab] = useState<"overview" | "payments" | "documents" | "updates">("overview")
 
-  const [payments, setPayments] = useState<any[]>([])
-  const [loadingPayments, setLoadingPayments] = useState(false)
+  // ✅ NEW: unified details states
+  const [payments, setPayments] = useState<PaymentRow[]>([])
+  const [documents, setDocuments] = useState<DocumentRow[]>([])
+  const [updates, setUpdates] = useState<UpdateRow[]>([])
+  const [updatePhotos, setUpdatePhotos] = useState<UpdatePhotoRow[]>([])
+  const [loadingDetails, setLoadingDetails] = useState(false)
 
-  const loadPayments = async () => {
-    setLoadingPayments(true)
+  const loadDetails = async () => {
+    setLoadingDetails(true)
     try {
+      // ✅ robust: send both params (project_id + id) to match your backend مهما كان
       const res = await fetch(
-        `/api/get-project-details?project_id=${project.id}`,
+        `/api/get-project-details?project_id=${encodeURIComponent(project.id)}&id=${encodeURIComponent(
+          project.id
+        )}`,
         { credentials: "include" }
       )
 
+      const data = await safeJson(res)
+
       if (!res.ok) {
         setPayments([])
+        setDocuments([])
+        setUpdates([])
+        setUpdatePhotos([])
         return
       }
 
-      const data = await res.json()
-      setPayments(data?.payments || [])
+      setPayments(Array.isArray(data?.payments) ? data.payments : [])
+      setDocuments(Array.isArray(data?.documents) ? data.documents : [])
+      setUpdates(Array.isArray(data?.updates) ? data.updates : [])
+      setUpdatePhotos(Array.isArray(data?.update_photos) ? data.update_photos : [])
     } catch {
       setPayments([])
+      setDocuments([])
+      setUpdates([])
+      setUpdatePhotos([])
     } finally {
-      setLoadingPayments(false)
+      setLoadingDetails(false)
     }
   }
 
+  // ✅ load details when needed based on tab
   useEffect(() => {
-    if (tab === "payments") {
-      loadPayments()
+    if (tab === "payments" || tab === "documents" || tab === "updates") {
+      loadDetails()
     }
-  }, [tab])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tab, project.id])
 
-  const totalPaid = payments.reduce(
-    (sum, p) => sum + Number(p.amount || 0),
-    0
-  )
-
-  const remaining =
-    Number(project.total_amount || 0) - totalPaid
+  const totalPaid = payments.reduce((sum, p) => sum + Number(p.amount || 0), 0)
+  const remaining = Number(project.total_amount || 0) - totalPaid
 
   return (
     <div className="border rounded-xl p-5 shadow-sm bg-white">
@@ -663,66 +704,44 @@ function ProjectCard({ project }: { project: ProjectRow }) {
           <h3 className="font-semibold text-lg text-gray-900">
             {project.project_code || "Project"} — {project.title}
           </h3>
-          <p className="text-sm text-gray-500">
-            {project.address || "—"}
-          </p>
+          <p className="text-sm text-gray-500">{project.address || "—"}</p>
         </div>
 
-        <span className="text-xs bg-gray-100 px-3 py-1 rounded-full">
-          {project.status || "active"}
-        </span>
+        <span className="text-xs bg-gray-100 px-3 py-1 rounded-full">{project.status || "active"}</span>
       </div>
 
       {/* Tabs */}
       <div className="flex gap-6 mt-4 border-b pb-2 text-sm">
         <button
           onClick={() => setTab("overview")}
-          className={
-            tab === "overview"
-              ? "font-semibold text-yellow-600"
-              : "text-gray-600"
-          }
+          className={tab === "overview" ? "font-semibold text-yellow-600" : "text-gray-600"}
         >
           Overview
         </button>
 
         <button
           onClick={() => setTab("payments")}
-          className={
-            tab === "payments"
-              ? "font-semibold text-yellow-600"
-              : "text-gray-600"
-          }
+          className={tab === "payments" ? "font-semibold text-yellow-600" : "text-gray-600"}
         >
           Payments
         </button>
 
         <button
           onClick={() => setTab("documents")}
-          className={
-            tab === "documents"
-              ? "font-semibold text-yellow-600"
-              : "text-gray-600"
-          }
+          className={tab === "documents" ? "font-semibold text-yellow-600" : "text-gray-600"}
         >
           Documents
         </button>
 
         <button
           onClick={() => setTab("updates")}
-          className={
-            tab === "updates"
-              ? "font-semibold text-yellow-600"
-              : "text-gray-600"
-          }
+          className={tab === "updates" ? "font-semibold text-yellow-600" : "text-gray-600"}
         >
           Updates
         </button>
       </div>
 
-      {/* ========================= */}
       {/* OVERVIEW */}
-      {/* ========================= */}
       {tab === "overview" && (
         <div className="mt-4 space-y-2 text-sm">
           <div>
@@ -739,34 +758,18 @@ function ProjectCard({ project }: { project: ProjectRow }) {
 
           <div>
             Remaining:{" "}
-            <b
-              className={
-                remaining > 0
-                  ? "text-red-600"
-                  : "text-green-600"
-              }
-            >
-              {remaining} SAR
-            </b>
+            <b className={remaining > 0 ? "text-red-600" : "text-green-600"}>{remaining} SAR</b>
           </div>
         </div>
       )}
 
-      {/* ========================= */}
       {/* PAYMENTS */}
-      {/* ========================= */}
       {tab === "payments" && (
         <div className="mt-4">
-          <AddPayment
-            projectId={project.id}
-            onAdded={loadPayments}
-          />
+          {/* ✅ onAdded now refreshes FULL details */}
+          <AddPayment projectId={project.id} onAdded={loadDetails} />
 
-          {loadingPayments && (
-            <div className="text-sm text-gray-500 mt-3">
-              Loading payments...
-            </div>
-          )}
+          {loadingDetails && <div className="text-sm text-gray-500 mt-3">Loading payments...</div>}
 
           {payments.length > 0 && (
             <div className="mt-4 space-y-2">
@@ -778,55 +781,110 @@ function ProjectCard({ project }: { project: ProjectRow }) {
                   <div>
                     <div>{p.date || "—"}</div>
                     <div className="text-gray-500 text-xs">
-                      {p.method || "—"}{" "}
-                      {p.note ? `— ${p.note}` : ""}
+                      {p.method || "—"} {p.note ? `— ${p.note}` : ""}
                     </div>
                   </div>
 
-                  <div className="font-semibold">
-                    {p.amount} SAR
-                  </div>
+                  <div className="font-semibold">{Number(p.amount || 0)} SAR</div>
                 </div>
               ))}
             </div>
           )}
 
-          {payments.length === 0 && !loadingPayments && (
-            <div className="text-sm text-gray-500 mt-3">
-              No payments yet.
+          {payments.length === 0 && !loadingDetails && (
+            <div className="text-sm text-gray-500 mt-3">No payments yet.</div>
+          )}
+        </div>
+      )}
+
+      {/* DOCUMENTS */}
+      {tab === "documents" && (
+        <div className="mt-4">
+          {/* ✅ onAdded refreshes details */}
+          <AddDocument projectId={project.id} onAdded={loadDetails} />
+
+          {loadingDetails && <div className="text-sm text-gray-500 mt-3">Loading documents...</div>}
+
+          {!loadingDetails && documents.length === 0 && (
+            <div className="text-sm text-gray-500 mt-3">No documents yet.</div>
+          )}
+
+          {documents.length > 0 && (
+            <div className="mt-4 space-y-2">
+              {documents.map((d) => (
+                <a
+                  key={d.id}
+                  href={d.file_url || "#"}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="block border rounded-lg p-3 text-sm hover:bg-gray-50"
+                >
+                  <div className="font-semibold">{d.title || "Document"}</div>
+                  <div className="text-xs text-gray-500 mt-1">{d.created_at || ""}</div>
+                </a>
+              ))}
             </div>
           )}
         </div>
       )}
 
-      {/* ========================= */}
-      {/* DOCUMENTS */}
-      {/* ========================= */}
-      {tab === "documents" && (
-        <div className="mt-4">
-          <AddDocument
-            projectId={project.id}
-            onAdded={() => {}}
-          />
-        </div>
-      )}
-
-      {/* ========================= */}
       {/* UPDATES */}
-      {/* ========================= */}
       {tab === "updates" && (
         <div className="mt-4">
-          <AddUpdate
-            projectId={project.id}
-            onAdded={() => {}}
-          />
+          {/* ✅ onAdded refreshes details */}
+          <AddUpdate projectId={project.id} onAdded={loadDetails} />
+
+          {loadingDetails && <div className="text-sm text-gray-500 mt-3">Loading updates...</div>}
+
+          {!loadingDetails && updates.length === 0 && (
+            <div className="text-sm text-gray-500 mt-3">No updates yet.</div>
+          )}
+
+          {updates.length > 0 && (
+            <div className="mt-4 space-y-3">
+              {updates.map((u) => {
+                const photos = updatePhotos.filter((p) => p.update_id === u.id)
+
+                return (
+                  <div key={u.id} className="border rounded-lg p-3">
+                    <div className="font-semibold text-sm">{u.title || "Update"}</div>
+
+                    {u.note && <div className="text-sm text-gray-600 mt-1">{u.note}</div>}
+
+                    <div className="text-xs text-gray-400 mt-2">{u.created_at || ""}</div>
+
+                    {photos.length > 0 && (
+                      <div className="grid grid-cols-2 gap-2 mt-3">
+                        {photos.map((ph) => (
+                          <a
+                            key={ph.id}
+                            href={ph.photo_url || "#"}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="block"
+                          >
+                            <img
+                              src={ph.photo_url || ""}
+                              alt="update"
+                              className="w-full h-32 object-cover rounded"
+                              loading="lazy"
+                            />
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          )}
         </div>
       )}
     </div>
   )
 }
 
-/** ✅ NEW: AddDocument */
+/** ✅ AddDocument */
 function AddDocument({
   projectId,
   onAdded,
@@ -928,7 +986,7 @@ function AddDocument({
   )
 }
 
-/** ✅ NEW: AddUpdate + optional photo */
+/** ✅ AddUpdate + optional photo */
 function AddUpdate({
   projectId,
   onAdded,
