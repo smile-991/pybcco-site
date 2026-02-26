@@ -2,82 +2,61 @@ export async function onRequestGet(context: any) {
   const { request, env } = context
   const cookie = request.headers.get("cookie") || ""
 
+  // ✅ لازم يكون في session للعميل
   const match = cookie.match(/pybcco_client=([^;]+)/)
   if (!match) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 })
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+      headers: { "Content-Type": "application/json" },
+    })
   }
 
   const accessToken = match[1]
 
-  const url = new URL(request.url)
-  const projectId = url.searchParams.get("id")
-  if (!projectId) {
-    return new Response(JSON.stringify({ error: "Project ID required" }), { status: 400 })
+  // ✅ headers للـ RLS
+  if (!env.SUPABASE_URL || !env.SUPABASE_ANON_KEY) {
+    return new Response(JSON.stringify({ error: "Missing Supabase env" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    })
   }
 
-  const headers = {
+  const headers: Record<string, string> = {
+    Accept: "application/json",
     apikey: env.SUPABASE_ANON_KEY,
     Authorization: `Bearer ${env.SUPABASE_ANON_KEY}`,
-    "x-client-token": accessToken
+    "x-client-token": accessToken,
   }
 
-  // 1) Project (RLS رح يمنع أي مشروع مو تبع العميل)
-  const projectRes = await fetch(
-    `${env.SUPABASE_URL}/rest/v1/projects?id=eq.${projectId}&select=*`,
+  // ✅ رجّع مشاريع العميل فقط
+  // (بوجود RLS الصحيح على projects رح يرجّع بس تبع العميل)
+  const res = await fetch(
+    `${env.SUPABASE_URL}/rest/v1/projects?select=*&order=created_at.desc`,
     { headers }
   )
-  const projects = await projectRes.json()
 
-  if (!Array.isArray(projects) || projects.length === 0) {
-    return new Response(JSON.stringify({ error: "Project not found" }), { status: 404 })
+  const text = await res.text()
+  let data: any = null
+  try {
+    data = text ? JSON.parse(text) : null
+  } catch {
+    data = null
   }
 
-  const project = projects[0]
-
-  // 2) Payments
-  const paymentsRes = await fetch(
-    `${env.SUPABASE_URL}/rest/v1/payments?project_id=eq.${projectId}&order=date.asc&select=*`,
-    { headers }
-  )
-  const payments = await paymentsRes.json()
-
-  // 3) Documents
-  const documentsRes = await fetch(
-    `${env.SUPABASE_URL}/rest/v1/documents?project_id=eq.${projectId}&order=uploaded_at.desc&select=*`,
-    { headers }
-  )
-  const documents = await documentsRes.json()
-
-  // 4) Updates
-  const updatesRes = await fetch(
-    `${env.SUPABASE_URL}/rest/v1/updates?project_id=eq.${projectId}&order=created_at.desc&select=*`,
-    { headers }
-  )
-  const updates = await updatesRes.json()
-
-  // 5) Update photos (فلترة احترافية: بس صور تحديثات هذا المشروع)
-  // نجيب IDs للتحديثات (إن وجدت) وبعدين نفلتر update_photos عليهم
-  const updateIds = Array.isArray(updates) ? updates.map((u: any) => u.id).filter(Boolean) : []
-  let update_photos: any[] = []
-
-  if (updateIds.length > 0) {
-    const inList = updateIds.map((x: string) => `"${x}"`).join(",")
-    const photosRes = await fetch(
-      `${env.SUPABASE_URL}/rest/v1/update_photos?update_id=in.(${inList})&select=*`,
-      { headers }
+  if (!res.ok) {
+    return new Response(
+      JSON.stringify({
+        error: "Supabase error (projects)",
+        status: res.status,
+        details: data,
+      }),
+      { status: res.status, headers: { "Content-Type": "application/json" } }
     )
-    const photos = await photosRes.json()
-    update_photos = Array.isArray(photos) ? photos : []
   }
 
-  return new Response(
-    JSON.stringify({
-      project,
-      payments: Array.isArray(payments) ? payments : [],
-      documents: Array.isArray(documents) ? documents : [],
-      updates: Array.isArray(updates) ? updates : [],
-      update_photos
-    }),
-    { status: 200 }
-  )
+  // ✅ لازم يرجّع Array
+  return new Response(JSON.stringify(Array.isArray(data) ? data : []), {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  })
 }

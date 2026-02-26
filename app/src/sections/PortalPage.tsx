@@ -150,7 +150,12 @@ function ClientProjects({ onLogout }: { onLogout: () => void }) {
         }
 
         const data = await res.json().catch(() => null)
-        setProjects(Array.isArray(data) ? data : [])
+        if (!Array.isArray(data)) {
+  setErr(data?.error || "Unexpected response from server")
+  setProjects([])
+} else {
+  setProjects(data)
+}
       } catch {
         setErr("Network error while loading projects")
         setProjects([])
