@@ -28,26 +28,44 @@ export default function ProjectDetailsPage() {
   const [loading, setLoading] = useState(true)
   const [imgOpen, setImgOpen] = useState<string | null>(null)
 
-  // ✅ token من localStorage
-  const clientToken = localStorage.getItem("pybcco_client_token") || ""
+  // ✅ token من localStorage (للتعليقات فقط)
+  const [clientToken, setClientToken] = useState(
+    localStorage.getItem("pybcco_client_token") || ""
+  )
 
-  // ✅ Guard: إذا ما في token (خصوصاً بالـ Incognito) رجعه على البوابة
+  // ✅ إذا ما في token، نحاول نجيبه من session بدل redirect
   useEffect(() => {
-    if (!clientToken) {
-      navigate("/portal", { replace: true })
-    }
-  }, [clientToken, navigate])
+    if (clientToken) return
+
+    fetch("/api/client-session", { credentials: "include" })
+      .then(async (r) => (r.ok ? r.json().catch(() => null) : null))
+      .then((sess) => {
+        const t = String(sess?.client_token || sess?.access_token || "").trim()
+        if (t) {
+          localStorage.setItem("pybcco_client_token", t)
+          setClientToken(t)
+        }
+      })
+      .catch(() => {})
+  }, [clientToken])
 
   useEffect(() => {
     if (!id) return
 
     setLoading(true)
+
     fetch(`/api/get-project-details?id=${id}`, {
       credentials: "include",
     })
       .then(async (res) => {
+        // ✅ لو انتهت الجلسة/غير مصرح
+        if (res.status === 401 || res.status === 403) {
+          navigate("/portal", { replace: true })
+          return null
+        }
+
         if (!res.ok) return null
-        return await res.json()
+        return await res.json().catch(() => null)
       })
       .then((result) => {
         setData(result)
@@ -57,7 +75,7 @@ export default function ProjectDetailsPage() {
         setData(null)
         setLoading(false)
       })
-  }, [id])
+  }, [id, navigate])
 
   // ✅ KEEP HOOK ORDER STABLE
   const project = data?.project
@@ -148,12 +166,18 @@ export default function ProjectDetailsPage() {
         <div className="bg-white p-6 rounded-2xl shadow-lg border">
           <div className="flex justify-between items-start flex-wrap gap-4">
             <div>
-              <h1 className="text-2xl font-bold">{project.project_code || project.title}</h1>
+              <h1 className="text-2xl font-bold">
+                {project.project_code || project.title}
+              </h1>
               <p className="text-sm text-gray-500 mt-1">{project.title}</p>
-              {project.address && <p className="text-xs text-gray-400 mt-1">{project.address}</p>}
+              {project.address && (
+                <p className="text-xs text-gray-400 mt-1">{project.address}</p>
+              )}
             </div>
 
-            <span className={`text-xs px-4 py-2 rounded-full ${statusBadge}`}>{statusLabel}</span>
+            <span className={`text-xs px-4 py-2 rounded-full ${statusBadge}`}>
+              {statusLabel}
+            </span>
           </div>
 
           <div className="mt-6">
@@ -163,7 +187,9 @@ export default function ProjectDetailsPage() {
                 style={{ width: `${project.progress_percent || 0}%` }}
               />
             </div>
-            <p className="text-xs mt-2 text-gray-600">{project.progress_percent || 0}% Complete</p>
+            <p className="text-xs mt-2 text-gray-600">
+              {project.progress_percent || 0}% Complete
+            </p>
           </div>
         </div>
 
@@ -224,7 +250,9 @@ export default function ProjectDetailsPage() {
                   {payments.map((payment: any) => (
                     <tr key={payment.id} className="border-b hover:bg-gray-50">
                       <td className="py-2">{formatDate(payment.date)}</td>
-                      <td className="py-2 font-medium">{money(payment.amount)} SAR</td>
+                      <td className="py-2 font-medium">
+                        {money(payment.amount)} SAR
+                      </td>
                       <td className="py-2">{payment.method || "-"}</td>
                       <td className="py-2">{payment.note || "-"}</td>
                     </tr>
@@ -239,7 +267,9 @@ export default function ProjectDetailsPage() {
         <div className="bg-white p-6 rounded-2xl shadow-lg border">
           <h2 className="text-lg font-semibold mb-6">Documents</h2>
 
-          {documents.length === 0 && <p className="text-sm text-gray-500">No documents uploaded yet.</p>}
+          {documents.length === 0 && (
+            <p className="text-sm text-gray-500">No documents uploaded yet.</p>
+          )}
 
           {documents.length > 0 && (
             <div className="grid md:grid-cols-2 gap-6">
@@ -268,10 +298,14 @@ export default function ProjectDetailsPage() {
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <h3 className="font-semibold">{update.title || "Update"}</h3>
-                        {update.note && <p className="text-sm text-gray-600 mt-1">{update.note}</p>}
+                        {update.note && (
+                          <p className="text-sm text-gray-600 mt-1">{update.note}</p>
+                        )}
                       </div>
 
-                      <div className="text-xs text-gray-400">{formatDate(update.created_at)}</div>
+                      <div className="text-xs text-gray-400">
+                        {formatDate(update.created_at)}
+                      </div>
                     </div>
 
                     {photos.length > 0 && (
