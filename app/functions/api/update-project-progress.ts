@@ -1,24 +1,28 @@
 export const onRequest = async (context: any) => {
   const { request, env } = context
 
+  // ---------- Shared headers ----------
+  const corsHeaders: Record<string, string> = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,POST,PATCH,OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Content-Type": "application/json",
+  }
+
   // ---------- CORS / Preflight ----------
   if (request.method === "OPTIONS") {
     return new Response(null, {
       status: 204,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,POST,PATCH,OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type",
-      },
+      headers: corsHeaders,
     })
   }
 
   // ---------- Allow PATCH (and POST fallback) ----------
   const method = request.method.toUpperCase()
   if (method !== "PATCH" && method !== "POST") {
-    return new Response("Method Not Allowed", {
+    return new Response(JSON.stringify({ error: "Method Not Allowed" }), {
       status: 405,
-      headers: { "Content-Type": "text/plain" },
+      headers: corsHeaders,
     })
   }
 
@@ -28,7 +32,7 @@ export const onRequest = async (context: any) => {
     if (!cookie.includes("pybcco_admin=1")) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
-        headers: { "Content-Type": "application/json" },
+        headers: corsHeaders,
       })
     }
 
@@ -41,7 +45,7 @@ export const onRequest = async (context: any) => {
       } catch {
         return new Response(JSON.stringify({ error: "Invalid JSON body" }), {
           status: 400,
-          headers: { "Content-Type": "application/json" },
+          headers: corsHeaders,
         })
       }
     }
@@ -53,7 +57,7 @@ export const onRequest = async (context: any) => {
     if (!projectId) {
       return new Response(JSON.stringify({ error: "project_id is required" }), {
         status: 400,
-        headers: { "Content-Type": "application/json" },
+        headers: corsHeaders,
       })
     }
 
@@ -79,7 +83,7 @@ export const onRequest = async (context: any) => {
       },
       body: JSON.stringify({
         progress_percent: progress,
-        updated_at: new Date().toISOString(),
+        // ✅ removed updated_at لأن العمود غير موجود بجدول projects
       }),
     })
 
@@ -101,7 +105,7 @@ export const onRequest = async (context: any) => {
         }),
         {
           status: 500,
-          headers: { "Content-Type": "application/json" },
+          headers: corsHeaders,
         }
       )
     }
@@ -116,7 +120,7 @@ export const onRequest = async (context: any) => {
       }),
       {
         status: 200,
-        headers: { "Content-Type": "application/json" },
+        headers: corsHeaders,
       }
     )
   } catch (err: any) {
@@ -125,7 +129,7 @@ export const onRequest = async (context: any) => {
         error: "Internal Server Error",
         message: err?.message || String(err),
       }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
+      { status: 500, headers: corsHeaders }
     )
   }
 }
