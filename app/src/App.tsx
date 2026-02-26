@@ -23,6 +23,7 @@ import ProfilePage from "@/sections/ProfilePage";
 import AdminPage from "./sections/AdminPage";
 import PortalPage from "./sections/PortalPage";
 import ProjectDetailsPage from "@/sections/ProjectDetailsPage";
+import ProjectTrackingSystemRiyadh from "./sections/ProjectTrackingSystemRiyadh"
 
 export default function App() {
   return (
@@ -51,6 +52,7 @@ export default function App() {
           <Route path="/portal" element={<PortalPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/project-tracking-system-riyadh" element={<ProjectTrackingSystemRiyadh />} />
           <Route path="/portal/projects/:id" element={<ProjectDetailsPage />} />
           <Route
             path="/case-study-villa-renovation-riyadh"
