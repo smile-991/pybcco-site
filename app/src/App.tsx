@@ -30,7 +30,7 @@ export default function App() {
       <Navbar />
 
       {/* ✅ حل مشكلة تغطية النافبار */}
-      <div className="pt-24">
+      <div className="pt-18">
         <ScrollToTop />
 
         <Routes>
