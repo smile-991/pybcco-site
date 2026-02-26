@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
+import ProjectCommentsClient from "@/sections/ProjectCommentsClient";
 
 type AnyObj = Record<string, any>
 
@@ -25,6 +26,7 @@ export default function ProjectDetailsPage() {
   const [data, setData] = useState<AnyObj | null>(null)
   const [loading, setLoading] = useState(true)
   const [imgOpen, setImgOpen] = useState<string | null>(null)
+const clientToken = localStorage.getItem("pybcco_client_token") || "";
 
   useEffect(() => {
     setLoading(true)
@@ -152,6 +154,11 @@ export default function ProjectDetailsPage() {
             <p className="text-xs mt-2 text-gray-600">{project.progress_percent || 0}% Complete</p>
           </div>
         </div>
+
+        <ProjectCommentsClient
+  projectId={project.id}
+  clientToken={clientToken}
+/>
 
         {/* FINANCIAL SUMMARY */}
         <div className="bg-white p-6 rounded-2xl shadow-lg border">
