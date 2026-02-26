@@ -21,44 +21,46 @@ import DecorShipboard from "./sections/Decorshipboard";
 import CaseStudyVillaRiyadh from "@/sections/CaseStudyVillaRiyadh";
 import ProfilePage from "@/sections/ProfilePage";
 import AdminPage from "./sections/AdminPage";
-import PortalPage from "./sections/PortalPage"
-import ProjectDetailsPage from "@/sections/ProjectDetailsPage"
+import PortalPage from "./sections/PortalPage";
+import ProjectDetailsPage from "@/sections/ProjectDetailsPage";
 
 export default function App() {
   return (
     <div className="min-h-screen bg-white" dir="rtl">
       <Navbar />
 
-      {/* مهم جداً لحل مشكلة النزول بنص الصفحة */}
-      <ScrollToTop />
+      {/* ✅ حل مشكلة تغطية النافبار */}
+      <div className="pt-24">
+        <ScrollToTop />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/projects" element={<ProjectsGallery />} />
-        <Route path="/decor" element={<Decor />} />
-        <Route path="/decor/wood" element={<DecorWood />} />
-<Route path="/decor/marble" element={<DecorMarble />} />
-        <Route path="/villa-finishing-riyadh" element={<VillaFinishingRiyadh />} />
-        <Route path="/villa-renovation-riyadh" element={<VillaRenovationRiyadh />} />
-        <Route path="/construction-company-riyadh" element={<ConstructionCompanyRiyadh />} />
-        <Route path="/villa-finishing-price-riyadh" element={<VillaFinishingPriceRiyadh />} />
-        <Route path="/villa-bone-construction-riyadh" element={<VillaBoneConstructionRiyadh />} />
-        <Route path="/apartment-finishing-riyadh" element={<ApartmentFinishingRiyadh />} />
-        <Route path="/home-renovation-company-riyadh" element={<HomeRenovationCompanyRiyadh />} />
-        <Route path="/contractor-almalqa-riyadh" element={<ContractorAlMalqaRiyadh />} />
-        <Route path="/decor/shipboard" element={<DecorShipboard />} />
-        <Route path="/portal" element={<PortalPage />} />
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/portal/projects/:id" element={<ProjectDetailsPage />} />
-        <Route
-  path="/case-study-villa-renovation-riyadh"
-  element={<CaseStudyVillaRiyadh />}
-/>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/projects" element={<ProjectsGallery />} />
+          <Route path="/decor" element={<Decor />} />
+          <Route path="/decor/wood" element={<DecorWood />} />
+          <Route path="/decor/marble" element={<DecorMarble />} />
+          <Route path="/villa-finishing-riyadh" element={<VillaFinishingRiyadh />} />
+          <Route path="/villa-renovation-riyadh" element={<VillaRenovationRiyadh />} />
+          <Route path="/construction-company-riyadh" element={<ConstructionCompanyRiyadh />} />
+          <Route path="/villa-finishing-price-riyadh" element={<VillaFinishingPriceRiyadh />} />
+          <Route path="/villa-bone-construction-riyadh" element={<VillaBoneConstructionRiyadh />} />
+          <Route path="/apartment-finishing-riyadh" element={<ApartmentFinishingRiyadh />} />
+          <Route path="/home-renovation-company-riyadh" element={<HomeRenovationCompanyRiyadh />} />
+          <Route path="/contractor-almalqa-riyadh" element={<ContractorAlMalqaRiyadh />} />
+          <Route path="/decor/shipboard" element={<DecorShipboard />} />
+          <Route path="/portal" element={<PortalPage />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/portal/projects/:id" element={<ProjectDetailsPage />} />
+          <Route
+            path="/case-study-villa-renovation-riyadh"
+            element={<CaseStudyVillaRiyadh />}
+          />
 
-        {/* ✅ 404 حقيقي بدل ما نرجع Home (لتجنب Soft 404 وتشويش جوجل) */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          {/* ✅ 404 حقيقي */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
 
       <Footer />
       <Toaster />
