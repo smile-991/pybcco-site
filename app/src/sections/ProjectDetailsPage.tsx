@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import ProjectCommentsClient from "@/sections/ProjectCommentsClient";
+import ProjectCommentsClient from "@/sections/ProjectCommentsClient"
 
 type AnyObj = Record<string, any>
 
@@ -23,14 +23,28 @@ function money(n: any) {
 export default function ProjectDetailsPage() {
   const { id } = useParams()
   const navigate = useNavigate()
+
   const [data, setData] = useState<AnyObj | null>(null)
   const [loading, setLoading] = useState(true)
   const [imgOpen, setImgOpen] = useState<string | null>(null)
-const clientToken = localStorage.getItem("pybcco_client_token") || "";
+
+  // ✅ token من localStorage
+  const clientToken = localStorage.getItem("pybcco_client_token") || ""
+
+  // ✅ Guard: إذا ما في token (خصوصاً بالـ Incognito) رجعه على البوابة
+  useEffect(() => {
+    if (!clientToken) {
+      navigate("/portal", { replace: true })
+    }
+  }, [clientToken, navigate])
 
   useEffect(() => {
+    if (!id) return
+
     setLoading(true)
-    fetch(`/api/get-project-details?id=${id}`, { credentials: "include" })
+    fetch(`/api/get-project-details?id=${id}`, {
+      credentials: "include",
+    })
       .then(async (res) => {
         if (!res.ok) return null
         return await res.json()
@@ -45,7 +59,7 @@ const clientToken = localStorage.getItem("pybcco_client_token") || "";
       })
   }, [id])
 
-  // ✅ KEEP HOOK ORDER STABLE: derive lists + useMemo before early returns
+  // ✅ KEEP HOOK ORDER STABLE
   const project = data?.project
   const payments = Array.isArray(data?.payments) ? data!.payments : []
   const documents = Array.isArray(data?.documents) ? data!.documents : []
@@ -136,9 +150,7 @@ const clientToken = localStorage.getItem("pybcco_client_token") || "";
             <div>
               <h1 className="text-2xl font-bold">{project.project_code || project.title}</h1>
               <p className="text-sm text-gray-500 mt-1">{project.title}</p>
-              {project.address && (
-                <p className="text-xs text-gray-400 mt-1">{project.address}</p>
-              )}
+              {project.address && <p className="text-xs text-gray-400 mt-1">{project.address}</p>}
             </div>
 
             <span className={`text-xs px-4 py-2 rounded-full ${statusBadge}`}>{statusLabel}</span>
@@ -155,10 +167,8 @@ const clientToken = localStorage.getItem("pybcco_client_token") || "";
           </div>
         </div>
 
-        <ProjectCommentsClient
-  projectId={project.id}
-  clientToken={clientToken}
-/>
+        {/* ✅ COMMENTS (client) */}
+        <ProjectCommentsClient projectId={project.id} clientToken={clientToken} />
 
         {/* FINANCIAL SUMMARY */}
         <div className="bg-white p-6 rounded-2xl shadow-lg border">
@@ -229,9 +239,7 @@ const clientToken = localStorage.getItem("pybcco_client_token") || "";
         <div className="bg-white p-6 rounded-2xl shadow-lg border">
           <h2 className="text-lg font-semibold mb-6">Documents</h2>
 
-          {documents.length === 0 && (
-            <p className="text-sm text-gray-500">No documents uploaded yet.</p>
-          )}
+          {documents.length === 0 && <p className="text-sm text-gray-500">No documents uploaded yet.</p>}
 
           {documents.length > 0 && (
             <div className="grid md:grid-cols-2 gap-6">
