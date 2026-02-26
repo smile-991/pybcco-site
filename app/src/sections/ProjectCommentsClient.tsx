@@ -71,7 +71,7 @@ export default function ProjectCommentsClient({
     setSending(true)
     setError("")
     try {
-      const res = await fetch("/api/post-client-comment", {
+      const res = await fetch("/api/post-client-comments", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
