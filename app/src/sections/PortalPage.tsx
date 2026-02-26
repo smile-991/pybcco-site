@@ -45,27 +45,31 @@ export default function PortalPage() {
   }
 
   const verifyOtp = async () => {
-    setMessage("")
-    try {
-      const res = await fetch("/api/verify-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ phone, code }),
-      })
+  setMessage("")
+  try {
+    const res = await fetch("/api/verify-otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ phone, code }),
+    })
 
-      const data = await res.json().catch(() => null)
+    const data = await res.json().catch(() => null)
 
-      if (!res.ok) {
-        setMessage(data?.error || "Invalid code")
-        return
-      }
-
-      setAuthorized(true)
-    } catch {
-      setMessage("Network error")
+    if (!res.ok) {
+      setMessage(data?.error || "Invalid code")
+      return
     }
+
+    // ✅ خزّن توكن العميل (ضروري للتعليقات)
+    const token = String(data?.client_token || data?.access_token || "").trim()
+    if (token) localStorage.setItem("pybcco_client_token", token)
+
+    setAuthorized(true)
+  } catch {
+    setMessage("Network error")
   }
+}
 
   if (authorized === null) {
     return (
@@ -166,13 +170,17 @@ function ClientProjects({ onLogout }: { onLogout: () => void }) {
   }, [onLogout])
 
   const handleLogout = async () => {
-    await fetch("/api/client-logout", {
-      method: "POST",
-      credentials: "include",
-    }).catch(() => {})
-    onLogout()
-    window.location.href = "/portal"
-  }
+  await fetch("/api/client-logout", {
+    method: "POST",
+    credentials: "include",
+  }).catch(() => {})
+
+  // ✅ امسح التوكن
+  localStorage.removeItem("pybcco_client_token")
+
+  onLogout()
+  window.location.href = "/portal"
+}
 
   if (loading) {
     return (

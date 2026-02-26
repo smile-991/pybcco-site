@@ -38,7 +38,18 @@ export default function ProjectCommentsClient({
 
   const canSend = useMemo(() => message.trim().length >= 2, [message])
 
+  function requireToken() {
+    if (!clientToken?.trim()) {
+      setError("جلسة الدخول انتهت. رجاءً سجّل خروج ثم ادخل مرة أخرى.")
+      return false
+    }
+    return true
+  }
+
   async function load() {
+    if (!projectId) return
+    if (!requireToken()) return
+
     setLoading(true)
     setError("")
     try {
@@ -68,10 +79,12 @@ export default function ProjectCommentsClient({
 
   async function send() {
     if (!canSend) return
+    if (!requireToken()) return
+
     setSending(true)
     setError("")
     try {
-      // ✅ المسار الصحيح حسب اسم ملف الفنكشن عندك: post-client-comment.ts
+      // ✅ endpoint الصحيح (مفرد)
       const res = await fetch("/api/post-client-comment", {
         method: "POST",
         headers: {
