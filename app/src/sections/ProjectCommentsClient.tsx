@@ -71,7 +71,8 @@ export default function ProjectCommentsClient({
     setSending(true)
     setError("")
     try {
-      const res = await fetch("/api/post-client-comments", {
+      // ✅ FIX: endpoint is singular to match: app/functions/api/post-client-comment.ts
+      const res = await fetch("/api/post-client-comment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -150,7 +151,8 @@ export default function ProjectCommentsClient({
                       {c.message}
                     </div>
                     <div className="mt-1 text-[11px] text-gray-500">
-                      {isClient ? "أنت" : "إدارة بنيان الهرم"} • {formatDate(c.created_at)}
+                      {isClient ? "أنت" : "إدارة بنيان الهرم"} •{" "}
+                      {formatDate(c.created_at)}
                     </div>
                   </div>
                 </div>
