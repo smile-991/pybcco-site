@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useMemo, useState, useCallback } from "react"
 
 type ClientRow = {
   id: string
@@ -64,6 +64,29 @@ async function safeJson(res: Response) {
 const clamp01to100 = (n: number) => {
   if (Number.isNaN(n)) return 0
   return Math.max(0, Math.min(100, n))
+}
+
+/** ✅ NEW: Project Comments types + helper */
+type CommentRow = {
+  id: string
+  project_id: string
+  sender_role: "client" | "admin"
+  message: string
+  created_at: string
+}
+
+function formatDate(ts: string) {
+  try {
+    return new Date(ts).toLocaleString("ar-SA", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+  } catch {
+    return ts
+  }
 }
 
 export default function AdminPage() {
@@ -648,7 +671,7 @@ function AddPayment({ projectId, onAdded }: { projectId: string; onAdded: () => 
 function ProjectCard({ project }: { project: ProjectRow }) {
   const [tab, setTab] = useState<"overview" | "payments" | "documents" | "updates">("overview")
 
-  // ✅ NEW: progress edit states (as requested)
+  // ✅ progress edit states
   const [progressEdit, setProgressEdit] = useState<number>(Number(project.progress_percent || 0))
   const [savingProgress, setSavingProgress] = useState(false)
   const [progressMsg, setProgressMsg] = useState("")
@@ -665,10 +688,17 @@ function ProjectCard({ project }: { project: ProjectRow }) {
   const [updatePhotos, setUpdatePhotos] = useState<UpdatePhotoRow[]>([])
   const [loadingDetails, setLoadingDetails] = useState(false)
 
+  // ✅ NEW: comments states
+  const [comments, setComments] = useState<CommentRow[]>([])
+  const [commentsLoading, setCommentsLoading] = useState(false)
+  const [commentsError, setCommentsError] = useState("")
+  const [reply, setReply] = useState("")
+  const [replying, setReplying] = useState(false)
+  const canReply = useMemo(() => reply.trim().length >= 2, [reply])
+
   const loadDetails = async () => {
     setLoadingDetails(true)
     try {
-      // ✅ robust: send both params (project_id + id) to match your backend مهما كان
       const res = await fetch(
         `/api/get-project-details?project_id=${encodeURIComponent(project.id)}&id=${encodeURIComponent(
           project.id
@@ -700,7 +730,65 @@ function ProjectCard({ project }: { project: ProjectRow }) {
     }
   }
 
-  // ✅ NEW: function to update progress (as requested)
+  const loadComments = async () => {
+    setCommentsLoading(true)
+    setCommentsError("")
+    try {
+      const res = await fetch("/api/get-project-comments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ project_id: project.id }),
+      })
+
+      const json = await safeJson(res)
+
+      if (!res.ok) {
+        setCommentsError(json?.error || "تعذر تحميل التعليقات")
+        setComments([])
+        return
+      }
+
+      const items = Array.isArray(json?.items) ? (json.items as CommentRow[]) : []
+      setComments(items)
+    } catch (e: any) {
+      setCommentsError(e?.message || "خطأ غير متوقع")
+    } finally {
+      setCommentsLoading(false)
+    }
+  }
+
+  const sendReply = async () => {
+    if (!canReply) return
+    setReplying(true)
+    setCommentsError("")
+    try {
+      const res = await fetch("/api/post-admin-reply", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ project_id: project.id, message: reply.trim() }),
+      })
+
+      const json = await safeJson(res)
+
+      if (!res.ok) {
+        setCommentsError(json?.error || "تعذر إرسال الرد")
+        return
+      }
+
+      const newItem = json?.item as CommentRow | undefined
+      if (newItem?.id) setComments((prev) => [...prev, newItem])
+
+      setReply("")
+    } catch (e: any) {
+      setCommentsError(e?.message || "خطأ غير متوقع")
+    } finally {
+      setReplying(false)
+    }
+  }
+
+  // ✅ update progress
   const saveProgress = async () => {
     setProgressMsg("")
     setSavingProgress(true)
@@ -722,8 +810,6 @@ function ProjectCard({ project }: { project: ProjectRow }) {
       }
 
       setProgressMsg("Progress updated ✅")
-      // ملاحظة: التحديث الفعلي على الكارد يحتاج refresh عام من الأب
-      // أو نقل onProjectChanged - إذا بدك “الصح” خبرني.
     } catch {
       setProgressMsg("Network error")
     } finally {
@@ -735,6 +821,14 @@ function ProjectCard({ project }: { project: ProjectRow }) {
   useEffect(() => {
     if (tab === "payments" || tab === "documents" || tab === "updates") {
       loadDetails()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tab, project.id])
+
+  // ✅ NEW: load comments on overview
+  useEffect(() => {
+    if (tab === "overview") {
+      loadComments()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tab, project.id])
@@ -796,7 +890,7 @@ function ProjectCard({ project }: { project: ProjectRow }) {
             Progress: <b>{project.progress_percent || 0}%</b>
           </div>
 
-          {/* ✅ NEW UI: edit + slider + save */}
+          {/* ✅ edit + slider + save */}
           <div className="mt-3 border-t pt-3">
             <div className="flex items-center gap-3 flex-wrap">
               <label className="text-sm text-gray-700">Progress %</label>
@@ -831,6 +925,80 @@ function ProjectCard({ project }: { project: ProjectRow }) {
             {progressMsg && <div className="text-xs mt-2 text-gray-600">{progressMsg}</div>}
           </div>
 
+          {/* ✅ NEW: Comments + Admin Reply UI (under Progress) */}
+          <div className="mt-4 rounded-2xl border bg-white p-4">
+            <div className="mb-3 flex items-center justify-between">
+              <div className="text-sm font-semibold">💬 تعليقات العميل</div>
+
+              <button
+                type="button"
+                onClick={loadComments}
+                disabled={commentsLoading}
+                className="rounded-lg border px-3 py-1 text-xs hover:bg-gray-50 disabled:opacity-50"
+              >
+                {commentsLoading ? "جارِ التحديث..." : "تحديث"}
+              </button>
+            </div>
+
+            {commentsError ? (
+              <div className="mb-3 rounded-lg border border-red-200 bg-red-50 p-2 text-xs text-red-700">
+                {commentsError}
+              </div>
+            ) : null}
+
+            <div className="max-h-56 overflow-auto rounded-xl border bg-gray-50 p-3">
+              {comments.length === 0 ? (
+                <div className="text-xs text-gray-500">لا توجد تعليقات بعد.</div>
+              ) : (
+                <div className="space-y-2">
+                  {comments.map((c) => {
+                    const isClient = c.sender_role === "client"
+                    return (
+                      <div
+                        key={c.id}
+                        className={`flex ${isClient ? "justify-start" : "justify-end"}`}
+                      >
+                        <div
+                          className={`max-w-[85%] rounded-2xl px-3 py-2 text-sm shadow-sm ${
+                            isClient
+                              ? "bg-white border"
+                              : "bg-yellow-100 border border-yellow-200"
+                          }`}
+                        >
+                          <div className="whitespace-pre-wrap leading-relaxed">{c.message}</div>
+                          <div className="mt-1 text-[11px] text-gray-500">
+                            {isClient ? "العميل" : "أنت"} • {formatDate(c.created_at)}
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+            </div>
+
+            <div className="mt-3 flex gap-2">
+              <textarea
+                value={reply}
+                onChange={(e) => setReply(e.target.value)}
+                placeholder="اكتب ردّك للعميل…"
+                className="min-h-[42px] w-full resize-none rounded-xl border p-2 text-sm outline-none focus:ring-2 focus:ring-yellow-200"
+              />
+              <button
+                type="button"
+                onClick={sendReply}
+                disabled={!canReply || replying}
+                className="rounded-xl bg-yellow-500 px-4 text-sm font-semibold text-black hover:bg-yellow-600 disabled:opacity-50"
+              >
+                {replying ? "إرسال..." : "إرسال"}
+              </button>
+            </div>
+
+            <div className="mt-2 text-[11px] text-gray-500">
+              * الرد يظهر للعميل تحت نسبة إنجاز المشروع.
+            </div>
+          </div>
+
           <div>
             Total: <b>{project.total_amount || 0} SAR</b>
           </div>
@@ -851,7 +1019,6 @@ function ProjectCard({ project }: { project: ProjectRow }) {
       {/* PAYMENTS */}
       {tab === "payments" && (
         <div className="mt-4">
-          {/* ✅ onAdded now refreshes FULL details */}
           <AddPayment projectId={project.id} onAdded={loadDetails} />
 
           {loadingDetails && <div className="text-sm text-gray-500 mt-3">Loading payments...</div>}
@@ -882,7 +1049,6 @@ function ProjectCard({ project }: { project: ProjectRow }) {
       {/* DOCUMENTS */}
       {tab === "documents" && (
         <div className="mt-4">
-          {/* ✅ onAdded refreshes details */}
           <AddDocument projectId={project.id} onAdded={loadDetails} />
 
           {loadingDetails && <div className="text-sm text-gray-500 mt-3">Loading documents...</div>}
@@ -913,7 +1079,6 @@ function ProjectCard({ project }: { project: ProjectRow }) {
       {/* UPDATES */}
       {tab === "updates" && (
         <div className="mt-4">
-          {/* ✅ onAdded refreshes details */}
           <AddUpdate projectId={project.id} onAdded={loadDetails} />
 
           {loadingDetails && <div className="text-sm text-gray-500 mt-3">Loading updates...</div>}
