@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import SeoHead from "@/components/SeoHead";
+import { Link } from "react-router-dom";
 
 const ALMALQA_FAQS = [
   {
@@ -256,10 +257,16 @@ export default function ContractorAlMalqaRiyadh() {
           </p>
 
           <p>
-            الجودة عندنا ليست شعار. نعتمد نظام متابعة يضمن استلام مراحل العمل،
-            ومطابقة المواد للمستوى المتفق عليه، وتوثيق التقدم بشكل مستمر.
-            لأن التفاصيل في شمال الرياض هي الفارق الحقيقي.
-          </p>
+  الجودة عندنا ليست شعار. نعتمد{" "}
+  <Link
+    to="/project-tracking-system-riyadh"
+    className="text-gold font-bold hover:underline"
+  >
+    نظام متابعة رقمي احترافي
+  </Link>{" "}
+  يضمن استلام مراحل العمل، ومطابقة المواد للمستوى المتفق عليه، وتوثيق التقدم
+  بشكل مستمر. لأن التفاصيل في شمال الرياض هي الفارق الحقيقي.
+</p>
 
           <p>
             خدماتنا في الملقا تشمل:{" "}

@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import BoqCalculator from "@/components/BoqCalculator";
 import SeoHead from "@/components/SeoHead";
+import { Link } from "react-router-dom"
 
 type WorkType = "finishing" | "bone";
 type Level = "commercial" | "standard" | "luxury";
@@ -614,6 +615,26 @@ const waLink = `https://wa.me/966550604837?text=${waText}`;
           <li>✔️ مستوى التشطيب المطلوب</li>
         </ul>
       </section>
+
+{/* PROJECT TRACKING SYSTEM LINK */}
+<section className="container mx-auto px-4 pb-6 text-right max-w-4xl">
+  <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+    <h2 className="text-xl md:text-2xl font-bold text-gold">
+      بعد ما تحدد الميزانية… تابع التنفيذ بشفافية كاملة
+    </h2>
+
+    <p className="mt-4 text-white/80 leading-relaxed">
+      في PYBCCO لا نكتفي بحساب التكلفة فقط، بل ندير مشروعك عبر{" "}
+      <Link
+        to="/project-tracking-system-riyadh"
+        className="text-gold font-bold hover:underline"
+      >
+        نظام متابعة رقمي احترافي
+      </Link>{" "}
+      يتيح لك متابعة نسبة الإنجاز، مراجعة الدفعات، تحميل العقود، والاطلاع على التحديثات بالصور ضمن حساب العميل — لحفظ حقوقك ووضوح كل مرحلة.
+    </p>
+  </div>
+</section>
 
       {/* FAQ SECTION */}
       <section className="container mx-auto px-4 py-14 text-right max-w-4xl">

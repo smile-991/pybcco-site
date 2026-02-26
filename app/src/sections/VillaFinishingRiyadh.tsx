@@ -239,6 +239,26 @@ export default function VillaFinishingRiyadh() {
         بالجودة والجدول الزمني.
       </p>
 
+{/* PROJECT TRACKING SYSTEM LINK */}
+<section className="container mx-auto px-4 py-10">
+  <div className="max-w-5xl mx-auto bg-white/5 border border-white/10 rounded-2xl p-6 text-right">
+    <h2 className="text-xl sm:text-2xl font-bold text-gold">
+      ميزة احترافية: نظام متابعة رقمي كامل لمشروع التشطيب
+    </h2>
+
+    <p className="mt-4 text-white/80 leading-relaxed">
+      في PYBCCO لا نعتمد على المتابعة التقليدية فقط، بل ندير مشاريع التشطيب عبر{" "}
+      <Link
+        to="/project-tracking-system-riyadh"
+        className="text-gold font-bold hover:underline"
+      >
+        نظام متابعة رقمي احترافي
+      </Link>{" "}
+      يتيح للعميل متابعة نسبة الإنجاز، مراجعة الدفعات، تحميل العقود، والاطلاع على التحديثات بالصور — لضمان الشفافية وحفظ الحقوق في كل مرحلة.
+    </p>
+  </div>
+</section>
+
       <section className="container mx-auto px-4 pb-14">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
           خدماتنا في <span className="text-gold">تشطيب الفلل</span>

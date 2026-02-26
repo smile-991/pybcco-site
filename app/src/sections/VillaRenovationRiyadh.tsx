@@ -292,7 +292,14 @@ export default function VillaRenovationRiyadh() {
   >
     حاسبة الأسعار
   </a>{" "}
-  لأخذ تصور مبدئي قبل المعاينة. كما يمكنك الاطلاع على{" "}
+  لأخذ تصور مبدئي قبل المعاينة. كما نوفر لعملائنا{" "}
+  <Link
+    to="/project-tracking-system-riyadh"
+    className="text-gold font-bold hover:underline"
+  >
+    نظام متابعة رقمي متكامل
+  </Link>{" "}
+  يتيح الاطلاع على نسبة الإنجاز، الدفعات، الوثائق، والتحديثات بالصور ضمن حساب العميل — لضمان الشفافية وحفظ الحقوق. ويمكنك أيضًا الاطلاع على{" "}
   <a
     href="/case-study-villa-renovation-riyadh"
     className="text-gold font-bold hover:underline"

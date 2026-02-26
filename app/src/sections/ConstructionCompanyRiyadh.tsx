@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import SeoHead from "@/components/SeoHead";
+import { Link } from "react-router-dom";
 
 const SITE = "https://www.pybcco.com";
 
@@ -227,6 +228,19 @@ export default function ConstructionCompanyRiyadh() {
             <strong className="text-gold">المعاينة</strong> ثم تحديد البنود
             والمستوى (تجاري/قياسي/فاخر)، وبعدها خطة تنفيذ بمراحل استلام واضحة.
           </p>
+
+          <p>
+  ولتعزيز الشفافية وحفظ الحقوق، نعتمد{" "}
+  <Link
+    to="/project-tracking-system-riyadh"
+    className="text-gold font-bold hover:underline"
+  >
+    نظام متابعة رقمي احترافي
+  </Link>{" "}
+  يمكّن العميل من متابعة نسبة الإنجاز، مراجعة الدفعات، تحميل الوثائق، والاطلاع
+  على التحديثات بالصور ضمن حساب خاص — بحيث تكون الصورة واضحة في كل مرحلة من
+  مراحل التنفيذ.
+</p>
 
           <p>
             خدماتنا تغطي مشاريع سكنية وتجارية داخل الرياض:{" "}

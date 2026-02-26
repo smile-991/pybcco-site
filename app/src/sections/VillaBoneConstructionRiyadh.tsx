@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import SeoHead from "@/components/SeoHead";
+import { Link } from "react-router-dom"
 
 const BONE_FAQS = [
   {
@@ -151,6 +152,27 @@ export default function VillaBoneConstructionRiyadh() {
           ))}
         </div>
       </section>
+
+      {/* PROJECT TRACKING SYSTEM LINK */}
+<section className="container mx-auto px-4 pb-10 text-right max-w-5xl">
+  <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+    <h2 className="text-xl sm:text-2xl font-bold text-gold">
+      ميزة إضافية: نظام متابعة رقمي كامل لمشروعك
+    </h2>
+
+    <p className="mt-4 text-white/80 leading-relaxed">
+      في PYBCCO جميع مشاريعنا تُدار عبر{" "}
+      <Link
+        to="/project-tracking-system-riyadh"
+        className="text-gold font-bold hover:underline"
+      >
+        نظام متابعة رقمي احترافي
+      </Link>{" "}
+      يضمن الشفافية الكاملة في كل مرحلة من مراحل التنفيذ، مع توثيق الدفعات والعقود
+      والتحديثات بالصور ضمن حساب العميل.
+    </p>
+  </div>
+</section>
 
       {/* FAQ VISIBLE */}
       <section className="container mx-auto px-4 pb-14 text-right max-w-4xl">

@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import SeoHead from "@/components/SeoHead";
+import { Link } from "react-router-dom";
 
 const SITE = "https://www.pybcco.com";
 
@@ -212,13 +213,25 @@ export default function ApartmentFinishingRiyadh() {
           <p>
             إذا كانت شقتك تحتاج تجديد بعد سكن أو تعديل كامل، قد يناسبك أيضاً صفحة{" "}
             <a
-              href="/villa-renovation-riyadh"
-              className="text-gold font-bold hover:underline"
-            >
-              الترميم والتجديد
-            </a>{" "}
+  href="/home-renovation-company-riyadh"
+  className="text-gold font-bold hover:underline"
+>
+  الترميم والتجديد
+</a>{" "}
             (نفس المنهجية لكن نطاق مختلف).
           </p>
+
+<p>
+  ولتعزيز الشفافية وحفظ الحقوق أثناء التنفيذ، نعتمد{" "}
+  <Link
+    to="/project-tracking-system-riyadh"
+    className="text-gold font-bold hover:underline"
+  >
+    نظام متابعة رقمي احترافي
+  </Link>{" "}
+  يمكّن العميل من متابعة نسبة الإنجاز، مراجعة الدفعات، تحميل الملفات، والاطلاع
+  على تحديثات العمل بالصور ضمن حساب خاص.
+</p>
 
           <p>
             ولأخذ تصور مبدئي لتكلفة مشروعك، يمكنك استخدام{" "}
