@@ -61,6 +61,11 @@ async function safeJson(res: Response) {
   }
 }
 
+const clamp01to100 = (n: number) => {
+  if (Number.isNaN(n)) return 0
+  return Math.max(0, Math.min(100, n))
+}
+
 export default function AdminPage() {
   const [authorized, setAuthorized] = useState<boolean | null>(null)
   const [password, setPassword] = useState("")
@@ -643,7 +648,17 @@ function AddPayment({ projectId, onAdded }: { projectId: string; onAdded: () => 
 function ProjectCard({ project }: { project: ProjectRow }) {
   const [tab, setTab] = useState<"overview" | "payments" | "documents" | "updates">("overview")
 
-  // ✅ NEW: unified details states
+  // ✅ NEW: progress edit states (as requested)
+  const [progressEdit, setProgressEdit] = useState<number>(Number(project.progress_percent || 0))
+  const [savingProgress, setSavingProgress] = useState(false)
+  const [progressMsg, setProgressMsg] = useState("")
+
+  // ✅ sync if project changes / refresh
+  useEffect(() => {
+    setProgressEdit(Number(project.progress_percent || 0))
+  }, [project.id, project.progress_percent])
+
+  // ✅ unified details states
   const [payments, setPayments] = useState<PaymentRow[]>([])
   const [documents, setDocuments] = useState<DocumentRow[]>([])
   const [updates, setUpdates] = useState<UpdateRow[]>([])
@@ -685,6 +700,37 @@ function ProjectCard({ project }: { project: ProjectRow }) {
     }
   }
 
+  // ✅ NEW: function to update progress (as requested)
+  const saveProgress = async () => {
+    setProgressMsg("")
+    setSavingProgress(true)
+    try {
+      const res = await fetch("/api/update-project-progress", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          project_id: project.id,
+          progress_percent: clamp01to100(progressEdit),
+        }),
+      })
+
+      const data = await safeJson(res)
+      if (!res.ok) {
+        setProgressMsg(data?.error || "Failed to update progress")
+        return
+      }
+
+      setProgressMsg("Progress updated ✅")
+      // ملاحظة: التحديث الفعلي على الكارد يحتاج refresh عام من الأب
+      // أو نقل onProjectChanged - إذا بدك “الصح” خبرني.
+    } catch {
+      setProgressMsg("Network error")
+    } finally {
+      setSavingProgress(false)
+    }
+  }
+
   // ✅ load details when needed based on tab
   useEffect(() => {
     if (tab === "payments" || tab === "documents" || tab === "updates") {
@@ -707,7 +753,9 @@ function ProjectCard({ project }: { project: ProjectRow }) {
           <p className="text-sm text-gray-500">{project.address || "—"}</p>
         </div>
 
-        <span className="text-xs bg-gray-100 px-3 py-1 rounded-full">{project.status || "active"}</span>
+        <span className="text-xs bg-gray-100 px-3 py-1 rounded-full">
+          {project.status || "active"}
+        </span>
       </div>
 
       {/* Tabs */}
@@ -748,6 +796,41 @@ function ProjectCard({ project }: { project: ProjectRow }) {
             Progress: <b>{project.progress_percent || 0}%</b>
           </div>
 
+          {/* ✅ NEW UI: edit + slider + save */}
+          <div className="mt-3 border-t pt-3">
+            <div className="flex items-center gap-3 flex-wrap">
+              <label className="text-sm text-gray-700">Progress %</label>
+
+              <input
+                type="number"
+                min={0}
+                max={100}
+                value={progressEdit}
+                onChange={(e) => setProgressEdit(clamp01to100(Number(e.target.value)))}
+                className="w-24 border rounded-lg px-3 py-2 text-sm"
+              />
+
+              <input
+                type="range"
+                min={0}
+                max={100}
+                value={progressEdit}
+                onChange={(e) => setProgressEdit(clamp01to100(Number(e.target.value)))}
+                className="w-56"
+              />
+
+              <button
+                onClick={saveProgress}
+                disabled={savingProgress}
+                className="px-4 py-2 rounded-lg bg-black text-white text-sm disabled:opacity-60"
+              >
+                {savingProgress ? "Saving..." : "Save"}
+              </button>
+            </div>
+
+            {progressMsg && <div className="text-xs mt-2 text-gray-600">{progressMsg}</div>}
+          </div>
+
           <div>
             Total: <b>{project.total_amount || 0} SAR</b>
           </div>
@@ -758,7 +841,9 @@ function ProjectCard({ project }: { project: ProjectRow }) {
 
           <div>
             Remaining:{" "}
-            <b className={remaining > 0 ? "text-red-600" : "text-green-600"}>{remaining} SAR</b>
+            <b className={remaining > 0 ? "text-red-600" : "text-green-600"}>
+              {remaining} SAR
+            </b>
           </div>
         </div>
       )}
@@ -774,10 +859,7 @@ function ProjectCard({ project }: { project: ProjectRow }) {
           {payments.length > 0 && (
             <div className="mt-4 space-y-2">
               {payments.map((p) => (
-                <div
-                  key={p.id}
-                  className="border rounded-lg p-3 text-sm flex justify-between"
-                >
+                <div key={p.id} className="border rounded-lg p-3 text-sm flex justify-between">
                   <div>
                     <div>{p.date || "—"}</div>
                     <div className="text-gray-500 text-xs">
