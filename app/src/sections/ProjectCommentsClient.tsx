@@ -23,6 +23,10 @@ function formatDate(ts: string) {
   }
 }
 
+function getStoredToken() {
+  return (localStorage.getItem("pybcco_client_token") || "").trim()
+}
+
 export default function ProjectCommentsClient({
   projectId,
   clientToken,
@@ -42,28 +46,53 @@ export default function ProjectCommentsClient({
     setError("جلسة الدخول انتهت. رجاءً سجّل خروج ثم ادخل مرة أخرى.")
   }
 
-  async function load() {
+  async function refreshTokenFromSession(): Promise<string> {
+    try {
+      const res = await fetch("/api/client-session", {
+        method: "GET",
+        credentials: "include",
+      })
+      if (!res.ok) return ""
+      const json = await res.json().catch(() => null)
+      const t = String(json?.client_token || json?.access_token || "").trim()
+      if (t) localStorage.setItem("pybcco_client_token", t)
+      return t
+    } catch {
+      return ""
+    }
+  }
+
+  function buildHeaders(token: string) {
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    }
+    if (token) headers["x-client-token"] = token
+    return headers
+  }
+
+  async function load(allowRetry = true) {
     if (!projectId) return
 
     setLoading(true)
     setError("")
+
+    // ✅ خذ التوكن من props أو من localStorage
+    let token = (clientToken || "").trim() || getStoredToken()
+
     try {
-      const headers: Record<string, string> = {
-        "Content-Type": "application/json",
-      }
-
-      const token = (clientToken || "").trim()
-      if (token) headers["x-client-token"] = token
-
       const res = await fetch("/api/get-project-comments", {
         method: "POST",
-        credentials: "include", // ✅ مهم جداً (حتى يروح Cookie)
-        headers,
+        credentials: "include",
+        headers: buildHeaders(token),
         body: JSON.stringify({ project_id: projectId }),
       })
 
-      // ✅ إذا السيرفر قال غير مصرح
-      if (res.status === 401 || res.status === 403) {
+      // ✅ إذا رجع 401/403: جرّب تجيب توكن من session وأعد المحاولة مرة واحدة
+      if ((res.status === 401 || res.status === 403) && allowRetry) {
+        const newToken = await refreshTokenFromSession()
+        if (newToken) return await load(false)
+
+        // إذا ما قدرنا نجيب توكن
         setItems([])
         sessionExpired()
         return
@@ -85,32 +114,31 @@ export default function ProjectCommentsClient({
     }
   }
 
-  async function send() {
+  async function send(allowRetry = true) {
     if (!canSend) return
     if (!projectId) return
 
     setSending(true)
     setError("")
+
+    let token = (clientToken || "").trim() || getStoredToken()
+
     try {
-      const headers: Record<string, string> = {
-        "Content-Type": "application/json",
-      }
-
-      const token = (clientToken || "").trim()
-      if (token) headers["x-client-token"] = token
-
       const res = await fetch("/api/post-client-comment", {
         method: "POST",
-        credentials: "include", // ✅ مهم جداً (حتى يروح Cookie)
-        headers,
+        credentials: "include",
+        headers: buildHeaders(token),
         body: JSON.stringify({
           project_id: projectId,
           message: message.trim(),
         }),
       })
 
-      // ✅ إذا السيرفر قال غير مصرح
-      if (res.status === 401 || res.status === 403) {
+      // ✅ إذا رجع 401/403: جرّب تجيب توكن من session وأعد المحاولة مرة واحدة
+      if ((res.status === 401 || res.status === 403) && allowRetry) {
+        const newToken = await refreshTokenFromSession()
+        if (newToken) return await send(false)
+
         sessionExpired()
         return
       }
@@ -142,7 +170,7 @@ export default function ProjectCommentsClient({
       <div className="mb-3 flex items-center justify-between">
         <div className="text-sm font-semibold">💬 تعليقات على المشروع</div>
         <button
-          onClick={load}
+          onClick={() => load()}
           className="text-xs rounded-lg border px-3 py-1 hover:bg-gray-50"
           disabled={loading}
           type="button"
@@ -201,7 +229,7 @@ export default function ProjectCommentsClient({
           className="min-h-[42px] w-full resize-none rounded-xl border p-2 text-sm outline-none focus:ring-2 focus:ring-yellow-200"
         />
         <button
-          onClick={send}
+          onClick={() => send()}
           disabled={!canSend || sending}
           className="rounded-xl bg-yellow-500 px-4 text-sm font-semibold text-black hover:bg-yellow-600 disabled:opacity-50"
           type="button"
