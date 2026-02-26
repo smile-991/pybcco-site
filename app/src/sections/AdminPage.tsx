@@ -667,6 +667,119 @@ function AddPayment({ projectId, onAdded }: { projectId: string; onAdded: () => 
   )
 }
 
+/** ✅ DocumentUploader Component (Upload to storage + create document row) */
+function DocumentUploader({
+  projectId,
+  type,
+  label,
+  onAdded,
+}: {
+  projectId: string
+  type: "contract" | "invoices" | "receipts" | "offers" | "other"
+  label: string
+  onAdded: () => void
+}) {
+  const [title, setTitle] = useState("")
+  const [file, setFile] = useState<File | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [msg, setMsg] = useState("")
+
+  const safeJsonLocal = async (res: Response) => {
+    const t = await res.text()
+    if (!t) return null
+    try {
+      return JSON.parse(t)
+    } catch {
+      return null
+    }
+  }
+
+  const handleUpload = async () => {
+    setMsg("")
+    if (!file) {
+      setMsg("اختر ملف أولاً")
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      // 1) Upload to storage
+      const fd = new FormData()
+      fd.append("file", file)
+
+      const up = await fetch("/api/upload-files", {
+        method: "POST",
+        body: fd,
+      })
+
+      const upJson = await safeJsonLocal(up)
+
+      if (!up.ok || !upJson?.url) {
+        throw new Error(upJson?.error || "Upload failed")
+      }
+
+      // 2) Create document row
+      const ins = await fetch("/api/create-document", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          project_id: projectId,
+          title: title.trim() || label,
+          type, // ✅ ثابت حسب القسم
+          file_url: upJson.url,
+        }),
+      })
+
+      const insJson = await safeJsonLocal(ins)
+
+      if (!ins.ok) {
+        throw new Error(insJson?.error || "Insert failed")
+      }
+
+      setMsg("تم الرفع ✅")
+      setTitle("")
+      setFile(null)
+      onAdded()
+    } catch (e: any) {
+      setMsg(e?.message || "Error")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="border rounded-lg p-4 bg-white">
+      <div className="font-semibold mb-2">{label}</div>
+
+      <div className="flex flex-col md:flex-row gap-2">
+        <input
+          className="border rounded px-3 py-2 text-sm"
+          placeholder="عنوان (اختياري)"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+
+        <input
+          type="file"
+          className="border rounded px-3 py-2 text-sm"
+          onChange={(e) => setFile(e.target.files?.[0] || null)}
+        />
+
+        <button
+          onClick={handleUpload}
+          disabled={loading}
+          className="bg-yellow-400 hover:bg-yellow-500 text-sm font-semibold px-4 py-2 rounded disabled:opacity-50"
+        >
+          {loading ? "Uploading..." : "Upload"}
+        </button>
+      </div>
+
+      {msg && <div className="text-xs mt-2 text-gray-700">{msg}</div>}
+    </div>
+  )
+}
+
 /** ✅ ProjectCard */
 function ProjectCard({ project }: { project: ProjectRow }) {
   const [tab, setTab] = useState<"overview" | "payments" | "documents" | "updates">("overview")
@@ -683,7 +796,7 @@ function ProjectCard({ project }: { project: ProjectRow }) {
 
   // ✅ unified details states
   const [payments, setPayments] = useState<PaymentRow[]>([])
-  const [documents, setDocuments] = useState<DocumentRow[]>([])
+  const [_documents, setDocuments] = useState<DocumentRow[]>([])
   const [updates, setUpdates] = useState<UpdateRow[]>([])
   const [updatePhotos, setUpdatePhotos] = useState<UpdatePhotoRow[]>([])
   const [loadingDetails, setLoadingDetails] = useState(false)
@@ -1047,35 +1160,46 @@ function ProjectCard({ project }: { project: ProjectRow }) {
       )}
 
       {/* DOCUMENTS */}
-      {tab === "documents" && (
-        <div className="mt-4">
-          <AddDocument projectId={project.id} onAdded={loadDetails} />
+{tab === "documents" && (
+  <div className="space-y-6">
 
-          {loadingDetails && <div className="text-sm text-gray-500 mt-3">Loading documents...</div>}
+    <DocumentUploader
+      projectId={project.id}
+      type="contract"
+      label="Contract"
+      onAdded={loadDetails}
+    />
 
-          {!loadingDetails && documents.length === 0 && (
-            <div className="text-sm text-gray-500 mt-3">No documents yet.</div>
-          )}
+    <DocumentUploader
+      projectId={project.id}
+      type="invoices"
+      label="Invoices"
+      onAdded={loadDetails}
+    />
 
-          {documents.length > 0 && (
-            <div className="mt-4 space-y-2">
-              {documents.map((d) => (
-                <a
-                  key={d.id}
-                  href={d.file_url || "#"}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="block border rounded-lg p-3 text-sm hover:bg-gray-50"
-                >
-                  <div className="font-semibold">{d.title || "Document"}</div>
-                  <div className="text-xs text-gray-500 mt-1">{d.created_at || ""}</div>
-                </a>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
+    <DocumentUploader
+      projectId={project.id}
+      type="receipts"
+      label="Receipts"
+      onAdded={loadDetails}
+    />
 
+    <DocumentUploader
+      projectId={project.id}
+      type="offers"
+      label="Offers"
+      onAdded={loadDetails}
+    />
+
+    <DocumentUploader
+      projectId={project.id}
+      type="other"
+      label="Other"
+      onAdded={loadDetails}
+    />
+
+  </div>
+)}
       {/* UPDATES */}
       {tab === "updates" && (
         <div className="mt-4">
@@ -1127,108 +1251,6 @@ function ProjectCard({ project }: { project: ProjectRow }) {
           )}
         </div>
       )}
-    </div>
-  )
-}
-
-/** ✅ AddDocument */
-function AddDocument({
-  projectId,
-  onAdded,
-}: {
-  projectId: string
-  onAdded?: () => void
-}) {
-  const [title, setTitle] = useState("")
-  const [file, setFile] = useState<File | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [msg, setMsg] = useState("")
-
-  const handleUpload = async () => {
-    setMsg("")
-    if (!file || !title.trim()) {
-      setMsg("Title and file required")
-      return
-    }
-
-    setLoading(true)
-
-    try {
-      const formData = new FormData()
-      formData.append("file", file)
-      formData.append("project_id", projectId)
-      formData.append("type", "document")
-
-      const uploadRes = await fetch("/api/upload-file", {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      })
-
-      const uploadData = await safeJson(uploadRes)
-
-      if (!uploadRes.ok || !uploadData?.url) {
-        setMsg(uploadData?.error || "Upload failed")
-        return
-      }
-
-      const saveRes = await fetch("/api/create-document", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          project_id: projectId,
-          title: title.trim(),
-          file_url: uploadData.url,
-        }),
-      })
-
-      const saveData = await safeJson(saveRes)
-
-      if (!saveRes.ok) {
-        setMsg(saveData?.error || "Save failed")
-        return
-      }
-
-      setTitle("")
-      setFile(null)
-      setMsg("Document uploaded ✅")
-      onAdded?.()
-    } catch {
-      setMsg("Network error")
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  return (
-    <div className="mt-4 border-t pt-4">
-      <h4 className="font-semibold text-sm mb-2">Add Document</h4>
-
-      <div className="grid md:grid-cols-3 gap-2">
-        <input
-          className="border rounded px-3 py-2 text-sm"
-          placeholder="Document Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-
-        <input
-          type="file"
-          className="border rounded px-3 py-2 text-sm"
-          onChange={(e) => setFile(e.target.files?.[0] || null)}
-        />
-
-        <button
-          onClick={handleUpload}
-          disabled={loading}
-          className="bg-blue-600 text-white rounded px-3 py-2 text-sm hover:bg-blue-700 disabled:opacity-60"
-        >
-          {loading ? "Uploading..." : "Upload"}
-        </button>
-      </div>
-
-      {msg && <p className="text-xs mt-2 text-gray-700">{msg}</p>}
     </div>
   )
 }
