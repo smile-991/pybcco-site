@@ -1,64 +1,112 @@
-export const onRequestPost = async (context: any) => {
+export const onRequest = async (context: any) => {
+  const { request, env } = context
+
+  const corsHeaders: Record<string, string> = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "POST,OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Content-Type": "application/json",
+  }
+
+  if (request.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: corsHeaders })
+  }
+
+  if (request.method !== "POST") {
+    return new Response(JSON.stringify({ error: "Method Not Allowed" }), {
+      status: 405,
+      headers: corsHeaders,
+    })
+  }
+
   try {
-    const { request, env } = context
+    // ✅ Cloudflare يدعم request.formData()
+    const form = await request.formData()
 
-    // تحقق من جلسة الأدمن
-    const cookie = request.headers.get("cookie") || ""
-    if (!cookie.includes("pybcco_admin=1")) {
-      return new Response("Unauthorized", { status: 401 })
+    const file = form.get("file") as File | null
+    const folder = String(form.get("folder") || "").trim() // مثال: "documents" أو "updates"
+    const projectId = String(form.get("project_id") || "").trim()
+    const kind = String(form.get("kind") || "").trim() // "document" | "update_photo" (اختياري)
+
+    if (!file) {
+      return new Response(JSON.stringify({ error: "No file provided (field name must be: file)" }), {
+        status: 400,
+        headers: corsHeaders,
+      })
     }
 
-    const formData = await request.formData()
-
-    const file = formData.get("file") as File
-    const projectId = formData.get("project_id") as string
-    const type = formData.get("type") as string // "document" | "update-photo"
-
-    if (!file || !projectId || !type) {
-      return new Response("Missing fields", { status: 400 })
+    // ✅ اختياري: إذا بدك تلزم project_id
+    if (!projectId) {
+      return new Response(JSON.stringify({ error: "project_id is required" }), {
+        status: 400,
+        headers: corsHeaders,
+      })
     }
 
-    const SUPABASE_URL = env.SUPABASE_URL
-    const SERVICE_KEY = env.SUPABASE_SERVICE_ROLE_KEY
+    const BUCKET = "project-files" // 🔴 غيّرها إذا Bucket عندك اسمها مختلف في Supabase Storage
 
-    // إنشاء اسم عشوائي للملف
-    const ext = file.name.split(".").pop()
-    const fileName = crypto.randomUUID() + "." + ext
+    const ext = (() => {
+      const n = file.name || "file"
+      const i = n.lastIndexOf(".")
+      return i >= 0 ? n.slice(i).toLowerCase() : ""
+    })()
 
-    let path = ""
+    const safeExt = ext && ext.length <= 10 ? ext : ""
+    const ts = Date.now()
+    const rand = Math.random().toString(16).slice(2)
 
-    if (type === "document") {
-      path = `projects/${projectId}/docs/${fileName}`
-    } else if (type === "update-photo") {
-      path = `projects/${projectId}/updates/${fileName}`
-    } else {
-      return new Response("Invalid type", { status: 400 })
-    }
+    // مسار التخزين داخل الباكت
+    const pathParts = [
+      "projects",
+      projectId,
+      folder || (kind === "update_photo" ? "updates" : "documents"),
+      `${ts}-${rand}${safeExt}`,
+    ]
+    const objectPath = pathParts.filter(Boolean).join("/")
 
-    const uploadRes = await fetch(
-      `${SUPABASE_URL}/storage/v1/object/portal/${path}`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${SERVICE_KEY}`,
-          "Content-Type": file.type
-        },
-        body: file
-      }
-    )
+    // ✅ رفع الملف على Supabase Storage
+    const uploadUrl = `${env.SUPABASE_URL}/storage/v1/object/${BUCKET}/${objectPath}`
 
-    if (!uploadRes.ok) {
-      const errText = await uploadRes.text()
-      return new Response(errText, { status: 500 })
-    }
-
-    const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/portal/${path}`
-
-    return new Response(JSON.stringify({ url: publicUrl }), {
-      headers: { "Content-Type": "application/json" }
+    const upRes = await fetch(uploadUrl, {
+      method: "POST",
+      headers: {
+        apikey: env.SUPABASE_SERVICE_ROLE_KEY,
+        Authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}`,
+        "Content-Type": file.type || "application/octet-stream",
+        "x-upsert": "true",
+      },
+      body: await file.arrayBuffer(),
     })
 
-  } catch (err: any) {
-    return new Response(err.message, { status: 500 })
+    const upText = await upRes.text()
+    if (!upRes.ok) {
+      return new Response(
+        JSON.stringify({
+          error: "Upload failed",
+          status: upRes.status,
+          details: upText,
+          uploadUrl,
+        }),
+        { status: 500, headers: corsHeaders }
+      )
+    }
+
+    // ✅ توليد Public URL
+    // لازم الباكت تكون Public أو تستخدم Signed URL (لكن خلّينا Public لأنه أسهل للبوابة)
+    const publicUrl = `${env.SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${objectPath}`
+
+    return new Response(
+      JSON.stringify({
+        ok: true,
+        path: objectPath,
+        url: publicUrl,
+      }),
+      { status: 200, headers: corsHeaders }
+    )
+  } catch (e: any) {
+    return new Response(
+      JSON.stringify({ error: "Internal Server Error", message: e?.message || String(e) }),
+      { status: 500, headers: corsHeaders }
+    )
   }
 }
