@@ -1,106 +1,104 @@
-export async function onRequestPost(context: any) {
-  const { request, env } = context;
+export async function onRequestOptions() {
+  // عادةً مش ضروري بنفس الدومين، بس منخليه آمن لأي preflight
+  return new Response(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "PATCH,POST,OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+  })
+}
+
+// ✅ نخلي نفس اللوجيك يشتغل للـ PATCH و POST
+export const onRequestPatch = (context: any) => handle(context)
+export const onRequestPost = (context: any) => handle(context)
+
+async function handle(context: any) {
+  const { request, env } = context
 
   try {
-    // ✅ 1) Check Admin Session Cookie
-    const cookie = request.headers.get("cookie") || "";
-
+    // ✅ حماية الأدمن (نفس منطق ملفات create-update / create-project ...)
+    const cookie = request.headers.get("cookie") || ""
     if (!cookie.includes("pybcco_admin=1")) {
-      return new Response(
-        JSON.stringify({ error: "Unauthorized" }),
-        { status: 401 }
-      );
+      return json({ error: "Unauthorized" }, 401)
     }
 
-    // ✅ 2) Parse Body
-    let body: any = null;
-
-    try {
-      body = await request.json();
-    } catch {
-      return new Response(
-        JSON.stringify({ error: "Invalid JSON body" }),
-        { status: 400 }
-      );
-    }
-
-    const project_id = body?.project_id;
-    const progress_raw = body?.progress_percent;
+    // ✅ Body
+    const body = await request.json().catch(() => null)
+    const project_id = body?.project_id || body?.id
+    const progress_percent_raw = body?.progress_percent
 
     if (!project_id) {
-      return new Response(
-        JSON.stringify({ error: "project_id required" }),
-        { status: 400 }
-      );
+      return json({ error: "project_id required" }, 400)
     }
 
-    // ✅ 3) Normalize Progress 0–100
-    const progress_percent = Math.max(
-      0,
-      Math.min(100, Math.round(Number(progress_raw)))
-    );
+    // ✅ sanitize progress
+    let progress = Number(progress_percent_raw)
+    if (!Number.isFinite(progress)) progress = 0
+    progress = Math.max(0, Math.min(100, Math.round(progress)))
 
-    if (Number.isNaN(progress_percent)) {
-      return new Response(
-        JSON.stringify({ error: "progress_percent must be number" }),
-        { status: 400 }
-      );
-    }
-
-    // ✅ 4) Update Supabase (Service Role Required)
-    const supaRes = await fetch(
+    // ✅ Supabase REST update
+    const res = await fetch(
       `${env.SUPABASE_URL}/rest/v1/projects?id=eq.${encodeURIComponent(project_id)}`,
       {
         method: "PATCH",
         headers: {
-          "Content-Type": "application/json",
           apikey: env.SUPABASE_SERVICE_ROLE_KEY,
           Authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}`,
+          "Content-Type": "application/json",
           Prefer: "return=representation",
         },
-        body: JSON.stringify({ progress_percent }),
-      }
-    );
-
-    const text = await supaRes.text();
-    let data: any = null;
-
-    try {
-      data = text ? JSON.parse(text) : null;
-    } catch {
-      data = text;
-    }
-
-    if (!supaRes.ok) {
-      return new Response(
-        JSON.stringify({
-          error: "Supabase update failed",
-          status: supaRes.status,
-          details: data,
+        body: JSON.stringify({
+          progress_percent: progress,
+          updated_at: new Date().toISOString(),
         }),
-        { status: 500 }
-      );
+      }
+    )
+
+    const text = await res.text()
+    let data: any = null
+    try {
+      data = text ? JSON.parse(text) : null
+    } catch {
+      data = text
     }
 
-    return new Response(
-      JSON.stringify({
-        success: true,
-        progress_percent,
-        data,
-      }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    if (!res.ok) {
+      return json(
+        {
+          error: "Failed to update progress",
+          status: res.status,
+          details: data,
+        },
+        500
+      )
+    }
 
+    // Supabase بيرجع array
+    const updated = Array.isArray(data) ? data[0] : data
+
+    return json(
+      {
+        ok: true,
+        project_id,
+        progress_percent: progress,
+        project: updated || null,
+      },
+      200
+    )
   } catch (err: any) {
-    return new Response(
-      JSON.stringify({
-        error: "Server error",
-        details: err?.message || err,
-      }),
-      { status: 500 }
-    );
+    return json({ error: err?.message || "Server error" }, 500)
   }
+}
+
+function json(payload: any, status = 200) {
+  return new Response(JSON.stringify(payload), {
+    status,
+    headers: {
+      "Content-Type": "application/json",
+      // إذا بدك تضل strict نفس الدومين، فيك تشيل CORS headers
+      "Access-Control-Allow-Origin": "*",
+    },
+  })
 }
