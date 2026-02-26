@@ -38,29 +38,37 @@ export default function ProjectCommentsClient({
 
   const canSend = useMemo(() => message.trim().length >= 2, [message])
 
-  function requireToken() {
-    if (!clientToken?.trim()) {
-      setError("جلسة الدخول انتهت. رجاءً سجّل خروج ثم ادخل مرة أخرى.")
-      return false
-    }
-    return true
+  function sessionExpired() {
+    setError("جلسة الدخول انتهت. رجاءً سجّل خروج ثم ادخل مرة أخرى.")
   }
 
   async function load() {
     if (!projectId) return
-    if (!requireToken()) return
 
     setLoading(true)
     setError("")
     try {
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      }
+
+      const token = (clientToken || "").trim()
+      if (token) headers["x-client-token"] = token
+
       const res = await fetch("/api/get-project-comments", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-client-token": clientToken,
-        },
+        credentials: "include", // ✅ مهم جداً (حتى يروح Cookie)
+        headers,
         body: JSON.stringify({ project_id: projectId }),
       })
+
+      // ✅ إذا السيرفر قال غير مصرح
+      if (res.status === 401 || res.status === 403) {
+        setItems([])
+        sessionExpired()
+        return
+      }
+
       const json = await res.json().catch(() => null)
 
       if (!res.ok) {
@@ -79,23 +87,34 @@ export default function ProjectCommentsClient({
 
   async function send() {
     if (!canSend) return
-    if (!requireToken()) return
+    if (!projectId) return
 
     setSending(true)
     setError("")
     try {
-      // ✅ endpoint الصحيح (مفرد)
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      }
+
+      const token = (clientToken || "").trim()
+      if (token) headers["x-client-token"] = token
+
       const res = await fetch("/api/post-client-comment", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-client-token": clientToken,
-        },
+        credentials: "include", // ✅ مهم جداً (حتى يروح Cookie)
+        headers,
         body: JSON.stringify({
           project_id: projectId,
           message: message.trim(),
         }),
       })
+
+      // ✅ إذا السيرفر قال غير مصرح
+      if (res.status === 401 || res.status === 403) {
+        sessionExpired()
+        return
+      }
+
       const json = await res.json().catch(() => null)
 
       if (!res.ok) {
@@ -114,9 +133,9 @@ export default function ProjectCommentsClient({
   }
 
   useEffect(() => {
-    if (projectId && clientToken) load()
+    if (projectId) load()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [projectId, clientToken])
+  }, [projectId])
 
   return (
     <div className="mt-4 rounded-2xl border bg-white p-4 shadow-sm">
