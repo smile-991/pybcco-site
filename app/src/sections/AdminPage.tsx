@@ -1162,97 +1162,174 @@ function ProjectCard({ project }: { project: ProjectRow }) {
       {/* DOCUMENTS */}
 {tab === "documents" && (
   <div className="space-y-6">
+    {/* Uploaders */}
+    <div className="space-y-4">
+      <DocumentUploader projectId={project.id} type="contract" label="Contract" onAdded={loadDetails} />
+      <DocumentUploader projectId={project.id} type="invoices" label="Invoices" onAdded={loadDetails} />
+      <DocumentUploader projectId={project.id} type="receipts" label="Receipts" onAdded={loadDetails} />
+      <DocumentUploader projectId={project.id} type="offers" label="Offers" onAdded={loadDetails} />
+      <DocumentUploader projectId={project.id} type="other" label="Other" onAdded={loadDetails} />
+    </div>
 
-    <DocumentUploader
-      projectId={project.id}
-      type="contract"
-      label="Contract"
-      onAdded={loadDetails}
-    />
+    {/* Loading */}
+    {loadingDetails && (
+      <div className="text-sm text-gray-500">Loading documents...</div>
+    )}
 
-    <DocumentUploader
-      projectId={project.id}
-      type="invoices"
-      label="Invoices"
-      onAdded={loadDetails}
-    />
+    {/* Lists grouped by type */}
+    {!loadingDetails && (
+      <div className="grid md:grid-cols-2 gap-4">
+        {(["contract", "invoices", "receipts", "offers", "other"] as const).map((t) => {
+          const labelMap: Record<string, string> = {
+            contract: "Contract",
+            invoices: "Invoices",
+            receipts: "Receipts",
+            offers: "Offers",
+            other: "Other",
+          }
 
-    <DocumentUploader
-      projectId={project.id}
-      type="receipts"
-      label="Receipts"
-      onAdded={loadDetails}
-    />
+          const items = (_documents || []).filter((d: any) => (d.type || "other") === t)
 
-    <DocumentUploader
-      projectId={project.id}
-      type="offers"
-      label="Offers"
-      onAdded={loadDetails}
-    />
+          return (
+            <div key={t} className="border rounded-xl p-4 bg-white">
+              <div className="font-semibold mb-3">{labelMap[t]}</div>
 
-    <DocumentUploader
-      projectId={project.id}
-      type="other"
-      label="Other"
-      onAdded={loadDetails}
-    />
+              {items.length === 0 ? (
+                <div className="text-sm text-gray-500">No files yet.</div>
+              ) : (
+                <div className="space-y-2">
+                  {items.map((d: any) => (
+                    <div
+                      key={d.id}
+                      className="border rounded-lg p-3 flex items-start justify-between gap-3"
+                    >
+                      <div className="min-w-0">
+                        <a
+                          href={d.file_url || "#"}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="font-semibold underline break-words"
+                        >
+                          {d.title || "Document"}
+                        </a>
+                        <div className="text-xs text-gray-500 mt-1">
+                          {d.uploaded_at || d.created_at || ""}
+                        </div>
+                      </div>
 
+                      <button
+                        onClick={async () => {
+                          if (!confirm("Delete this file?")) return
+
+                          const res = await fetch("/api/delete-document", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            credentials: "include",
+                            body: JSON.stringify({ id: d.id, delete_storage: true }),
+                          })
+
+                          const j = await safeJson(res)
+                          if (!res.ok) {
+                            alert(j?.error || "Delete failed")
+                            return
+                          }
+
+                          loadDetails()
+                        }}
+                        className="text-red-600 text-xs font-semibold hover:underline shrink-0"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )
+        })}
+      </div>
+    )}
   </div>
 )}
-      {/* UPDATES */}
-      {tab === "updates" && (
-        <div className="mt-4">
-          <AddUpdate projectId={project.id} onAdded={loadDetails} />
+{/* UPDATES */}
+{tab === "updates" && (
+  <div className="mt-4">
+    <AddUpdate projectId={project.id} onAdded={loadDetails} />
 
-          {loadingDetails && <div className="text-sm text-gray-500 mt-3">Loading updates...</div>}
+    {loadingDetails && <div className="text-sm text-gray-500 mt-3">Loading updates...</div>}
 
-          {!loadingDetails && updates.length === 0 && (
-            <div className="text-sm text-gray-500 mt-3">No updates yet.</div>
-          )}
+    {!loadingDetails && updates.length === 0 && (
+      <div className="text-sm text-gray-500 mt-3">No updates yet.</div>
+    )}
 
-          {updates.length > 0 && (
-            <div className="mt-4 space-y-3">
-              {updates.map((u) => {
-                const photos = updatePhotos.filter((p) => p.update_id === u.id)
+    {updates.length > 0 && (
+      <div className="mt-4 space-y-3">
+        {updates.map((u) => {
+          const photos = updatePhotos.filter((p) => p.update_id === u.id)
 
-                return (
-                  <div key={u.id} className="border rounded-lg p-3">
-                    <div className="font-semibold text-sm">{u.title || "Update"}</div>
+          return (
+            <div key={u.id} className="border rounded-lg p-3">
+              <div className="font-semibold text-sm">{u.title || "Update"}</div>
 
-                    {u.note && <div className="text-sm text-gray-600 mt-1">{u.note}</div>}
+              {u.note && <div className="text-sm text-gray-600 mt-1">{u.note}</div>}
 
-                    <div className="text-xs text-gray-400 mt-2">{u.created_at || ""}</div>
+              <div className="text-xs text-gray-400 mt-2">{u.created_at || ""}</div>
 
-                    {photos.length > 0 && (
-                      <div className="grid grid-cols-2 gap-2 mt-3">
-                        {photos.map((ph) => (
-                          <a
-                            key={ph.id}
-                            href={ph.photo_url || "#"}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="block"
-                          >
-                            <img
-                              src={ph.photo_url || ""}
-                              alt="update"
-                              className="w-full h-32 object-cover rounded"
-                              loading="lazy"
-                            />
-                          </a>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )
-              })}
+              {photos.length > 0 && (
+                <div className="grid grid-cols-2 gap-2 mt-3">
+                  {photos.map((ph) => (
+                    <div key={ph.id} className="border rounded-lg p-2">
+                      <a
+                        href={ph.photo_url || "#"}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="block"
+                      >
+                        <img
+                          src={ph.photo_url || ""}
+                          alt="update"
+                          className="w-full h-32 object-cover rounded"
+                          loading="lazy"
+                        />
+                      </a>
+
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          if (!confirm("Delete this photo?")) return
+
+                          const res = await fetch("/api/delete-update-photo", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            credentials: "include",
+                            body: JSON.stringify({ id: ph.id, delete_storage: true }),
+                          })
+
+                          const j = await safeJson(res)
+                          if (!res.ok) {
+                            alert(j?.error || "Delete failed")
+                            return
+                          }
+
+                          loadDetails()
+                        }}
+                        className="mt-2 text-red-600 text-xs font-semibold hover:underline"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      )}
-    </div>
-  )
+          )
+        })}
+      </div>
+    )}
+  </div>
+)}
+</div>
+)
 }
 
 /** ✅ AddUpdate + optional photo */
