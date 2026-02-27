@@ -666,7 +666,6 @@ function AddPayment({ projectId, onAdded }: { projectId: string; onAdded: () => 
     </div>
   )
 }
-
 /** ✅ DocumentUploader Component (Upload to storage + create document row) */
 function DocumentUploader({
   projectId,
@@ -690,7 +689,7 @@ function DocumentUploader({
     try {
       return JSON.parse(t)
     } catch {
-      return null
+      return { raw: t }
     }
   }
 
@@ -698,6 +697,10 @@ function DocumentUploader({
     setMsg("")
     if (!file) {
       setMsg("اختر ملف أولاً")
+      return
+    }
+    if (!projectId) {
+      setMsg("projectId غير موجود")
       return
     }
 
@@ -708,15 +711,25 @@ function DocumentUploader({
       const fd = new FormData()
       fd.append("file", file)
 
-      const up = await fetch("/api/upload-files", {
+      // ✅ مهم: لازم نبعث project_id
+      fd.append("project_id", projectId)
+
+      // ✅ الأفضل: نخزن حسب نوع المستند لتصير مرتبة
+      fd.append("folder", type)
+
+      // ✅ (اختياري) بس منيح للتفريق بالمستقبل
+      fd.append("kind", "document")
+
+      // ✅ مهم: اسم الملف عندك upload-file.ts => endpoint هو /api/upload-file
+      const up = await fetch("/api/upload-file", {
         method: "POST",
         body: fd,
       })
 
       const upJson = await safeJsonLocal(up)
 
-      if (!up.ok || !upJson?.url) {
-        throw new Error(upJson?.error || "Upload failed")
+      if (!up.ok || !(upJson as any)?.url) {
+        throw new Error((upJson as any)?.error || `Upload failed (${up.status})`)
       }
 
       // 2) Create document row
@@ -726,15 +739,15 @@ function DocumentUploader({
         body: JSON.stringify({
           project_id: projectId,
           title: title.trim() || label,
-          type, // ✅ ثابت حسب القسم
-          file_url: upJson.url,
+          type, // ✅ ثابت حسب القسم (already lowercase)
+          file_url: (upJson as any).url,
         }),
       })
 
       const insJson = await safeJsonLocal(ins)
 
       if (!ins.ok) {
-        throw new Error(insJson?.error || "Insert failed")
+        throw new Error((insJson as any)?.error || `Insert failed (${ins.status})`)
       }
 
       setMsg("تم الرفع ✅")
@@ -779,7 +792,6 @@ function DocumentUploader({
     </div>
   )
 }
-
 /** ✅ ProjectCard */
 function ProjectCard({ project }: { project: ProjectRow }) {
   const [tab, setTab] = useState<"overview" | "payments" | "documents" | "updates">("overview")
