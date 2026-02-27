@@ -12,8 +12,6 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const PORTAL_LANDING_URL = "/project-tracking-system-riyadh"; // ✅ مفهرس + للإعلانات
-const PORTAL_LOGIN_URL = "/portal"; // 🔒 PortalPage.tsx (غير مفهرس)
-
 // ✅ روابط الناف الأساسية
 const navLinks = [
   { name: "الرئيسية", href: "#hero", type: "scroll" as const },
@@ -24,7 +22,7 @@ const navLinks = [
   { name: "تواصل معنا", href: "#contact", type: "scroll" as const },
   { name: "جميع المشاريع", href: "/projects", type: "route" as const },
 
-  // ✅ من الهوم والناف يودّي للصفحة الدعائية وليس تسجيل الدخول
+  // ✅ من الهوم والناف يودّي للصفحة الدعائية المفهرسة
   { name: "بوابة العملاء", href: PORTAL_LANDING_URL, type: "route" as const },
 ];
 
@@ -75,61 +73,43 @@ export default function Navbar() {
       dir="rtl"
     >
       <div className="container-custom">
-        {/* ✅ PATCH 1: nav بدون justify-between */}
         <nav className="flex items-center h-20 gap-4">
-          {/* ✅ PATCH 2: RIGHT (RTL): Login + Logo */}
-          <div className="flex items-center gap-3 shrink-0">
-            {/* ✅ تسجيل دخول العملاء (بالناف الرئيسي لازم يروح للصفحة الدعائية المفهرسة) */}
-            <a
-              href={PORTAL_LANDING_URL}
-              onClick={(e) => {
-                e.preventDefault();
-                goTo(PORTAL_LANDING_URL);
-              }}
-              className={`hidden lg:flex items-center px-3 py-2 text-[13px] font-semibold rounded-lg transition-all duration-200 hover:bg-gold/10 whitespace-nowrap leading-none ${
-                isScrolled ? "text-gray-800" : "text-white"
+          {/* ===== Logo ===== */}
+          <a
+            href="#hero"
+            onClick={(e) => {
+              e.preventDefault();
+              goTo("#hero");
+            }}
+            className="flex items-center gap-3 shrink-0"
+            aria-label="بنيان الهرم للمقاولات - PYBCCO"
+          >
+            {/* ✅ نص براند موجود دائماً (SEO + Accessibility) */}
+            <span className="sr-only">بنيان الهرم للمقاولات - PYBCCO</span>
+
+            <img
+              src="/assets/logo.png"
+              alt="بنيان الهرم للمقاولات"
+              className="w-12 h-12 object-contain"
+              width={48}
+              height={48}
+              loading="eager"
+              decoding="async"
+            />
+
+            <div
+              className={`hidden sm:block ${
+                isScrolled ? "text-black" : "text-white"
               }`}
             >
-              تسجيل دخول العملاء
-            </a>
-
-            {/* ===== Logo ===== */}
-            <a
-              href="#hero"
-              onClick={(e) => {
-                e.preventDefault();
-                goTo("#hero");
-              }}
-              className="flex items-center gap-3"
-              aria-label="بنيان الهرم للمقاولات - PYBCCO"
-            >
-              {/* ✅ نص براند موجود دائماً (SEO + Accessibility) */}
-              <span className="sr-only">بنيان الهرم للمقاولات - PYBCCO</span>
-
-              <img
-                src="/assets/logo.png"
-                alt="بنيان الهرم للمقاولات"
-                className="w-12 h-12 object-contain"
-                width={48}
-                height={48}
-                loading="eager"
-                decoding="async"
-              />
-
-              <div
-                className={`hidden sm:block ${
-                  isScrolled ? "text-black" : "text-white"
-                }`}
-              >
-                <div className="font-bold text-lg leading-tight whitespace-nowrap">
-                  بنيان الهرم
-                </div>
-                <p className="text-xs opacity-80 whitespace-nowrap">للمقاولات</p>
+              <div className="font-bold text-lg leading-tight whitespace-nowrap">
+                بنيان الهرم
               </div>
-            </a>
-          </div>
+              <p className="text-xs opacity-80 whitespace-nowrap">للمقاولات</p>
+            </div>
+          </a>
 
-          {/* ✅ PATCH 3: Desktop Navigation بالنص flex-1 */}
+          {/* ✅ Desktop Navigation (CENTER) */}
           <div className="hidden lg:flex items-center justify-center gap-1 flex-1">
             {navLinks.map((link) => (
               <a
@@ -201,15 +181,9 @@ export default function Navbar() {
                 </a>
               </div>
             </div>
-
-            {/* ✅ PATCH 5: حذف تكرار "تسجيل دخول العملاء" من الديسكتوب هون
-                كان عندك سابقاً:
-                <a href={PORTAL_LOGIN_URL}>تسجيل دخول العملاء</a>
-                وتم حذفه لأن صار زرّه يمين قبل اللوجو
-            */}
           </div>
 
-          {/* ✅ PATCH 4: CTA Desktop shrink-0 */}
+          {/* ===== CTA Desktop (LEFT) ===== */}
           <div className="hidden lg:flex items-center gap-3 shrink-0">
             <a
               href="tel:+966550604837"
@@ -279,7 +253,6 @@ export default function Navbar() {
                 />
               </a>
 
-              {/* ✅ Facebook */}
               <a
                 href="https://www.facebook.com/pybcco"
                 target="_blank"
@@ -371,7 +344,6 @@ export default function Navbar() {
                 </div>
 
                 <nav className="flex flex-col gap-1">
-                  {/* ===== الروابط الرئيسية ===== */}
                   {navLinks.map((link) => (
                     <a
                       key={link.name}
@@ -386,22 +358,10 @@ export default function Navbar() {
                     </a>
                   ))}
 
-                  {/* ✅ تسجيل دخول العملاء (غير مفهرس) */}
-                  <a
-                    href={PORTAL_LOGIN_URL}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      goTo(PORTAL_LOGIN_URL);
-                    }}
-                    className="px-4 py-3 text-[15px] font-medium text-gold hover:bg-white/10 rounded-lg transition"
-                  >
-                    تسجيل دخول العملاء
-                  </a>
+                  {/* ✅ تم حذف "تسجيل دخول العملاء" من الموبايل أيضاً حسب طلبك */}
 
-                  {/* ===== Divider ===== */}
                   <div className="my-4 h-px bg-white/10" />
 
-                  {/* ===== المتجر ===== */}
                   <div>
                     <div className="px-4 mb-2 text-xs tracking-wider text-white/50 uppercase">
                       المتجر
@@ -424,7 +384,6 @@ export default function Navbar() {
                     </div>
                   </div>
 
-                  {/* ===== مناطق العمل ===== */}
                   <div className="my-4 h-px bg-white/10" />
 
                   <a
@@ -469,7 +428,6 @@ export default function Navbar() {
                     </a>
                   </Button>
 
-                  {/* ✅ زر بوابة العملاء (المفهرسة) */}
                   <Button
                     asChild
                     variant="outline"
@@ -521,7 +479,6 @@ export default function Navbar() {
                       <Instagram className="w-5 h-5 text-white" />
                     </a>
 
-                    {/* ✅ Facebook */}
                     <a
                       href="https://www.facebook.com/pybcco"
                       target="_blank"
