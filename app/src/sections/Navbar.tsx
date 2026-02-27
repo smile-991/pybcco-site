@@ -390,18 +390,18 @@ export default function Navbar() {
   </a>
 </Button>
 
-{/* ✅ زر المتجر واضح مثل زر الدخول */}
+{/* ✅ زر المتجر (واضح جدًا) */}
 <Button
   asChild
   variant="outline"
   className="w-full border-gold text-gold hover:bg-white/10 font-bold mb-4 whitespace-nowrap"
 >
   <a
-    href="/store"
+    href="/decor"
     onClick={(e) => {
       e.preventDefault()
       setIsOpen(false)
-      goTo("/store")
+      goTo("/decor")
     }}
   >
     🛍 المتجر
