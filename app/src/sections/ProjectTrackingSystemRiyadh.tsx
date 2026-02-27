@@ -92,7 +92,7 @@ export default function ProjectTrackingSystemRiyadh() {
         </p>
 
         <div className="text-center mb-16">
-          <Link to="/portal-login">
+          <Link to="/portal">
             <Button className="px-8 py-6 text-lg">
               🔐 دخول العملاء
             </Button>
