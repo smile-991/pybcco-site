@@ -247,28 +247,39 @@ export default function Home() {
               </span>
             </div>
 
-            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button
-                onClick={() => window.open(WA_LINK, "_blank")}
-                size="lg"
-                className="bg-gold hover:bg-gold/90 text-black font-bold px-8 py-6 text-lg w-full sm:w-auto"
-              >
-                <Phone className="w-5 h-5 ml-2" />
-                اطلب معاينة
-              </Button>
+<div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+  <Button
+    onClick={() => window.open(WA_LINK, "_blank")}
+    size="lg"
+    className="bg-gold hover:bg-gold/90 text-black font-bold px-8 py-6 text-lg w-full sm:w-auto"
+  >
+    <Phone className="w-5 h-5 ml-2" />
+    اطلب معاينة
+  </Button>
 
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="text-gold bg-transparent hover:bg-white/10 px-8 py-6 text-lg w-full sm:w-auto"
-              >
-                <Link to="/villa-finishing-price-riyadh">
-                  <Calculator className="w-5 h-5 ml-2" />
-                  احسب التكلفة
-                </Link>
-              </Button>
-            </div>
+  <Button
+    asChild
+    size="lg"
+    variant="outline"
+    className="text-gold bg-transparent hover:bg-white/10 px-8 py-6 text-lg w-full sm:w-auto"
+  >
+    <Link to="/villa-finishing-price-riyadh">
+      <Calculator className="w-5 h-5 ml-2" />
+      احسب التكلفة
+    </Link>
+  </Button>
+
+  <Button
+    asChild
+    size="lg"
+    variant="outline"
+    className="text-gold bg-transparent hover:bg-white/10 px-8 py-6 text-lg w-full sm:w-auto"
+  >
+    <Link to="/decor">
+      🛍 المتجر
+    </Link>
+  </Button>
+</div>
 
             <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 max-w-3xl mx-auto">
               {STATS.map((s, i) => (
