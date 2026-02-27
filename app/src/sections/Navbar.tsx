@@ -63,6 +63,20 @@ export default function Navbar() {
     setIsOpen(false);
   };
 
+  // ✅ بدل السكرول: نعرض أهم الروابط، والباقي داخل Dropdown "المزيد"
+  const primaryLinks = [
+    navLinks[0], // الرئيسية
+    navLinks[1], // من نحن
+    navLinks[2], // خدماتنا
+    navLinks[3], // معرض الأعمال
+    navLinks[5], // تواصل معنا
+  ];
+
+  const moreLinks = [
+    navLinks[4], // فريق العمل
+    navLinks[6], // جميع المشاريع
+  ];
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -71,7 +85,7 @@ export default function Navbar() {
       dir="rtl"
     >
       <div className="container-custom">
-        <nav className="flex items-center h-20 gap-4 min-w-0">
+        <nav className="flex items-center h-20 gap-3 min-w-0">
           {/* ===== RIGHT (RTL): بوابة العملاء + Logo ===== */}
           <div className="flex items-center gap-3 shrink-0">
             {/* ✅ بوابة العملاء (أقصى اليمين قبل اللوجو) */}
@@ -130,99 +144,125 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* ✅ Desktop Navigation (CENTER) — Scrollable لمنع التراكب */}
-          <div className="hidden lg:flex flex-1 min-w-0 justify-center">
-            <div className="flex items-center gap-1 px-2 min-w-0 overflow-x-auto overflow-y-visible whitespace-nowrap">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    goTo(link.href);
-                  }}
-                  className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 whitespace-nowrap leading-none ${
-                    isScrolled ? "text-gray-800" : "text-white"
-                  }`}
-                >
-                  {link.name}
-                </a>
-              ))}
+          {/* ✅ Desktop Navigation (CENTER) — بدون Scroll */}
+          <div className="hidden lg:flex items-center justify-center gap-1 flex-1 min-w-0">
+            {primaryLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  goTo(link.href);
+                }}
+                className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 whitespace-nowrap leading-none ${
+                  isScrolled ? "text-gray-800" : "text-white"
+                }`}
+              >
+                {link.name}
+              </a>
+            ))}
 
-              {/* ===== المتجر Dropdown (Desktop) ===== */}
-              <div className="relative group">
-                <button
-                  type="button"
-                  className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
-                    isScrolled ? "text-gray-800" : "text-white"
-                  }`}
-                >
-                  المتجر
-                  <span className="text-xs">▾</span>
-                </button>
+            {/* ===== المتجر Dropdown (Desktop) ===== */}
+            <div className="relative group">
+              <button
+                type="button"
+                className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
+                  isScrolled ? "text-gray-800" : "text-white"
+                }`}
+              >
+                المتجر
+                <span className="text-xs">▾</span>
+              </button>
 
-                <div className="absolute right-0 mt-2 w-64 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden z-50">
-                  {storeLinks.map((item) => (
-                    <a
-                      key={item.href}
-                      href={item.href}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        goTo(item.href);
-                      }}
-                      className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 transition whitespace-nowrap"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-              </div>
-
-              {/* ===== مناطق عملنا Dropdown (Desktop) ===== */}
-              <div className="relative group">
-                <button
-                  type="button"
-                  className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
-                    isScrolled ? "text-gray-800" : "text-white"
-                  }`}
-                >
-                  مناطق عملنا
-                  <span className="text-xs">▾</span>
-                </button>
-
-                <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div className="absolute right-0 mt-2 w-64 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden z-50">
+                {storeLinks.map((item) => (
                   <a
-                    href="/contractor-almalqa-riyadh"
+                    key={item.href}
+                    href={item.href}
                     onClick={(e) => {
                       e.preventDefault();
-                      goTo("/contractor-almalqa-riyadh");
+                      goTo(item.href);
                     }}
-                    className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 rounded-xl transition whitespace-nowrap"
+                    className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 transition whitespace-nowrap"
                   >
-                    حي الملقا
+                    {item.name}
                   </a>
-                </div>
+                ))}
+              </div>
+            </div>
+
+            {/* ===== مناطق عملنا Dropdown (Desktop) ===== */}
+            <div className="relative group">
+              <button
+                type="button"
+                className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
+                  isScrolled ? "text-gray-800" : "text-white"
+                }`}
+              >
+                مناطق عملنا
+                <span className="text-xs">▾</span>
+              </button>
+
+              <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <a
+                  href="/contractor-almalqa-riyadh"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    goTo("/contractor-almalqa-riyadh");
+                  }}
+                  className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 rounded-xl transition whitespace-nowrap"
+                >
+                  حي الملقا
+                </a>
+              </div>
+            </div>
+
+            {/* ===== المزيد Dropdown (Desktop) ===== */}
+            <div className="relative group">
+              <button
+                type="button"
+                className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
+                  isScrolled ? "text-gray-800" : "text-white"
+                }`}
+              >
+                المزيد
+                <span className="text-xs">▾</span>
+              </button>
+
+              <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden z-50">
+                {moreLinks.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      goTo(item.href);
+                    }}
+                    className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 transition whitespace-nowrap"
+                  >
+                    {item.name}
+                  </a>
+                ))}
               </div>
             </div>
           </div>
 
           {/* ===== CTA Desktop (LEFT) ===== */}
-          <div className="hidden lg:flex items-center gap-2 shrink-0 flex-nowrap">
-            {/* ✅ تلفون: على LG يظهر أيقونة فقط، الرقم على XL */}
+          <div className="hidden lg:flex items-center gap-2 shrink-0">
+            {/* ✅ تلفون: أيقونة فقط بدون رقم */}
             <a
               href="tel:+966550604837"
-              className={`flex items-center gap-2 text-sm font-medium ${
-                isScrolled ? "text-gray-800" : "text-white"
-              }`}
               aria-label="اتصل بنا"
+              className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+                isScrolled
+                  ? "bg-black/5 hover:bg-black/10 text-gray-800"
+                  : "bg-white/10 hover:bg-white/20 text-white"
+              }`}
             >
               <Phone className="w-4 h-4" />
-              <span dir="ltr" className="hidden xl:inline whitespace-nowrap tabular-nums">
-                055 060 4837
-              </span>
             </a>
 
-            {/* Social (Desktop) - على XL فقط */}
+            {/* Social (Desktop) - فقط على XL لتخفيف الزحمة */}
             <div className="hidden xl:flex items-center gap-2">
               <a
                 href="https://x.com/pybcco"
@@ -418,10 +458,7 @@ export default function Navbar() {
                     </div>
                     <div>
                       <p className="text-sm text-white/60">اتصل بنا</p>
-                      <p
-                        dir="ltr"
-                        className="font-bold whitespace-nowrap tabular-nums"
-                      >
+                      <p dir="ltr" className="font-bold whitespace-nowrap tabular-nums">
                         055 060 4837
                       </p>
                     </div>
@@ -441,7 +478,6 @@ export default function Navbar() {
                     </a>
                   </Button>
 
-                  {/* بوابة العملاء بالموبايل */}
                   <Button
                     asChild
                     variant="outline"
