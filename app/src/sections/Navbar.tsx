@@ -63,18 +63,15 @@ export default function Navbar() {
     setIsOpen(false);
   };
 
-  // ✅ بدل السكرول: نعرض أهم الروابط، والباقي داخل Dropdown "المزيد"
-  const primaryLinks = [
+  // ✅ ألغينا "المزيد" وصارت الروابط كلها مباشرة بالنافبار
+  const desktopLinks = [
     navLinks[0], // الرئيسية
     navLinks[1], // من نحن
     navLinks[2], // خدماتنا
     navLinks[3], // معرض الأعمال
+    navLinks[4], // فريق العمل  ✅ (طلعناه لبرا)
     navLinks[5], // تواصل معنا
-  ];
-
-  const moreLinks = [
-    navLinks[4], // فريق العمل
-    navLinks[6], // جميع المشاريع
+    navLinks[6], // جميع المشاريع ✅ (طلعناه لبرا)
   ];
 
   return (
@@ -109,7 +106,7 @@ export default function Navbar() {
               </a>
             </Button>
 
-            {/* ===== Logo ===== */}
+            {/* ===== Logo (واحد فقط) ===== */}
             <a
               href="#hero"
               onClick={(e) => {
@@ -144,9 +141,9 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* ✅ Desktop Navigation (CENTER) — بدون Scroll */}
+          {/* ✅ Desktop Navigation (CENTER) */}
           <div className="hidden lg:flex items-center justify-center gap-1 flex-1 min-w-0">
-            {primaryLinks.map((link) => (
+            {desktopLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
@@ -217,34 +214,7 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* ===== المزيد Dropdown (Desktop) ===== */}
-            <div className="relative group">
-              <button
-                type="button"
-                className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
-                  isScrolled ? "text-gray-800" : "text-white"
-                }`}
-              >
-                المزيد
-                <span className="text-xs">▾</span>
-              </button>
-
-              <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden z-50">
-                {moreLinks.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      goTo(item.href);
-                    }}
-                    className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 transition whitespace-nowrap"
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            </div>
+            {/* ❌ تم حذف Dropdown "المزيد" بالكامل */}
           </div>
 
           {/* ===== CTA Desktop (LEFT) ===== */}
@@ -379,16 +349,8 @@ export default function Navbar() {
               className="w-80 bg-black text-white border-white/10"
             >
               <div className="flex flex-col h-full">
+                {/* ✅ تم حذف تكرار اللوجو داخل الموبايل منيو (صار اللوجو واحد فقط بالهيدر) */}
                 <div className="flex items-center gap-3 mb-8">
-                  <img
-                    src="/assets/logo.png"
-                    alt="بنيان الهرم للمقاولات"
-                    className="w-10 h-10 object-contain"
-                    width={40}
-                    height={40}
-                    loading="eager"
-                    decoding="async"
-                  />
                   <div>
                     <div className="font-bold">بنيان الهرم</div>
                     <p className="text-xs text-white/60">للمقاولات</p>
@@ -458,7 +420,10 @@ export default function Navbar() {
                     </div>
                     <div>
                       <p className="text-sm text-white/60">اتصل بنا</p>
-                      <p dir="ltr" className="font-bold whitespace-nowrap tabular-nums">
+                      <p
+                        dir="ltr"
+                        className="font-bold whitespace-nowrap tabular-nums"
+                      >
                         055 060 4837
                       </p>
                     </div>
@@ -483,10 +448,7 @@ export default function Navbar() {
                     variant="outline"
                     className="w-full border-gold text-gold hover:bg-white/10 font-bold mb-3 whitespace-nowrap"
                   >
-                    <a
-                      href={PORTAL_LANDING_URL}
-                      onClick={() => setIsOpen(false)}
-                    >
+                    <a href={PORTAL_LANDING_URL} onClick={() => setIsOpen(false)}>
                       بوابة العملاء
                     </a>
                   </Button>
