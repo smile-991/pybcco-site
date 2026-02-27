@@ -13,7 +13,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const PORTAL_LANDING_URL = "/project-tracking-system-riyadh"; // ✅ مفهرس + للإعلانات
 
-// ✅ روابط الناف الأساسية
+// ✅ روابط الناف الأساسية (بدون بوابة العملاء بالنص)
 const navLinks = [
   { name: "الرئيسية", href: "#hero", type: "scroll" as const },
   { name: "من نحن", href: "#about", type: "scroll" as const },
@@ -71,7 +71,7 @@ export default function Navbar() {
       dir="rtl"
     >
       <div className="container-custom">
-        <nav className="flex items-center h-20 gap-4">
+        <nav className="flex items-center h-20 gap-4 min-w-0">
           {/* ===== RIGHT (RTL): بوابة العملاء + Logo ===== */}
           <div className="flex items-center gap-3 shrink-0">
             {/* ✅ بوابة العملاء (أقصى اليمين قبل اللوجو) */}
@@ -105,7 +105,6 @@ export default function Navbar() {
               className="flex items-center gap-3"
               aria-label="بنيان الهرم للمقاولات - PYBCCO"
             >
-              {/* ✅ نص براند موجود دائماً (SEO + Accessibility) */}
               <span className="sr-only">بنيان الهرم للمقاولات - PYBCCO</span>
 
               <img
@@ -132,7 +131,7 @@ export default function Navbar() {
           </div>
 
           {/* ✅ Desktop Navigation (CENTER) */}
-          <div className="hidden lg:flex items-center justify-center gap-1 flex-1">
+          <div className="hidden lg:flex items-center justify-center gap-1 flex-1 min-w-0">
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -206,10 +205,11 @@ export default function Navbar() {
           </div>
 
           {/* ===== CTA Desktop (LEFT) ===== */}
-          <div className="hidden lg:flex items-center gap-3 shrink-0">
+          <div className="hidden lg:flex items-center gap-2 shrink-0">
+            {/* ✅ نخلي التلفون يظهر فقط على XL لتجنب القص على الشاشات المتوسطة */}
             <a
               href="tel:+966550604837"
-              className={`flex items-center gap-2 text-sm font-medium ${
+              className={`hidden xl:flex items-center gap-2 text-sm font-medium ${
                 isScrolled ? "text-gray-800" : "text-white"
               }`}
             >
@@ -219,8 +219,8 @@ export default function Navbar() {
               </span>
             </a>
 
-            {/* Social (Desktop) */}
-            <div className="flex items-center gap-2">
+            {/* ✅ السوشيال فقط على XL */}
+            <div className="hidden xl:flex items-center gap-2">
               <a
                 href="https://x.com/pybcco"
                 target="_blank"
@@ -298,7 +298,7 @@ export default function Navbar() {
             <Button
               asChild
               variant="outline"
-              className={`font-bold px-4 whitespace-nowrap ${
+              className={`font-bold px-3 whitespace-nowrap ${
                 isScrolled
                   ? "border-gold text-gold hover:bg-gold/10"
                   : "border-gold text-gold bg-transparent hover:bg-white/10"
@@ -310,11 +310,9 @@ export default function Navbar() {
               </a>
             </Button>
 
-            {/* ❌ تم حذف زر بوابة العملاء من اليسار حسب طلبك */}
-
             <Button
               onClick={() => goTo("#contact")}
-              className="bg-gold hover:bg-gold/90 text-black font-bold px-5 whitespace-nowrap"
+              className="bg-gold hover:bg-gold/90 text-black font-bold px-4 whitespace-nowrap"
             >
               طلب عرض سعر
             </Button>
@@ -440,7 +438,7 @@ export default function Navbar() {
                     </a>
                   </Button>
 
-                  {/* ✅ بوابة العملاء بالموبايل تبقى كما هي */}
+                  {/* بوابة العملاء بالموبايل */}
                   <Button
                     asChild
                     variant="outline"
