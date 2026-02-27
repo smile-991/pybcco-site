@@ -143,7 +143,7 @@ export default function Navbar() {
           {/* 🔥 الحل: نمنع التراكم عبر overflow-x-auto (سكرول أفقي) */}
           <div
             className="
-              hidden lg:flex flex-1 min-w-0 items-center justify-center gap-1
+              hidden lg:flex flex-1 min-w-0 items-center justify-start gap-1
               overflow-x-auto whitespace-nowrap
               [-ms-overflow-style:none] [scrollbar-width:none]
               [&::-webkit-scrollbar]:hidden
