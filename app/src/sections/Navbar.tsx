@@ -13,7 +13,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const PORTAL_LANDING_URL = "/project-tracking-system-riyadh"; // ✅ مفهرس + للإعلانات
 
-// ✅ روابط الناف الأساسية
+// ✅ روابط الناف الأساسية (✅ حذف "من نحن")
 const navLinks = [
   { name: "الرئيسية", href: "#hero", type: "scroll" as const },
   { name: "خدماتنا", href: "#services", type: "scroll" as const },
@@ -59,16 +59,8 @@ export default function Navbar() {
     setIsOpen(false);
   };
 
-  // ✅ روابط الديسكتوب (بدون "المزيد")
-  const desktopLinks = [
-    navLinks[0],
-    navLinks[1],
-    navLinks[2],
-    navLinks[3],
-    navLinks[4],
-    navLinks[5],
-    navLinks[6],
-  ];
+  // ✅ روابط الديسكتوب (بدون "المزيد") — مصفوفة واضحة بدل indexes
+  const desktopLinks = navLinks;
 
   return (
     <header
@@ -346,129 +338,132 @@ export default function Navbar() {
             </SheetTrigger>
 
             <SheetContent
-  side="right"
-  className="w-80 bg-black text-white border-white/10"
->
-  <div className="flex flex-col h-full">
-    {/* ✅ حذف لوجو الموبايل نهائيًا (حتى ما يطلع لوجوين) */}
-    <div className="mb-6">
-      <div className="font-bold">بنيان الهرم</div>
-      <p className="text-xs text-white/60">للمقاولات</p>
-    </div>
+              side="right"
+              className="w-80 bg-black text-white border-white/10"
+            >
+              <div className="flex flex-col h-full">
+                {/* ✅ حذف لوجو الموبايل نهائيًا (حتى ما يطلع لوجوين) */}
+                <div className="mb-6">
+                  <div className="font-bold">بنيان الهرم</div>
+                  <p className="text-xs text-white/60">للمقاولات</p>
+                </div>
 
-    {/* ✅ خلي القائمة تتمدد وتسكرول صح */}
-    <nav className="flex flex-col gap-1 flex-1 overflow-y-auto">
-      {navLinks.map((link) => (
-        <a
-          key={link.name}
-          href={link.href}
-          onClick={(e) => {
-            e.preventDefault()
-            goTo(link.href)
-          }}
-          className="px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition"
-        >
-          {link.name}
-        </a>
-      ))}
+                {/* ✅ خلي القائمة تتمدد وتسكرول صح */}
+                <nav className="flex flex-col gap-1 flex-1 overflow-y-auto">
+                  {navLinks.map((link) => (
+                    <a
+                      key={link.name}
+                      href={link.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        goTo(link.href);
+                      }}
+                      className="px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition"
+                    >
+                      {link.name}
+                    </a>
+                  ))}
 
-      {/* ✅ زر دخول العملاء */}
-<Button
-  asChild
-  className="w-full bg-gold hover:bg-gold/90 text-black font-bold mt-3 mb-3 whitespace-nowrap"
->
-  <a
-    href={PORTAL_LANDING_URL}
-    onClick={(e) => {
-      e.preventDefault()
-      setIsOpen(false)
-      goTo(PORTAL_LANDING_URL)
-    }}
-  >
-    🔐 دخول العملاء
-  </a>
-</Button>
+                  {/* ✅ زر دخول العملاء */}
+                  <Button
+                    asChild
+                    className="w-full bg-gold hover:bg-gold/90 text-black font-bold mt-3 mb-3 whitespace-nowrap"
+                  >
+                    <a
+                      href={PORTAL_LANDING_URL}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsOpen(false);
+                        goTo(PORTAL_LANDING_URL);
+                      }}
+                    >
+                      🔐 دخول العملاء
+                    </a>
+                  </Button>
 
-{/* ✅ زر المتجر (واضح جدًا) */}
-<Button
-  asChild
-  variant="outline"
-  className="w-full border-gold text-gold hover:bg-white/10 font-bold mb-4 whitespace-nowrap"
->
-  <a
-    href="/decor"
-    onClick={(e) => {
-      e.preventDefault()
-      setIsOpen(false)
-      goTo("/decor")
-    }}
-  >
-    🛍 المتجر
-  </a>
-</Button>
+                  {/* ✅ زر المتجر (واضح جدًا) */}
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="w-full border-gold text-gold hover:bg-white/10 font-bold mb-4 whitespace-nowrap"
+                  >
+                    <a
+                      href="/decor"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsOpen(false);
+                        goTo("/decor");
+                      }}
+                    >
+                      🛍 المتجر
+                    </a>
+                  </Button>
 
-<div className="my-4 h-px bg-white/10" />
+                  <div className="my-4 h-px bg-white/10" />
 
-<a
-  href="/contractor-almalqa-riyadh"
-  onClick={(e) => {
-    e.preventDefault()
-    setIsOpen(false)
-    goTo("/contractor-almalqa-riyadh")
-  }}
-  className="px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition"
->
-  مناطق عملنا – حي الملقا
-</a>
-    </nav>
+                  <a
+                    href="/contractor-almalqa-riyadh"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsOpen(false);
+                      goTo("/contractor-almalqa-riyadh");
+                    }}
+                    className="px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition"
+                  >
+                    مناطق عملنا – حي الملقا
+                  </a>
+                </nav>
 
-    <div className="mt-auto pt-6 border-t border-white/10">
-      <a
-        href="tel:+966550604837"
-        className="flex items-center gap-3 mb-4 text-white"
-      >
-        <div className="w-10 h-10 bg-gold/20 rounded-lg flex items-center justify-center">
-          <Phone className="w-5 h-5 text-gold" />
-        </div>
-        <div>
-          <p className="text-sm text-white/60">اتصل بنا</p>
-          <p dir="ltr" className="font-bold whitespace-nowrap tabular-nums">
-            055 060 4837
-          </p>
-        </div>
-      </a>
+                <div className="mt-auto pt-6 border-t border-white/10">
+                  <a
+                    href="tel:+966550604837"
+                    className="flex items-center gap-3 mb-4 text-white"
+                  >
+                    <div className="w-10 h-10 bg-gold/20 rounded-lg flex items-center justify-center">
+                      <Phone className="w-5 h-5 text-gold" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-white/60">اتصل بنا</p>
+                      <p
+                        dir="ltr"
+                        className="font-bold whitespace-nowrap tabular-nums"
+                      >
+                        055 060 4837
+                      </p>
+                    </div>
+                  </a>
 
-      <Button
-        asChild
-        variant="outline"
-        className="w-full border-gold text-gold hover:bg-white/10 font-bold mb-3 whitespace-nowrap"
-      >
-        <a
-          href="/villa-finishing-price-riyadh"
-          onClick={() => setIsOpen(false)}
-        >
-          <Calculator className="w-5 h-5 ml-2" />
-          احسب التكلفة
-        </a>
-      </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="w-full border-gold text-gold hover:bg-white/10 font-bold mb-3 whitespace-nowrap"
+                  >
+                    <a
+                      href="/villa-finishing-price-riyadh"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <Calculator className="w-5 h-5 ml-2" />
+                      احسب التكلفة
+                    </a>
+                  </Button>
 
-      <Button
-        onClick={() => goTo("#contact")}
-        className="w-full bg-gold hover:bg-gold/90 text-black font-bold whitespace-nowrap"
-      >
-        طلب عرض سعر
-      </Button>
+                  <Button
+                    onClick={() => goTo("#contact")}
+                    className="w-full bg-gold hover:bg-gold/90 text-black font-bold whitespace-nowrap"
+                  >
+                    طلب عرض سعر
+                  </Button>
 
-      <div className="flex items-center justify-center gap-3 mt-4">
-        <a
-          href="https://x.com/pybcco"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="X"
-          className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition"
-        >
-          <Twitter className="w-5 h-5 text-white" />
-        </a>
+                  <div className="flex items-center justify-center gap-3 mt-4">
+                    <a
+                      href="https://x.com/pybcco"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="X"
+                      className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition"
+                    >
+                      <Twitter className="w-5 h-5 text-white" />
+                    </a>
 
                     <a
                       href="https://www.linkedin.com/company/pybcco"
