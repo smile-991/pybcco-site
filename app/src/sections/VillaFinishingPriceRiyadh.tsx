@@ -498,7 +498,7 @@ const waLink = `https://wa.me/966550604837?text=${waText}`;
                     اطلب معاينة / تواصل معنا
                   </a>
                   <a
-                    href="https://wa.me/966550604837"
+                    href={waLink}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-4 py-2 text-sm hover:bg-white/10"
@@ -600,6 +600,64 @@ const waLink = `https://wa.me/966550604837?text=${waText}`;
           </div>
         </div>
       </section>
+
+{/* SEO PRICE INTENT BOOST */}
+<section className="container mx-auto px-4 py-14 text-right max-w-4xl">
+  <h2 className="text-2xl md:text-3xl font-bold text-gold">
+    كم سعر تشطيب فيلا بالرياض حسب المساحة؟
+  </h2>
+
+  <p className="mt-4 text-white/80 leading-relaxed">
+    تختلف تكلفة تشطيب الفيلا في الرياض حسب المساحة ونوع العمل (تشطيب/عظم) والمستوى المختار.
+    فيما يلي أمثلة تقديرية تساعدك على فهم الصورة العامة — ويمكنك الحصول على رقم أدق عبر الحاسبة أعلاه.
+  </p>
+
+  <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3">
+    {[
+      { a: 250, label: "فيلا 250م²" },
+      { a: 300, label: "فيلا 300م²" },
+      { a: 400, label: "فيلا 400م²" },
+    ].map((x, i) => {
+      const commercial = x.a * PRICES_PER_M2.finishing.commercial
+      const standard = x.a * PRICES_PER_M2.finishing.standard
+      const luxury = x.a * PRICES_PER_M2.finishing.luxury
+
+      return (
+        <div key={i} className="rounded-2xl border border-white/10 bg-white/5 p-5">
+          <div className="text-lg font-extrabold text-white">{x.label}</div>
+          <div className="mt-3 text-sm text-white/70 space-y-2">
+            <div>تجاري: <span className="text-white font-bold">{formatSAR(commercial)} ريال</span></div>
+            <div>قياسي: <span className="text-white font-bold">{formatSAR(standard)} ريال</span></div>
+            <div>فاخر: <span className="text-white font-bold">{formatSAR(luxury)} ريال</span></div>
+          </div>
+          <div className="mt-3 text-xs text-white/50">
+            * تقديري وقد يختلف حسب المواد ونطاق العمل والمعاينة.
+          </div>
+        </div>
+      )
+    })}
+  </div>
+
+  <h2 className="mt-12 text-2xl md:text-3xl font-bold text-gold">
+    سعر المتر لتشطيب الفلل في الرياض 2026
+  </h2>
+
+  <p className="mt-4 text-white/80 leading-relaxed">
+    كثير من العملاء يبحثون عن “سعر المتر”، لكن السعر الحقيقي يتغير حسب نوع المواد، مستوى التشطيب،
+    وعدد دورات المياه والمطابخ، ومستوى الجبس والإضاءة، وحجم الأعمال الإضافية. لذلك نعتمد في PYBCCO
+    على الحسبة الإجمالية لإعطائك رقم أقرب للواقع مع الحفاظ على الشفافية.
+  </p>
+
+  <div className="mt-6 rounded-2xl border border-white/10 bg-black/30 p-5 text-white/80 text-sm leading-relaxed">
+    <div className="font-bold text-white mb-2">متى يزيد السعر عادة؟</div>
+    <ul className="space-y-2">
+      <li>✔️ عند اختيار مواد أعلى جودة (أرضيات/دهانات/أبواب/رخام...)</li>
+      <li>✔️ زيادة الأعمال المخفية: عزل، تمديدات، معالجة عيوب، إعادة تأهيل</li>
+      <li>✔️ التفاصيل: جبس مع إضاءة معقدة، أعمال خشب ديكوري، رخام/ستون</li>
+      <li>✔️ كثرة دورات المياه والمطابخ والتجهيزات</li>
+    </ul>
+  </div>
+</section>
 
       {/* PRICE DETAILS */}
       <section className="container mx-auto px-4 py-14 text-right max-w-4xl">
