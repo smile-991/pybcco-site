@@ -11,6 +11,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
+const PORTAL_LANDING_URL = "/project-tracking-system-riyadh"; // ✅ مفهرس + للإعلانات
+const PORTAL_LOGIN_URL = "/portal"; // 🔒 PortalPage.tsx (غير مفهرس)
+
+// ✅ روابط الناف الأساسية
 const navLinks = [
   { name: "الرئيسية", href: "#hero", type: "scroll" as const },
   { name: "من نحن", href: "#about", type: "scroll" as const },
@@ -19,6 +23,9 @@ const navLinks = [
   { name: "فريق العمل", href: "#team", type: "scroll" as const },
   { name: "تواصل معنا", href: "#contact", type: "scroll" as const },
   { name: "جميع المشاريع", href: "/projects", type: "route" as const },
+
+  // ✅ هذا هو المطلوب: من الهوم والناف يودّي للصفحة الدعائية وليس تسجيل الدخول
+  { name: "بوابة العملاء", href: PORTAL_LANDING_URL, type: "route" as const },
 ];
 
 // ✅ روابط المتجر (Navbar Dropdown)
@@ -176,6 +183,21 @@ export default function Navbar() {
                 </a>
               </div>
             </div>
+
+            {/* ✅ (اختياري) تسجيل دخول العملاء على الديسكتوب داخل الناف
+               إذا ما بدك يبين — احذف هالبلوك */}
+            <a
+              href={PORTAL_LOGIN_URL}
+              onClick={(e) => {
+                e.preventDefault();
+                goTo(PORTAL_LOGIN_URL);
+              }}
+              className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 whitespace-nowrap leading-none ${
+                isScrolled ? "text-gray-800" : "text-white"
+              }`}
+            >
+              تسجيل دخول العملاء
+            </a>
           </div>
 
           {/* ===== CTA Desktop ===== */}
@@ -284,6 +306,19 @@ export default function Navbar() {
               </a>
             </Button>
 
+            {/* ✅ بوابة العملاء (المفهرسة) */}
+            <Button
+              asChild
+              variant="outline"
+              className={`font-bold px-4 whitespace-nowrap ${
+                isScrolled
+                  ? "border-gold text-gold hover:bg-gold/10"
+                  : "border-gold text-gold bg-transparent hover:bg-white/10"
+              }`}
+            >
+              <a href={PORTAL_LANDING_URL}>بوابة العملاء</a>
+            </Button>
+
             <Button
               onClick={() => goTo("#contact")}
               className="bg-gold hover:bg-gold/90 text-black font-bold px-5 whitespace-nowrap"
@@ -342,6 +377,18 @@ export default function Navbar() {
                     </a>
                   ))}
 
+                  {/* ✅ تسجيل دخول العملاء (غير مفهرس) */}
+                  <a
+                    href={PORTAL_LOGIN_URL}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      goTo(PORTAL_LOGIN_URL);
+                    }}
+                    className="px-4 py-3 text-[15px] font-medium text-gold hover:bg-white/10 rounded-lg transition"
+                  >
+                    تسجيل دخول العملاء
+                  </a>
+
                   {/* ===== Divider ===== */}
                   <div className="my-4 h-px bg-white/10" />
 
@@ -393,10 +440,7 @@ export default function Navbar() {
                     </div>
                     <div>
                       <p className="text-sm text-white/60">اتصل بنا</p>
-                      <p
-                        dir="ltr"
-                        className="font-bold whitespace-nowrap tabular-nums"
-                      >
+                      <p dir="ltr" className="font-bold whitespace-nowrap tabular-nums">
                         055 060 4837
                       </p>
                     </div>
@@ -413,6 +457,20 @@ export default function Navbar() {
                     >
                       <Calculator className="w-5 h-5 ml-2" />
                       احسب التكلفة
+                    </a>
+                  </Button>
+
+                  {/* ✅ زر بوابة العملاء (المفهرسة) */}
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="w-full border-gold text-gold hover:bg-white/10 font-bold mb-3 whitespace-nowrap"
+                  >
+                    <a
+                      href={PORTAL_LANDING_URL}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      بوابة العملاء
                     </a>
                   </Button>
 
