@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const PORTAL_LANDING_URL = "/project-tracking-system-riyadh"; // ✅ مفهرس + للإعلانات
+
 // ✅ روابط الناف الأساسية
 const navLinks = [
   { name: "الرئيسية", href: "#hero", type: "scroll" as const },
@@ -21,9 +22,6 @@ const navLinks = [
   { name: "فريق العمل", href: "#team", type: "scroll" as const },
   { name: "تواصل معنا", href: "#contact", type: "scroll" as const },
   { name: "جميع المشاريع", href: "/projects", type: "route" as const },
-
-  // ✅ من الهوم والناف يودّي للصفحة الدعائية المفهرسة
-  { name: "بوابة العملاء", href: PORTAL_LANDING_URL, type: "route" as const },
 ];
 
 // ✅ روابط المتجر (Navbar Dropdown)
@@ -74,40 +72,64 @@ export default function Navbar() {
     >
       <div className="container-custom">
         <nav className="flex items-center h-20 gap-4">
-          {/* ===== Logo ===== */}
-          <a
-            href="#hero"
-            onClick={(e) => {
-              e.preventDefault();
-              goTo("#hero");
-            }}
-            className="flex items-center gap-3 shrink-0"
-            aria-label="بنيان الهرم للمقاولات - PYBCCO"
-          >
-            {/* ✅ نص براند موجود دائماً (SEO + Accessibility) */}
-            <span className="sr-only">بنيان الهرم للمقاولات - PYBCCO</span>
-
-            <img
-              src="/assets/logo.png"
-              alt="بنيان الهرم للمقاولات"
-              className="w-12 h-12 object-contain"
-              width={48}
-              height={48}
-              loading="eager"
-              decoding="async"
-            />
-
-            <div
-              className={`hidden sm:block ${
-                isScrolled ? "text-black" : "text-white"
+          {/* ===== RIGHT (RTL): بوابة العملاء + Logo ===== */}
+          <div className="flex items-center gap-3 shrink-0">
+            {/* ✅ بوابة العملاء (أقصى اليمين قبل اللوجو) */}
+            <Button
+              asChild
+              variant="outline"
+              className={`hidden lg:flex font-bold px-4 whitespace-nowrap ${
+                isScrolled
+                  ? "border-gold text-gold hover:bg-gold/10"
+                  : "border-gold text-gold bg-transparent hover:bg-white/10"
               }`}
             >
-              <div className="font-bold text-lg leading-tight whitespace-nowrap">
-                بنيان الهرم
+              <a
+                href={PORTAL_LANDING_URL}
+                onClick={(e) => {
+                  e.preventDefault();
+                  goTo(PORTAL_LANDING_URL);
+                }}
+              >
+                بوابة العملاء
+              </a>
+            </Button>
+
+            {/* ===== Logo ===== */}
+            <a
+              href="#hero"
+              onClick={(e) => {
+                e.preventDefault();
+                goTo("#hero");
+              }}
+              className="flex items-center gap-3"
+              aria-label="بنيان الهرم للمقاولات - PYBCCO"
+            >
+              {/* ✅ نص براند موجود دائماً (SEO + Accessibility) */}
+              <span className="sr-only">بنيان الهرم للمقاولات - PYBCCO</span>
+
+              <img
+                src="/assets/logo.png"
+                alt="بنيان الهرم للمقاولات"
+                className="w-12 h-12 object-contain"
+                width={48}
+                height={48}
+                loading="eager"
+                decoding="async"
+              />
+
+              <div
+                className={`hidden sm:block ${
+                  isScrolled ? "text-black" : "text-white"
+                }`}
+              >
+                <div className="font-bold text-lg leading-tight whitespace-nowrap">
+                  بنيان الهرم
+                </div>
+                <p className="text-xs opacity-80 whitespace-nowrap">للمقاولات</p>
               </div>
-              <p className="text-xs opacity-80 whitespace-nowrap">للمقاولات</p>
-            </div>
-          </a>
+            </a>
+          </div>
 
           {/* ✅ Desktop Navigation (CENTER) */}
           <div className="hidden lg:flex items-center justify-center gap-1 flex-1">
@@ -288,18 +310,7 @@ export default function Navbar() {
               </a>
             </Button>
 
-            {/* ✅ بوابة العملاء (المفهرسة) */}
-            <Button
-              asChild
-              variant="outline"
-              className={`font-bold px-4 whitespace-nowrap ${
-                isScrolled
-                  ? "border-gold text-gold hover:bg-gold/10"
-                  : "border-gold text-gold bg-transparent hover:bg-white/10"
-              }`}
-            >
-              <a href={PORTAL_LANDING_URL}>بوابة العملاء</a>
-            </Button>
+            {/* ❌ تم حذف زر بوابة العملاء من اليسار حسب طلبك */}
 
             <Button
               onClick={() => goTo("#contact")}
@@ -358,8 +369,6 @@ export default function Navbar() {
                     </a>
                   ))}
 
-                  {/* ✅ تم حذف "تسجيل دخول العملاء" من الموبايل أيضاً حسب طلبك */}
-
                   <div className="my-4 h-px bg-white/10" />
 
                   <div>
@@ -408,7 +417,10 @@ export default function Navbar() {
                     </div>
                     <div>
                       <p className="text-sm text-white/60">اتصل بنا</p>
-                      <p dir="ltr" className="font-bold whitespace-nowrap tabular-nums">
+                      <p
+                        dir="ltr"
+                        className="font-bold whitespace-nowrap tabular-nums"
+                      >
                         055 060 4837
                       </p>
                     </div>
@@ -428,6 +440,7 @@ export default function Navbar() {
                     </a>
                   </Button>
 
+                  {/* ✅ بوابة العملاء بالموبايل تبقى كما هي */}
                   <Button
                     asChild
                     variant="outline"
