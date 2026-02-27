@@ -347,129 +347,126 @@ export default function Navbar() {
             </SheetTrigger>
 
             <SheetContent
-              side="right"
-              className="w-80 bg-black text-white border-white/10"
+  side="right"
+  className="w-80 bg-black text-white border-white/10"
+>
+  <div className="flex flex-col h-full">
+    {/* ✅ حذف لوجو الموبايل نهائيًا (حتى ما يطلع لوجوين) */}
+    <div className="mb-6">
+      <div className="font-bold">بنيان الهرم</div>
+      <p className="text-xs text-white/60">للمقاولات</p>
+    </div>
+
+    <nav className="flex flex-col gap-1">
+      {navLinks.map((link) => (
+        <a
+          key={link.name}
+          href={link.href}
+          onClick={(e) => {
+            e.preventDefault()
+            goTo(link.href)
+          }}
+          className="px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition"
+        >
+          {link.name}
+        </a>
+      ))}
+
+      <div className="my-4 h-px bg-white/10" />
+
+      <div>
+        <div className="px-4 mb-2 text-xs tracking-wider text-white/50 uppercase">
+          المتجر
+        </div>
+
+        <div className="flex flex-col gap-1">
+          {storeLinks.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={(e) => {
+                e.preventDefault()
+                goTo(item.href)
+              }}
+              className="px-4 py-2 text-sm text-white/90 hover:bg-white/10 hover:text-gold rounded-lg transition"
             >
-              <div className="flex flex-col h-full">
-                {/* ✅ حذف لوجو الموبايل نهائيًا (حتى ما يطلع لوجوين) */}
-                <div className="mb-6">
-                  <div className="font-bold">بنيان الهرم</div>
-                  <p className="text-xs text-white/60">للمقاولات</p>
-                </div>
+              {item.name}
+            </a>
+          ))}
+        </div>
+      </div>
 
-                <nav className="flex flex-col gap-1">
-                  {navLinks.map((link) => (
-                    <a
-                      key={link.name}
-                      href={link.href}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        goTo(link.href);
-                      }}
-                      className="px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition"
-                    >
-                      {link.name}
-                    </a>
-                  ))}
+      <div className="my-4 h-px bg-white/10" />
 
-                  <div className="my-4 h-px bg-white/10" />
+      <a
+        href="/contractor-almalqa-riyadh"
+        onClick={(e) => {
+          e.preventDefault()
+          goTo("/contractor-almalqa-riyadh")
+        }}
+        className="px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition"
+      >
+        مناطق عملنا – حي الملقا
+      </a>
+    </nav>
 
-                  <div>
-                    <div className="px-4 mb-2 text-xs tracking-wider text-white/50 uppercase">
-                      المتجر
-                    </div>
+    <div className="mt-auto pt-6 border-t border-white/10">
+      <a
+        href="tel:+966550604837"
+        className="flex items-center gap-3 mb-4 text-white"
+      >
+        <div className="w-10 h-10 bg-gold/20 rounded-lg flex items-center justify-center">
+          <Phone className="w-5 h-5 text-gold" />
+        </div>
+        <div>
+          <p className="text-sm text-white/60">اتصل بنا</p>
+          <p dir="ltr" className="font-bold whitespace-nowrap tabular-nums">
+            055 060 4837
+          </p>
+        </div>
+      </a>
 
-                    <div className="flex flex-col gap-1">
-                      {storeLinks.map((item) => (
-                        <a
-                          key={item.href}
-                          href={item.href}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            goTo(item.href);
-                          }}
-                          className="px-4 py-2 text-sm text-white/90 hover:bg-white/10 hover:text-gold rounded-lg transition"
-                        >
-                          {item.name}
-                        </a>
-                      ))}
-                    </div>
-                  </div>
+      <Button
+        asChild
+        variant="outline"
+        className="w-full border-gold text-gold hover:bg-white/10 font-bold mb-3 whitespace-nowrap"
+      >
+        <a
+          href="/villa-finishing-price-riyadh"
+          onClick={() => setIsOpen(false)}
+        >
+          <Calculator className="w-5 h-5 ml-2" />
+          احسب التكلفة
+        </a>
+      </Button>
 
-                  <div className="my-4 h-px bg-white/10" />
+      {/* ✅ زر قوي للموبايل فقط: بوابة العملاء (Primary) */}
+      <Button
+        asChild
+        className="w-full bg-gold hover:bg-gold/90 text-black font-bold mb-3 whitespace-nowrap"
+      >
+        <a href={PORTAL_LANDING_URL} onClick={() => setIsOpen(false)}>
+          🔐 دخول العملاء
+        </a>
+      </Button>
 
-                  <a
-                    href="/contractor-almalqa-riyadh"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      goTo("/contractor-almalqa-riyadh");
-                    }}
-                    className="px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition"
-                  >
-                    مناطق عملنا – حي الملقا
-                  </a>
-                </nav>
+      <Button
+        onClick={() => goTo("#contact")}
+        className="w-full bg-gold hover:bg-gold/90 text-black font-bold whitespace-nowrap"
+      >
+        طلب عرض سعر
+      </Button>
 
-                <div className="mt-auto pt-6 border-t border-white/10">
-                  <a
-                    href="tel:+966550604837"
-                    className="flex items-center gap-3 mb-4 text-white"
-                  >
-                    <div className="w-10 h-10 bg-gold/20 rounded-lg flex items-center justify-center">
-                      <Phone className="w-5 h-5 text-gold" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-white/60">اتصل بنا</p>
-                      <p dir="ltr" className="font-bold whitespace-nowrap tabular-nums">
-                        055 060 4837
-                      </p>
-                    </div>
-                  </a>
-
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="w-full border-gold text-gold hover:bg-white/10 font-bold mb-3 whitespace-nowrap"
-                  >
-                    <a
-                      href="/villa-finishing-price-riyadh"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <Calculator className="w-5 h-5 ml-2" />
-                      احسب التكلفة
-                    </a>
-                  </Button>
-
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="w-full border-gold text-gold hover:bg-white/10 font-bold mb-3 whitespace-nowrap"
-                  >
-                    <a
-                      href={PORTAL_LANDING_URL}
-                      onClick={() => setIsOpen(false)}
-                    >
-                      بوابة العملاء
-                    </a>
-                  </Button>
-
-                  <Button
-                    onClick={() => goTo("#contact")}
-                    className="w-full bg-gold hover:bg-gold/90 text-black font-bold whitespace-nowrap"
-                  >
-                    طلب عرض سعر
-                  </Button>
-
-                  <div className="flex items-center justify-center gap-3 mt-4">
-                    <a
-                      href="https://x.com/pybcco"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="X"
-                      className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition"
-                    >
-                      <Twitter className="w-5 h-5 text-white" />
-                    </a>
+      <div className="flex items-center justify-center gap-3 mt-4">
+        <a
+          href="https://x.com/pybcco"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="X"
+          className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition"
+        >
+          <Twitter className="w-5 h-5 text-white" />
+        </a>
 
                     <a
                       href="https://www.linkedin.com/company/pybcco"
