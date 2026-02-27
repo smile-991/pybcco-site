@@ -78,11 +78,11 @@ export default function Navbar() {
       )
   );
 
-  const linkClass = `px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 whitespace-nowrap leading-none ${
+  const linkClass = `px-2.5 py-1.5 text-[12px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 whitespace-nowrap leading-none ${
     isScrolled ? "text-gray-800" : "text-white"
   }`;
 
-  const dropdownBtnClass = `px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
+  const dropdownBtnClass = `px-2.5 py-1.5 text-[12px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
     isScrolled ? "text-gray-800" : "text-white"
   }`;
 
@@ -94,13 +94,13 @@ export default function Navbar() {
       dir="rtl"
     >
       <div className="container-custom">
-        <nav className="flex items-center h-20 gap-3 min-w-0 justify-between flex-nowrap">
+        <nav className="flex items-center h-16 gap-2 min-w-0 justify-between flex-nowrap">
           {/* ===== RIGHT: Portal + Logo ===== */}
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-2 shrink-0">
             <Button
               asChild
               variant="outline"
-              className={`hidden xl:flex font-bold px-4 whitespace-nowrap ${
+              className={`hidden xl:flex font-bold px-3 py-1.5 text-sm whitespace-nowrap ${
                 isScrolled
                   ? "border-gold text-gold hover:bg-gold/10"
                   : "border-gold text-gold bg-transparent hover:bg-white/10"
@@ -123,7 +123,7 @@ export default function Navbar() {
                 e.preventDefault();
                 goTo("#hero");
               }}
-              className="flex items-center gap-3"
+              className="flex items-center gap-2"
               aria-label="بنيان الهرم للمقاولات - PYBCCO"
             >
               <span className="sr-only">بنيان الهرم للمقاولات - PYBCCO</span>
@@ -131,9 +131,9 @@ export default function Navbar() {
               <img
                 src="/assets/logo.png"
                 alt="بنيان الهرم للمقاولات"
-                className="w-12 h-12 object-contain"
-                width={48}
-                height={48}
+                className="w-10 h-10 object-contain"
+                width={40}
+                height={40}
                 loading="eager"
                 decoding="async"
               />
@@ -143,10 +143,12 @@ export default function Navbar() {
                   isScrolled ? "text-black" : "text-white"
                 }`}
               >
-                <div className="font-bold text-lg leading-tight whitespace-nowrap">
+                <div className="font-bold text-[15px] leading-tight whitespace-nowrap">
                   بنيان الهرم
                 </div>
-                <p className="text-xs opacity-80 whitespace-nowrap">للمقاولات</p>
+                <p className="text-[11px] opacity-80 whitespace-nowrap">
+                  للمقاولات
+                </p>
               </div>
             </a>
           </div>
@@ -238,7 +240,7 @@ export default function Navbar() {
                 ))}
               </div>
 
-              {/* المزيد Dropdown (يحل مشكلة تزحلق/ازدحام الزوم) */}
+              {/* المزيد Dropdown */}
               <div className="relative group shrink-0">
                 <button type="button" className={dropdownBtnClass}>
                   المزيد <span className="text-xs">▾</span>
@@ -311,30 +313,30 @@ export default function Navbar() {
             <a
               href="tel:+966550604837"
               aria-label="اتصل بنا"
-              className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+              className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
                 isScrolled
                   ? "bg-black/5 hover:bg-black/10 text-gray-800"
                   : "bg-white/10 hover:bg-white/20 text-white"
               }`}
             >
-              <Phone className="w-4 h-4" />
+              <Phone className="w-3.5 h-3.5" />
             </a>
 
-            {/* ✅ Social (Desktop): 2x2 grid to save width + align with buttons height */}
-            <div className="hidden xl:grid grid-cols-2 gap-2 shrink-0">
+            {/* ✅ Social (Desktop): 2x2 grid smaller */}
+            <div className="hidden xl:grid grid-cols-2 gap-1.5 shrink-0">
               <a
                 href="https://x.com/pybcco"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="X"
-                className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+                className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
                   isScrolled
                     ? "bg-black/5 hover:bg-black/10"
                     : "bg-white/10 hover:bg-white/20"
                 }`}
               >
                 <Twitter
-                  className={`w-4 h-4 ${
+                  className={`w-3.5 h-3.5 ${
                     isScrolled ? "text-gray-800" : "text-white"
                   }`}
                 />
@@ -345,14 +347,14 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+                className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
                   isScrolled
                     ? "bg-black/5 hover:bg-black/10"
                     : "bg-white/10 hover:bg-white/20"
                 }`}
               >
                 <Linkedin
-                  className={`w-4 h-4 ${
+                  className={`w-3.5 h-3.5 ${
                     isScrolled ? "text-gray-800" : "text-white"
                   }`}
                 />
@@ -363,14 +365,14 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+                className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
                   isScrolled
                     ? "bg-black/5 hover:bg-black/10"
                     : "bg-white/10 hover:bg-white/20"
                 }`}
               >
                 <Instagram
-                  className={`w-4 h-4 ${
+                  className={`w-3.5 h-3.5 ${
                     isScrolled ? "text-gray-800" : "text-white"
                   }`}
                 />
@@ -381,14 +383,14 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${
+                className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
                   isScrolled
                     ? "bg-black/5 hover:bg-black/10"
                     : "bg-white/10 hover:bg-white/20"
                 }`}
               >
                 <Facebook
-                  className={`w-4 h-4 ${
+                  className={`w-3.5 h-3.5 ${
                     isScrolled ? "text-gray-800" : "text-white"
                   }`}
                 />
@@ -398,7 +400,7 @@ export default function Navbar() {
             <Button
               asChild
               variant="outline"
-              className={`font-bold px-3 whitespace-nowrap ${
+              className={`font-bold px-2.5 py-1.5 text-sm whitespace-nowrap ${
                 isScrolled
                   ? "border-gold text-gold hover:bg-gold/10"
                   : "border-gold text-gold bg-transparent hover:bg-white/10"
@@ -412,7 +414,7 @@ export default function Navbar() {
 
             <Button
               onClick={() => goTo("#contact")}
-              className="bg-gold hover:bg-gold/90 text-black font-bold px-4 whitespace-nowrap"
+              className="bg-gold hover:bg-gold/90 text-black font-bold px-3 py-1.5 text-sm whitespace-nowrap"
             >
               طلب عرض سعر
             </Button>
