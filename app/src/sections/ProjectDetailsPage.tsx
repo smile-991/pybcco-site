@@ -20,6 +20,17 @@ function money(n: any) {
   return new Intl.NumberFormat("ar-SA").format(x)
 }
 
+function toInt(n: any, fallback = 0) {
+  const x = Number(n)
+  return Number.isFinite(x) ? Math.trunc(x) : fallback
+}
+
+function badgeForMilestone(isDone: boolean) {
+  return isDone
+    ? "bg-green-100 text-green-700"
+    : "bg-gray-100 text-gray-600"
+}
+
 export default function ProjectDetailsPage() {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -83,6 +94,7 @@ export default function ProjectDetailsPage() {
   const documents = Array.isArray(data?.documents) ? data!.documents : []
   const updates = Array.isArray(data?.updates) ? data!.updates : []
   const updatePhotos = Array.isArray(data?.update_photos) ? data!.update_photos : []
+  const milestones = Array.isArray(data?.milestones) ? data!.milestones : []
 
   const docsByType = useMemo(() => {
     const groups: Record<string, any[]> = {
@@ -124,6 +136,25 @@ export default function ProjectDetailsPage() {
     )
   }
 
+  // ✅ Milestone-based progress (يحمي من خلاف "نسبة عشوائية")
+  const normalizedMilestones = milestones
+    .map((m: any) => ({
+      ...m,
+      percentage: toInt(m.percentage, 0),
+      is_done: !!m.is_done,
+    }))
+    .sort((a: any, b: any) => a.percentage - b.percentage)
+
+  const milestoneProgress = normalizedMilestones.reduce((max: number, m: any) => {
+    if (m.is_done) return Math.max(max, toInt(m.percentage, 0))
+    return max
+  }, 0)
+
+  const shownProgress =
+    normalizedMilestones.length > 0 ? milestoneProgress : toInt(project.progress_percent, 0)
+
+  const currentMilestone = normalizedMilestones.find((m: any) => !m.is_done) || null
+
   const total = Number(project.total_amount) || 0
   const paid = payments.reduce((sum: number, p: any) => sum + Number(p.amount || 0), 0)
   const remaining = total - paid
@@ -144,6 +175,15 @@ export default function ProjectDetailsPage() {
       : project.status === "completed"
       ? "bg-blue-100 text-blue-700"
       : "bg-gray-200 text-gray-700"
+
+  // ✅ Next due payment (اختياري) من milestone الحالي إذا موجود
+  const nextDueAmount =
+    currentMilestone && currentMilestone.due_amount != null
+      ? Number(currentMilestone.due_amount || 0)
+      : null
+
+  const nextDueDate =
+    currentMilestone && currentMilestone.due_date ? String(currentMilestone.due_date) : null
 
   return (
     <div className="min-h-screen bg-gray-50 p-6 md:p-10">
@@ -180,16 +220,103 @@ export default function ProjectDetailsPage() {
             </span>
           </div>
 
+          {/* Progress bar */}
           <div className="mt-6">
             <div className="w-full bg-gray-200 rounded-full h-3">
               <div
                 className="bg-yellow-500 h-3 rounded-full transition-all"
-                style={{ width: `${project.progress_percent || 0}%` }}
+                style={{ width: `${shownProgress}%` }}
               />
             </div>
-            <p className="text-xs mt-2 text-gray-600">
-              {project.progress_percent || 0}% Complete
-            </p>
+            <p className="text-xs mt-2 text-gray-600">{shownProgress}% Complete</p>
+
+            {/* ✅ Milestones (B) تحت progress bar */}
+            {normalizedMilestones.length > 0 && (
+              <div className="mt-4 border rounded-2xl bg-gray-50 p-4">
+                <div className="flex items-center justify-between gap-3 flex-wrap">
+                  <h2 className="text-sm font-semibold text-gray-900">
+                    مراحل الإنجاز (تعريف واضح للنسبة)
+                  </h2>
+                  {currentMilestone && (
+                    <div className="text-xs text-gray-600">
+                      المرحلة الحالية:{" "}
+                      <span className="font-semibold text-gray-900">
+                        {toInt(currentMilestone.percentage, 0)}% — {currentMilestone.title}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="mt-3 space-y-2">
+                  {normalizedMilestones.map((m: any) => (
+                    <div
+                      key={m.id}
+                      className="bg-white border rounded-xl p-3 flex items-start justify-between gap-4"
+                    >
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span
+                            className={`text-xs px-3 py-1 rounded-full ${badgeForMilestone(
+                              m.is_done
+                            )}`}
+                          >
+                            {m.is_done ? "✔ مكتملة" : "غير مكتملة"}
+                          </span>
+
+                          <div className="text-sm font-semibold text-gray-900">
+                            {toInt(m.percentage, 0)}% — {m.title}
+                          </div>
+                        </div>
+
+                        {m.note && (
+                          <div className="text-sm text-gray-600 mt-1">{m.note}</div>
+                        )}
+
+                        {(m.due_amount != null || m.due_date) && !m.is_done && (
+                          <div className="text-sm text-gray-700 mt-2">
+                            {m.due_amount != null ? `دفعة متوقعة: ${money(m.due_amount)} SAR` : ""}
+                            {m.due_amount != null && m.due_date ? " — " : ""}
+                            {m.due_date ? `استحقاق: ${formatDate(m.due_date)}` : ""}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="text-xs text-gray-400 shrink-0">
+                        {m.is_done && (m.done_at ? `تم: ${formatDate(m.done_at)}` : "تم")}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* ✅ Current milestone summary + next due (اختياري) */}
+                {currentMilestone && (
+                  <div className="mt-4 text-sm">
+                    {(nextDueAmount != null || nextDueDate) && (
+                      <div className="p-3 rounded-xl border bg-white">
+                        <div className="font-semibold text-gray-900">
+                          الدفعة القادمة (تهيئة للسداد)
+                        </div>
+                        <div className="text-gray-700 mt-1">
+                          {nextDueAmount != null ? `المبلغ: ${money(nextDueAmount)} SAR` : ""}
+                          {nextDueAmount != null && nextDueDate ? " — " : ""}
+                          {nextDueDate ? `تاريخ الاستحقاق: ${formatDate(nextDueDate)}` : ""}
+                        </div>
+                        <div className="text-xs text-gray-500 mt-1">
+                          * يتم توثيق المراحل والدفعات لضمان الشفافية للطرفين.
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* إذا ما في milestones بعد، نعرض بطاقة صغيرة تشرح السبب */}
+            {normalizedMilestones.length === 0 && (
+              <div className="mt-4 text-xs text-gray-500">
+                * نسبة الإنجاز تُعرض كنسبة عامة. (عند تفعيل “مراحل الإنجاز” من الأدمن، تصبح النسبة مرتبطة بمراحل واضحة).
+              </div>
+            )}
           </div>
         </div>
 

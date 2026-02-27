@@ -145,6 +145,13 @@ export async function onRequestGet(context: any) {
     update_photos = Array.isArray(photos) ? photos : []
   }
 
+  // ✅ 6) Milestones (جديد)
+  const milestonesRes = await fetch(
+    `${env.SUPABASE_URL}/rest/v1/project_milestones?project_id=eq.${projectId}&order=percentage.asc&select=*`,
+    { headers }
+  )
+  const milestones = await milestonesRes.json().catch(() => [])
+
   return new Response(
     JSON.stringify({
       project,
@@ -152,6 +159,7 @@ export async function onRequestGet(context: any) {
       documents: Array.isArray(documents) ? documents : [],
       updates: Array.isArray(updates) ? updates : [],
       update_photos,
+      milestones: Array.isArray(milestones) ? milestones : [],
     }),
     { status: 200, headers: { "Content-Type": "application/json" } }
   )

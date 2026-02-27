@@ -51,6 +51,21 @@ type UpdatePhotoRow = {
   created_at?: string | null
 }
 
+// ✅ NEW: project milestones (progress checkpoints)
+type MilestoneRow = {
+  id: string
+  project_id: string
+  percentage: number
+  title: string
+  note?: string | null
+  due_amount?: number | string | null
+  due_date?: string | null
+  is_done: boolean
+  done_at?: string | null
+  sort_order?: number | null
+  created_at?: string | null
+}
+
 async function safeJson(res: Response) {
   const text = await res.text()
   if (!text) return null
@@ -381,7 +396,11 @@ function ClientsAndProjects({ onUnauthorized }: { onUnauthorized: () => void }) 
         {projects.length > 0 && (
           <div className="grid md:grid-cols-2 gap-6 mt-6">
             {projects.map((p) => (
-              <ProjectCard key={p.id} project={p} />
+              <ProjectCard
+                key={p.id}
+                project={p}
+                onMutated={() => selectedClientId && loadProjects(selectedClientId)}
+              />
             ))}
           </div>
         )}
@@ -793,13 +812,29 @@ function DocumentUploader({
   )
 }
 /** ✅ ProjectCard */
-function ProjectCard({ project }: { project: ProjectRow }) {
+function ProjectCard({
+  project,
+  onMutated,
+}: {
+  project: ProjectRow
+  onMutated?: () => void
+}) {
   const [tab, setTab] = useState<"overview" | "payments" | "documents" | "updates">("overview")
 
   // ✅ progress edit states
   const [progressEdit, setProgressEdit] = useState<number>(Number(project.progress_percent || 0))
   const [savingProgress, setSavingProgress] = useState(false)
   const [progressMsg, setProgressMsg] = useState("")
+
+  // ✅ milestones edit states (admin)
+  const [msId, setMsId] = useState<string | null>(null)
+  const [msPercent, setMsPercent] = useState<number>(25)
+  const [msTitle, setMsTitle] = useState("")
+  const [msNote, setMsNote] = useState("")
+  const [msDueAmount, setMsDueAmount] = useState<string>("")
+  const [msDueDate, setMsDueDate] = useState<string>("")
+  const [msSaving, setMsSaving] = useState(false)
+  const [msMsg, setMsMsg] = useState("")
 
   // ✅ sync if project changes / refresh
   useEffect(() => {
@@ -811,6 +846,7 @@ function ProjectCard({ project }: { project: ProjectRow }) {
   const [_documents, setDocuments] = useState<DocumentRow[]>([])
   const [updates, setUpdates] = useState<UpdateRow[]>([])
   const [updatePhotos, setUpdatePhotos] = useState<UpdatePhotoRow[]>([])
+  const [milestones, setMilestones] = useState<MilestoneRow[]>([])
   const [loadingDetails, setLoadingDetails] = useState(false)
 
   // ✅ NEW: comments states
@@ -838,6 +874,7 @@ function ProjectCard({ project }: { project: ProjectRow }) {
         setDocuments([])
         setUpdates([])
         setUpdatePhotos([])
+        setMilestones([])
         return
       }
 
@@ -845,11 +882,13 @@ function ProjectCard({ project }: { project: ProjectRow }) {
       setDocuments(Array.isArray(data?.documents) ? data.documents : [])
       setUpdates(Array.isArray(data?.updates) ? data.updates : [])
       setUpdatePhotos(Array.isArray(data?.update_photos) ? data.update_photos : [])
+      setMilestones(Array.isArray(data?.milestones) ? data.milestones : [])
     } catch {
       setPayments([])
       setDocuments([])
       setUpdates([])
       setUpdatePhotos([])
+      setMilestones([])
     } finally {
       setLoadingDetails(false)
     }
@@ -942,9 +981,141 @@ function ProjectCard({ project }: { project: ProjectRow }) {
     }
   }
 
+  // ✅ milestones APIs (admin)
+  const resetMsForm = () => {
+    setMsId(null)
+    setMsPercent(25)
+    setMsTitle("")
+    setMsNote("")
+    setMsDueAmount("")
+    setMsDueDate("")
+  }
+
+  const startEditMilestone = (m: MilestoneRow) => {
+    setMsMsg("")
+    setMsId(m.id)
+    setMsPercent(clamp01to100(Number(m.percentage || 0)))
+    setMsTitle(String(m.title || ""))
+    setMsNote(String(m.note || ""))
+    setMsDueAmount(m.due_amount === null || typeof m.due_amount === "undefined" ? "" : String(m.due_amount))
+    setMsDueDate(m.due_date ? String(m.due_date) : "")
+  }
+
+  const saveMilestone = async () => {
+    setMsMsg("")
+
+    const pct = clamp01to100(Number(msPercent))
+    const title = msTitle.trim()
+    const note = msNote.trim()
+    const dueAmount = msDueAmount.trim()
+    const dueDate = msDueDate.trim()
+
+    if (!title || pct <= 0) {
+      setMsMsg("الرجاء إدخال نسبة + عنوان")
+      return
+    }
+
+    setMsSaving(true)
+    try {
+      const res = await fetch("/api/save-milestone", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          id: msId,
+          project_id: project.id,
+          percentage: pct,
+          title,
+          note: note || null,
+          due_amount: dueAmount ? Number(dueAmount) : null,
+          due_date: dueDate || null,
+        }),
+      })
+
+      const json = await safeJson(res)
+      if (!res.ok) {
+        setMsMsg(json?.error || "تعذر حفظ المرحلة")
+        return
+      }
+
+      setMsMsg("تم الحفظ ✅")
+      resetMsForm()
+      await loadDetails()
+      onMutated?.()
+    } catch {
+      setMsMsg("Network error")
+    } finally {
+      setMsSaving(false)
+    }
+  }
+
+  const toggleMilestoneDone = async (m: MilestoneRow, isDone: boolean) => {
+    setMsMsg("")
+    try {
+      const res = await fetch("/api/toggle-milestone-done", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ id: m.id, is_done: isDone }),
+      })
+
+      const json = await safeJson(res)
+      if (!res.ok) {
+        setMsMsg(json?.error || "تعذر تحديث الحالة")
+        return
+      }
+
+      // ✅ sync project.progress_percent automatically based on max done milestone
+      await loadDetails()
+      const after = Array.isArray(json?.milestones) ? (json.milestones as MilestoneRow[]) : null
+      const list = after || milestones
+      const done = list.filter((x) => !!x.is_done)
+      const max = done.reduce((acc, x) => Math.max(acc, Number(x.percentage || 0)), 0)
+
+      await fetch("/api/update-project-progress", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ project_id: project.id, progress_percent: clamp01to100(max) }),
+      }).catch(() => {})
+
+      onMutated?.()
+    } catch {
+      setMsMsg("Network error")
+    }
+  }
+
+  const deleteMilestone = async (m: MilestoneRow) => {
+    const ok = confirm("حذف المرحلة؟")
+    if (!ok) return
+
+    setMsMsg("")
+    try {
+      const res = await fetch("/api/delete-milestone", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ id: m.id }),
+      })
+
+      const json = await safeJson(res)
+      if (!res.ok) {
+        setMsMsg(json?.error || "تعذر الحذف")
+        return
+      }
+
+      setMsMsg("تم الحذف ✅")
+      await loadDetails()
+      onMutated?.()
+    } catch {
+      setMsMsg("Network error")
+    }
+  }
+
   // ✅ load details when needed based on tab
   useEffect(() => {
-    if (tab === "payments" || tab === "documents" || tab === "updates") {
+    // Overview now needs milestones too
+    if (tab === "overview" || tab === "payments" || tab === "documents" || tab === "updates") {
       loadDetails()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -960,6 +1131,35 @@ function ProjectCard({ project }: { project: ProjectRow }) {
 
   const totalPaid = payments.reduce((sum, p) => sum + Number(p.amount || 0), 0)
   const remaining = Number(project.total_amount || 0) - totalPaid
+
+  // ✅ milestones helpers
+  const milestonesSorted = useMemo(() => {
+    const arr = Array.isArray(milestones) ? [...milestones] : []
+    // prefer explicit sort_order, fallback to percentage
+    arr.sort((a, b) => {
+      const soA = a.sort_order ?? null
+      const soB = b.sort_order ?? null
+      if (soA !== null && soB !== null && soA !== soB) return soA - soB
+      if (soA !== null && soB === null) return -1
+      if (soA === null && soB !== null) return 1
+      return Number(a.percentage || 0) - Number(b.percentage || 0)
+    })
+    return arr
+  }, [milestones])
+
+  const donePercent = useMemo(() => {
+    const done = milestonesSorted.filter((m) => !!m.is_done)
+    const max = done.reduce((acc, m) => Math.max(acc, Number(m.percentage || 0)), 0)
+    return clamp01to100(max)
+  }, [milestonesSorted])
+
+  const nextDue = useMemo(() => {
+    // next milestone not done
+    const nxt = milestonesSorted.find((m) => !m.is_done)
+    return nxt || null
+  }, [milestonesSorted])
+
+  const hasMilestones = milestonesSorted.length > 0
 
   return (
     <div className="border rounded-xl p-5 shadow-sm bg-white">
@@ -1012,43 +1212,291 @@ function ProjectCard({ project }: { project: ProjectRow }) {
       {tab === "overview" && (
         <div className="mt-4 space-y-2 text-sm">
           <div>
-            Progress: <b>{project.progress_percent || 0}%</b>
+            Progress: <b>{hasMilestones ? donePercent : project.progress_percent || 0}%</b>
           </div>
 
-          {/* ✅ edit + slider + save */}
-          <div className="mt-3 border-t pt-3">
-            <div className="flex items-center gap-3 flex-wrap">
-              <label className="text-sm text-gray-700">Progress %</label>
+          {/* ✅ Milestones (preferred) OR Manual progress */}
+          {!hasMilestones ? (
+            <div className="mt-3 border-t pt-3">
+              <div className="flex items-center gap-3 flex-wrap">
+                <label className="text-sm text-gray-700">Progress %</label>
 
-              <input
-                type="number"
-                min={0}
-                max={100}
-                value={progressEdit}
-                onChange={(e) => setProgressEdit(clamp01to100(Number(e.target.value)))}
-                className="w-24 border rounded-lg px-3 py-2 text-sm"
-              />
+                <input
+                  type="number"
+                  min={0}
+                  max={100}
+                  value={progressEdit}
+                  onChange={(e) => setProgressEdit(clamp01to100(Number(e.target.value)))}
+                  className="w-24 border rounded-lg px-3 py-2 text-sm"
+                />
 
-              <input
-                type="range"
-                min={0}
-                max={100}
-                value={progressEdit}
-                onChange={(e) => setProgressEdit(clamp01to100(Number(e.target.value)))}
-                className="w-56"
-              />
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={progressEdit}
+                  onChange={(e) => setProgressEdit(clamp01to100(Number(e.target.value)))}
+                  className="w-56"
+                />
 
-              <button
-                onClick={saveProgress}
-                disabled={savingProgress}
-                className="px-4 py-2 rounded-lg bg-black text-white text-sm disabled:opacity-60"
-              >
-                {savingProgress ? "Saving..." : "Save"}
-              </button>
+                <button
+                  onClick={saveProgress}
+                  disabled={savingProgress}
+                  className="px-4 py-2 rounded-lg bg-black text-white text-sm disabled:opacity-60"
+                >
+                  {savingProgress ? "Saving..." : "Save"}
+                </button>
+              </div>
+
+              {progressMsg && <div className="text-xs mt-2 text-gray-600">{progressMsg}</div>}
+
+              {/* enable milestones (optional) */}
+              <div className="mt-4 rounded-2xl border bg-white p-4">
+                <div className="mb-2 text-sm font-semibold">📍 تفعيل مراحل الإنجاز (اختياري)</div>
+                <div className="text-xs text-gray-600">
+                  إذا بدك تمنع الخلاف على النسبة وتخليها مرتبطة ببنود واضحة، ابدأ بإضافة أول مرحلة.
+                  بمجرد إضافة milestones للمشروع، رح يتحول النظام تلقائياً لحساب النسبة من المراحل.
+                </div>
+
+                {msMsg ? (
+                  <div className="mt-3 rounded-lg border bg-gray-50 p-2 text-xs text-gray-700">
+                    {msMsg}
+                  </div>
+                ) : null}
+
+                <div className="mt-3 rounded-xl border bg-gray-50 p-3">
+                  <div className="text-xs font-semibold mb-2">
+                    {msId ? "تعديل مرحلة" : "إضافة أول مرحلة"}
+                  </div>
+
+                  <div className="grid md:grid-cols-4 gap-2">
+                    <input
+                      type="number"
+                      min={0}
+                      max={100}
+                      value={msPercent}
+                      onChange={(e) => setMsPercent(clamp01to100(Number(e.target.value)))}
+                      className="border rounded-lg px-3 py-2 text-sm"
+                      placeholder="النسبة %"
+                    />
+                    <input
+                      value={msTitle}
+                      onChange={(e) => setMsTitle(e.target.value)}
+                      className="border rounded-lg px-3 py-2 text-sm md:col-span-2"
+                      placeholder="عنوان المرحلة"
+                    />
+                    <input
+                      value={msDueAmount}
+                      onChange={(e) => setMsDueAmount(e.target.value)}
+                      className="border rounded-lg px-3 py-2 text-sm"
+                      placeholder="مبلغ متوقع (اختياري)"
+                    />
+                    <input
+                      value={msDueDate}
+                      onChange={(e) => setMsDueDate(e.target.value)}
+                      className="border rounded-lg px-3 py-2 text-sm"
+                      placeholder="تاريخ متوقع (YYYY-MM-DD)"
+                    />
+                    <textarea
+                      value={msNote}
+                      onChange={(e) => setMsNote(e.target.value)}
+                      className="border rounded-lg px-3 py-2 text-sm md:col-span-4 min-h-[70px]"
+                      placeholder="ملاحظة واضحة للعميل (مصداقية نسبة الإنجاز)"
+                    />
+                  </div>
+
+                  <div className="mt-3 flex gap-2">
+                    <button
+                      type="button"
+                      onClick={saveMilestone}
+                      disabled={msSaving}
+                      className="rounded-lg bg-yellow-500 px-4 py-2 text-sm font-semibold text-black hover:bg-yellow-600 disabled:opacity-60"
+                    >
+                      {msSaving ? "Saving..." : "Save milestone"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={resetMsForm}
+                      className="rounded-lg border px-4 py-2 text-sm hover:bg-white"
+                    >
+                      Clear
+                    </button>
+                  </div>
+
+                  <div className="mt-2 text-[11px] text-gray-500">
+                    * إذا ظهرت رسالة 404: يعني لازم نضيف endpoints milestones في Cloudflare Functions.
+                  </div>
+                </div>
+              </div>
             </div>
+          ) : (
+            <div className="mt-3 border-t pt-3">
+              <div className="text-xs text-gray-600">
+                ✅ تم تفعيل نظام المراحل (Milestones). نسبة الإنجاز تُحسب تلقائياً من آخر مرحلة مكتملة.
+              </div>
 
-            {progressMsg && <div className="text-xs mt-2 text-gray-600">{progressMsg}</div>}
-          </div>
+              {/* progress bar */}
+              <div className="mt-2">
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div
+                    className="bg-yellow-500 h-2 rounded-full transition-all"
+                    style={{ width: `${donePercent}%` }}
+                  />
+                </div>
+                <div className="mt-1 text-[11px] text-gray-500">
+                  الحالية: {donePercent}%
+                  {nextDue?.title ? ` • التالية: ${nextDue.percentage}% (${nextDue.title})` : ""}
+                </div>
+              </div>
+
+              {/* milestones list + editor */}
+              <div className="mt-4 rounded-2xl border bg-white p-4">
+                <div className="mb-3 flex items-center justify-between">
+                  <div className="text-sm font-semibold">📍 مراحل الإنجاز</div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      resetMsForm()
+                      setMsMsg("")
+                    }}
+                    className="rounded-lg border px-3 py-1 text-xs hover:bg-gray-50"
+                  >
+                    مرحلة جديدة
+                  </button>
+                </div>
+
+                {msMsg ? (
+                  <div className="mb-3 rounded-lg border bg-gray-50 p-2 text-xs text-gray-700">
+                    {msMsg}
+                  </div>
+                ) : null}
+
+                <div className="space-y-2">
+                  {milestonesSorted.map((m) => (
+                    <div key={m.id} className="rounded-xl border p-3">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <div className="font-semibold text-sm">
+                            {m.percentage}% — {m.title}
+                          </div>
+                          {m.note ? <div className="text-xs text-gray-600 mt-1">{m.note}</div> : null}
+
+                          {(m.due_amount || m.due_date) && (
+                            <div className="mt-1 text-[11px] text-gray-500">
+                              {m.due_amount ? `مبلغ متوقع: ${m.due_amount} SAR` : ""}
+                              {m.due_amount && m.due_date ? " • " : ""}
+                              {m.due_date ? `تاريخ متوقع: ${m.due_date}` : ""}
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="flex flex-col gap-2 items-end">
+                          <span
+                            className={`text-[11px] px-2 py-1 rounded-full border ${
+                              m.is_done
+                                ? "bg-green-50 text-green-700 border-green-200"
+                                : "bg-gray-50 text-gray-700 border-gray-200"
+                            }`}
+                          >
+                            {m.is_done ? "Done" : "Not done"}
+                          </span>
+
+                          <div className="flex gap-2 flex-wrap justify-end">
+                            <button
+                              type="button"
+                              onClick={() => toggleMilestoneDone(m, !m.is_done)}
+                              className="rounded-lg bg-black text-white px-3 py-1 text-xs"
+                            >
+                              {m.is_done ? "Undo" : "Mark done"}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => startEditMilestone(m)}
+                              className="rounded-lg border px-3 py-1 text-xs hover:bg-gray-50"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => deleteMilestone(m)}
+                              className="rounded-lg border border-red-200 text-red-600 px-3 py-1 text-xs hover:bg-red-50"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* editor */}
+                <div className="mt-4 rounded-xl border bg-gray-50 p-3">
+                  <div className="text-xs font-semibold mb-2">
+                    {msId ? "تعديل مرحلة" : "إضافة مرحلة"}
+                  </div>
+
+                  <div className="grid md:grid-cols-4 gap-2">
+                    <input
+                      type="number"
+                      min={0}
+                      max={100}
+                      value={msPercent}
+                      onChange={(e) => setMsPercent(clamp01to100(Number(e.target.value)))}
+                      className="border rounded-lg px-3 py-2 text-sm"
+                      placeholder="النسبة %"
+                    />
+                    <input
+                      value={msTitle}
+                      onChange={(e) => setMsTitle(e.target.value)}
+                      className="border rounded-lg px-3 py-2 text-sm md:col-span-2"
+                      placeholder="عنوان المرحلة"
+                    />
+                    <input
+                      value={msDueAmount}
+                      onChange={(e) => setMsDueAmount(e.target.value)}
+                      className="border rounded-lg px-3 py-2 text-sm"
+                      placeholder="مبلغ متوقع (اختياري)"
+                    />
+                    <input
+                      value={msDueDate}
+                      onChange={(e) => setMsDueDate(e.target.value)}
+                      className="border rounded-lg px-3 py-2 text-sm"
+                      placeholder="تاريخ متوقع (YYYY-MM-DD)"
+                    />
+                    <textarea
+                      value={msNote}
+                      onChange={(e) => setMsNote(e.target.value)}
+                      className="border rounded-lg px-3 py-2 text-sm md:col-span-4 min-h-[70px]"
+                      placeholder="ملاحظة واضحة للعميل (مصداقية نسبة الإنجاز)"
+                    />
+                  </div>
+
+                  <div className="mt-3 flex gap-2">
+                    <button
+                      type="button"
+                      onClick={saveMilestone}
+                      disabled={msSaving}
+                      className="rounded-lg bg-yellow-500 px-4 py-2 text-sm font-semibold text-black hover:bg-yellow-600 disabled:opacity-60"
+                    >
+                      {msSaving ? "Saving..." : "Save milestone"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={resetMsForm}
+                      className="rounded-lg border px-4 py-2 text-sm hover:bg-white"
+                    >
+                      Clear
+                    </button>
+                  </div>
+
+                  <div className="mt-2 text-[11px] text-gray-500">
+                    * إذا ظهرت رسالة 404: يعني لازم نضيف endpoints milestones في Cloudflare Functions.
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* ✅ NEW: Comments + Admin Reply UI (under Progress) */}
           <div className="mt-4 rounded-2xl border bg-white p-4">
