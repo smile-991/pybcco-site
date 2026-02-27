@@ -1,11 +1,14 @@
 export const onRequest = async (context: any) => {
   const { request, env } = context
 
+  const origin = request.headers.get("Origin") || "*"
   const corsHeaders: Record<string, string> = {
-    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Origin": origin === "null" ? "*" : origin,
     "Access-Control-Allow-Methods": "POST,OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Headers": "Content-Type,x-client-token",
+    "Access-Control-Allow-Credentials": "true",
     "Content-Type": "application/json",
+    Vary: "Origin",
   }
 
   if (request.method === "OPTIONS") {
@@ -13,29 +16,32 @@ export const onRequest = async (context: any) => {
   }
 
   if (request.method !== "POST") {
-    return new Response(JSON.stringify({ error: "Method Not Allowed" }), {
+    return new Response(JSON.stringify({ error: "Method Not Allowed", method: request.method }), {
       status: 405,
       headers: corsHeaders,
     })
   }
 
   try {
-    // ✅ Cloudflare يدعم request.formData()
     const form = await request.formData()
 
-    const file = form.get("file") as File | null
-    const folder = String(form.get("folder") || "").trim() // مثال: "documents" أو "updates"
+    const fileAny = form.get("file")
+    const file = fileAny instanceof File ? fileAny : null
+
+    const folder = String(form.get("folder") || "").trim()
     const projectId = String(form.get("project_id") || "").trim()
-    const kind = String(form.get("kind") || "").trim() // "document" | "update_photo" (اختياري)
+    const kind = String(form.get("kind") || "").trim()
 
     if (!file) {
-      return new Response(JSON.stringify({ error: "No file provided (field name must be: file)" }), {
-        status: 400,
-        headers: corsHeaders,
-      })
+      return new Response(
+        JSON.stringify({
+          error: "No file provided (field name must be: file)",
+          debug: { gotType: typeof fileAny, gotValue: fileAny ? String(fileAny).slice(0, 80) : null },
+        }),
+        { status: 400, headers: corsHeaders }
+      )
     }
 
-    // ✅ اختياري: إذا بدك تلزم project_id
     if (!projectId) {
       return new Response(JSON.stringify({ error: "project_id is required" }), {
         status: 400,
@@ -43,7 +49,7 @@ export const onRequest = async (context: any) => {
       })
     }
 
-    const BUCKET = "project-files" // 🔴 غيّرها إذا Bucket عندك اسمها مختلف في Supabase Storage
+    const BUCKET = "project-files" // ✅ تأكد هذا الاسم مطابق بالـ Supabase Storage
 
     const ext = (() => {
       const n = file.name || "file"
@@ -55,16 +61,15 @@ export const onRequest = async (context: any) => {
     const ts = Date.now()
     const rand = Math.random().toString(16).slice(2)
 
-    // مسار التخزين داخل الباكت
-    const pathParts = [
+    const finalFolder = folder || (kind === "update_photo" ? "updates" : "documents")
+
+    const objectPath = [
       "projects",
       projectId,
-      folder || (kind === "update_photo" ? "updates" : "documents"),
+      finalFolder,
       `${ts}-${rand}${safeExt}`,
-    ]
-    const objectPath = pathParts.filter(Boolean).join("/")
+    ].join("/")
 
-    // ✅ رفع الملف على Supabase Storage
     const uploadUrl = `${env.SUPABASE_URL}/storage/v1/object/${BUCKET}/${objectPath}`
 
     const upRes = await fetch(uploadUrl, {
@@ -79,6 +84,7 @@ export const onRequest = async (context: any) => {
     })
 
     const upText = await upRes.text()
+
     if (!upRes.ok) {
       return new Response(
         JSON.stringify({
@@ -86,23 +92,18 @@ export const onRequest = async (context: any) => {
           status: upRes.status,
           details: upText,
           uploadUrl,
+          objectPath,
         }),
         { status: 500, headers: corsHeaders }
       )
     }
 
-    // ✅ توليد Public URL
-    // لازم الباكت تكون Public أو تستخدم Signed URL (لكن خلّينا Public لأنه أسهل للبوابة)
     const publicUrl = `${env.SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${objectPath}`
 
-    return new Response(
-      JSON.stringify({
-        ok: true,
-        path: objectPath,
-        url: publicUrl,
-      }),
-      { status: 200, headers: corsHeaders }
-    )
+    return new Response(JSON.stringify({ ok: true, path: objectPath, url: publicUrl }), {
+      status: 200,
+      headers: corsHeaders,
+    })
   } catch (e: any) {
     return new Response(
       JSON.stringify({ error: "Internal Server Error", message: e?.message || String(e) }),
