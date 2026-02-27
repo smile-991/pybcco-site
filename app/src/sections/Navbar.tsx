@@ -13,7 +13,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const PORTAL_LANDING_URL = "/project-tracking-system-riyadh"; // ✅ مفهرس + للإعلانات
 
-// ✅ روابط الناف الأساسية (بدون بوابة العملاء بالنص)
+// ✅ روابط الناف الأساسية
 const navLinks = [
   { name: "الرئيسية", href: "#hero", type: "scroll" as const },
   { name: "من نحن", href: "#about", type: "scroll" as const },
@@ -24,7 +24,7 @@ const navLinks = [
   { name: "جميع المشاريع", href: "/projects", type: "route" as const },
 ];
 
-// ✅ روابط المتجر (Navbar Dropdown)
+// ✅ روابط المتجر
 const storeLinks = [
   { name: "واجهة المتجر", href: "/decor" },
   { name: "بديل الخشب", href: "/decor/wood" },
@@ -43,14 +43,12 @@ export default function Navbar() {
   }, []);
 
   const goTo = (href: string) => {
-    // لو رابط صفحة
     if (!href.startsWith("#")) {
       window.location.href = href;
       setIsOpen(false);
       return;
     }
 
-    // لو نحن على الهوم → سكروول
     if (window.location.pathname === "/") {
       const el = document.querySelector(href);
       if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -58,20 +56,19 @@ export default function Navbar() {
       return;
     }
 
-    // لو على صفحة ثانية → رجع للهوم مع الهاش
     window.location.href = `/${href}`;
     setIsOpen(false);
   };
 
-  // ✅ ألغينا "المزيد" وصارت الروابط كلها مباشرة بالنافبار
+  // ✅ روابط الديسكتوب (بدون "المزيد")
   const desktopLinks = [
-    navLinks[0], // الرئيسية
-    navLinks[1], // من نحن
-    navLinks[2], // خدماتنا
-    navLinks[3], // معرض الأعمال
-    navLinks[4], // فريق العمل  ✅ (طلعناه لبرا)
-    navLinks[5], // تواصل معنا
-    navLinks[6], // جميع المشاريع ✅ (طلعناه لبرا)
+    navLinks[0],
+    navLinks[1],
+    navLinks[2],
+    navLinks[3],
+    navLinks[4],
+    navLinks[5],
+    navLinks[6],
   ];
 
   return (
@@ -82,14 +79,14 @@ export default function Navbar() {
       dir="rtl"
     >
       <div className="container-custom">
-        <nav className="flex items-center h-20 gap-3 min-w-0">
-          {/* ===== RIGHT (RTL): بوابة العملاء + Logo ===== */}
+        <nav className="flex items-center h-20 gap-3 min-w-0 justify-between flex-nowrap">
+          {/* ===== RIGHT: Portal + Logo ===== */}
           <div className="flex items-center gap-3 shrink-0">
-            {/* ✅ بوابة العملاء (أقصى اليمين قبل اللوجو) */}
+            {/* ✅ بوابة العملاء (تظهر فقط على XL وفوق لتخفيف الزحمة) */}
             <Button
               asChild
               variant="outline"
-              className={`hidden lg:flex font-bold px-4 whitespace-nowrap ${
+              className={`hidden xl:flex font-bold px-4 whitespace-nowrap ${
                 isScrolled
                   ? "border-gold text-gold hover:bg-gold/10"
                   : "border-gold text-gold bg-transparent hover:bg-white/10"
@@ -141,8 +138,8 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* ✅ Desktop Navigation (CENTER) */}
-          <div className="hidden lg:flex items-center justify-center gap-1 flex-1 min-w-0">
+          {/* ✅ Desktop Navigation (CENTER) — فقط XL وفوق لمنع التراكب */}
+          <div className="hidden xl:flex items-center justify-center gap-1 flex-1 min-w-0">
             {desktopLinks.map((link) => (
               <a
                 key={link.name}
@@ -159,16 +156,15 @@ export default function Navbar() {
               </a>
             ))}
 
-            {/* ===== المتجر Dropdown (Desktop) ===== */}
-            <div className="relative group">
+            {/* المتجر Dropdown */}
+            <div className="relative group shrink-0">
               <button
                 type="button"
                 className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
                   isScrolled ? "text-gray-800" : "text-white"
                 }`}
               >
-                المتجر
-                <span className="text-xs">▾</span>
+                المتجر <span className="text-xs">▾</span>
               </button>
 
               <div className="absolute right-0 mt-2 w-64 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden z-50">
@@ -188,16 +184,15 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* ===== مناطق عملنا Dropdown (Desktop) ===== */}
-            <div className="relative group">
+            {/* مناطق عملنا Dropdown */}
+            <div className="relative group shrink-0">
               <button
                 type="button"
                 className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
                   isScrolled ? "text-gray-800" : "text-white"
                 }`}
               >
-                مناطق عملنا
-                <span className="text-xs">▾</span>
+                مناطق عملنا <span className="text-xs">▾</span>
               </button>
 
               <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
@@ -213,13 +208,10 @@ export default function Navbar() {
                 </a>
               </div>
             </div>
-
-            {/* ❌ تم حذف Dropdown "المزيد" بالكامل */}
           </div>
 
-          {/* ===== CTA Desktop (LEFT) ===== */}
-          <div className="hidden lg:flex items-center gap-2 shrink-0">
-            {/* ✅ تلفون: أيقونة فقط بدون رقم */}
+          {/* ===== CTA Desktop (LEFT) — فقط XL وفوق */}
+          <div className="hidden xl:flex items-center gap-2 shrink-0">
             <a
               href="tel:+966550604837"
               aria-label="اتصل بنا"
@@ -232,8 +224,7 @@ export default function Navbar() {
               <Phone className="w-4 h-4" />
             </a>
 
-            {/* Social (Desktop) - فقط على XL لتخفيف الزحمة */}
-            <div className="hidden xl:flex items-center gap-2">
+            <div className="hidden 2xl:flex items-center gap-2">
               <a
                 href="https://x.com/pybcco"
                 target="_blank"
@@ -307,7 +298,6 @@ export default function Navbar() {
               </a>
             </div>
 
-            {/* Calculator CTA */}
             <Button
               asChild
               variant="outline"
@@ -331,9 +321,9 @@ export default function Navbar() {
             </Button>
           </div>
 
-          {/* ===== Mobile Menu ===== */}
+          {/* ===== Mobile/Tablet Menu (يشتغل لحد XL) ===== */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="lg:hidden">
+            <SheetTrigger asChild className="xl:hidden">
               <Button
                 variant="ghost"
                 size="icon"
@@ -349,7 +339,6 @@ export default function Navbar() {
               className="w-80 bg-black text-white border-white/10"
             >
               <div className="flex flex-col h-full">
-                {/* ✅ تم حذف تكرار اللوجو داخل الموبايل منيو (صار اللوجو واحد فقط بالهيدر) */}
                 <div className="flex items-center gap-3 mb-8">
                   <div>
                     <div className="font-bold">بنيان الهرم</div>
@@ -420,10 +409,7 @@ export default function Navbar() {
                     </div>
                     <div>
                       <p className="text-sm text-white/60">اتصل بنا</p>
-                      <p
-                        dir="ltr"
-                        className="font-bold whitespace-nowrap tabular-nums"
-                      >
+                      <p dir="ltr" className="font-bold whitespace-nowrap tabular-nums">
                         055 060 4837
                       </p>
                     </div>
@@ -448,7 +434,10 @@ export default function Navbar() {
                     variant="outline"
                     className="w-full border-gold text-gold hover:bg-white/10 font-bold mb-3 whitespace-nowrap"
                   >
-                    <a href={PORTAL_LANDING_URL} onClick={() => setIsOpen(false)}>
+                    <a
+                      href={PORTAL_LANDING_URL}
+                      onClick={() => setIsOpen(false)}
+                    >
                       بوابة العملاء
                     </a>
                   </Button>
