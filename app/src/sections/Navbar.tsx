@@ -79,10 +79,11 @@ export default function Navbar() {
       dir="rtl"
     >
       <div className="container-custom">
+        {/* ✅ مهم: flex-nowrap لمنع أي تراكم */}
         <nav className="flex items-center h-20 gap-3 min-w-0 justify-between flex-nowrap">
           {/* ===== RIGHT: Portal + Logo ===== */}
           <div className="flex items-center gap-3 shrink-0">
-            {/* ✅ بوابة العملاء (تظهر فقط على XL وفوق لتخفيف الزحمة) */}
+            {/* ✅ بوابة العملاء: نخليها XL وفوق لتخفيف الزحمة */}
             <Button
               asChild
               variant="outline"
@@ -138,8 +139,16 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* ✅ Desktop Navigation (CENTER) — فقط XL وفوق لمنع التراكب */}
-          <div className="hidden xl:flex items-center justify-center gap-1 flex-1 min-w-0">
+          {/* ✅ Desktop Navigation (CENTER) */}
+          {/* 🔥 الحل: نمنع التراكم عبر overflow-x-auto (سكرول أفقي) */}
+          <div
+            className="
+              hidden lg:flex flex-1 min-w-0 items-center justify-center gap-1
+              overflow-x-auto whitespace-nowrap
+              [-ms-overflow-style:none] [scrollbar-width:none]
+              [&::-webkit-scrollbar]:hidden
+            "
+          >
             {desktopLinks.map((link) => (
               <a
                 key={link.name}
@@ -210,8 +219,9 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* ===== CTA Desktop (LEFT) — فقط XL وفوق */}
-          <div className="hidden xl:flex items-center gap-2 shrink-0">
+          {/* ===== CTA Desktop (LEFT) ===== */}
+          <div className="hidden lg:flex items-center gap-2 shrink-0">
+            {/* ✅ تلفون */}
             <a
               href="tel:+966550604837"
               aria-label="اتصل بنا"
@@ -224,6 +234,7 @@ export default function Navbar() {
               <Phone className="w-4 h-4" />
             </a>
 
+            {/* ✅ السوشيال: فقط 2XL وفوق (لتخفيف التزاحم) */}
             <div className="hidden 2xl:flex items-center gap-2">
               <a
                 href="https://x.com/pybcco"
@@ -298,6 +309,7 @@ export default function Navbar() {
               </a>
             </div>
 
+            {/* Calculator CTA */}
             <Button
               asChild
               variant="outline"
@@ -321,9 +333,9 @@ export default function Navbar() {
             </Button>
           </div>
 
-          {/* ===== Mobile/Tablet Menu (يشتغل لحد XL) ===== */}
+          {/* ===== Mobile Menu ===== */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="xl:hidden">
+            <SheetTrigger asChild className="lg:hidden">
               <Button
                 variant="ghost"
                 size="icon"
@@ -339,11 +351,10 @@ export default function Navbar() {
               className="w-80 bg-black text-white border-white/10"
             >
               <div className="flex flex-col h-full">
-                <div className="flex items-center gap-3 mb-8">
-                  <div>
-                    <div className="font-bold">بنيان الهرم</div>
-                    <p className="text-xs text-white/60">للمقاولات</p>
-                  </div>
+                {/* ✅ حذف لوجو الموبايل نهائيًا (حتى ما يطلع لوجوين) */}
+                <div className="mb-6">
+                  <div className="font-bold">بنيان الهرم</div>
+                  <p className="text-xs text-white/60">للمقاولات</p>
                 </div>
 
                 <nav className="flex flex-col gap-1">
