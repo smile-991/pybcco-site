@@ -59,8 +59,8 @@ export default function Navbar() {
     setIsOpen(false);
   };
 
-  // ✅ روابط الديسكتوب (بدون "المزيد") — مصفوفة واضحة بدل indexes
-  const desktopLinks = navLinks;
+  // ✅ روابط الديسكتوب — الروابط العادية فقط (التي داخل سكرول)
+  const desktopSimpleLinks = navLinks;
 
   return (
     <header
@@ -70,11 +70,9 @@ export default function Navbar() {
       dir="rtl"
     >
       <div className="container-custom">
-        {/* ✅ مهم: flex-nowrap لمنع أي تراكم */}
         <nav className="flex items-center h-20 gap-3 min-w-0 justify-between flex-nowrap">
           {/* ===== RIGHT: Portal + Logo ===== */}
           <div className="flex items-center gap-3 shrink-0">
-            {/* ✅ بوابة العملاء: نخليها XL وفوق لتخفيف الزحمة */}
             <Button
               asChild
               variant="outline"
@@ -95,7 +93,6 @@ export default function Navbar() {
               </a>
             </Button>
 
-            {/* ===== Logo (واحد فقط) ===== */}
             <a
               href="#hero"
               onClick={(e) => {
@@ -131,88 +128,92 @@ export default function Navbar() {
           </div>
 
           {/* ✅ Desktop Navigation (CENTER) */}
-          {/* 🔥 الحل: نمنع التراكم عبر overflow-x-auto (سكرول أفقي) */}
-          <div
-            className="
-              hidden lg:flex flex-1 min-w-0 items-center justify-start gap-1
-              overflow-x-auto whitespace-nowrap
-              [-ms-overflow-style:none] [scrollbar-width:none]
-              [&::-webkit-scrollbar]:hidden
-            "
-          >
-            {desktopLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  goTo(link.href);
-                }}
-                className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 whitespace-nowrap leading-none ${
-                  isScrolled ? "text-gray-800" : "text-white"
-                }`}
-              >
-                {link.name}
-              </a>
-            ))}
-
-            {/* المتجر Dropdown */}
-            <div className="relative group shrink-0">
-              <button
-                type="button"
-                className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
-                  isScrolled ? "text-gray-800" : "text-white"
-                }`}
-              >
-                المتجر <span className="text-xs">▾</span>
-              </button>
-
-              <div className="absolute right-0 mt-2 w-64 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden z-50">
-                {storeLinks.map((item) => (
-                  <a
-                    key={item.href}
-                    href={item.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      goTo(item.href);
-                    }}
-                    className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 transition whitespace-nowrap"
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* مناطق عملنا Dropdown */}
-            <div className="relative group shrink-0">
-              <button
-                type="button"
-                className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
-                  isScrolled ? "text-gray-800" : "text-white"
-                }`}
-              >
-                مناطق عملنا <span className="text-xs">▾</span>
-              </button>
-
-              <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+          <div className="hidden lg:flex flex-1 min-w-0 items-center gap-2">
+            {/* 1) ✅ الروابط العادية فقط داخل سكرول */}
+            <div
+              className="
+                flex min-w-0 items-center gap-1
+                overflow-x-auto whitespace-nowrap
+                [-ms-overflow-style:none] [scrollbar-width:none]
+                [&::-webkit-scrollbar]:hidden
+              "
+            >
+              {desktopSimpleLinks.map((link) => (
                 <a
-                  href="/contractor-almalqa-riyadh"
+                  key={link.name}
+                  href={link.href}
                   onClick={(e) => {
                     e.preventDefault();
-                    goTo("/contractor-almalqa-riyadh");
+                    goTo(link.href);
                   }}
-                  className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 rounded-xl transition whitespace-nowrap"
+                  className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 whitespace-nowrap leading-none ${
+                    isScrolled ? "text-gray-800" : "text-white"
+                  }`}
                 >
-                  حي الملقا
+                  {link.name}
                 </a>
+              ))}
+            </div>
+
+            {/* 2) ✅ Dropdowns ثابتين خارج منطقة السكرول */}
+            <div className="flex items-center gap-2 shrink-0">
+              {/* المتجر Dropdown */}
+              <div className="relative group shrink-0">
+                <button
+                  type="button"
+                  className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
+                    isScrolled ? "text-gray-800" : "text-white"
+                  }`}
+                >
+                  المتجر <span className="text-xs">▾</span>
+                </button>
+
+                <div className="absolute right-0 mt-2 w-64 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden z-50">
+                  {storeLinks.map((item) => (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        goTo(item.href);
+                      }}
+                      className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 transition whitespace-nowrap"
+                    >
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* مناطق عملنا Dropdown */}
+              <div className="relative group shrink-0">
+                <button
+                  type="button"
+                  className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
+                    isScrolled ? "text-gray-800" : "text-white"
+                  }`}
+                >
+                  مناطق عملنا <span className="text-xs">▾</span>
+                </button>
+
+                <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <a
+                    href="/contractor-almalqa-riyadh"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      goTo("/contractor-almalqa-riyadh");
+                    }}
+                    className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 rounded-xl transition whitespace-nowrap"
+                  >
+                    حي الملقا
+                  </a>
+                </div>
               </div>
             </div>
           </div>
 
           {/* ===== CTA Desktop (LEFT) ===== */}
           <div className="hidden lg:flex items-center gap-2 shrink-0">
-            {/* ✅ تلفون */}
             <a
               href="tel:+966550604837"
               aria-label="اتصل بنا"
@@ -225,7 +226,6 @@ export default function Navbar() {
               <Phone className="w-4 h-4" />
             </a>
 
-            {/* ✅ السوشيال: فقط 2XL وفوق (لتخفيف التزاحم) */}
             <div className="hidden 2xl:flex items-center gap-2">
               <a
                 href="https://x.com/pybcco"
@@ -300,7 +300,6 @@ export default function Navbar() {
               </a>
             </div>
 
-            {/* Calculator CTA */}
             <Button
               asChild
               variant="outline"
@@ -337,18 +336,13 @@ export default function Navbar() {
               </Button>
             </SheetTrigger>
 
-            <SheetContent
-              side="right"
-              className="w-80 bg-black text-white border-white/10"
-            >
+            <SheetContent side="right" className="w-80 bg-black text-white border-white/10">
               <div className="flex flex-col h-full">
-                {/* ✅ حذف لوجو الموبايل نهائيًا (حتى ما يطلع لوجوين) */}
                 <div className="mb-6">
                   <div className="font-bold">بنيان الهرم</div>
                   <p className="text-xs text-white/60">للمقاولات</p>
                 </div>
 
-                {/* ✅ خلي القائمة تتمدد وتسكرول صح */}
                 <nav className="flex flex-col gap-1 flex-1 overflow-y-auto">
                   {navLinks.map((link) => (
                     <a
@@ -364,7 +358,6 @@ export default function Navbar() {
                     </a>
                   ))}
 
-                  {/* ✅ زر دخول العملاء */}
                   <Button
                     asChild
                     className="w-full bg-gold hover:bg-gold/90 text-black font-bold mt-3 mb-3 whitespace-nowrap"
@@ -381,11 +374,11 @@ export default function Navbar() {
                     </a>
                   </Button>
 
-                  {/* ✅ زر المتجر (واضح جدًا) */}
+                  {/* ✅ زر المتجر */}
                   <Button
                     asChild
                     variant="outline"
-                    className="w-full border-gold text-gold hover:bg-white/10 font-bold mb-4 whitespace-nowrap"
+                    className="w-full border-gold text-gold hover:bg-white/10 font-bold mb-2 whitespace-nowrap"
                   >
                     <a
                       href="/decor"
@@ -398,6 +391,45 @@ export default function Navbar() {
                       🛍 المتجر
                     </a>
                   </Button>
+
+                  {/* ✅ روابط المتجر داخل الموبايل */}
+                  <div className="flex flex-col gap-1 mb-4">
+                    <a
+                      href="/decor/wood"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsOpen(false);
+                        goTo("/decor/wood");
+                      }}
+                      className="px-4 py-2 text-sm text-white/90 hover:bg-white/10 hover:text-gold rounded-lg transition"
+                    >
+                      بديل الخشب
+                    </a>
+
+                    <a
+                      href="/decor/marble"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsOpen(false);
+                        goTo("/decor/marble");
+                      }}
+                      className="px-4 py-2 text-sm text-white/90 hover:bg-white/10 hover:text-gold rounded-lg transition"
+                    >
+                      بديل الرخام
+                    </a>
+
+                    <a
+                      href="/decor/shipboard"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsOpen(false);
+                        goTo("/decor/shipboard");
+                      }}
+                      className="px-4 py-2 text-sm text-white/90 hover:bg-white/10 hover:text-gold rounded-lg transition"
+                    >
+                      بديل الشيبورد
+                    </a>
+                  </div>
 
                   <div className="my-4 h-px bg-white/10" />
 
@@ -424,10 +456,7 @@ export default function Navbar() {
                     </div>
                     <div>
                       <p className="text-sm text-white/60">اتصل بنا</p>
-                      <p
-                        dir="ltr"
-                        className="font-bold whitespace-nowrap tabular-nums"
-                      >
+                      <p dir="ltr" className="font-bold whitespace-nowrap tabular-nums">
                         055 060 4837
                       </p>
                     </div>
