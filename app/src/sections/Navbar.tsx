@@ -59,8 +59,29 @@ export default function Navbar() {
     setIsOpen(false);
   };
 
-  // ✅ روابط الديسكتوب — الروابط العادية فقط (التي داخل سكرول)
-  const desktopSimpleLinks = navLinks;
+  // ✅ Desktop Links Strategy (Professional + Stable with Zoom)
+  // 2XL: show all
+  // LG→XL/2XL: show compact + "المزيد" dropdown to avoid shifting with zoom
+  const desktopAllLinks = navLinks;
+
+  const desktopPrimaryLinks = [
+    navLinks[0], // الرئيسية
+    navLinks[1], // خدماتنا
+    navLinks[2], // معرض الأعمال
+    navLinks[4], // تواصل معنا
+  ].filter(Boolean);
+
+  const desktopMoreLinks = navLinks.filter(
+    (l) => !desktopPrimaryLinks.some((p) => p.href === l.href && p.name === l.name)
+  );
+
+  const linkClass = `px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 whitespace-nowrap leading-none ${
+    isScrolled ? "text-gray-800" : "text-white"
+  }`;
+
+  const dropdownBtnClass = `px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
+    isScrolled ? "text-gray-800" : "text-white"
+  }`;
 
   return (
     <header
@@ -128,43 +149,118 @@ export default function Navbar() {
           </div>
 
           {/* ✅ Desktop Navigation (CENTER) */}
-          <div className="hidden lg:flex flex-1 min-w-0 items-center gap-2">
-            {/* 1) ✅ الروابط العادية فقط داخل سكرول */}
-            <div
-              className="
-                flex min-w-0 items-center gap-1
-                overflow-x-auto whitespace-nowrap
-                [-ms-overflow-style:none] [scrollbar-width:none]
-                [&::-webkit-scrollbar]:hidden
-              "
-            >
-              {desktopSimpleLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    goTo(link.href);
-                  }}
-                  className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 whitespace-nowrap leading-none ${
-                    isScrolled ? "text-gray-800" : "text-white"
-                  }`}
-                >
-                  {link.name}
-                </a>
-              ))}
+          <div className="hidden lg:flex flex-1 min-w-0 items-center justify-center">
+            {/* ===== 2XL: Full Links (Stable on wide desktop) ===== */}
+            <div className="hidden 2xl:flex min-w-0 items-center gap-2">
+              {/* الروابط */}
+              <div className="flex items-center gap-1 min-w-0 whitespace-nowrap">
+                {desktopAllLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      goTo(link.href);
+                    }}
+                    className={linkClass}
+                  >
+                    {link.name}
+                  </a>
+                ))}
+              </div>
+
+              {/* Dropdowns ثابتين */}
+              <div className="flex items-center gap-2 shrink-0">
+                {/* المتجر Dropdown */}
+                <div className="relative group shrink-0">
+                  <button type="button" className={dropdownBtnClass}>
+                    المتجر <span className="text-xs">▾</span>
+                  </button>
+
+                  <div className="absolute right-0 mt-2 w-64 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden z-50">
+                    {storeLinks.map((item) => (
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          goTo(item.href);
+                        }}
+                        className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 transition whitespace-nowrap"
+                      >
+                        {item.name}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                {/* مناطق عملنا Dropdown */}
+                <div className="relative group shrink-0">
+                  <button type="button" className={dropdownBtnClass}>
+                    مناطق عملنا <span className="text-xs">▾</span>
+                  </button>
+
+                  <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <a
+                      href="/contractor-almalqa-riyadh"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        goTo("/contractor-almalqa-riyadh");
+                      }}
+                      className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 rounded-xl transition whitespace-nowrap"
+                    >
+                      حي الملقا
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {/* 2) ✅ Dropdowns ثابتين خارج منطقة السكرول */}
-            <div className="flex items-center gap-2 shrink-0">
+            {/* ===== LG→XL/2XL: Compact + More (Stable with Zoom) ===== */}
+            <div className="flex 2xl:hidden min-w-0 items-center gap-2">
+              {/* روابط مختصرة */}
+              <div className="flex items-center gap-1 whitespace-nowrap">
+                {desktopPrimaryLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      goTo(link.href);
+                    }}
+                    className={linkClass}
+                  >
+                    {link.name}
+                  </a>
+                ))}
+              </div>
+
+              {/* المزيد Dropdown (يحل مشكلة تزحلق/ازدحام الزوم) */}
+              <div className="relative group shrink-0">
+                <button type="button" className={dropdownBtnClass}>
+                  المزيد <span className="text-xs">▾</span>
+                </button>
+
+                <div className="absolute right-0 mt-2 w-64 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden z-50">
+                  {desktopMoreLinks.map((item) => (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        goTo(item.href);
+                      }}
+                      className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 transition whitespace-nowrap"
+                    >
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
               {/* المتجر Dropdown */}
               <div className="relative group shrink-0">
-                <button
-                  type="button"
-                  className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
-                    isScrolled ? "text-gray-800" : "text-white"
-                  }`}
-                >
+                <button type="button" className={dropdownBtnClass}>
                   المتجر <span className="text-xs">▾</span>
                 </button>
 
@@ -187,12 +283,7 @@ export default function Navbar() {
 
               {/* مناطق عملنا Dropdown */}
               <div className="relative group shrink-0">
-                <button
-                  type="button"
-                  className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
-                    isScrolled ? "text-gray-800" : "text-white"
-                  }`}
-                >
+                <button type="button" className={dropdownBtnClass}>
                   مناطق عملنا <span className="text-xs">▾</span>
                 </button>
 
@@ -336,7 +427,10 @@ export default function Navbar() {
               </Button>
             </SheetTrigger>
 
-            <SheetContent side="right" className="w-80 bg-black text-white border-white/10">
+            <SheetContent
+              side="right"
+              className="w-80 bg-black text-white border-white/10"
+            >
               <div className="flex flex-col h-full">
                 <div className="mb-6">
                   <div className="font-bold">بنيان الهرم</div>
