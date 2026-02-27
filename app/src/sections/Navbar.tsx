@@ -357,7 +357,8 @@ export default function Navbar() {
       <p className="text-xs text-white/60">للمقاولات</p>
     </div>
 
-    <nav className="flex flex-col gap-1">
+    {/* ✅ خلي القائمة تتمدد وتسكرول صح */}
+    <nav className="flex flex-col gap-1 flex-1 overflow-y-auto">
       {navLinks.map((link) => (
         <a
           key={link.name}
@@ -371,6 +372,23 @@ export default function Navbar() {
           {link.name}
         </a>
       ))}
+
+      {/* ✅ زر قوي ظاهر مباشرة على الموبايل */}
+      <Button
+        asChild
+        className="w-full bg-gold hover:bg-gold/90 text-black font-bold mt-3 mb-4 whitespace-nowrap"
+      >
+        <a
+          href={PORTAL_LANDING_URL}
+          onClick={(e) => {
+            e.preventDefault()
+            setIsOpen(false)
+            goTo(PORTAL_LANDING_URL)
+          }}
+        >
+          🔐 دخول العملاء
+        </a>
+      </Button>
 
       <div className="my-4 h-px bg-white/10" />
 
@@ -437,16 +455,6 @@ export default function Navbar() {
         >
           <Calculator className="w-5 h-5 ml-2" />
           احسب التكلفة
-        </a>
-      </Button>
-
-      {/* ✅ زر قوي للموبايل فقط: بوابة العملاء (Primary) */}
-      <Button
-        asChild
-        className="w-full bg-gold hover:bg-gold/90 text-black font-bold mb-3 whitespace-nowrap"
-      >
-        <a href={PORTAL_LANDING_URL} onClick={() => setIsOpen(false)}>
-          🔐 دخول العملاء
         </a>
       </Button>
 
