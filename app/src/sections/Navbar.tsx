@@ -130,96 +130,99 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* ✅ Desktop Navigation (CENTER) */}
-          <div className="hidden lg:flex items-center justify-center gap-1 flex-1 min-w-0">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  goTo(link.href);
-                }}
-                className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 whitespace-nowrap leading-none ${
-                  isScrolled ? "text-gray-800" : "text-white"
-                }`}
-              >
-                {link.name}
-              </a>
-            ))}
-
-            {/* ===== المتجر Dropdown (Desktop) ===== */}
-            <div className="relative group">
-              <button
-                type="button"
-                className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
-                  isScrolled ? "text-gray-800" : "text-white"
-                }`}
-              >
-                المتجر
-                <span className="text-xs">▾</span>
-              </button>
-
-              <div className="absolute right-0 mt-2 w-64 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden">
-                {storeLinks.map((item) => (
-                  <a
-                    key={item.href}
-                    href={item.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      goTo(item.href);
-                    }}
-                    className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 transition whitespace-nowrap"
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* ===== مناطق عملنا Dropdown (Desktop) ===== */}
-            <div className="relative group">
-              <button
-                type="button"
-                className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
-                  isScrolled ? "text-gray-800" : "text-white"
-                }`}
-              >
-                مناطق عملنا
-                <span className="text-xs">▾</span>
-              </button>
-
-              <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+          {/* ✅ Desktop Navigation (CENTER) — Scrollable لمنع التراكب */}
+          <div className="hidden lg:flex flex-1 min-w-0 justify-center">
+            <div className="flex items-center gap-1 px-2 min-w-0 overflow-x-auto overflow-y-visible whitespace-nowrap">
+              {navLinks.map((link) => (
                 <a
-                  href="/contractor-almalqa-riyadh"
+                  key={link.name}
+                  href={link.href}
                   onClick={(e) => {
                     e.preventDefault();
-                    goTo("/contractor-almalqa-riyadh");
+                    goTo(link.href);
                   }}
-                  className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 rounded-xl transition whitespace-nowrap"
+                  className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 whitespace-nowrap leading-none ${
+                    isScrolled ? "text-gray-800" : "text-white"
+                  }`}
                 >
-                  حي الملقا
+                  {link.name}
                 </a>
+              ))}
+
+              {/* ===== المتجر Dropdown (Desktop) ===== */}
+              <div className="relative group">
+                <button
+                  type="button"
+                  className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
+                    isScrolled ? "text-gray-800" : "text-white"
+                  }`}
+                >
+                  المتجر
+                  <span className="text-xs">▾</span>
+                </button>
+
+                <div className="absolute right-0 mt-2 w-64 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden z-50">
+                  {storeLinks.map((item) => (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        goTo(item.href);
+                      }}
+                      className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 transition whitespace-nowrap"
+                    >
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* ===== مناطق عملنا Dropdown (Desktop) ===== */}
+              <div className="relative group">
+                <button
+                  type="button"
+                  className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 flex items-center gap-2 whitespace-nowrap leading-none ${
+                    isScrolled ? "text-gray-800" : "text-white"
+                  }`}
+                >
+                  مناطق عملنا
+                  <span className="text-xs">▾</span>
+                </button>
+
+                <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <a
+                    href="/contractor-almalqa-riyadh"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      goTo("/contractor-almalqa-riyadh");
+                    }}
+                    className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 rounded-xl transition whitespace-nowrap"
+                  >
+                    حي الملقا
+                  </a>
+                </div>
               </div>
             </div>
           </div>
 
           {/* ===== CTA Desktop (LEFT) ===== */}
-          <div className="hidden lg:flex items-center gap-2 shrink-0">
-            {/* ✅ نخلي التلفون يظهر فقط على XL لتجنب القص على الشاشات المتوسطة */}
+          <div className="hidden lg:flex items-center gap-2 shrink-0 flex-nowrap">
+            {/* ✅ تلفون: على LG يظهر أيقونة فقط، الرقم على XL */}
             <a
               href="tel:+966550604837"
-              className={`hidden xl:flex items-center gap-2 text-sm font-medium ${
+              className={`flex items-center gap-2 text-sm font-medium ${
                 isScrolled ? "text-gray-800" : "text-white"
               }`}
+              aria-label="اتصل بنا"
             >
               <Phone className="w-4 h-4" />
-              <span dir="ltr" className="whitespace-nowrap tabular-nums">
+              <span dir="ltr" className="hidden xl:inline whitespace-nowrap tabular-nums">
                 055 060 4837
               </span>
             </a>
 
-            {/* ✅ السوشيال فقط على XL */}
+            {/* Social (Desktop) - على XL فقط */}
             <div className="hidden xl:flex items-center gap-2">
               <a
                 href="https://x.com/pybcco"
