@@ -72,7 +72,10 @@ export default function Navbar() {
   ].filter(Boolean);
 
   const desktopMoreLinks = navLinks.filter(
-    (l) => !desktopPrimaryLinks.some((p) => p.href === l.href && p.name === l.name)
+    (l) =>
+      !desktopPrimaryLinks.some(
+        (p) => p.href === l.href && p.name === l.name
+      )
   );
 
   const linkClass = `px-3 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 hover:bg-gold/10 whitespace-nowrap leading-none ${
@@ -317,7 +320,8 @@ export default function Navbar() {
               <Phone className="w-4 h-4" />
             </a>
 
-            <div className="hidden 2xl:flex items-center gap-2">
+            {/* ✅ Social (Desktop): 2x2 grid to save width + align with buttons height */}
+            <div className="hidden xl:grid grid-cols-2 gap-2 shrink-0">
               <a
                 href="https://x.com/pybcco"
                 target="_blank"
@@ -550,7 +554,10 @@ export default function Navbar() {
                     </div>
                     <div>
                       <p className="text-sm text-white/60">اتصل بنا</p>
-                      <p dir="ltr" className="font-bold whitespace-nowrap tabular-nums">
+                      <p
+                        dir="ltr"
+                        className="font-bold whitespace-nowrap tabular-nums"
+                      >
                         055 060 4837
                       </p>
                     </div>
