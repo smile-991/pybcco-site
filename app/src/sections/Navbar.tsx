@@ -373,10 +373,10 @@ export default function Navbar() {
         </a>
       ))}
 
-      {/* ✅ زر قوي ظاهر مباشرة على الموبايل */}
+      {/* ✅ زر دخول العملاء */}
 <Button
   asChild
-  className="w-full bg-gold hover:bg-gold/90 text-black font-bold mt-3 mb-4 whitespace-nowrap"
+  className="w-full bg-gold hover:bg-gold/90 text-black font-bold mt-3 mb-3 whitespace-nowrap"
 >
   <a
     href={PORTAL_LANDING_URL}
@@ -390,32 +390,23 @@ export default function Navbar() {
   </a>
 </Button>
 
-<div className="my-4 h-px bg-white/10" />
-
-{/* ✅ المتجر واضح بدون الحاجة للسكرول */}
-<details className="px-2">
-  <summary className="list-none px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition cursor-pointer flex items-center justify-between">
-    <span>المتجر</span>
-    <span className="text-white/60">▾</span>
-  </summary>
-
-  <div className="mt-2 flex flex-col gap-1">
-    {storeLinks.map((item) => (
-      <a
-        key={item.href}
-        href={item.href}
-        onClick={(e) => {
-          e.preventDefault()
-          setIsOpen(false)
-          goTo(item.href)
-        }}
-        className="px-4 py-2 text-sm text-white/90 hover:bg-white/10 hover:text-gold rounded-lg transition"
-      >
-        {item.name}
-      </a>
-    ))}
-  </div>
-</details>
+{/* ✅ زر المتجر واضح مثل زر الدخول */}
+<Button
+  asChild
+  variant="outline"
+  className="w-full border-gold text-gold hover:bg-white/10 font-bold mb-4 whitespace-nowrap"
+>
+  <a
+    href="/store"
+    onClick={(e) => {
+      e.preventDefault()
+      setIsOpen(false)
+      goTo("/store")
+    }}
+  >
+    🛍 المتجر
+  </a>
+</Button>
 
 <div className="my-4 h-px bg-white/10" />
 
