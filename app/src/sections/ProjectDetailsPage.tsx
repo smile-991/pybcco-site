@@ -100,33 +100,28 @@ export default function ProjectDetailsPage() {
   const updatePhotos = Array.isArray(data?.update_photos) ? data!.update_photos : []
   const milestones = Array.isArray(data?.milestones) ? data!.milestones : []
 
+  // ✅ FIX: group documents by the correct plural types
   const docsByType = useMemo(() => {
-  const grouped: Record<string, any[]> = {
-    contract: [],
-    offers: [],
-    invoices: [],
-    receipts: [],
-    other: [],
-  }
-
-  for (const d of documents) {
-    const type = String(d.type || "").toLowerCase().trim()
-
-    if (type === "contract") {
-      grouped.contract.push(d)
-    } else if (type === "offers") {
-      grouped.offers.push(d)
-    } else if (type === "invoices") {
-      grouped.invoices.push(d)
-    } else if (type === "receipts") {
-      grouped.receipts.push(d)
-    } else {
-      grouped.other.push(d)
+    const grouped: Record<string, any[]> = {
+      contract: [],
+      offers: [],
+      invoices: [],
+      receipts: [],
+      other: [],
     }
-  }
 
-  return grouped
-}, [documents])
+    for (const d of documents) {
+      const type = String(d.type || "").toLowerCase().trim()
+
+      if (type === "contract") grouped.contract.push(d)
+      else if (type === "offers") grouped.offers.push(d)
+      else if (type === "invoices") grouped.invoices.push(d)
+      else if (type === "receipts") grouped.receipts.push(d)
+      else grouped.other.push(d)
+    }
+
+    return grouped
+  }, [documents])
 
   if (loading) {
     return (
@@ -239,27 +234,21 @@ export default function ProjectDetailsPage() {
 
           {/* ✅ Progress bar (RTL-safe) */}
           <div className="mt-6">
-            {/* dir=rtl يخلي التعبئة من اليمين (مثل اللي عندك بالصورة) */}
             <div dir="rtl" className="w-full bg-gray-200 rounded-full h-3 relative overflow-hidden">
-              {/* ✅ done (green) */}
               <div
                 className="bg-green-500 h-3 rounded-full transition-all"
                 style={{ width: `${shownProgress}%` }}
               />
 
-              {/* ✅ القادم (GOLD) يبدأ من نهاية الأخضر دائماً (من اليمين بسبب RTL) */}
               {yellowWidth > 0 && shownProgress < 100 && (
                 <div
                   className="absolute top-0 h-3 rounded-full overflow-hidden"
                   style={{
-                    // في RTL: النهاية عند "يمين"، فنثبت الذهب بعد الأخضر باستخدام right
                     right: `${shownProgress}%`,
                     width: `${Math.min(yellowWidth, 100 - shownProgress)}%`,
                   }}
                 >
-                  {/* الذهب المتدرّج */}
                   <div className="w-full h-full goldFill relative">
-                    {/* تموّج قوي وسريع */}
                     <div className="absolute inset-0 shimmerStrong" />
                   </div>
                 </div>
@@ -268,7 +257,6 @@ export default function ProjectDetailsPage() {
 
             <p className="text-xs mt-2 text-gray-600">{shownProgress}% Complete</p>
 
-            {/* ✅ Milestones (B) تحت progress bar */}
             {normalizedMilestones.length > 0 && (
               <div className="mt-4 border rounded-2xl bg-gray-50 p-4">
                 <div className="flex items-center justify-between gap-3 flex-wrap">
@@ -324,7 +312,6 @@ export default function ProjectDetailsPage() {
                   ))}
                 </div>
 
-                {/* ✅ Current milestone summary + next due (اختياري) */}
                 {currentMilestone && (
                   <div className="mt-4 text-sm">
                     {(nextDueAmount != null || nextDueDate) && (
@@ -347,7 +334,6 @@ export default function ProjectDetailsPage() {
               </div>
             )}
 
-            {/* إذا ما في milestones بعد، نعرض بطاقة صغيرة تشرح السبب */}
             {normalizedMilestones.length === 0 && (
               <div className="mt-4 text-xs text-gray-500">
                 * نسبة الإنجاز تُعرض كنسبة عامة. (عند تفعيل “مراحل الإنجاز” من الأدمن، تصبح النسبة مرتبطة بمراحل واضحة).
@@ -433,9 +419,10 @@ export default function ProjectDetailsPage() {
           {documents.length > 0 && (
             <div className="grid md:grid-cols-2 gap-6">
               <DocGroup title="Contract" items={docsByType.contract} />
-              <DocGroup title="Offers" items={docsByType.offer} />
-              <DocGroup title="Invoices" items={docsByType.invoice} />
-              <DocGroup title="Receipts" items={docsByType.receipt} />
+              {/* ✅ FIX: plural keys */}
+              <DocGroup title="Offers" items={docsByType.offers} />
+              <DocGroup title="Invoices" items={docsByType.invoices} />
+              <DocGroup title="Receipts" items={docsByType.receipts} />
               <DocGroup title="Other" items={docsByType.other} />
             </div>
           )}
@@ -519,19 +506,21 @@ export default function ProjectDetailsPage() {
   )
 }
 
-function DocGroup({ title, items }: { title: string; items: any[] }) {
+function DocGroup({ title, items }: { title: string; items?: any[] }) {
+  const safeItems = Array.isArray(items) ? items : []
+
   return (
     <div className="border rounded-2xl p-4">
       <div className="flex items-center justify-between mb-3">
         <h3 className="font-semibold text-sm">{title}</h3>
-        <span className="text-xs text-gray-400">{items.length}</span>
+        <span className="text-xs text-gray-400">{safeItems.length}</span>
       </div>
 
-      {items.length === 0 ? (
+      {safeItems.length === 0 ? (
         <p className="text-xs text-gray-500">—</p>
       ) : (
         <div className="space-y-2">
-          {items.map((doc: any) => (
+          {safeItems.map((doc: any) => (
             <a
               key={doc.id}
               href={doc.file_url}
