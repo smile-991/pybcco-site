@@ -26,6 +26,7 @@ import ProjectDetailsPage from "@/sections/ProjectDetailsPage";
 import ProjectTrackingSystemRiyadh from "./sections/ProjectTrackingSystemRiyadh"
 import PrivacyPolicy from "@/sections/PrivacyPolicy";
 import TermsAndConditions from "@/sections/TermsAndConditions";
+
 export default function App() {
   return (
     <div className="min-h-screen bg-white" dir="rtl">
