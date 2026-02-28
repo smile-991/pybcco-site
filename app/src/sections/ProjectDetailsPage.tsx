@@ -101,22 +101,32 @@ export default function ProjectDetailsPage() {
   const milestones = Array.isArray(data?.milestones) ? data!.milestones : []
 
   const docsByType = useMemo(() => {
-    const groups: Record<string, any[]> = {
-      contract: [],
-      offer: [],
-      invoice: [],
-      receipt: [],
-      other: [],
-    }
+  const grouped: Record<string, any[]> = {
+    contract: [],
+    offers: [],
+    invoices: [],
+    receipts: [],
+    other: [],
+  }
 
-    for (const d of documents) {
-      const t = String(d.type || "other").toLowerCase()
-      if (groups[t]) groups[t].push(d)
-      else groups.other.push(d)
-    }
+  for (const d of documents) {
+    const type = String(d.type || "").toLowerCase().trim()
 
-    return groups
-  }, [documents])
+    if (type === "contract") {
+      grouped.contract.push(d)
+    } else if (type === "offers") {
+      grouped.offers.push(d)
+    } else if (type === "invoices") {
+      grouped.invoices.push(d)
+    } else if (type === "receipts") {
+      grouped.receipts.push(d)
+    } else {
+      grouped.other.push(d)
+    }
+  }
+
+  return grouped
+}, [documents])
 
   if (loading) {
     return (
