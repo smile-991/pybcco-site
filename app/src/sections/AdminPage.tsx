@@ -254,7 +254,35 @@ function ClientsAndProjects({ onUnauthorized }: { onUnauthorized: () => void }) 
       setLoadingClients(false)
     }
   }, [onUnauthorized, selectedClientId])
+const deleteClient = async (clientId: string) => {
+  const confirmDelete = window.confirm(
+    "⚠️ سيتم حذف العميل وكل مشاريعه ودفعاته وملفاته نهائياً.\n\nهل أنت متأكد؟"
+  )
+  if (!confirmDelete) return
 
+  try {
+    const res = await fetch("/api/delete-client", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ client_id: clientId }),
+    })
+
+    const data = await res.json().catch(() => null)
+
+    if (!res.ok) {
+      alert(data?.error || "Delete failed")
+      return
+    }
+
+    alert("✅ تم حذف العميل بنجاح")
+    await loadClients()
+    setSelectedClientId("")
+    setProjects([])
+  } catch {
+    alert("Server error while deleting")
+  }
+}
   const loadProjects = useCallback(
     async (clientId: string) => {
       if (!clientId) return
@@ -329,10 +357,16 @@ function ClientsAndProjects({ onUnauthorized }: { onUnauthorized: () => void }) 
 
         <div className="grid md:grid-cols-2 gap-6">
           {clients.map((client) => (
-            <button
+            <div
               key={client.id}
               onClick={() => setSelectedClientId(client.id)}
-              className={`text-left border rounded-xl p-4 shadow-sm transition ${
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ")
+                  setSelectedClientId(client.id)
+              }}
+              className={`text-left border rounded-xl p-4 shadow-sm transition cursor-pointer ${
                 selectedClientId === client.id
                   ? "border-yellow-400 bg-yellow-50"
                   : "hover:bg-gray-50"
@@ -340,20 +374,36 @@ function ClientsAndProjects({ onUnauthorized }: { onUnauthorized: () => void }) 
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <h3 className="font-semibold text-gray-900">{client.full_name}</h3>
+                  <h3 className="font-semibold text-gray-900">
+                    {client.full_name}
+                  </h3>
                   <p className="text-sm text-gray-500">{client.phone}</p>
                 </div>
-                <span className="text-xs text-gray-500">Select</span>
+
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-gray-500">Select</span>
+
+                  {/* زر حذف العميل */}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      deleteClient(client.id)
+                    }}
+                    className="text-xs text-red-600 hover:underline"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
 
               <div className="mt-3 bg-gray-100 rounded-lg p-2 text-xs break-all">
                 {client.access_token || "—"}
               </div>
-            </button>
+            </div>
           ))}
         </div>
       </div>
-
       {/* PROJECTS */}
       <div className="bg-white shadow-xl rounded-2xl p-6 border border-gray-100">
         <div className="flex items-center justify-between gap-3 mb-4">
