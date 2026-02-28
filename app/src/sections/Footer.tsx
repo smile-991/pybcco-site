@@ -261,7 +261,7 @@ export default function Footer() {
       <div className="border-t border-white/10 relative z-10">
         <div className="container-custom py-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-white/50 text-sm text-center md:text-right">
-            © 2026 بنيان الهرم للمقاولات. جميع الحقوق محفوظة.
+          © 2026 بنيان الهرم للمقاولات – PYBCCO. جميع الحقوق محفوظة.
           </p>
 
           {/* ✅ الروابط القانونية */}
