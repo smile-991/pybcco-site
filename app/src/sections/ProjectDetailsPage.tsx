@@ -26,9 +26,7 @@ function toInt(n: any, fallback = 0) {
 }
 
 function badgeForMilestone(isDone: boolean) {
-  return isDone
-    ? "bg-green-100 text-green-700"
-    : "bg-gray-100 text-gray-600"
+  return isDone ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-600"
 }
 
 export default function ProjectDetailsPage() {
@@ -206,29 +204,48 @@ export default function ProjectDetailsPage() {
         <div className="bg-white p-6 rounded-2xl shadow-lg border">
           <div className="flex justify-between items-start flex-wrap gap-4">
             <div>
-              <h1 className="text-2xl font-bold">
-                {project.project_code || project.title}
-              </h1>
+              <h1 className="text-2xl font-bold">{project.project_code || project.title}</h1>
               <p className="text-sm text-gray-500 mt-1">{project.title}</p>
-              {project.address && (
-                <p className="text-xs text-gray-400 mt-1">{project.address}</p>
+              {project.address && <p className="text-xs text-gray-400 mt-1">{project.address}</p>}
+            </div>
+
+            <span className={`text-xs px-4 py-2 rounded-full ${statusBadge}`}>{statusLabel}</span>
+          </div>
+
+          {/* ✅ Progress bar (NEW: Green done + Yellow in-progress hint) */}
+          <div className="mt-6">
+            <div className="w-full bg-gray-200 rounded-full h-3 relative overflow-hidden">
+              {/* ✅ done (green) */}
+              <div
+                className="bg-green-500 h-3 rounded-full transition-all"
+                style={{ width: `${Math.min(Math.max(shownProgress, 0), 100)}%` }}
+              />
+
+              {/* ✅ in-progress hint (animated small segment after done) */}
+              {currentMilestone && shownProgress < 100 && (
+                <div
+                  className="absolute top-0 h-3 rounded-full bg-yellow-400/90 animate-pulse"
+                  style={{
+                    left: `${Math.min(Math.max(shownProgress, 0), 100)}%`,
+                    // ✅ نخلي الأصفر ما يتجاوز 100% (حتى ما يطلع برا)
+                    width: `${Math.max(
+                      0,
+                      Math.min(
+                        5,
+                        Math.min(
+                          100 - Math.min(Math.max(shownProgress, 0), 100),
+                          Math.max(0, toInt(currentMilestone.percentage, 0) - shownProgress) || 5
+                        )
+                      )
+                    )}%`,
+                  }}
+                />
               )}
             </div>
 
-            <span className={`text-xs px-4 py-2 rounded-full ${statusBadge}`}>
-              {statusLabel}
-            </span>
-          </div>
-
-          {/* Progress bar */}
-          <div className="mt-6">
-            <div className="w-full bg-gray-200 rounded-full h-3">
-              <div
-                className="bg-yellow-500 h-3 rounded-full transition-all"
-                style={{ width: `${shownProgress}%` }}
-              />
-            </div>
-            <p className="text-xs mt-2 text-gray-600">{shownProgress}% Complete</p>
+            <p className="text-xs mt-2 text-gray-600">
+              {Math.min(Math.max(shownProgress, 0), 100)}% Complete
+            </p>
 
             {/* ✅ Milestones (B) تحت progress bar */}
             {normalizedMilestones.length > 0 && (
@@ -268,9 +285,7 @@ export default function ProjectDetailsPage() {
                           </div>
                         </div>
 
-                        {m.note && (
-                          <div className="text-sm text-gray-600 mt-1">{m.note}</div>
-                        )}
+                        {m.note && <div className="text-sm text-gray-600 mt-1">{m.note}</div>}
 
                         {(m.due_amount != null || m.due_date) && !m.is_done && (
                           <div className="text-sm text-gray-700 mt-2">
@@ -377,9 +392,7 @@ export default function ProjectDetailsPage() {
                   {payments.map((payment: any) => (
                     <tr key={payment.id} className="border-b hover:bg-gray-50">
                       <td className="py-2">{formatDate(payment.date)}</td>
-                      <td className="py-2 font-medium">
-                        {money(payment.amount)} SAR
-                      </td>
+                      <td className="py-2 font-medium">{money(payment.amount)} SAR</td>
                       <td className="py-2">{payment.method || "-"}</td>
                       <td className="py-2">{payment.note || "-"}</td>
                     </tr>
@@ -394,9 +407,7 @@ export default function ProjectDetailsPage() {
         <div className="bg-white p-6 rounded-2xl shadow-lg border">
           <h2 className="text-lg font-semibold mb-6">Documents</h2>
 
-          {documents.length === 0 && (
-            <p className="text-sm text-gray-500">No documents uploaded yet.</p>
-          )}
+          {documents.length === 0 && <p className="text-sm text-gray-500">No documents uploaded yet.</p>}
 
           {documents.length > 0 && (
             <div className="grid md:grid-cols-2 gap-6">
@@ -425,14 +436,10 @@ export default function ProjectDetailsPage() {
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <h3 className="font-semibold">{update.title || "Update"}</h3>
-                        {update.note && (
-                          <p className="text-sm text-gray-600 mt-1">{update.note}</p>
-                        )}
+                        {update.note && <p className="text-sm text-gray-600 mt-1">{update.note}</p>}
                       </div>
 
-                      <div className="text-xs text-gray-400">
-                        {formatDate(update.created_at)}
-                      </div>
+                      <div className="text-xs text-gray-400">{formatDate(update.created_at)}</div>
                     </div>
 
                     {photos.length > 0 && (
