@@ -245,14 +245,21 @@ export default function Footer() {
           <p className="text-white/50 text-sm text-center md:text-right">
             © 2026 بنيان الهرم للمقاولات. جميع الحقوق محفوظة.
           </p>
-          <div className="flex items-center gap-6">
-            <a href="#" className="text-white/50 hover:text-gold text-sm">
-              سياسة الخصوصية
-            </a>
-            <a href="#" className="text-white/50 hover:text-gold text-sm">
-              الشروط والأحكام
-            </a>
-          </div>
+          <Link
+  to="/privacy-policy"
+  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+  className="text-white/50 hover:text-gold text-sm"
+>
+  سياسة الخصوصية
+</Link>
+
+<Link
+  to="/terms"
+  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+  className="text-white/50 hover:text-gold text-sm"
+>
+  الشروط والأحكام
+</Link>
         </div>
       </div>
 

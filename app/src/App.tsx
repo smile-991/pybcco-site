@@ -24,7 +24,8 @@ import AdminPage from "./sections/AdminPage";
 import PortalPage from "./sections/PortalPage";
 import ProjectDetailsPage from "@/sections/ProjectDetailsPage";
 import ProjectTrackingSystemRiyadh from "./sections/ProjectTrackingSystemRiyadh"
-
+import PrivacyPolicy from "@/sections/PrivacyPolicy";
+import TermsAndConditions from "@/sections/TermsAndConditions";
 export default function App() {
   return (
     <div className="min-h-screen bg-white" dir="rtl">
@@ -53,6 +54,9 @@ export default function App() {
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/project-tracking-system-riyadh" element={<ProjectTrackingSystemRiyadh />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsAndConditions />} />
+
           <Route path="/portal/projects/:id" element={<ProjectDetailsPage />} />
           <Route
             path="/case-study-villa-renovation-riyadh"
