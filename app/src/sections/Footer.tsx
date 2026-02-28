@@ -16,7 +16,8 @@ const PHONE_LOCAL = "055 060 4837";
 const PHONE_TEL = "+966550604837";
 const EMAIL_PUBLIC = "info@pybcco.com";
 
-const ADDRESS_AR = "شارع الوشم، حي المربع، الرياض 12345، المملكة العربية السعودية";
+const ADDRESS_AR =
+  "شارع الوشم، حي المربع، الرياض 12345، المملكة العربية السعودية";
 const ADDRESS_EN = "Al Washm St, Al Murabba, Riyadh 12345, Saudi Arabia";
 
 const MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -49,7 +50,11 @@ const socialLinks = [
     label: "LinkedIn",
   },
   { icon: Twitter, href: "https://x.com/pybcco", label: "X" },
-  { icon: Instagram, href: "https://instagram.com/pybcco.decor", label: "Instagram" },
+  {
+    icon: Instagram,
+    href: "https://instagram.com/pybcco.decor",
+    label: "Instagram",
+  },
   // ✅ Facebook
   { icon: Facebook, href: "https://www.facebook.com/pybcco", label: "Facebook" },
 ];
@@ -69,7 +74,10 @@ function ContactRow({
   ltrValue?: boolean;
 }) {
   const Content = (
-    <div className="flex flex-row-reverse items-start gap-3 w-full text-right" dir="rtl">
+    <div
+      className="flex flex-row-reverse items-start gap-3 w-full text-right"
+      dir="rtl"
+    >
       <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
         <Icon className="w-5 h-5" />
       </div>
@@ -119,9 +127,13 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-dark text-white relative overflow-hidden text-right" dir="rtl">
+    <footer
+      className="bg-dark text-white relative overflow-hidden text-right"
+      dir="rtl"
+    >
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
+      {/* ✅ مهم جدًا: pointer-events-none حتى ما تمسك الكليك وتخلي الروابط غير فعالة */}
+      <div className="absolute inset-0 opacity-5 pointer-events-none">
         <div
           className="absolute inset-0"
           style={{
@@ -152,8 +164,8 @@ export default function Footer() {
             </div>
 
             <p className="text-white/70 mb-6 leading-relaxed">
-              نبني المستقبل بإتقان وجودة عالية. خبرة تمتد لأكثر من 12 عاماً في مجال المقاولات
-              والتشطيبات.
+              نبني المستقبل بإتقان وجودة عالية. خبرة تمتد لأكثر من 12 عاماً في
+              مجال المقاولات والتشطيبات.
             </p>
 
             <div className="flex gap-2">
@@ -233,51 +245,61 @@ export default function Footer() {
                 href={`mailto:${EMAIL_PUBLIC}`}
                 ltrValue
               />
-              <ContactRow icon={MapPin} label="العنوان" value={ADDRESS_AR} href={MAPS_LINK} />
+              <ContactRow
+                icon={MapPin}
+                label="العنوان"
+                value={ADDRESS_AR}
+                href={MAPS_LINK}
+              />
             </ul>
           </div>
         </div>
       </div>
 
       {/* Bottom */}
-      <div className="border-t border-white/10">
+      {/* ✅ ضمان إضافي: relative z-10 حتى يكون فوق أي overlay */}
+      <div className="border-t border-white/10 relative z-10">
         <div className="container-custom py-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-white/50 text-sm text-center md:text-right">
             © 2026 بنيان الهرم للمقاولات. جميع الحقوق محفوظة.
           </p>
-          <Link
-  to="/privacy-policy"
-  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-  className="text-white/50 hover:text-gold text-sm"
->
-  سياسة الخصوصية
-</Link>
 
-<Link
-  to="/terms"
-  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-  className="text-white/50 hover:text-gold text-sm"
->
-  الشروط والأحكام
-</Link>
+          {/* ✅ الروابط القانونية */}
+          <div className="flex items-center gap-6">
+            <Link
+              to="/privacy-policy"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="text-white/50 hover:text-gold text-sm"
+            >
+              سياسة الخصوصية
+            </Link>
+
+            <Link
+              to="/terms"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="text-white/50 hover:text-gold text-sm"
+            >
+              الشروط والأحكام
+            </Link>
+          </div>
         </div>
       </div>
 
       {/* QR */}
-<div className="mt-10 flex flex-col items-center gap-3">
-  <p className="text-xs text-white/60 mt-2">
-    اضغط أو امسح الكود لزيارة البروفايل
-  </p>
+      <div className="mt-10 flex flex-col items-center gap-3 relative z-10">
+        <p className="text-xs text-white/60 mt-2">
+          اضغط أو امسح الكود لزيارة البروفايل
+        </p>
 
-  <Link to="/profile" className="inline-block relative z-10 pointer-events-auto">
-    <img
-      src="/assets/qr.webp"
-      alt="QR Code - Profile"
-      className="w-32 h-32 object-contain rounded-md bg-white p-2 cursor-pointer hover:scale-105 transition duration-200"
-      loading="lazy"
-    />
-  </Link>
-</div>
+        <Link to="/profile" className="inline-block relative z-10 pointer-events-auto">
+          <img
+            src="/assets/qr.webp"
+            alt="QR Code - Profile"
+            className="w-32 h-32 object-contain rounded-md bg-white p-2 cursor-pointer hover:scale-105 transition duration-200"
+            loading="lazy"
+          />
+        </Link>
+      </div>
 
       {/* Scroll to Top */}
       <Button
