@@ -4,6 +4,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ================= BASE VARIABLES ================= */
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -49,22 +51,13 @@
   }
 }
 
+/* ================= UTILITIES ================= */
+
 @layer utilities {
-  .text-gold {
-    color: hsl(var(--gold));
-  }
-
-  .bg-gold {
-    background-color: hsl(var(--gold));
-  }
-
-  .bg-dark {
-    background-color: hsl(var(--dark));
-  }
-
-  .border-gold {
-    border-color: hsl(var(--gold));
-  }
+  .text-gold { color: hsl(var(--gold)); }
+  .bg-gold { background-color: hsl(var(--gold)); }
+  .bg-dark { background-color: hsl(var(--dark)); }
+  .border-gold { border-color: hsl(var(--gold)); }
 
   .gradient-gold {
     background: linear-gradient(135deg, hsl(45 100% 50%) 0%, hsl(45 100% 45%) 100%);
@@ -87,48 +80,9 @@
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   }
 
-  .animate-fade-in {
-    animation: fadeIn 0.8s ease-out forwards;
-  }
-
-  .animate-slide-up {
-    animation: slideUp 0.8s ease-out forwards;
-  }
-
-  .animate-slide-in-right {
-    animation: slideInRight 0.8s ease-out forwards;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes slideInRight {
-    from {
-      opacity: 0;
-      transform: translateX(50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
+  .animate-fade-in { animation: fadeIn 0.8s ease-out forwards; }
+  .animate-slide-up { animation: slideUp 0.8s ease-out forwards; }
+  .animate-slide-in-right { animation: slideInRight 0.8s ease-out forwards; }
 
   .section-padding {
     @apply py-20 px-4 sm:px-6 lg:px-8 xl:px-12;
@@ -139,7 +93,25 @@
   }
 }
 
-/* Fix phone number direction */
+/* ================= ANIMATIONS ================= */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ================= PHONE FIX ================= */
+
 .topbar-phone,
 .phone-number,
 a[href^="tel:"] {
@@ -147,9 +119,10 @@ a[href^="tel:"] {
   unicode-bidi: plaintext;
 }
 
-/* === HEADER LOGO FIX === */
+/* ================= HEADER LOGO FIX ================= */
+
 header a[href="#hero"],
-header a[href$="#hero"]{
+header a[href$="#hero"] {
   font-size: 0 !important;
   line-height: 0 !important;
   color: transparent !important;
@@ -159,12 +132,12 @@ header a[href$="#hero"]{
 }
 
 header a[href="#hero"] *,
-header a[href$="#hero"] *{
+header a[href$="#hero"] * {
   display: none !important;
 }
 
 header a[href="#hero"]::before,
-header a[href$="#hero"]::before{
+header a[href$="#hero"]::before {
   content: "";
   width: 42px;
   height: 42px;
@@ -173,61 +146,36 @@ header a[href$="#hero"]::before{
   background-size: contain;
 }
 
-/* === Fix cities badges === */
-span[data-slot="badge"]{
+/* ================= BADGES FIX ================= */
+
+span[data-slot="badge"] {
   background-color: #fbbf24 !important;
   color: #111827 !important;
   font-weight: 600;
 }
 
-span[data-slot="badge"] svg{
+span[data-slot="badge"] svg {
   color: #111827 !important;
 }
 
-span[data-slot="badge"]:hover{
+span[data-slot="badge"]:hover {
   background-color: #f59e0b !important;
   color: #111827 !important;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.45s ease-out both;
-}
-
-/* ===== Progress yellow shimmer animation (قديمة - نتركها للتوافق) ===== */
+/* ================= PROGRESS SHIMMER ================= */
 
 @keyframes shimmerMove {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
 }
 
 .shimmer {
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.7),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
   animation: shimmerMove 1.8s linear infinite;
 }
 
-/* ===== GOLD + Strong shimmer (الجديد للبار الذهبي) ===== */
-
-.goldFill{
+.goldFill {
   background: linear-gradient(
     90deg,
     #7a4b00 0%,
@@ -244,7 +192,7 @@ span[data-slot="badge"]:hover{
   100% { transform: translateX(-140%); }
 }
 
-.shimmerStrong{
+.shimmerStrong {
   background: linear-gradient(
     90deg,
     transparent 0%,
@@ -253,8 +201,8 @@ span[data-slot="badge"]:hover{
     rgba(255,255,255,0.95) 65%,
     transparent 100%
   );
-  animation: shimmerMoveStrong 0.65s linear infinite; /* أسرع */
+  animation: shimmerMoveStrong 0.65s linear infinite;
   filter: blur(0.15px);
-  mix-blend-mode: overlay; /* لمعان أقوى */
+  mix-blend-mode: overlay;
   opacity: 0.95;
 }
