@@ -26,7 +26,7 @@
     --input: 45 30% 85%;
     --ring: 45 100% 50%;
     --radius: 0.5rem;
-    
+
     --gold: 45 100% 50%;
     --gold-dark: 45 100% 45%;
     --dark: 0 0% 10%;
@@ -38,11 +38,11 @@
   * {
     @apply border-border;
   }
-  
+
   html {
     scroll-behavior: smooth;
   }
-  
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Cairo', sans-serif;
@@ -53,52 +53,52 @@
   .text-gold {
     color: hsl(var(--gold));
   }
-  
+
   .bg-gold {
     background-color: hsl(var(--gold));
   }
-  
+
   .bg-dark {
     background-color: hsl(var(--dark));
   }
-  
+
   .border-gold {
     border-color: hsl(var(--gold));
   }
-  
+
   .gradient-gold {
     background: linear-gradient(135deg, hsl(45 100% 50%) 0%, hsl(45 100% 45%) 100%);
   }
-  
+
   .gradient-dark {
     background: linear-gradient(135deg, hsl(0 0% 10%) 0%, hsl(0 0% 20%) 100%);
   }
-  
+
   .shadow-gold {
     box-shadow: 0 4px 30px rgba(255, 193, 7, 0.3);
   }
-  
+
   .hover-lift {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
-  
+
   .hover-lift:hover {
     transform: translateY(-5px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   }
-  
+
   .animate-fade-in {
     animation: fadeIn 0.8s ease-out forwards;
   }
-  
+
   .animate-slide-up {
     animation: slideUp 0.8s ease-out forwards;
   }
-  
+
   .animate-slide-in-right {
     animation: slideInRight 0.8s ease-out forwards;
   }
-  
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -107,7 +107,7 @@
       opacity: 1;
     }
   }
-  
+
   @keyframes slideUp {
     from {
       opacity: 0;
@@ -118,7 +118,7 @@
       transform: translateY(0);
     }
   }
-  
+
   @keyframes slideInRight {
     from {
       opacity: 0;
@@ -129,15 +129,16 @@
       transform: translateX(0);
     }
   }
-  
+
   .section-padding {
     @apply py-20 px-4 sm:px-6 lg:px-8 xl:px-12;
   }
-  
+
   .container-custom {
     @apply max-w-7xl mx-auto;
   }
 }
+
 /* Fix phone number direction */
 .topbar-phone,
 .phone-number,
@@ -187,6 +188,7 @@ span[data-slot="badge"]:hover{
   background-color: #f59e0b !important;
   color: #111827 !important;
 }
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -202,7 +204,7 @@ span[data-slot="badge"]:hover{
   animation: fadeIn 0.45s ease-out both;
 }
 
-/* ===== Progress yellow shimmer animation ===== */
+/* ===== Progress yellow shimmer animation (قديمة - نتركها للتوافق) ===== */
 
 @keyframes shimmerMove {
   0% {
@@ -221,4 +223,38 @@ span[data-slot="badge"]:hover{
     transparent
   );
   animation: shimmerMove 1.8s linear infinite;
+}
+
+/* ===== GOLD + Strong shimmer (الجديد للبار الذهبي) ===== */
+
+.goldFill{
+  background: linear-gradient(
+    90deg,
+    #7a4b00 0%,
+    #c89200 18%,
+    #ffd773 40%,
+    #d4af37 60%,
+    #ffea9b 78%,
+    #8a5a00 100%
+  );
+}
+
+@keyframes shimmerMoveStrong {
+  0% { transform: translateX(140%); }
+  100% { transform: translateX(-140%); }
+}
+
+.shimmerStrong{
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.95) 35%,
+    rgba(255,255,255,0.55) 50%,
+    rgba(255,255,255,0.95) 65%,
+    transparent 100%
+  );
+  animation: shimmerMoveStrong 0.65s linear infinite; /* أسرع */
+  filter: blur(0.15px);
+  mix-blend-mode: overlay; /* لمعان أقوى */
+  opacity: 0.95;
 }

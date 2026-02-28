@@ -164,7 +164,7 @@ export default function ProjectDetailsPage() {
     ? clamp0to100(toInt(currentMilestone.percentage, 0))
     : null
 
-  // ✅ شريط أصفر يمثل "المرحلة القادمة" من نهاية الأخضر إلى نسبة المرحلة القادمة
+  // ✅ شريط ذهبي يمثل "المرحلة القادمة" من نهاية الأخضر إلى نسبة المرحلة القادمة
   const yellowWidth =
     nextMilestonePct != null ? clamp0to100(Math.max(0, nextMilestonePct - shownProgress)) : 0
 
@@ -237,16 +237,22 @@ export default function ProjectDetailsPage() {
                 style={{ width: `${shownProgress}%` }}
               />
 
-              {/* ✅ القادم (yellow) يبدأ من نهاية الأخضر دائماً (من اليمين بسبب RTL) */}
+              {/* ✅ القادم (GOLD) يبدأ من نهاية الأخضر دائماً (من اليمين بسبب RTL) */}
               {yellowWidth > 0 && shownProgress < 100 && (
                 <div
                   className="absolute top-0 h-3 rounded-full overflow-hidden"
                   style={{
-                    // في RTL: النهاية عند "يمين"، فنثبت الأصفر بعد الأخضر باستخدام right
+                    // في RTL: النهاية عند "يمين"، فنثبت الذهب بعد الأخضر باستخدام right
                     right: `${shownProgress}%`,
                     width: `${Math.min(yellowWidth, 100 - shownProgress)}%`,
                   }}
-                />
+                >
+                  {/* الذهب المتدرّج */}
+                  <div className="w-full h-full goldFill relative">
+                    {/* تموّج قوي وسريع */}
+                    <div className="absolute inset-0 shimmerStrong" />
+                  </div>
+                </div>
               )}
             </div>
 
