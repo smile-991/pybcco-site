@@ -103,6 +103,16 @@ export default function ProjectTrackingSystemRiyadh() {
           <Link to="/portal">
             <Button className="px-8 py-6 text-lg">🔐 دخول العملاء</Button>
           </Link>
+
+          {/* ✅ الصورة تحت زر دخول العملاء */}
+          <div className="mt-12 flex justify-center">
+            <img
+              src="/images/example.webp"
+              alt="واجهة نظام متابعة المشاريع - PYBCCO"
+              className="rounded-2xl shadow-2xl border border-gray-200 max-w-5xl w-full"
+              loading="lazy"
+            />
+          </div>
         </div>
 
         <h2 className="text-2xl font-semibold mb-6">لماذا أطلقنا نظام المتابعة الرقمي؟</h2>
