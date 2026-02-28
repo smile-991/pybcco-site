@@ -25,6 +25,12 @@ function toInt(n: any, fallback = 0) {
   return Number.isFinite(x) ? Math.trunc(x) : fallback
 }
 
+function clamp0to100(n: any) {
+  const x = Number(n)
+  if (!Number.isFinite(x)) return 0
+  return Math.min(Math.max(x, 0), 100)
+}
+
 function badgeForMilestone(isDone: boolean) {
   return isDone ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-600"
 }
@@ -148,10 +154,19 @@ export default function ProjectDetailsPage() {
     return max
   }, 0)
 
-  const shownProgress =
+  const shownProgressRaw =
     normalizedMilestones.length > 0 ? milestoneProgress : toInt(project.progress_percent, 0)
 
+  const shownProgress = clamp0to100(shownProgressRaw)
+
   const currentMilestone = normalizedMilestones.find((m: any) => !m.is_done) || null
+  const nextMilestonePct = currentMilestone
+    ? clamp0to100(toInt(currentMilestone.percentage, 0))
+    : null
+
+  // ✅ شريط أصفر يمثل "المرحلة القادمة" من نهاية الأخضر إلى نسبة المرحلة القادمة
+  const yellowWidth =
+    nextMilestonePct != null ? clamp0to100(Math.max(0, nextMilestonePct - shownProgress)) : 0
 
   const total = Number(project.total_amount) || 0
   const paid = payments.reduce((sum: number, p: any) => sum + Number(p.amount || 0), 0)
@@ -212,40 +227,30 @@ export default function ProjectDetailsPage() {
             <span className={`text-xs px-4 py-2 rounded-full ${statusBadge}`}>{statusLabel}</span>
           </div>
 
-          {/* ✅ Progress bar (NEW: Green done + Yellow in-progress hint) */}
+          {/* ✅ Progress bar (RTL-safe) */}
           <div className="mt-6">
-            <div className="w-full bg-gray-200 rounded-full h-3 relative overflow-hidden">
+            {/* dir=rtl يخلي التعبئة من اليمين (مثل اللي عندك بالصورة) */}
+            <div dir="rtl" className="w-full bg-gray-200 rounded-full h-3 relative overflow-hidden">
               {/* ✅ done (green) */}
               <div
                 className="bg-green-500 h-3 rounded-full transition-all"
-                style={{ width: `${Math.min(Math.max(shownProgress, 0), 100)}%` }}
+                style={{ width: `${shownProgress}%` }}
               />
 
-              {/* ✅ in-progress hint (animated small segment after done) */}
-              {currentMilestone && shownProgress < 100 && (
+              {/* ✅ القادم (yellow) يبدأ من نهاية الأخضر دائماً (من اليمين بسبب RTL) */}
+              {yellowWidth > 0 && shownProgress < 100 && (
                 <div
                   className="absolute top-0 h-3 rounded-full bg-yellow-400/90 animate-pulse"
                   style={{
-                    left: `${Math.min(Math.max(shownProgress, 0), 100)}%`,
-                    // ✅ نخلي الأصفر ما يتجاوز 100% (حتى ما يطلع برا)
-                    width: `${Math.max(
-                      0,
-                      Math.min(
-                        5,
-                        Math.min(
-                          100 - Math.min(Math.max(shownProgress, 0), 100),
-                          Math.max(0, toInt(currentMilestone.percentage, 0) - shownProgress) || 5
-                        )
-                      )
-                    )}%`,
+                    // في RTL: النهاية عند "يمين"، فنثبت الأصفر بعد الأخضر باستخدام right
+                    right: `${shownProgress}%`,
+                    width: `${Math.min(yellowWidth, 100 - shownProgress)}%`,
                   }}
                 />
               )}
             </div>
 
-            <p className="text-xs mt-2 text-gray-600">
-              {Math.min(Math.max(shownProgress, 0), 100)}% Complete
-            </p>
+            <p className="text-xs mt-2 text-gray-600">{shownProgress}% Complete</p>
 
             {/* ✅ Milestones (B) تحت progress bar */}
             {normalizedMilestones.length > 0 && (
@@ -379,18 +384,18 @@ export default function ProjectDetailsPage() {
             <p className="text-sm text-gray-500">No payments recorded yet.</p>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table dir="rtl" className="w-full text-sm">
                 <thead>
-                  <tr className="text-left border-b">
-                    <th className="py-2">Date</th>
-                    <th className="py-2">Amount</th>
-                    <th className="py-2">Method</th>
-                    <th className="py-2">Note</th>
+                  <tr className="border-b text-right">
+                    <th className="py-2">التاريخ</th>
+                    <th className="py-2">المبلغ</th>
+                    <th className="py-2">الطريقة</th>
+                    <th className="py-2">ملاحظة</th>
                   </tr>
                 </thead>
                 <tbody>
                   {payments.map((payment: any) => (
-                    <tr key={payment.id} className="border-b hover:bg-gray-50">
+                    <tr key={payment.id} className="border-b hover:bg-gray-50 text-right">
                       <td className="py-2">{formatDate(payment.date)}</td>
                       <td className="py-2 font-medium">{money(payment.amount)} SAR</td>
                       <td className="py-2">{payment.method || "-"}</td>

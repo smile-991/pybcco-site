@@ -201,3 +201,24 @@ span[data-slot="badge"]:hover{
 .animate-fadeIn {
   animation: fadeIn 0.45s ease-out both;
 }
+
+/* ===== Progress yellow shimmer animation ===== */
+
+@keyframes shimmerMove {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.7),
+    transparent
+  );
+  animation: shimmerMove 1.8s linear infinite;
+}
