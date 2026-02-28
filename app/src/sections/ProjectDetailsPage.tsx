@@ -240,7 +240,7 @@ export default function ProjectDetailsPage() {
               {/* ✅ القادم (yellow) يبدأ من نهاية الأخضر دائماً (من اليمين بسبب RTL) */}
               {yellowWidth > 0 && shownProgress < 100 && (
                 <div
-                  className="absolute top-0 h-3 rounded-full bg-yellow-400/90 animate-pulse"
+                  className="absolute top-0 h-3 rounded-full overflow-hidden"
                   style={{
                     // في RTL: النهاية عند "يمين"، فنثبت الأصفر بعد الأخضر باستخدام right
                     right: `${shownProgress}%`,
