@@ -76,16 +76,21 @@ export default function Hero() {
       {/* ✅ Background */}
       <div className={isMobileNow ? "absolute inset-0" : "absolute inset-0 parallax"}>
         <img
-          src="/images/hero-webp.webp"
-          alt=""
-          aria-hidden="true"
-          fetchPriority="high"
-          loading="eager"
-          decoding="async"
-          className="absolute inset-0 w-full h-full object-cover"
-          width={1600}
-          height={1200}
-        />
+  src="/images/hero-mobile.webp"
+  srcSet="
+    /images/hero-mobile.webp 800w,
+    /images/hero-webp.webp 1600w
+  "
+  sizes="(max-width: 768px) 100vw, 1600px"
+  alt=""
+  aria-hidden="true"
+  fetchPriority="high"
+  loading="eager"
+  decoding="async"
+  className="absolute inset-0 w-full h-full object-cover"
+  width={1600}
+  height={1200}
+/>
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
       </div>
 
