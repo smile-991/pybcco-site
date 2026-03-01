@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
 
-const SITE = "https://www.pybcco.com";
+const SITE = "https://pybcco.com";
 
 const FAQS = [
   {
@@ -274,7 +274,7 @@ export default function ApartmentFinishingRiyadh() {
       </section>
 
       {/* FAQ (VISIBLE + MATCHES SCHEMA) */}
-      <section className="container mx-auto px-4 pb-14 text-right max-w-5xl mx-auto">
+      <section className="container mx-auto px-4 pb-14 text-right max-w-5xl">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
           الأسئلة الشائعة حول{" "}
           <span className="text-gold">تشطيب الشقق بالرياض</span>

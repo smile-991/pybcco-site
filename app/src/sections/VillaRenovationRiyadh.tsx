@@ -339,7 +339,7 @@ export default function VillaRenovationRiyadh() {
       </section>
 
       {/* FAQ (VISIBLE + MATCHES SCHEMA) */}
-      <section className="container mx-auto px-4 pb-14 text-right max-w-5xl mx-auto">
+      <section className="container mx-auto px-4 pb-14 text-right max-w-5xl">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
           الأسئلة الشائعة حول <span className="text-gold">ترميم الفلل بالرياض</span>
         </h2>
