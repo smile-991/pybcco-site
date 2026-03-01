@@ -302,13 +302,16 @@ export default function Footer() {
       </div>
 
       {/* Scroll to Top */}
-      <Button
-        onClick={scrollToTop}
-        size="icon"
-        className="fixed bottom-6 left-6 w-12 h-12 bg-gold hover:bg-gold/90 text-black rounded-full shadow-lg z-50"
-      >
-        <ArrowUp className="w-6 h-6" />
-      </Button>
+<Button
+  type="button"
+  onClick={scrollToTop}
+  size="icon"
+  aria-label="العودة إلى أعلى الصفحة"
+  title="العودة إلى أعلى الصفحة"
+  className="fixed bottom-6 left-6 w-12 h-12 bg-gold hover:bg-gold/90 text-black rounded-full shadow-lg z-50"
+>
+  <ArrowUp className="w-6 h-6" />
+</Button>
     </footer>
   );
 }
