@@ -8,19 +8,37 @@ const stats = [
   { icon: Ruler, value: "19", label: "مدينة" },
 ];
 
+// ✅ تحديد الموبايل من أول render (بدون انتظار useEffect)
+function getIsMobile() {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(max-width: 767px)").matches;
+}
+
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
 
   const [scrollY, setScrollY] = useState(0);
-  const [isMobileNow, setIsMobileNow] = useState(false);
+  const [isMobileNow, setIsMobileNow] = useState(getIsMobile);
 
   useEffect(() => {
-    // ✅ تحديد الموبايل مرة واحدة بدون window داخل render
-    const isMobile = window.matchMedia("(max-width: 767px)").matches;
-    setIsMobileNow(isMobile);
+    // ✅ تحديث حالة الموبايل عند تغيير الحجم (اختياري بس احترافي)
+    const mql = window.matchMedia("(max-width: 767px)");
+    const onChange = () => setIsMobileNow(mql.matches);
+    onChange();
 
-    // ✅ على الموبايل: لا scroll state ولا parallax نهائيًا (تحسين LCP/TBT/CLS)
-    if (isMobile) return;
+    // Safari fallback
+    if (mql.addEventListener) mql.addEventListener("change", onChange);
+    else mql.addListener(onChange);
+
+    return () => {
+      if (mql.removeEventListener) mql.removeEventListener("change", onChange);
+      else mql.removeListener(onChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    // ✅ على الموبايل: لا scroll state ولا parallax نهائيًا
+    if (isMobileNow) return;
 
     const handleScroll = () => {
       const y = window.scrollY || 0;
@@ -36,11 +54,10 @@ export default function Hero() {
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
-
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isMobileNow]);
 
-  // ✅ على الموبايل: نخليها ثابتة (ما في fade/lift)
+  // ✅ على الموبايل: ثابت 100% من أول فريم
   const progress = isMobileNow ? 0 : Math.min(scrollY / 320, 1);
   const fade = isMobileNow ? 1 : 1 - progress * 0.55;
   const lift = isMobileNow ? 0 : progress * 14;
@@ -56,8 +73,8 @@ export default function Hero() {
       ref={heroRef}
       className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* ✅ Background (IMG محلي بدل Unsplash) */}
-      <div className="absolute inset-0 parallax">
+      {/* ✅ Background */}
+      <div className={isMobileNow ? "absolute inset-0" : "absolute inset-0 parallax"}>
         <img
           src="/images/hero-webp.webp"
           alt=""
@@ -72,7 +89,7 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
       </div>
 
-      {/* ✅ Animated Background Elements (موقفة على الموبايل لتخفيف CLS/Repaint) */}
+      {/* ✅ Animated blobs: Desktop only (من أول render) */}
       {!isMobileNow && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 bg-gold/10 rounded-full blur-3xl animate-pulse" />
@@ -84,11 +101,15 @@ export default function Hero() {
       <div className="relative z-10 container-custom pt-12 md:pt-20">
         <div
           className="text-center max-w-4xl mx-auto"
-          style={{
-            opacity: fade,
-            transform: `translateY(${lift}px)`,
-            willChange: isMobileNow ? undefined : "opacity, transform",
-          }}
+          style={
+            isMobileNow
+              ? undefined
+              : {
+                  opacity: fade,
+                  transform: `translateY(${lift}px)`,
+                  willChange: "opacity, transform",
+                }
+          }
         >
           {/* Badge */}
           <div
@@ -103,19 +124,16 @@ export default function Hero() {
             </span>
           </div>
 
-          {/* Main Title */}
           <h1 className="text-white font-extrabold leading-tight tracking-wide text-3xl sm:text-5xl lg:text-6xl text-center mb-6 md:mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]">
             شركة <span className="text-gold/90">بنيان الهرم</span>{" "}
             <span className="whitespace-nowrap">للمقاولات</span>
           </h1>
 
-          {/* Subtitle */}
           <p className="text-white/80 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed text-center drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]">
             نقدم حلول مقاولات متكاملة تشمل الأعمال الإنشائية وأعمال التشطيبات،
             وفق أعلى معايير الجودة والالتزام داخل المملكة العربية السعودية.
           </p>
 
-          {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10 md:mb-16 mt-6">
             <Button
               onClick={() => scrollToSection("#contact")}
@@ -136,9 +154,7 @@ export default function Hero() {
             </Button>
 
             <Button
-              onClick={() =>
-                (window.location.href = "/villa-finishing-price-riyadh")
-              }
+              onClick={() => (window.location.href = "/villa-finishing-price-riyadh")}
               size="lg"
               className="bg-gold/80 hover:bg-gold text-black font-bold px-8 py-5 text-base md:text-lg w-full sm:w-auto"
             >
@@ -146,7 +162,6 @@ export default function Hero() {
             </Button>
           </div>
 
-          {/* Stats */}
           <div className="grid grid-cols-3 gap-3 sm:gap-8 max-w-2xl mx-auto">
             {stats.map((stat, index) => (
               <div
@@ -169,7 +184,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll Indicator - Desktop Only */}
       <div className="hidden md:block absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
         <button
           onClick={() => scrollToSection("#about")}
