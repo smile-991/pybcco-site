@@ -467,40 +467,59 @@ export default function Home() {
         </div>
       </section>
 
-      {/* لماذا نحن */}
-      <section id="why-us" className="section-padding bg-white">
-        <div className="container-custom px-4">
-          <div className="text-center mb-10">
-            <span className="inline-block bg-gold/10 text-gold-dark px-4 py-2 rounded-full text-sm font-semibold mb-4">
-              لماذا نحن؟
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-              أسباب اختيار <span className="text-gold">بنيان الهرم</span>
-            </h2>
-          </div>
+     {/* لماذا نحن */}
+<section id="why-us" className="section-padding bg-white">
+  <div className="container-custom px-4">
+    <div className="text-center mb-10">
+      <span className="inline-block bg-gold/10 text-gold-dark px-4 py-2 rounded-full text-sm font-semibold mb-4">
+        لماذا نحن؟
+      </span>
+      <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+        أسباب اختيار <span className="text-gold">بنيان الهرم</span>
+      </h2>
+    </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
-            {[
-              "إشراف هندسي مباشر ومتابعة ميدانية",
-              "عقود واضحة وبنود مفهومة",
-              "جدول زمني وخطة تنفيذ قابلة للمتابعة",
-              "جودة مواد ومواصفات محددة",
-              "تسليم مفتاح حسب الاتفاق",
-              "التزام بالتواصل والشفافية مع العميل",
-            ].map((t, i) => (
-              <div
-                key={i}
-                className="bg-gray-50 rounded-2xl p-5 shadow-sm border border-black/5"
+    <div className="grid md:grid-cols-2 gap-4">
+      {[
+        { text: "إشراف هندسي مباشر ومتابعة ميدانية" },
+        { text: "عقود واضحة وبنود مفهومة" },
+        { text: "جدول زمني وخطة تنفيذ قابلة للمتابعة" },
+        { text: "جودة مواد ومواصفات محددة" },
+        { text: "تسليم مفتاح حسب الاتفاق" },
+        { text: "التزام بالتواصل والشفافية مع العميل" },
+
+        // ✅ الجديد (رابط داخلي قوي)
+        {
+          text: "نظام متابعة مشاريع إلكتروني خاص (بوابة العميل)",
+          href: "/project-tracking-system-riyadh",
+        },
+      ].map((item, i) => (
+        <div
+          key={i}
+          className="bg-gray-50 rounded-2xl p-5 shadow-sm border border-black/5"
+        >
+          <div className="flex items-start gap-3">
+            <CheckCircle2 className="w-5 h-5 text-gold mt-0.5" />
+
+            {item.href ? (
+              <Link
+                to={item.href}
+                className="text-gray-900 font-semibold hover:underline"
+                aria-label={item.text}
               >
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-gold mt-0.5" />
-                  <div className="text-gray-900 font-semibold">{t}</div>
-                </div>
+                {item.text}
+              </Link>
+            ) : (
+              <div className="text-gray-900 font-semibold">
+                {item.text}
               </div>
-            ))}
+            )}
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* فريق العمل */}
       <section id="team">
