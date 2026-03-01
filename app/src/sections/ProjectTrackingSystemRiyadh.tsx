@@ -2,7 +2,7 @@ import SeoHead from "@/components/SeoHead"
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
 
-const SITE = "https://www.pybcco.com"
+const SITE = "https://pybcco.com"
 
 export default function ProjectTrackingSystemRiyadh() {
   const serviceSchema = {
