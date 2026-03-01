@@ -481,18 +481,13 @@ export default function Home() {
 
     <div className="grid md:grid-cols-2 gap-4">
       {[
-        { text: "إشراف هندسي مباشر ومتابعة ميدانية" },
+        { text: "إشراف هندسي مباشر ومتابعة ميدانية", href: "/team" },
         { text: "عقود واضحة وبنود مفهومة" },
-        { text: "جدول زمني وخطة تنفيذ قابلة للمتابعة" },
-        { text: "جودة مواد ومواصفات محددة" },
-        { text: "تسليم مفتاح حسب الاتفاق" },
-        { text: "التزام بالتواصل والشفافية مع العميل" },
-
-        // ✅ الجديد (رابط داخلي قوي)
-        {
-          text: "نظام متابعة مشاريع إلكتروني خاص (بوابة العميل)",
-          href: "/project-tracking-system-riyadh",
-        },
+        { text: "جدول زمني وخطة تنفيذ قابلة للمتابعة", href: "/project-tracking-system-riyadh" },
+        { text: "جودة مواد ومواصفات محددة", href: "/services" },
+        { text: "تسليم مفتاح حسب الاتفاق", href: "/villa-finishing-riyadh" },
+        { text: "التزام بالتواصل والشفافية مع العميل", href: "/contact" },
+        { text: "نظام متابعة مشاريع إلكتروني خاص", href: "/project-tracking-system-riyadh" },
       ].map((item, i) => (
         <div
           key={i}
