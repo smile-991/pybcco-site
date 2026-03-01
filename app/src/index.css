@@ -1,3 +1,64 @@
+/* ================= SELF-HOSTED CAIRO (WOFF2) ================= */
+/* ملفاتك موجودة في: app/public/fonts/cairo/ */
+
+@font-face {
+  font-family: "Cairo";
+  src: url("/fonts/cairo/cairo-v31-arabic_latin-300.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cairo";
+  src: url("/fonts/cairo/cairo-v31-arabic_latin-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cairo";
+  src: url("/fonts/cairo/cairo-v31-arabic_latin-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cairo";
+  src: url("/fonts/cairo/cairo-v31-arabic_latin-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cairo";
+  src: url("/fonts/cairo/cairo-v31-arabic_latin-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cairo";
+  src: url("/fonts/cairo/cairo-v31-arabic_latin-800.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cairo";
+  src: url("/fonts/cairo/cairo-v31-arabic_latin-900.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ================= TAILWIND ================= */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -45,7 +106,7 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Cairo', sans-serif;
+    font-family: "Cairo", sans-serif;
   }
 }
 
