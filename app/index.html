@@ -19,13 +19,22 @@
       crossorigin
     />
 
-    <!-- ✅ Preload Hero Image (LCP fix for Mobile) -->
-    <link
-      rel="preload"
-      as="image"
-      href="/images/hero-webp.webp"
-      fetchpriority="high"
-    />
+ <!-- ✅ Preload Hero Image (LCP fix) -->
+<link
+  rel="preload"
+  as="image"
+  href="/images/hero-mobile.webp"
+  fetchpriority="high"
+  media="(max-width: 767px)"
+/>
+
+<link
+  rel="preload"
+  as="image"
+  href="/images/hero-webp.webp"
+  fetchpriority="high"
+  media="(min-width: 768px)"
+/>
 
     <!-- Base (Fallback) - سيتم استبداله/تحديثه عبر SeoHead لكل صفحة -->
     <title>بنيان الهرم للمقاولات | PYBCCO</title>
