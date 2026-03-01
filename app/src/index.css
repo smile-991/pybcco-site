@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* ================= SELF-HOSTED CAIRO (WOFF2) ================= */
 /* ملفاتك موجودة في: app/public/fonts/cairo/ */
 
@@ -56,12 +60,6 @@
   font-style: normal;
   font-display: swap;
 }
-
-/* ================= TAILWIND ================= */
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 /* ================= BASE VARIABLES ================= */
 
