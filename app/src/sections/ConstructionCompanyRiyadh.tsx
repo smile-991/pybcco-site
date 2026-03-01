@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
 
-const SITE = "https://www.pybcco.com";
+const SITE = "https://pybcco.com";
 
 const FAQS = [
   {

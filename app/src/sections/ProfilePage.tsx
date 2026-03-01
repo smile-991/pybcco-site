@@ -1,7 +1,7 @@
 import SeoHead from "@/components/SeoHead";
 import ProfileQR from "@/sections/ProfileQR";
 
-const SITE = "https://www.pybcco.com";
+const SITE = "https://pybcco.com";
 
 export default function ProfilePage() {
   return (

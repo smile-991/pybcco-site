@@ -98,7 +98,7 @@ export default function ContractorAlMalqaRiyadh() {
       "@type": "LocalBusiness",
       name: "PYBCCO – بنيان الهرم للمقاولات",
       telephone: "+966550604837",
-      url: "https://www.pybcco.com",
+      url: "https://pybcco.com",
     },
   };
 

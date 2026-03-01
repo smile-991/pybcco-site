@@ -48,7 +48,7 @@ export default function ProfileQR() {
               </Button>
             </a>
 
-            <a href="https://www.pybcco.com" target="_blank" rel="noreferrer">
+            <a href="https://pybcco.com" target="_blank" rel="noreferrer">
               <Button variant="ghost" className="w-full h-12 text-base font-bold">
                 زيارة الموقع الكامل
               </Button>
