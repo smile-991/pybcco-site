@@ -1,0 +1,15 @@
+# dependencies
+node_modules/
+
+# local scripts output
+image-sizes.csv
+
+# build output
+dist/
+build/
+
+# environment
+.env
+
+# logs
+npm-debug.log*
