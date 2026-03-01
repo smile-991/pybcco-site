@@ -10,11 +10,16 @@ const stats = [
 
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
+
   const [scrollY, setScrollY] = useState(0);
+  const [isMobileNow, setIsMobileNow] = useState(false);
 
   useEffect(() => {
-    // ✅ على الموبايل: لا scroll state ولا parallax نهائيًا (تحسين LCP/TBT/CLS)
+    // ✅ تحديد الموبايل مرة واحدة بدون window داخل render
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    setIsMobileNow(isMobile);
+
+    // ✅ على الموبايل: لا scroll state ولا parallax نهائيًا (تحسين LCP/TBT/CLS)
     if (isMobile) return;
 
     const handleScroll = () => {
@@ -36,10 +41,6 @@ export default function Hero() {
   }, []);
 
   // ✅ على الموبايل: نخليها ثابتة (ما في fade/lift)
-  const isMobileNow =
-    typeof window !== "undefined" &&
-    window.matchMedia("(max-width: 767px)").matches;
-
   const progress = isMobileNow ? 0 : Math.min(scrollY / 320, 1);
   const fade = isMobileNow ? 1 : 1 - progress * 0.55;
   const lift = isMobileNow ? 0 : progress * 14;
@@ -71,7 +72,7 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
       </div>
 
-      {/* Animated Background Elements (عطّلناها على الموبايل لتخفيف CLS/Repaint) */}
+      {/* ✅ Animated Background Elements (موقفة على الموبايل لتخفيف CLS/Repaint) */}
       {!isMobileNow && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 bg-gold/10 rounded-full blur-3xl animate-pulse" />
@@ -135,7 +136,9 @@ export default function Hero() {
             </Button>
 
             <Button
-              onClick={() => (window.location.href = "/villa-finishing-price-riyadh")}
+              onClick={() =>
+                (window.location.href = "/villa-finishing-price-riyadh")
+              }
               size="lg"
               className="bg-gold/80 hover:bg-gold text-black font-bold px-8 py-5 text-base md:text-lg w-full sm:w-auto"
             >
