@@ -129,7 +129,7 @@ export default function Navbar() {
               <span className="sr-only">بنيان الهرم للمقاولات - PYBCCO</span>
 
               <img
-                src="/assets/logo.png"
+                src="/assets/logo.webp"
                 alt="بنيان الهرم للمقاولات"
                 className="w-10 h-10 object-contain"
                 width={40}

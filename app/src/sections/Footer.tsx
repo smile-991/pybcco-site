@@ -151,7 +151,7 @@ export default function Footer() {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-14 h-14 bg-gold rounded-xl flex items-center justify-center overflow-hidden">
                 <img
-                  src="/assets/logo.png"
+                  src="/assets/logo.webp"
                   alt="بنيان الهرم للمقاولات"
                   className="w-full h-full object-contain"
                 />
