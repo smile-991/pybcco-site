@@ -226,33 +226,33 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
-          <div>
-            <h4 className="font-bold text-lg mb-6 text-gold">تواصل معنا</h4>
+{/* Contact */}
+<div>
+  <h2 className="font-bold text-lg mb-6 text-gold">تواصل معنا</h2>
 
-            <ul className="space-y-4">
-              <ContactRow
-                icon={Phone}
-                label="اتصل بنا"
-                value={PHONE_LOCAL}
-                href={`tel:${PHONE_TEL}`}
-                ltrValue
-              />
-              <ContactRow
-                icon={Mail}
-                label="البريد الإلكتروني"
-                value={EMAIL_PUBLIC}
-                href={`mailto:${EMAIL_PUBLIC}`}
-                ltrValue
-              />
-              <ContactRow
-                icon={MapPin}
-                label="العنوان"
-                value={ADDRESS_AR}
-                href={MAPS_LINK}
-              />
-            </ul>
-          </div>
+  <ul className="space-y-4">
+    <ContactRow
+      icon={Phone}
+      label="اتصل بنا"
+      value={PHONE_LOCAL}
+      href={`tel:${PHONE_TEL}`}
+      ltrValue
+    />
+    <ContactRow
+      icon={Mail}
+      label="البريد الإلكتروني"
+      value={EMAIL_PUBLIC}
+      href={`mailto:${EMAIL_PUBLIC}`}
+      ltrValue
+    />
+    <ContactRow
+      icon={MapPin}
+      label="العنوان"
+      value={ADDRESS_AR}
+      href={MAPS_LINK}
+    />
+  </ul>
+</div>
         </div>
       </div>
 
