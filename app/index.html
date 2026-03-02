@@ -93,19 +93,20 @@
          لأن SeoHead هو المصدر الوحيد للـ Schema لتجنب duplication/conflict.
     -->
 
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-GS48Y4TN1W"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-GS48Y4TN1W");
-    </script>
+    <!-- Google Analytics (Delayed 1500ms for performance) -->
+<script>
+  setTimeout(function () {
+    var script = document.createElement("script");
+    script.src = "https://www.googletagmanager.com/gtag/js?id=G-GS48Y4TN1W";
+    script.async = true;
+    document.head.appendChild(script);
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-GS48Y4TN1W");
+  }, 1500);
+</script>
   </head>
 
   <body>
