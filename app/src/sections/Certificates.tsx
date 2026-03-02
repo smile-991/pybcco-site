@@ -136,6 +136,11 @@ const certificates = [
 
 type Cert = (typeof certificates)[0];
 
+// ✅ أبعاد ثابتة (تقريبية) لإزالة تحذير width/height
+// إذا بتحبها أدق 100%، عطيني أبعاد كل صورة (أو اسمحلي نقيسها من ملفك) وبخليها exact.
+const CERT_IMG_W = 1200;
+const CERT_IMG_H = 1600;
+
 export default function Certificates() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -303,7 +308,9 @@ export default function Certificates() {
                     src={selectedCertificate.file}
                     alt={selectedCertificate.title}
                     className="w-full h-auto object-contain"
-                    loading="eager"
+                    width={CERT_IMG_W}
+                    height={CERT_IMG_H}
+                    loading="lazy"
                     decoding="async"
                   />
                 </div>
@@ -311,7 +318,10 @@ export default function Certificates() {
                 <div className="bg-gray-50 rounded-xl p-4 space-y-3">
                   <h4 className="font-bold text-gray-900">تفاصيل الشهادة:</h4>
                   {selectedCertificate.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-gray-700">
+                    <div
+                      key={idx}
+                      className="flex items-center gap-2 text-gray-700"
+                    >
                       <CheckCircle2 className="w-4 h-4 text-gold" />
                       {feature}
                     </div>
@@ -326,7 +336,10 @@ export default function Certificates() {
                 <div className="bg-gray-50 rounded-xl p-4 space-y-3">
                   <h4 className="font-bold text-gray-900">معلومات مختصرة:</h4>
                   {selectedCertificate.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-gray-700">
+                    <div
+                      key={idx}
+                      className="flex items-center gap-2 text-gray-700"
+                    >
                       <CheckCircle2 className="w-4 h-4 text-gold" />
                       {feature}
                     </div>
