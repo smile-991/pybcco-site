@@ -347,9 +347,12 @@ export default function Contact() {
                         setFormData({ ...formData, service: value })
                       }
                     >
-                      <SelectTrigger className="bg-white border-gray-200 focus:border-gold focus:ring-gold">
-                        <SelectValue placeholder="اختر نوع الخدمة" />
-                      </SelectTrigger>
+                      <SelectTrigger
+  aria-label="اختر نوع الخدمة"
+  className="bg-white border-gray-200 focus:border-gold focus:ring-gold"
+>
+  <SelectValue placeholder="اختر نوع الخدمة" />
+</SelectTrigger>
                       <SelectContent>
                         {serviceTypes.map((service) => (
                           <SelectItem key={service} value={service}>
