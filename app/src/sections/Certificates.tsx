@@ -66,7 +66,6 @@ const certificates = [
     status: "ساري",
     icon: Shield,
     description: "شهادة اشتراك في التأمينات الاجتماعية لجميع العاملين في الشركة",
-    // ✅ لا صورة للتأمينات (كما طلبت)
     file: null as string | null,
     features: [
       "رقم الاشتراك: 601875632",
@@ -136,10 +135,10 @@ const certificates = [
 
 type Cert = (typeof certificates)[0];
 
-// ✅ أبعاد ثابتة (تقريبية) لإزالة تحذير width/height
-// إذا بتحبها أدق 100%، عطيني أبعاد كل صورة (أو اسمحلي نقيسها من ملفك) وبخليها exact.
-const CERT_IMG_W = 1200;
-const CERT_IMG_H = 1600;
+// ملاحظة: أبعاد افتراضية لتثبيت الـ layout وتقليل CLS داخل الـ Dialog
+// إذا بدك أبعاد دقيقة 100%: ابعتلي مقاسات الصور (أو أسماءها وأنا بعطيك أبعاد مقترحة لكل وحدة)
+const DIALOG_IMG_W = 1200;
+const DIALOG_IMG_H = 1600;
 
 export default function Certificates() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -245,6 +244,7 @@ export default function Certificates() {
                   variant="ghost"
                   size="sm"
                   className="text-gold hover:text-gold-dark hover:bg-gold/10"
+                  aria-label={`عرض شهادة ${cert.title}`}
                   onClick={() => setSelectedCertificate(cert)}
                 >
                   عرض الشهادة
@@ -301,16 +301,16 @@ export default function Certificates() {
                 </div>
               </DialogHeader>
 
-              {/* ✅ إذا في صورة → اعرضها | إذا لا → اعرض التفاصيل النصية فقط */}
+              {/* محتوى الشهادة */}
               {selectedCertificate.file ? (
                 <div className="rounded-xl overflow-hidden border bg-white">
                   <img
                     src={selectedCertificate.file}
                     alt={selectedCertificate.title}
+                    width={DIALOG_IMG_W}
+                    height={DIALOG_IMG_H}
                     className="w-full h-auto object-contain"
-                    width={CERT_IMG_W}
-                    height={CERT_IMG_H}
-                    loading="lazy"
+                    loading="eager"
                     decoding="async"
                   />
                 </div>
@@ -318,10 +318,7 @@ export default function Certificates() {
                 <div className="bg-gray-50 rounded-xl p-4 space-y-3">
                   <h4 className="font-bold text-gray-900">تفاصيل الشهادة:</h4>
                   {selectedCertificate.features.map((feature, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center gap-2 text-gray-700"
-                    >
+                    <div key={idx} className="flex items-center gap-2 text-gray-700">
                       <CheckCircle2 className="w-4 h-4 text-gold" />
                       {feature}
                     </div>
@@ -329,17 +326,14 @@ export default function Certificates() {
                 </div>
               )}
 
-              {/* Description + Features (تبقى للجميع) */}
+              {/* الوصف + معلومات مختصرة (مرة واحدة فقط) */}
               <div className="space-y-4 mt-4">
                 <p className="text-gray-600">{selectedCertificate.description}</p>
 
                 <div className="bg-gray-50 rounded-xl p-4 space-y-3">
                   <h4 className="font-bold text-gray-900">معلومات مختصرة:</h4>
                   {selectedCertificate.features.map((feature, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center gap-2 text-gray-700"
-                    >
+                    <div key={idx} className="flex items-center gap-2 text-gray-700">
                       <CheckCircle2 className="w-4 h-4 text-gold" />
                       {feature}
                     </div>
@@ -349,6 +343,7 @@ export default function Certificates() {
                 <div className="flex gap-3 pt-2">
                   <Button
                     className="flex-1 bg-gold hover:bg-gold/90 text-black font-bold"
+                    aria-label="إغلاق نافذة الشهادة"
                     onClick={() => setSelectedCertificate(null)}
                   >
                     إغلاق
