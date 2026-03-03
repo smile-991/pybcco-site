@@ -27,7 +27,7 @@ import ProjectTrackingSystemRiyadh from "./sections/ProjectTrackingSystemRiyadh"
 import PrivacyPolicy from "@/sections/PrivacyPolicy";
 import TermsAndConditions from "@/sections/TermsAndConditions";
 import HowToChooseConstructionCompanyRiyadh from "@/sections/HowToChooseConstructionCompanyRiyadh";
-import EngineeringInsights from "@/sections/engineering-insights";
+import EngineeringInsightsSection from "@/sections/engineering-insights";
 
 export default function App() {
   return (
@@ -59,7 +59,7 @@ export default function App() {
           <Route path="/project-tracking-system-riyadh" element={<ProjectTrackingSystemRiyadh />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsAndConditions />} />
-          <Route path="/engineering-insights" element={<EngineeringInsights />} />
+          <Route path="/engineering-insights" element={<EngineeringInsightsSection />} />
           <Route
   path="/engineering-insights/how-to-choose-construction-company-riyadh"
   element={<HowToChooseConstructionCompanyRiyadh />}
