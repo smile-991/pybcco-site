@@ -9,7 +9,7 @@ type SeoHeadProps = {
   ogImage?: string; // absolute URL recommended
   ogType?: string; // default: website
   twitterCard?: "summary" | "summary_large_image"; // default summary_large_image
-  robots?: string; // ✅ NEW: مثال "index,follow" أو "noindex,follow"
+  robots?: string; // مثال "index,follow" أو "noindex,follow"
   jsonLd?: JsonLd | JsonLd[]; // FAQ / Service / Breadcrumb / WebPage ...
 };
 
@@ -112,7 +112,7 @@ export default function SeoHead({
   ogImage,
   ogType = "website",
   twitterCard = "summary_large_image",
-  robots = "index,follow,max-image-preview:large", // ✅ default مطابق fallback
+  robots = "index,follow,max-image-preview:large",
   jsonLd,
 }: SeoHeadProps) {
   useEffect(() => {
@@ -122,8 +122,11 @@ export default function SeoHead({
     // 2) Meta description
     upsertMetaByName("description", description);
 
-    // ✅ Robots (Dynamic)
+    // 2.1) Robots (Dynamic)
     upsertMetaByName("robots", robots);
+
+    // ✅ إضافة googlebot للاتساق (اختياري لكنه مفيد)
+    upsertMetaByName("googlebot", robots);
 
     // 3) Canonical
     upsertLinkRel("canonical", canonical);
@@ -154,10 +157,9 @@ export default function SeoHead({
     const prefix = "seo-jsonld-";
     removeJsonLdScripts(prefix);
 
-    // ✅ نجمع: LocalBusiness الموحد + أي jsonLd من الصفحة
     const arrUser = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
-    // ✅ إذا الصفحة نفسها بتحط LocalBusiness، ما نكرره (منع duplication)
+    // ✅ إذا الصفحة نفسها بتحط LocalBusiness، ما نكرره
     const userHasLocalBusiness = arrUser.some((o) => looksLikeLocalBusiness(o));
 
     const arrFinal = [
