@@ -264,6 +264,18 @@ export default function ConstructionCompanyRiyadh() {
         </div>
       </section>
 
+      <div className="container mx-auto px-4 mt-6">
+  <p className="text-sm opacity-80 text-center">
+    قبل توقيع أي عقد، اطلع على{" "}
+    <Link
+      to="/engineering-insights/how-to-choose-construction-company-riyadh"
+      className="underline underline-offset-4 text-gold hover:opacity-80"
+    >
+      رؤى هندسية: كيف تختار أفضل شركة مقاولات في الرياض؟
+    </Link>
+  </p>
+</div>
+
       {/* SERVICES */}
       <section id="services" className="container mx-auto px-4 pb-14">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">

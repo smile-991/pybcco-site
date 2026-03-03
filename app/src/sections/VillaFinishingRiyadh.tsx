@@ -226,6 +226,18 @@ export default function VillaFinishingRiyadh() {
         </div>
       </section>
 
+      <div className="container mx-auto px-4 mt-6">
+  <p className="text-sm opacity-80 text-center">
+    قبل توقيع أي عقد، اطلع على{" "}
+    <Link
+      to="/engineering-insights/how-to-choose-construction-company-riyadh"
+      className="underline underline-offset-4 text-gold hover:opacity-80"
+    >
+      رؤى هندسية: كيف تختار أفضل شركة مقاولات في الرياض؟
+    </Link>
+  </p>
+</div>
+
       {/* SERVICES */}
       <p className="mt-8 text-white/60 text-center max-w-4xl mx-auto">
         نحن{" "}
