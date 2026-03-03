@@ -10,43 +10,40 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    
-    <!-- ✅ Self-hosted Cairo (Preload critical weights for faster first paint) -->
-
+    <!-- ✅ Self-hosted Cairo -->
     <link rel="stylesheet" href="/fonts/cairo/cairo.css" />
-    
-<link
-  rel="preload"
-  as="font"
-  type="font/woff2"
-  href="/fonts/cairo/cairo-v31-arabic_latin-700.woff2"
-  crossorigin
-/>
 
-<link
-  rel="preload"
-  as="font"
-  type="font/woff2"
-  href="/fonts/cairo/cairo-v31-arabic_latin-regular.woff2"
-  crossorigin
-/>
+    <!-- ✅ Preload critical Cairo weights (NO visual change) -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/cairo/cairo-v31-arabic_latin-700.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/cairo/cairo-v31-arabic_latin-regular.woff2"
+      crossorigin
+    />
 
- <!-- ✅ Preload Hero Image (LCP fix) -->
-<link
-  rel="preload"
-  as="image"
-  href="/images/hero-mobile.webp"
-  fetchpriority="high"
-  media="(max-width: 767px)"
-/>
-
-<link
-  rel="preload"
-  as="image"
-  href="/images/hero-webp.webp"
-  fetchpriority="high"
-  media="(min-width: 768px)"
-/>
+    <!-- ✅ Preload Hero Images (LCP fix) -->
+    <link
+      rel="preload"
+      as="image"
+      href="/images/hero-mobile.webp"
+      fetchpriority="high"
+      media="(max-width: 767px)"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="/images/hero-webp.webp"
+      fetchpriority="high"
+      media="(min-width: 768px)"
+    />
 
     <!-- Base (Fallback) - سيتم استبداله/تحديثه عبر SeoHead لكل صفحة -->
     <title>بنيان الهرم للمقاولات | PYBCCO</title>
@@ -89,41 +86,20 @@
          لأن SeoHead هو المصدر الوحيد للـ Schema لتجنب duplication/conflict.
     -->
 
-    <style>
-  /* === Critical hero text rendering (LCP) === */
-  .hero-h1 {
-    color: #fff;
-    font-weight: 800; /* extrabold */
-    letter-spacing: 0.02em;
-    line-height: 1.1;
-  }
-
-  /* sizes close to Tailwind text-4xl / sm:text-5xl */
-  .hero-h1 {
-    font-size: 2.25rem;
-  }
-  @media (min-width: 640px) {
-    .hero-h1 {
-      font-size: 3rem;
-    }
-  }
-</style>
-
-
     <!-- Google Analytics (Delayed 1500ms for performance) -->
-<script>
-  setTimeout(function () {
-    var script = document.createElement("script");
-    script.src = "https://www.googletagmanager.com/gtag/js?id=G-GS48Y4TN1W";
-    script.async = true;
-    document.head.appendChild(script);
+    <script>
+      setTimeout(function () {
+        var script = document.createElement("script");
+        script.src = "https://www.googletagmanager.com/gtag/js?id=G-GS48Y4TN1W";
+        script.async = true;
+        document.head.appendChild(script);
 
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag("js", new Date());
-    gtag("config", "G-GS48Y4TN1W");
-  }, 1500);
-</script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag("js", new Date());
+        gtag("config", "G-GS48Y4TN1W");
+      }, 1500);
+    </script>
   </head>
 
   <body>
@@ -132,9 +108,9 @@
       <main
         dir="rtl"
         style="
-  padding: 24px;
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-"
+          padding: 24px;
+          font-family: 'Cairo', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+        "
       >
         <h1 style="margin: 0 0 12px; font-size: 28px; line-height: 1.3;">
           شركة مقاولات بالرياض – بنيان الهرم للمقاولات (PYBCCO)
