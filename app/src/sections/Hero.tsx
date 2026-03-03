@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { ArrowDown, Building2, HardHat, Ruler, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -11,31 +11,13 @@ const stats = [
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
 
-  const [scrollY, setScrollY] = useState(0);
-  const [isMobileNow, setIsMobileNow] = useState(true);
   useEffect(() => {
-    // ✅ تحديث حالة الموبايل عند تغيير الحجم (اختياري بس احترافي)
-    const mql = window.matchMedia("(max-width: 767px)");
-    const onChange = () => setIsMobileNow(mql.matches);
-    onChange();
-
-    // Safari fallback
-    if (mql.addEventListener) mql.addEventListener("change", onChange);
-    else mql.addListener(onChange);
-
-    return () => {
-      if (mql.removeEventListener) mql.removeEventListener("change", onChange);
-      else mql.removeListener(onChange);
-    };
-  }, []);
-
-  useEffect(() => {
-    // ✅ على الموبايل: لا scroll state ولا parallax نهائيًا
-    if (isMobileNow) return;
+    // ✅ Parallax فقط للديسكتوب/تابلت (md+)
+    const mql = window.matchMedia("(min-width: 768px)");
+    if (!mql.matches) return;
 
     const handleScroll = () => {
       const y = window.scrollY || 0;
-      setScrollY(y);
 
       if (heroRef.current) {
         const parallaxElements = heroRef.current.querySelectorAll(".parallax");
@@ -43,17 +25,25 @@ export default function Hero() {
           (el as HTMLElement).style.transform = `translateY(${y * 0.5}px)`;
         });
       }
+
+      // ✅ تأثير خفيف على الكونتينر (بدون state)
+      const content = heroRef.current?.querySelector(
+        '[data-hero-content="true"]'
+      ) as HTMLElement | null;
+
+      if (content) {
+        const progress = Math.min(y / 320, 1);
+        const fade = 1 - progress * 0.55;
+        const lift = progress * 14;
+        content.style.opacity = String(fade);
+        content.style.transform = `translateY(${lift}px)`;
+      }
     };
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isMobileNow]);
-
-  // ✅ على الموبايل: ثابت 100% من أول فريم
-  const progress = isMobileNow ? 0 : Math.min(scrollY / 320, 1);
-  const fade = isMobileNow ? 1 : 1 - progress * 0.55;
-  const lift = isMobileNow ? 0 : progress * 14;
+  }, []);
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -67,55 +57,40 @@ export default function Hero() {
       className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* ✅ Background */}
-      <div className={isMobileNow ? "absolute inset-0" : "absolute inset-0 parallax"}>
+      <div className="absolute inset-0 md:parallax">
         <img
-  src="/images/hero-mobile.webp"
-  srcSet="
-    /images/hero-mobile.webp 800w,
-    /images/hero-webp.webp 1600w
-  "
-  sizes="(max-width: 768px) 100vw, 1600px"
-  alt=""
-  aria-hidden="true"
-  fetchPriority="high"
-  loading="eager"
-  decoding="async"
-  className="absolute inset-0 w-full h-full object-cover"
-  width={1600}
-  height={1200}
-/>
+          src="/images/hero-mobile.webp"
+          srcSet="
+            /images/hero-mobile.webp 800w,
+            /images/hero-webp.webp 1600w
+          "
+          sizes="(max-width: 768px) 100vw, 1600px"
+          alt=""
+          aria-hidden="true"
+          fetchPriority="high"
+          loading="eager"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover"
+          width={1600}
+          height={1200}
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
       </div>
 
-      {/* ✅ Animated blobs: Desktop only (من أول render) */}
-      {!isMobileNow && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-gold/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-gold/5 rounded-full blur-3xl animate-pulse delay-1000" />
-        </div>
-      )}
+      {/* ✅ Animated blobs: Desktop only (CSS فقط) */}
+      <div className="hidden md:block absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-gold/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-gold/5 rounded-full blur-3xl animate-pulse delay-1000" />
+      </div>
 
       {/* Content */}
       <div className="relative z-10 container-custom pt-12 md:pt-20">
         <div
-          className="text-center max-w-4xl mx-auto"
-          style={
-            isMobileNow
-              ? undefined
-              : {
-                  opacity: fade,
-                  transform: `translateY(${lift}px)`,
-                  willChange: "opacity, transform",
-                }
-          }
+          data-hero-content="true"
+          className="text-center max-w-4xl mx-auto md:will-change-[opacity,transform]"
         >
           {/* Badge */}
-          <div
-            className={[
-              "inline-flex items-center gap-2 bg-gold/20 border border-gold/30 rounded-full px-4 py-2 mb-5 md:mb-6",
-              isMobileNow ? "" : "backdrop-blur-sm",
-            ].join(" ")}
-          >
+          <div className="inline-flex items-center gap-2 bg-gold/20 border border-gold/30 rounded-full px-4 py-2 mb-5 md:mb-6 md:backdrop-blur-sm">
             <span className="w-2 h-2 bg-gold rounded-full animate-pulse" />
             <span className="text-gold text-sm font-medium">
               شركة مقاولات معتمدة منذ 2013
@@ -152,7 +127,9 @@ export default function Hero() {
             </Button>
 
             <Button
-              onClick={() => (window.location.href = "/villa-finishing-price-riyadh")}
+              onClick={() =>
+                (window.location.href = "/villa-finishing-price-riyadh")
+              }
               size="lg"
               className="bg-gold/80 hover:bg-gold text-black font-bold px-8 py-5 text-base md:text-lg w-full sm:w-auto"
             >
@@ -164,10 +141,7 @@ export default function Hero() {
             {stats.map((stat, index) => (
               <div
                 key={index}
-                className={[
-                  "bg-white/5 rounded-xl p-3 sm:p-6 border border-white/10",
-                  isMobileNow ? "" : "backdrop-blur-md",
-                ].join(" ")}
+                className="bg-white/5 rounded-xl p-3 sm:p-6 border border-white/10 md:backdrop-blur-md"
               >
                 <stat.icon className="w-5 h-5 sm:w-8 sm:h-8 text-gold mx-auto mb-2" />
                 <div className="text-xl sm:text-4xl font-bold text-white mb-1">
@@ -193,4 +167,4 @@ export default function Hero() {
       </div>
     </section>
   );
-}  
+}
