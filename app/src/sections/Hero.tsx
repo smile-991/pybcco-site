@@ -8,18 +8,11 @@ const stats = [
   { icon: Ruler, value: "19", label: "مدينة" },
 ];
 
-// ✅ تحديد الموبايل من أول render (بدون انتظار useEffect)
-function getIsMobile() {
-  if (typeof window === "undefined") return false;
-  return window.matchMedia("(max-width: 767px)").matches;
-}
-
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
 
   const [scrollY, setScrollY] = useState(0);
-  const [isMobileNow, setIsMobileNow] = useState(getIsMobile);
-
+  const [isMobileNow, setIsMobileNow] = useState(true);
   useEffect(() => {
     // ✅ تحديث حالة الموبايل عند تغيير الحجم (اختياري بس احترافي)
     const mql = window.matchMedia("(max-width: 767px)");
