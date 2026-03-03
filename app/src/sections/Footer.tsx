@@ -119,13 +119,27 @@ export default function Footer() {
 
   // ===== التنقل الذكي مثل Navbar =====
   const goTo = (href: string) => {
+  // ✅ روابط داخل الصفحة
+  if (href.startsWith("#")) {
     if (window.location.pathname === "/") {
       const el = document.querySelector(href);
       if (el) el.scrollIntoView({ behavior: "smooth" });
     } else {
-      window.location.href = `/${href}`;
+      // ✅ لما تكون بصفحة ثانية وروابطك تبع الهوم
+      window.location.href = `/${href}`; // => "/#services" مثلاً
     }
-  };
+    return;
+  }
+
+  // ✅ روابط صفحات (Routes) مثل /engineering-insights
+  if (href.startsWith("/")) {
+    window.location.href = href; // أو Link (بس هذا حل مضمون)
+    return;
+  }
+
+  // ✅ احتياط لأي شيء غريب
+  window.location.href = href;
+};
 
   return (
     <footer
