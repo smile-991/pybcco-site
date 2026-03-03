@@ -86,6 +86,27 @@
          لأن SeoHead هو المصدر الوحيد للـ Schema لتجنب duplication/conflict.
     -->
 
+    <style>
+  /* === Critical hero text rendering (LCP) === */
+  .hero-h1 {
+    color: #fff;
+    font-weight: 800; /* extrabold */
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+  }
+
+  /* sizes close to Tailwind text-4xl / sm:text-5xl */
+  .hero-h1 {
+    font-size: 2.25rem;
+  }
+  @media (min-width: 640px) {
+    .hero-h1 {
+      font-size: 3rem;
+    }
+  }
+</style>
+
+
     <!-- Google Analytics (Delayed 1500ms for performance) -->
 <script>
   setTimeout(function () {

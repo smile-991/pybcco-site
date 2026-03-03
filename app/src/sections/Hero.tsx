@@ -129,7 +129,7 @@ export default function Hero() {
             </span>
           </div>
 
-          <h1 className="text-white font-extrabold leading-tight tracking-wide text-3xl sm:text-5xl lg:text-6xl text-center mb-6 md:mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]">
+          <h1 className="hero-h1 text-white font-extrabold leading-tight tracking-wide text-3xl sm:text-5xl lg:text-6xl text-center mb-6 md:mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]">
             شركة <span className="text-gold/90">بنيان الهرم</span>{" "}
             <span className="whitespace-nowrap">للمقاولات</span>
           </h1>
