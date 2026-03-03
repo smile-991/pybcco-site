@@ -111,4 +111,18 @@
     <priority>0.3</priority>
   </url>
 
+  <url>
+  <loc>https://pybcco.com/engineering-insights</loc>
+  <lastmod>2026-03-03</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<url>
+  <loc>https://pybcco.com/engineering-insights/how-to-choose-construction-company-riyadh</loc>
+  <lastmod>2026-03-03</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
 </urlset>

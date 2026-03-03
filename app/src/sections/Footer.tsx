@@ -32,6 +32,7 @@ const quickLinks = [
   { name: "مشاريعنا", href: "#gallery" },
   { name: "فريق العمل", href: "#team" },
   { name: "تواصل معنا", href: "#contact" },
+  { name: "رؤى هندسية", href: "/engineering-insights" },
 ];
 
 const services = [
