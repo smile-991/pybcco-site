@@ -28,7 +28,10 @@ function SmartImage({
 
   const clean = currentSrc.split("?")[0].toLowerCase();
   const hasExt =
-    clean.endsWith(".webp") || clean.endsWith(".jpg") || clean.endsWith(".jpeg") || clean.endsWith(".png");
+    clean.endsWith(".webp") ||
+    clean.endsWith(".jpg") ||
+    clean.endsWith(".jpeg") ||
+    clean.endsWith(".png");
 
   const swapExt = (s: string, next: "webp" | "jpg" | "jpeg") =>
     s.replace(/\.(webp|jpg|jpeg|png)$/i, `.${next}`);
@@ -76,7 +79,8 @@ const projects = [
     scope: "توريد وتركيب الإضاءة",
     value: "1,120,000 ريال",
     status: "منتهي",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=900&q=80",
+    image:
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=900&q=80",
   },
   {
     id: 2,
@@ -87,7 +91,8 @@ const projects = [
     scope: "توريد وتركيب الإضاءة",
     value: "1,875,804 ريال",
     status: "منتهي",
-    image: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=900&q=80",
+    image:
+      "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=900&q=80",
   },
   {
     id: 3,
@@ -98,7 +103,8 @@ const projects = [
     scope: "توريد وتركيب الإضاءة",
     value: "1,498,785 ريال",
     status: "منتهي",
-    image: "https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?w=900&q=80",
+    image:
+      "https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?w=900&q=80",
   },
   {
     id: 4,
@@ -109,7 +115,8 @@ const projects = [
     scope: "مقاول رئيسي (تشطيب)",
     value: "4,000,000 ريال",
     status: "منتهي",
-    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&q=80",
+    image:
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&q=80",
   },
   {
     id: 5,
@@ -120,7 +127,8 @@ const projects = [
     scope: "مقاول رئيسي",
     value: "4,000,000 ريال",
     status: "منتهي",
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=80",
+    image:
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=80",
   },
   {
     id: 6,
@@ -131,7 +139,8 @@ const projects = [
     scope: "مقاول رئيسي (المباني الرئيسية)",
     value: "1,910,523 ريال",
     status: "منتهي",
-    image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900&q=80",
+    image:
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900&q=80",
   },
   {
     id: 7,
@@ -142,7 +151,8 @@ const projects = [
     scope: "مقاول رئيسي (إنشاء وتشطيب)",
     value: "1,023,439 ريال",
     status: "منتهي",
-    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=900&q=80",
+    image:
+      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=900&q=80",
   },
   {
     id: 8,
@@ -153,7 +163,8 @@ const projects = [
     scope: "مقاول رئيسي (أعمال التشطيب)",
     value: "11,000,000 ريال",
     status: "منتهي",
-    image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=80",
+    image:
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=80",
   },
   {
     id: 9,
@@ -164,7 +175,8 @@ const projects = [
     scope: "مقاول رئيسي (إنشاء وتشطيب)",
     value: "10,000,000 ريال",
     status: "منتهي",
-    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&q=80",
+    image:
+      "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&q=80",
   },
   {
     id: 10,
@@ -175,7 +187,8 @@ const projects = [
     scope: "مقاول رئيسي (تنسيق المواقع)",
     value: "1,800,000 ريال",
     status: "منتهي",
-    image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=900&q=80",
+    image:
+      "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=900&q=80",
   },
   {
     id: 11,
@@ -186,7 +199,8 @@ const projects = [
     scope: "مقاول رئيسي (أعمال التشطيب)",
     value: "1,085,000 ريال",
     status: "منتهي",
-    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=900&q=80",
+    image:
+      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=900&q=80",
   },
   {
     id: 12,
@@ -197,7 +211,8 @@ const projects = [
     scope: "توريد الإضاءة",
     value: "594,508 ريال",
     status: "منتهي",
-    image: "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=900&q=80",
+    image:
+      "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=900&q=80",
   },
 ] as const;
 
@@ -229,11 +244,20 @@ export default function Projects() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("الكل");
-  const [selectedProject, setSelectedProject] = useState<(typeof projects)[number] | null>(null);
+  const [selectedProject, setSelectedProject] =
+    useState<(typeof projects)[number] | null>(null);
+
+  // ✅ Lightbox للصورة (تكبير)
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(
+    null
+  );
 
   // ✅ Mobile: cities collapse
   const [showAllCities, setShowAllCities] = useState(false);
-  const visibleCities = useMemo(() => (showAllCities ? cities : cities.slice(0, 10)), [showAllCities]);
+  const visibleCities = useMemo(
+    () => (showAllCities ? cities : cities.slice(0, 10)),
+    [showAllCities]
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -257,7 +281,12 @@ export default function Projects() {
   }, [selectedCategory]);
 
   return (
-    <section id="projects" ref={sectionRef} className="section-padding bg-white relative overflow-hidden">
+    <section
+      id="projects"
+      ref={sectionRef}
+      className="section-padding bg-white relative overflow-hidden"
+      dir="rtl"
+    >
       <div className="container-custom relative z-10">
         {/* Section Header */}
         <div
@@ -272,7 +301,8 @@ export default function Projects() {
             أعمالنا <span className="text-gold">حول المملكة</span>
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-            نفخر بتنفيذ أكثر من 90 مشروعاً ناجحاً في 19 مدينة حول المملكة العربية السعودية
+            نفخر بتنفيذ أكثر من 90 مشروعاً ناجحاً في 19 مدينة حول المملكة العربية
+            السعودية
           </p>
         </div>
 
@@ -284,7 +314,8 @@ export default function Projects() {
         >
           <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
             <h3 className="text-lg font-bold text-gray-900 mb-4 text-center">
-              نغطي مشاريعنا <span className="text-gold">19 مدينة</span> حول المملكة
+              نغطي مشاريعنا <span className="text-gold">19 مدينة</span> حول
+              المملكة
             </h3>
 
             <div className="flex flex-wrap justify-center gap-2">
@@ -345,16 +376,23 @@ export default function Projects() {
               }`}
               style={{ transitionDelay: `${300 + index * 50}ms` }}
             >
-              {/* Image */}
-              <div className="relative h-48 overflow-hidden">
+              {/* Image (Clickable → Lightbox) */}
+              <button
+                type="button"
+                onClick={() => setLightbox({ src: project.image, alt: project.name })}
+                className="relative h-48 overflow-hidden w-full text-right"
+                aria-label={`تكبير صورة المشروع: ${project.name}`}
+              >
                 <SmartImage
                   src={project.image}
                   alt={project.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 cursor-zoom-in"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute top-3 right-3">
-                  <Badge className="bg-gold text-black font-semibold">{project.category}</Badge>
+                  <Badge className="bg-gold text-black font-semibold">
+                    {project.category}
+                  </Badge>
                 </div>
                 <div className="absolute bottom-3 left-3 right-3">
                   <div className="flex items-center gap-1 text-white/80 text-sm">
@@ -362,14 +400,16 @@ export default function Projects() {
                     {project.location}
                   </div>
                 </div>
-              </div>
+              </button>
 
               {/* Content */}
               <div className="p-5">
                 <h3 className="font-bold text-gray-900 mb-2 group-hover:text-gold transition-colors line-clamp-1">
                   {project.name}
                 </h3>
-                <p className="text-gray-500 text-sm mb-3 line-clamp-1">{project.scope}</p>
+                <p className="text-gray-500 text-sm mb-3 line-clamp-1">
+                  {project.scope}
+                </p>
                 <div className="flex items-center justify-between">
                   <span className="text-gold font-bold text-sm">{project.value}</span>
                   <Button
@@ -396,7 +436,9 @@ export default function Projects() {
           <Button
             size="lg"
             className="bg-gold hover:bg-gold/90 text-black font-bold px-8"
-            onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })}
+            onClick={() =>
+              document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })
+            }
           >
             <ExternalLink className="w-5 h-5 mr-2" />
             اطلب مشروعك الآن
@@ -418,12 +460,18 @@ export default function Projects() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   <div className="absolute top-4 right-4">
-                    <Badge className="bg-gold text-black font-semibold">{selectedProject.category}</Badge>
+                    <Badge className="bg-gold text-black font-semibold">
+                      {selectedProject.category}
+                    </Badge>
                   </div>
                 </div>
 
-                <DialogTitle className="text-xl font-bold text-gray-900">{selectedProject.name}</DialogTitle>
-                <DialogDescription className="text-gray-600">{selectedProject.scope}</DialogDescription>
+                <DialogTitle className="text-xl font-bold text-gray-900">
+                  {selectedProject.name}
+                </DialogTitle>
+                <DialogDescription className="text-gray-600">
+                  {selectedProject.scope}
+                </DialogDescription>
               </DialogHeader>
 
               <div className="space-y-4 mt-4">
@@ -437,12 +485,16 @@ export default function Projects() {
 
                 <div className="flex items-center justify-between py-2 border-b border-gray-100">
                   <span className="text-gray-500">العميل</span>
-                  <span className="font-semibold text-gray-900">{selectedProject.client}</span>
+                  <span className="font-semibold text-gray-900">
+                    {selectedProject.client}
+                  </span>
                 </div>
 
                 <div className="flex items-center justify-between py-2 border-b border-gray-100">
                   <span className="text-gray-500">قيمة المشروع</span>
-                  <span className="font-semibold text-gold">{selectedProject.value}</span>
+                  <span className="font-semibold text-gold">
+                    {selectedProject.value}
+                  </span>
                 </div>
 
                 <div className="flex items-center justify-between py-2">
@@ -458,11 +510,37 @@ export default function Projects() {
                 className="w-full mt-6 bg-gold hover:bg-gold/90 text-black font-bold"
                 onClick={() => {
                   setSelectedProject(null);
-                  document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
+                  document
+                    .querySelector("#contact")
+                    ?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
                 طلب مشروع مماثل
               </Button>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Image Lightbox Dialog (Zoom) */}
+      <Dialog open={!!lightbox} onOpenChange={() => setLightbox(null)}>
+        <DialogContent className="max-w-5xl p-0 overflow-hidden" dir="rtl">
+          {lightbox && (
+            <>
+              <DialogHeader className="px-4 pt-4">
+                <DialogTitle className="text-right">{lightbox.alt}</DialogTitle>
+                <DialogDescription className="text-right">
+                  اضغط خارج النافذة للإغلاق
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="bg-black">
+                <SmartImage
+                  src={lightbox.src}
+                  alt={lightbox.alt}
+                  className="w-full h-auto object-contain max-h-[75vh]"
+                />
+              </div>
             </>
           )}
         </DialogContent>
