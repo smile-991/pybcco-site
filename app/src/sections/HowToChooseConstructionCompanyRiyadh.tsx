@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import SeoHead from "@/components/SeoHead";
 import {
   Accordion,
@@ -8,8 +9,13 @@ import {
 
 type JsonLd = Record<string, any>;
 
+const SITE_URL = "https://pybcco.com";
 const CANONICAL =
   "https://pybcco.com/engineering-insights/how-to-choose-construction-company-riyadh";
+
+// عدّلهم إذا بتحب (بس اترك Published ثابت، وعدّل Modified عند أي تحديث كبير)
+const DATE_PUBLISHED = "2026-03-02";
+const DATE_MODIFIED = "2026-03-05";
 
 function buildFaqJsonLd(canonical: string): JsonLd {
   return {
@@ -76,13 +82,13 @@ function buildBreadcrumbJsonLd(): JsonLd {
         "@type": "ListItem",
         position: 1,
         name: "الرئيسية",
-        item: "https://pybcco.com/",
+        item: `${SITE_URL}/`,
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "رؤى هندسية",
-        item: "https://pybcco.com/engineering-insights",
+        item: `${SITE_URL}/engineering-insights`,
       },
       {
         "@type": "ListItem",
@@ -94,18 +100,61 @@ function buildBreadcrumbJsonLd(): JsonLd {
   };
 }
 
+function buildArticleJsonLd(): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${CANONICAL}#article`,
+    mainEntityOfPage: { "@type": "WebPage", "@id": CANONICAL },
+    inLanguage: "ar",
+    headline: "كيف تختار أفضل شركة مقاولات في الرياض؟ دليل عملي قبل توقيع العقد",
+    description:
+      "دليل عملي لاختيار شركة مقاولات في الرياض: نطاق العمل، العقد التفصيلي، الإشراف الهندسي، الشفافية، وضمان التشطيب لمدة سنتين، مع أسئلة شائعة.",
+    datePublished: DATE_PUBLISHED,
+    dateModified: DATE_MODIFIED,
+    author: {
+      "@type": "Organization",
+      name: "بنيان الهرم للمقاولات – PYBCCO",
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "بنيان الهرم للمقاولات – PYBCCO",
+      url: SITE_URL,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/logo.webp`,
+      },
+    },
+    // اختياري: صورة المقال (إذا ما عندك صورة خاصة للمقال خليه اللوجو أو صورة عامة)
+    image: [`${SITE_URL}/logo.webp`],
+    about: [
+      "شركة مقاولات في الرياض",
+      "مقاول تشطيب فلل بالرياض",
+      "تشطيب فلل بالرياض",
+      "عقد تشطيب",
+      "ضمان التشطيب",
+      "إشراف هندسي",
+    ],
+  };
+}
+
 export default function HowToChooseConstructionCompanyRiyadh() {
-  const faqJsonLd = buildFaqJsonLd(CANONICAL);
-  const breadcrumbJsonLd = buildBreadcrumbJsonLd();
+  const jsonLd = useMemo(() => {
+    const faqJsonLd = buildFaqJsonLd(CANONICAL);
+    const breadcrumbJsonLd = buildBreadcrumbJsonLd();
+    const articleJsonLd = buildArticleJsonLd();
+    return [articleJsonLd, faqJsonLd, breadcrumbJsonLd];
+  }, []);
 
   return (
-    <main className="py-16">
+    <main dir="rtl" className="py-16">
       <SeoHead
         title="كيف تختار أفضل شركة مقاولات في الرياض؟ دليل عملي قبل توقيع العقد | PYBCCO"
         description="دليل عملي لاختيار شركة مقاولات في الرياض: نطاق العمل، العقد التفصيلي، الإشراف الهندسي، الشفافية، وضمان التشطيب لمدة سنتين، مع أسئلة شائعة."
         canonical={CANONICAL}
         robots="index,follow,max-image-preview:large"
-        jsonLd={[faqJsonLd, breadcrumbJsonLd]}
+        jsonLd={jsonLd as any}
       />
 
       <div className="container mx-auto px-4">
@@ -129,6 +178,29 @@ export default function HowToChooseConstructionCompanyRiyadh() {
             في هذه <strong>الرؤية الهندسية</strong> نعرض معايير عملية تساعدك على
             اختيار <strong>أفضل شركة مقاولات</strong> بثقة قبل توقيع أي عقد.
           </p>
+
+          {/* روابط داخلية سياقية (قوية لـ SEO) */}
+          <div className="mt-6 rounded-xl border bg-gray-50 p-4 text-sm opacity-90">
+            <p className="font-bold">روابط مفيدة:</p>
+            <ul className="mt-2 list-disc pr-6 space-y-1">
+              <li>
+                <a
+                  href="/construction-company-riyadh"
+                  className="underline decoration-yellow-400 underline-offset-4 hover:opacity-80"
+                >
+                  شركة مقاولات بالرياض – تفاصيل الخدمات
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/villa-finishing-price-riyadh"
+                  className="underline decoration-yellow-400 underline-offset-4 hover:opacity-80"
+                >
+                  حاسبة تكلفة التشطيب – تصور مبدئي قبل البدء
+                </a>
+              </li>
+            </ul>
+          </div>
 
           <h2 className="mt-10 text-2xl font-bold">
             1) وضوح نطاق أعمال التشطيب أو البناء
@@ -171,8 +243,8 @@ export default function HowToChooseConstructionCompanyRiyadh() {
             3) إشراف هندسي وإدارة مشروع حقيقية
           </h2>
           <p className="mt-3 leading-relaxed opacity-90">
-            من أهم الفروق بين مقاول عادي و<strong>شركة مقاولات محترفة في الرياض</strong>{" "}
-            وجود:
+            من أهم الفروق بين مقاول عادي و
+            <strong> شركة مقاولات محترفة في الرياض</strong> وجود:
           </p>
           <ul className="mt-3 list-disc pr-6 space-y-2 opacity-90">
             <li>إشراف هندسي فعلي</li>
@@ -202,7 +274,8 @@ export default function HowToChooseConstructionCompanyRiyadh() {
 
           <h2 className="mt-10 text-2xl font-bold">5) الضمان على أعمال التشطيب</h2>
           <p className="mt-3 leading-relaxed opacity-90">
-            الشركة الواثقة من جودة تنفيذها تقدم <strong>ضمانًا واضحًا على التشطيب</strong>.
+            الشركة الواثقة من جودة تنفيذها تقدم{" "}
+            <strong>ضمانًا واضحًا على التشطيب</strong>.
           </p>
           <ul className="mt-3 list-disc pr-6 space-y-2 opacity-90">
             <li>
