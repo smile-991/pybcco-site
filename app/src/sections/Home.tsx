@@ -406,7 +406,7 @@ export default function Home() {
               asChild
               className="bg-gold hover:bg-gold/90 text-black font-bold hidden sm:inline-flex"
             >
-              <Link to="/projects">عرض جميع المشاريع</Link>
+              <Link to="/projects">عرض جميع الصور</Link>
             </Button>
           </div>
 
@@ -461,7 +461,7 @@ export default function Home() {
               asChild
               className="bg-gold hover:bg-gold/90 text-black font-bold w-full"
             >
-              <Link to="/projects">عرض جميع المشاريع</Link>
+              <Link to="/projects">عرض جميع الصور</Link>
             </Button>
           </div>
         </div>
