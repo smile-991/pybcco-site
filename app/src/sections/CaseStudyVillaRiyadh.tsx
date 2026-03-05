@@ -58,22 +58,12 @@ function Pill({ children }: { children: React.ReactNode }) {
   );
 }
 
-function SectionTitle({
-  title,
-  desc,
-}: {
-  title: string;
-  desc?: string;
-}) {
+function SectionTitle({ title, desc }: { title: string; desc?: string }) {
   return (
     <div className="mb-6">
-      <h2 className="text-xl md:text-2xl font-extrabold text-gray-900">
-        {title}
-      </h2>
+      <h2 className="text-xl md:text-2xl font-extrabold text-gray-900">{title}</h2>
       {desc ? (
-        <p className="mt-2 text-sm md:text-base text-gray-600 leading-relaxed">
-          {desc}
-        </p>
+        <p className="mt-2 text-sm md:text-base text-gray-600 leading-relaxed">{desc}</p>
       ) : null}
     </div>
   );
@@ -104,7 +94,8 @@ function ImageGrid({
             <img
               src={img.src}
               alt={img.alt}
-              loading="lazy"
+              loading={img.src === "/casestudy/main.webp" ? "eager" : "lazy"}
+              fetchPriority={img.src === "/casestudy/main.webp" ? "high" : "auto"}
               className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
             />
             <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
@@ -139,18 +130,8 @@ export default function CaseStudyVillaRiyadh() {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "الرئيسية",
-            item: SITE_URL,
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: "معرض المشاريع",
-            item: `${SITE_URL}/projects`,
-          },
+          { "@type": "ListItem", position: 1, name: "الرئيسية", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: "معرض المشاريع", item: `${SITE_URL}/projects` },
           {
             "@type": "ListItem",
             position: 3,
@@ -162,11 +143,13 @@ export default function CaseStudyVillaRiyadh() {
       {
         "@context": "https://schema.org",
         "@type": "Article",
+        mainEntityOfPage: { "@type": "WebPage", "@id": CANONICAL },
         headline: "دراسة حالة: تشطيب وتجديد فيلا سكنية – الرياض (قبل/بعد)",
         description:
           "دراسة حالة حقيقية لمشروع تشطيب وتجديد فيلا بالرياض: هدم وإعادة تشكيل، تشطيبات داخلية وخارجية، تفاصيل تنفيذ، والنتيجة النهائية بالصور.",
         inLanguage: "ar",
-        mainEntityOfPage: CANONICAL,
+        datePublished: "2026-03-02",
+        dateModified: "2026-03-05",
         author: {
           "@type": "Organization",
           name: "بنيان الهرم للمقاولات – PYBCCO",
@@ -176,7 +159,12 @@ export default function CaseStudyVillaRiyadh() {
           "@type": "Organization",
           name: "بنيان الهرم للمقاولات – PYBCCO",
           url: SITE_URL,
+          logo: {
+            "@type": "ImageObject",
+            url: `${SITE_URL}/logo.webp`,
+          },
         },
+        // (حسب طلبك) لا تغيير هنا: نبقي نفس منطق الصور كما هو
         image: allImages.slice(0, 8),
         about: [
           "تشطيب فلل الرياض",
@@ -187,7 +175,7 @@ export default function CaseStudyVillaRiyadh() {
         ],
       },
     ];
-  }, []);
+  }, [CANONICAL]);
 
   return (
     <main dir="rtl" className="min-h-screen bg-white">
@@ -207,9 +195,21 @@ export default function CaseStudyVillaRiyadh() {
             </h1>
 
             <p className="mt-4 text-gray-600 leading-relaxed">
-              هذه دراسة حالة حقيقية توضح كيف تم تحويل فيلا بحالة تقليدية إلى
-              مظهر عصري بتفاصيل تنفيذ دقيقة. ركّزنا على: ضبط الهوية المعمارية،
-              تحسين الواجهات، وتطوير الداخل مع حلول عملية ترفع قيمة العقار.
+              هذه دراسة حالة حقيقية توضح كيف تم تحويل فيلا بحالة تقليدية إلى مظهر عصري بتفاصيل تنفيذ دقيقة. ركّزنا على: ضبط الهوية المعمارية، تحسين الواجهات، وتطوير الداخل مع حلول عملية ترفع قيمة العقار.{" "}
+              <a
+                href="/villa-renovation-riyadh"
+                className="font-semibold underline decoration-yellow-400 underline-offset-4 hover:opacity-80"
+              >
+                تعرّف على خدمة ترميم الفلل بالرياض
+              </a>{" "}
+              أو{" "}
+              <a
+                href="/construction-company-riyadh"
+                className="font-semibold underline decoration-yellow-400 underline-offset-4 hover:opacity-80"
+              >
+                اقرأ عن شركة مقاولات بالرياض
+              </a>
+              .
             </p>
 
             <div className="mt-5 flex flex-wrap justify-center gap-2">
@@ -340,8 +340,7 @@ export default function CaseStudyVillaRiyadh() {
               هل تريد تحويل فيلتك لنفس المستوى؟
             </h3>
             <p className="mt-2 text-sm md:text-base text-gray-600 leading-relaxed">
-              نرتّب لك معاينة سريعة داخل الرياض ونقدم تصور واضح للتكلفة وخطة
-              تنفيذ منظمة بدون فوضى.
+              نرتّب لك معاينة سريعة داخل الرياض ونقدم تصور واضح للتكلفة وخطة تنفيذ منظمة بدون فوضى.
             </p>
             <div className="mt-5 flex flex-wrap justify-center gap-3">
               <Button asChild className="bg-yellow-500 text-black hover:bg-yellow-400">
@@ -364,18 +363,12 @@ export default function CaseStudyVillaRiyadh() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-4xl">
           <DialogHeader>
-            <DialogTitle className="text-right">
-              {active?.alt ?? "عرض الصورة"}
-            </DialogTitle>
+            <DialogTitle className="text-right">{active?.alt ?? "عرض الصورة"}</DialogTitle>
           </DialogHeader>
 
           <div className="mt-2 overflow-hidden rounded-2xl border bg-black">
             {active ? (
-              <img
-                src={active.src}
-                alt={active.alt}
-                className="w-full h-auto object-contain"
-              />
+              <img src={active.src} alt={active.alt} className="w-full h-auto object-contain" />
             ) : null}
           </div>
         </DialogContent>
