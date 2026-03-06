@@ -42,7 +42,7 @@ const COST_REPORTS = [
     excerpt:
       "مثال تطبيقي يساعد العميل على فهم كيفية قراءة التكاليف بشكل أقرب للواقع عند الحديث عن بناء فيلا بمساحة 300 متر.",
     slug: "/engineering-insights/cost/villa-300m-construction-cost-riyadh",
-    published: false,
+    published: true,
   },
   {
     title: "تكلفة بناء عظم بالرياض",
