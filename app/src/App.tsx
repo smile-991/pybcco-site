@@ -43,6 +43,7 @@ import PlumbingAndElectricalCostFinishing from "@/engineering-insights/cost/plum
 import HowToEstimateProjectCostInitially from "@/engineering-insights/cost/how-to-estimate-project-cost-initially";
 import MisleadingQuotationMistakes from "@/engineering-insights/cost/misleading-quotation-mistakes";
 import HowToCompareFinishingQuotations from "@/engineering-insights/cost/how-to-compare-finishing-quotations";
+import CreateAccountPage from "./sections/create-account";
 
 export default function App() {
   return (
@@ -76,6 +77,7 @@ export default function App() {
           <Route path="/terms" element={<TermsAndConditions />} />
           <Route path="/engineering-insights" element={<EngineeringInsightsSection />} />
           <Route path="/engineering-insights/cost" element={<EngineeringInsightsCostPage />} />
+          <Route path="/create-account" element={<CreateAccountPage />} />
           <Route
   path="/engineering-insights/cost/how-to-compare-finishing-quotations"
   element={<HowToCompareFinishingQuotations />}
