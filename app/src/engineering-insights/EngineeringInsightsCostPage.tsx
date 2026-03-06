@@ -1,7 +1,14 @@
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import SeoHead from "@/components/SeoHead";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 type JsonLd = Record<string, any>;
 
@@ -175,11 +182,64 @@ function buildBreadcrumbJsonLd(): JsonLd {
   };
 }
 
+function buildFaqJsonLd(): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${CANONICAL}#faq`,
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "ما فائدة هذا القسم قبل طلب عرض السعر؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "هذا القسم يساعد العميل على فهم تكلفة البناء والتشطيب، وقراءة عروض الأسعار بشكل أوضح، وبناء تصور أولي منطقي قبل الدخول في التعاقد أو التنفيذ.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "هل هذه التقارير تعطي سعرًا نهائيًا للمشروع؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "لا، هذه التقارير تعطي فهمًا وتقديرًا أوليًا مبنيًا على المنطق العملي للسوق، بينما السعر النهائي يحتاج إلى دراسة المشروع ونطاق الأعمال والمواد والمخططات.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "ما أهم التقارير التي يبدأ بها العميل؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "غالبًا يبدأ العميل بتقارير مثل تكلفة تشطيب فيلا بالرياض، سعر متر التشطيب في الرياض، وكيف تحسب تكلفة مشروعك بشكل مبدئي، ثم ينتقل إلى المقالات الأكثر تخصصًا حسب حالته.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "هل هذه المقالات مناسبة فقط للفلل؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "لا، القسم يغطي الفلل والشقق وبعض حالات العظم والتشطيب وتسليم المفتاح، مع التركيز على المحتوى الذي يساعد العميل على فهم التكلفة واتخاذ القرار بشكل أفضل.",
+        },
+      },
+    ],
+  };
+}
+
 export default function EngineeringInsightsCostPage() {
   const publishedCount = COST_REPORTS.filter((item) => item.published).length;
   const comingSoonCount = COST_REPORTS.length - publishedCount;
 
-  const jsonLd = [buildCollectionJsonLd(), buildBreadcrumbJsonLd()];
+  const jsonLd = useMemo(
+    () => [
+      buildCollectionJsonLd(),
+      buildBreadcrumbJsonLd(),
+      buildFaqJsonLd(),
+    ],
+    []
+  );
 
   return (
     <main dir="rtl" className="py-16">
@@ -207,6 +267,13 @@ export default function EngineeringInsightsCostPage() {
             <strong>سعر متر التشطيب</strong> وتكلفة{" "}
             <strong>تشطيب الفلل وتسليم المفتاح</strong>، وصولًا إلى كيفية قراءة
             عروض الأسعار ومقارنة البنود بشكل صحيح.
+          </p>
+
+          <p className="mt-4 text-base md:text-lg opacity-80 leading-relaxed max-w-4xl">
+            تم تنظيم هذا القسم على شكل <strong>مرجع موضوعي</strong> يغطي الأسئلة
+            الأكثر بحثًا قبل التنفيذ، بحيث يجد العميل محتوى يشرح التكلفة من
+            زوايا متعددة: السعر العام، سعر المتر، البنود المؤثرة، أخطاء عروض
+            الأسعار، والحساب المبدئي قبل طلب التسعير التفصيلي.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
@@ -254,10 +321,12 @@ export default function EngineeringInsightsCostPage() {
             <h2 className="text-2xl md:text-3xl font-bold">
               ماذا ستجد داخل هذا القسم؟
             </h2>
+
             <p className="mt-3 opacity-80 leading-relaxed">
               تم بناء هذا القسم ليكون مرجعًا منظمًا حول{" "}
               <strong>تكلفة التشطيب والبناء</strong>، وليس مجرد مقالات متفرقة.
-              لذلك ستجد تقارير تغطي:
+              لذلك ستجد تقارير تغطي الجوانب الأكثر أهمية للعميل قبل طلب عرض
+              السعر أو بدء التنفيذ.
             </p>
 
             <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -301,6 +370,31 @@ export default function EngineeringInsightsCostPage() {
                 </CardContent>
               </Card>
             </div>
+          </div>
+        </section>
+
+        <section className="mt-16">
+          <div className="max-w-4xl">
+            <h2 className="text-2xl md:text-3xl font-bold">
+              لماذا هذا القسم مهم؟
+            </h2>
+
+            <p className="mt-3 opacity-80 leading-relaxed">
+              لأن كثيرًا من العملاء يدخلون مرحلة البناء أو التشطيب بأسئلة عامة
+              جدًا، مثل: كم التكلفة؟ كم سعر المتر؟ ما الفرق بين عرض وآخر؟ وما
+              الذي قد يرفع السعر لاحقًا؟ وهذه الأسئلة إذا لم تُجب بشكل واضح،
+              يصبح القرار المالي ضعيفًا والمقارنة بين العروض مضللة.
+            </p>
+
+            <p className="mt-4 opacity-80 leading-relaxed">
+              لذلك تم تصميم هذا القسم ليقوم بثلاث وظائف في الوقت نفسه:
+            </p>
+
+            <ul className="mt-4 list-disc pr-6 space-y-2 opacity-85 leading-relaxed">
+              <li>توعية العميل قبل البدء بمشروعه.</li>
+              <li>مساعدة العميل على فهم المشروع قبل طلب عرض السعر.</li>
+              <li>إنشاء محتوى مفيد يقلل الأخطاء المتكررة في عالم الإنشاء والتشطيب.</li>
+            </ul>
           </div>
         </section>
 
@@ -375,19 +469,15 @@ export default function EngineeringInsightsCostPage() {
                 <p className="mt-4 opacity-85 leading-relaxed">
                   لأن الأسئلة المرتبطة بـ <strong>التكلفة والسعر</strong> هي من
                   أكثر ما يبحث عنه العملاء قبل اتخاذ قرار البناء أو التشطيب.
-                  وعندما يتم تنظيم هذا المحتوى بشكل احترافي، فإنه يخدم ثلاث
-                  وظائف في الوقت نفسه:
+                  وعندما يتم تنظيم هذا المحتوى بشكل احترافي، فإنه يخدم العميل
+                  ويقوي البنية الموضوعية للموقع في الوقت نفسه.
                 </p>
-
-                <ul className="mt-4 list-disc pr-6 space-y-2 opacity-85 leading-relaxed">
-                  <li>توعية العميل قبل البدء بمشروعه.</li>
-                  <li>مساعدة العميل على فهم المشروع قبل طلب عرض السعر.</li>
-                  <li>انشاء محتوى مفيد يغني عن اخطاء متكررة بعالم الانشاء و التشطيب.</li>
-                </ul>
 
                 <div className="mt-6 flex flex-wrap gap-3">
                   <Button asChild className="rounded-2xl">
-                    <Link to="/villa-finishing-price-riyadh">الانتقال إلى الحاسبة</Link>
+                    <Link to="/villa-finishing-price-riyadh">
+                      الانتقال إلى الحاسبة
+                    </Link>
                   </Button>
 
                   <Button asChild variant="outline" className="rounded-2xl">
@@ -415,7 +505,9 @@ export default function EngineeringInsightsCostPage() {
                   </p>
                   <div className="mt-4">
                     <Button asChild variant="outline" className="rounded-2xl">
-                      <Link to="/villa-finishing-price-riyadh">افتح الحاسبة</Link>
+                      <Link to="/villa-finishing-price-riyadh">
+                        افتح الحاسبة
+                      </Link>
                     </Button>
                   </div>
                 </CardContent>
@@ -438,7 +530,56 @@ export default function EngineeringInsightsCostPage() {
             </div>
           </div>
         </section>
-       
+
+        <section className="mt-16 max-w-4xl">
+          <h2 className="text-2xl md:text-3xl font-bold">الأسئلة الشائعة</h2>
+
+          <Accordion type="single" collapsible className="w-full mt-6">
+            <AccordionItem value="q1">
+              <AccordionTrigger>
+                ما فائدة هذا القسم قبل طلب عرض السعر؟
+              </AccordionTrigger>
+              <AccordionContent>
+                هذا القسم يساعد العميل على فهم تكلفة البناء والتشطيب، وقراءة
+                عروض الأسعار بشكل أوضح، وبناء تصور أولي منطقي قبل الدخول في
+                التعاقد أو التنفيذ.
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="q2">
+              <AccordionTrigger>
+                هل هذه التقارير تعطي سعرًا نهائيًا للمشروع؟
+              </AccordionTrigger>
+              <AccordionContent>
+                لا، هذه التقارير تعطي فهمًا وتقديرًا أوليًا مبنيًا على المنطق
+                العملي للسوق، بينما السعر النهائي يحتاج إلى دراسة المشروع ونطاق
+                الأعمال والمواد والمخططات.
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="q3">
+              <AccordionTrigger>
+                ما أهم التقارير التي يبدأ بها العميل؟
+              </AccordionTrigger>
+              <AccordionContent>
+                غالبًا يبدأ العميل بتقارير مثل تكلفة تشطيب فيلا بالرياض، وسعر
+                متر التشطيب في الرياض، وكيف تحسب تكلفة مشروعك بشكل مبدئي، ثم
+                ينتقل إلى المقالات الأكثر تخصصًا حسب حالته.
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="q4">
+              <AccordionTrigger>
+                هل هذه المقالات مناسبة فقط للفلل؟
+              </AccordionTrigger>
+              <AccordionContent>
+                لا، القسم يغطي الفلل والشقق وبعض حالات العظم والتشطيب وتسليم
+                المفتاح، مع التركيز على المحتوى الذي يساعد العميل على فهم
+                التكلفة واتخاذ القرار بشكل أفضل.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </section>
       </div>
     </main>
   );
