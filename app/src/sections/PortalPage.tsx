@@ -21,6 +21,7 @@ const ACTIVATED_USER_STORAGE_KEY = "pybcco_activated_user";
 const CLIENT_TOKEN_STORAGE_KEY = "pybcco_client_token";
 
 export default function PortalPage() {
+  const navigate = useNavigate();
   const [authorized, setAuthorized] = useState<boolean | null>(null);
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
@@ -38,20 +39,24 @@ export default function PortalPage() {
       const raw = localStorage.getItem(ACTIVATED_USER_STORAGE_KEY);
 
       if (raw) {
-        const parsed: ActivatedSession = JSON.parse(raw);
+        try {
+          const parsed: ActivatedSession = JSON.parse(raw);
 
-        if (parsed?.phone) {
-          setActivatedSession(parsed);
+          if (parsed?.phone) {
+            setActivatedSession(parsed);
 
-          if (parsed.hasProject && parsed.clientId) {
-            setAuthorized(true);
-            return;
+            if (parsed.hasProject && parsed.clientId) {
+              setAuthorized(true);
+              return;
+            }
+
+            if (!parsed.hasProject) {
+              navigate("/account", { replace: true });
+              return;
+            }
           }
-
-          if (!parsed.hasProject) {
-            setAuthorized(false);
-            return;
-          }
+        } catch {
+          localStorage.removeItem(ACTIVATED_USER_STORAGE_KEY);
         }
       }
 

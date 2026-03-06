@@ -26,7 +26,7 @@ export default function ActivateAccountSection() {
   const [success, setSuccess] = useState(false);
   const [hasProject, setHasProject] = useState<boolean | null>(null);
   const [clientName, setClientName] = useState("");
-const [, setClientId] = useState<string | null>(null)
+
   useEffect(() => {
     async function activate() {
       try {
@@ -70,7 +70,6 @@ const [, setClientId] = useState<string | null>(null)
           matchedClientName = checkData?.client?.full_name || "";
 
           setHasProject(projectFound);
-          setClientId(matchedClientId);
           setClientName(matchedClientName);
         } else {
           setHasProject(false);
@@ -125,21 +124,22 @@ const [, setClientId] = useState<string | null>(null)
 
                 {clientName ? (
                   <p className="leading-8 text-gray-700">
-                    أهلاً {clientName}، يمكنك الآن الدخول إلى بوابة العملاء ومتابعة
-                    تفاصيل مشروعك.
+                    أهلاً {clientName}، يمكنك الآن الدخول إلى حسابك ومتابعة تفاصيل
+                    مشروعك من بوابة العملاء.
                   </p>
                 ) : (
                   <p className="leading-8 text-gray-700">
-                    يمكنك الآن الدخول إلى بوابة العملاء ومتابعة تفاصيل مشروعك.
+                    يمكنك الآن الدخول إلى حسابك ومتابعة تفاصيل مشروعك من بوابة
+                    العملاء.
                   </p>
                 )}
               </div>
 
               <Link
-                to="/portal"
+                to="/account"
                 className="inline-block rounded-xl bg-yellow-500 px-6 py-3 font-bold text-black transition hover:opacity-90"
               >
-                الدخول إلى بوابة العملاء
+                الدخول إلى حسابي
               </Link>
             </div>
           )}
@@ -210,10 +210,10 @@ const [, setClientId] = useState<string | null>(null)
 
               <div className="pt-2">
                 <Link
-                  to="/portal"
+                  to="/account"
                   className="inline-block rounded-xl border border-black px-6 py-3 font-bold text-black transition hover:bg-black hover:text-white"
                 >
-                  الذهاب إلى صفحة الحساب / البوابة
+                  الذهاب إلى حسابي
                 </Link>
               </div>
             </div>
