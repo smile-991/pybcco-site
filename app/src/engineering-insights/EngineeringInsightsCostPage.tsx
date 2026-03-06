@@ -91,7 +91,7 @@ const COST_REPORTS = [
     excerpt:
       "شرح مبسط لكيفية تقدير تكلفة المشروع قبل طلب عرض السعر التفصيلي، مع توضيح حدود التقدير الأولي وفائدته العملية.",
     slug: "/engineering-insights/cost/how-to-estimate-project-cost-initially",
-    published: false,
+    published: true,
   },
   {
     title: "الأخطاء التي تجعل عرض السعر مضللًا",
