@@ -56,7 +56,7 @@ const COST_REPORTS = [
     excerpt:
       "محتوى مخصص للعملاء الذين لديهم فيلا عظم ويريدون تقدير تكلفة التشطيب فقط مع فهم نطاق الأعمال والتفاوت بين المستويات.",
     slug: "/engineering-insights/cost/villa-shell-to-finish-cost-riyadh",
-    published: false,
+    published: true,
   },
   {
     title: "تكلفة تشطيب شقة بالرياض",
