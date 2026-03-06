@@ -10,13 +10,23 @@ type ClientCheckResponse = {
   } | null;
 };
 
+type ActivatedSession = {
+  phone: string;
+  activatedAt: string;
+  hasProject: boolean;
+  clientId: string | null;
+};
+
+const ACTIVATED_USER_STORAGE_KEY = "pybcco_activated_user";
+
 export default function ActivateAccountSection() {
   const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("جاري تفعيل الحساب...");
   const [success, setSuccess] = useState(false);
   const [hasProject, setHasProject] = useState<boolean | null>(null);
-
+  const [clientName, setClientName] = useState("");
+const [, setClientId] = useState<string | null>(null)
   useEffect(() => {
     async function activate() {
       try {
@@ -28,17 +38,21 @@ export default function ActivateAccountSection() {
           return;
         }
 
-        const res = await fetch(
+        const activateRes = await fetch(
           `/api/activate-account?token=${encodeURIComponent(token)}`
         );
 
-        const data = await res.json();
+        const activateData = await activateRes.json();
 
-        if (!res.ok) {
-          throw new Error(data?.error || "فشل تفعيل الحساب.");
+        if (!activateRes.ok) {
+          throw new Error(activateData?.error || "فشل تفعيل الحساب.");
         }
 
-        const phone = data?.phone || "";
+        const phone = String(activateData?.phone || "").trim();
+
+        let projectFound = false;
+        let matchedClientId: string | null = null;
+        let matchedClientName = "";
 
         if (phone) {
           const checkRes = await fetch(
@@ -48,13 +62,31 @@ export default function ActivateAccountSection() {
           const checkData: ClientCheckResponse = await checkRes.json();
 
           if (!checkRes.ok) {
-  throw new Error("تعذر التحقق من حالة المشروع.");
-}
+            throw new Error("تعذر التحقق من حالة المشروع.");
+          }
 
-          setHasProject(!!checkData.found);
+          projectFound = !!checkData?.found;
+          matchedClientId = checkData?.client?.id || null;
+          matchedClientName = checkData?.client?.full_name || "";
+
+          setHasProject(projectFound);
+          setClientId(matchedClientId);
+          setClientName(matchedClientName);
         } else {
           setHasProject(false);
         }
+
+        const sessionData: ActivatedSession = {
+          phone,
+          activatedAt: new Date().toISOString(),
+          hasProject: projectFound,
+          clientId: matchedClientId,
+        };
+
+        localStorage.setItem(
+          ACTIVATED_USER_STORAGE_KEY,
+          JSON.stringify(sessionData)
+        );
 
         setSuccess(true);
         setMessage("تم تفعيل الحساب بنجاح.");
@@ -71,20 +103,41 @@ export default function ActivateAccountSection() {
   return (
     <section className="w-full py-16">
       <div className="mx-auto max-w-3xl px-4">
-        <div className="rounded-2xl border border-yellow-500/20 bg-white p-8 shadow-sm text-center">
+        <div className="rounded-2xl border border-yellow-500/20 bg-white p-8 text-center shadow-sm">
           <h1 className="mb-4 text-3xl font-bold text-black">تفعيل الحساب</h1>
 
-          <p className="mb-6 text-gray-700 leading-8">{message}</p>
+          <p className="mb-6 leading-8 text-gray-700">{message}</p>
+
+          {loading && (
+            <div className="rounded-2xl border border-gray-200 bg-gray-50 p-5 text-center">
+              <p className="text-sm text-gray-600">
+                يرجى الانتظار قليلًا ريثما ننهي التحقق من الحساب وحالة المشروع.
+              </p>
+            </div>
+          )}
 
           {!loading && success && hasProject === true && (
             <div className="space-y-4">
-              <p className="text-gray-700">
-                تم العثور على مشروع مرتبط بحسابك. يمكنك الدخول الآن إلى بوابة العملاء.
-              </p>
+              <div className="rounded-2xl border border-yellow-200 bg-yellow-50 p-5 text-center">
+                <p className="mb-2 text-lg font-semibold text-black">
+                  تم العثور على مشروع مرتبط بحسابك
+                </p>
+
+                {clientName ? (
+                  <p className="leading-8 text-gray-700">
+                    أهلاً {clientName}، يمكنك الآن الدخول إلى بوابة العملاء ومتابعة
+                    تفاصيل مشروعك.
+                  </p>
+                ) : (
+                  <p className="leading-8 text-gray-700">
+                    يمكنك الآن الدخول إلى بوابة العملاء ومتابعة تفاصيل مشروعك.
+                  </p>
+                )}
+              </div>
 
               <Link
                 to="/portal"
-                className="inline-block rounded-xl bg-yellow-500 px-6 py-3 font-bold text-black hover:opacity-90"
+                className="inline-block rounded-xl bg-yellow-500 px-6 py-3 font-bold text-black transition hover:opacity-90"
               >
                 الدخول إلى بوابة العملاء
               </Link>
@@ -98,7 +151,8 @@ export default function ActivateAccountSection() {
                   تم تفعيل حسابك بنجاح
                 </p>
                 <p className="leading-8 text-gray-700">
-                  لا يوجد مشروع مرتبط بحسابك حاليًا، ويمكنك البدء من خلال إحدى الخدمات التالية:
+                  لا يوجد مشروع مرتبط بحسابك حاليًا، ويمكنك البدء من خلال إحدى
+                  الخدمات التالية:
                 </p>
               </div>
 
@@ -107,7 +161,9 @@ export default function ActivateAccountSection() {
                   to="/contact"
                   className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-yellow-400 hover:shadow-md"
                 >
-                  <div className="mb-2 text-lg font-bold text-black">طلب مشروع جديد</div>
+                  <div className="mb-2 text-lg font-bold text-black">
+                    طلب مشروع جديد
+                  </div>
                   <p className="text-sm leading-7 text-gray-600">
                     أرسل طلبك وسنتواصل معك لدراسة المشروع وتقديم العرض المناسب.
                   </p>
@@ -119,7 +175,9 @@ export default function ActivateAccountSection() {
                   rel="noreferrer"
                   className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-yellow-400 hover:shadow-md"
                 >
-                  <div className="mb-2 text-lg font-bold text-black">إرسال استفسار واتساب</div>
+                  <div className="mb-2 text-lg font-bold text-black">
+                    إرسال استفسار واتساب
+                  </div>
                   <p className="text-sm leading-7 text-gray-600">
                     تواصل معنا مباشرة عبر واتساب لأي استفسار سريع أو طلب متابعة.
                   </p>
@@ -129,7 +187,9 @@ export default function ActivateAccountSection() {
                   to="/villa-finishing-price-riyadh"
                   className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-yellow-400 hover:shadow-md"
                 >
-                  <div className="mb-2 text-lg font-bold text-black">التسعير اليدوي / الحاسبة</div>
+                  <div className="mb-2 text-lg font-bold text-black">
+                    التسعير اليدوي / الحاسبة
+                  </div>
                   <p className="text-sm leading-7 text-gray-600">
                     احسب تكلفة مشروعك التقريبية واحفظ التقدير للرجوع إليه لاحقًا.
                   </p>
@@ -139,12 +199,41 @@ export default function ActivateAccountSection() {
                   to="/decor"
                   className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-yellow-400 hover:shadow-md"
                 >
-                  <div className="mb-2 text-lg font-bold text-black">طلب شراء من المتجر</div>
+                  <div className="mb-2 text-lg font-bold text-black">
+                    طلب شراء من المتجر
+                  </div>
                   <p className="text-sm leading-7 text-gray-600">
                     تصفح منتجات المتجر وابدأ طلب الشراء مباشرة من المنصة.
                   </p>
                 </Link>
               </div>
+
+              <div className="pt-2">
+                <Link
+                  to="/portal"
+                  className="inline-block rounded-xl border border-black px-6 py-3 font-bold text-black transition hover:bg-black hover:text-white"
+                >
+                  الذهاب إلى صفحة الحساب / البوابة
+                </Link>
+              </div>
+            </div>
+          )}
+
+          {!loading && !success && (
+            <div className="space-y-4">
+              <div className="rounded-2xl border border-red-200 bg-red-50 p-5 text-center">
+                <p className="text-sm leading-7 text-red-700">
+                  تعذر إكمال التفعيل. تأكد من صحة الرابط أو حاول مرة أخرى من خلال
+                  طلب رابط تفعيل جديد.
+                </p>
+              </div>
+
+              <Link
+                to="/create-account"
+                className="inline-block rounded-xl border border-black px-6 py-3 font-bold text-black transition hover:bg-black hover:text-white"
+              >
+                العودة إلى إنشاء الحساب
+              </Link>
             </div>
           )}
         </div>

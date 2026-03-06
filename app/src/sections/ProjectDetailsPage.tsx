@@ -4,6 +4,15 @@ import ProjectCommentsClient from "@/sections/ProjectCommentsClient"
 
 type AnyObj = Record<string, any>
 
+type ActivatedSession = {
+  phone: string
+  activatedAt: string
+  hasProject: boolean
+  clientId: string | null
+}
+
+const ACTIVATED_USER_STORAGE_KEY = "pybcco_activated_user"
+
 function formatDate(value?: string) {
   if (!value) return "-"
   const d = new Date(value)
@@ -45,8 +54,17 @@ export default function ProjectDetailsPage() {
 
   // ✅ token من localStorage (للتعليقات فقط)
   const [clientToken, setClientToken] = useState(
-    localStorage.getItem("pybcco_client_token") || ""
-  )
+  localStorage.getItem("pybcco_client_token") || ""
+)
+
+const activatedUser: ActivatedSession | null = (() => {
+  try {
+    const raw = localStorage.getItem(ACTIVATED_USER_STORAGE_KEY)
+    return raw ? JSON.parse(raw) : null
+  } catch {
+    return null
+  }
+})()
 
   // ✅ إذا ما في token، نحاول نجيبه من session بدل redirect
   useEffect(() => {
@@ -70,14 +88,19 @@ export default function ProjectDetailsPage() {
     setLoading(true)
 
     fetch(`/api/get-project-details?id=${id}`, {
-      credentials: "include",
-    })
+  credentials: "include",
+  headers: {
+    "x-client-id": activatedUser?.clientId || "",
+  },
+})
       .then(async (res) => {
         // ✅ لو انتهت الجلسة/غير مصرح
         if (res.status === 401 || res.status === 403) {
-          navigate("/portal", { replace: true })
-          return null
-        }
+  if (!activatedUser?.clientId) {
+    navigate("/portal", { replace: true })
+    return null
+  }
+}
 
         if (!res.ok) return null
         return await res.json().catch(() => null)
