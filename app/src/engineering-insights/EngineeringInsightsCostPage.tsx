@@ -49,7 +49,7 @@ const COST_REPORTS = [
     excerpt:
       "توضيح معنى مرحلة العظم، وما البنود التي تدخل فيها، وما أبرز المتغيرات التي تؤثر على التكلفة النهائية.",
     slug: "/engineering-insights/cost/gray-structure-cost-riyadh",
-    published: false,
+    published: true,
   },
   {
     title: "تكلفة تشطيب فيلا عظم بالرياض",
