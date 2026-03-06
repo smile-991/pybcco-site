@@ -3,10 +3,10 @@ import { createClient } from "@supabase/supabase-js";
 export async function onRequestGet(context: any) {
   try {
     const url = new URL(context.request.url);
-    const email = url.searchParams.get("email");
+    const phone = url.searchParams.get("phone");
 
-    if (!email) {
-      return new Response(JSON.stringify({ error: "Missing email" }), {
+    if (!phone) {
+      return new Response(JSON.stringify({ error: "Missing phone" }), {
         status: 400,
         headers: { "Content-Type": "application/json" },
       });
@@ -20,7 +20,7 @@ export async function onRequestGet(context: any) {
     const { data: client, error } = await supabase
       .from("clients")
       .select("id, full_name, phone")
-      .eq("email", email)
+      .eq("phone", phone)
       .maybeSingle();
 
     if (error) {
