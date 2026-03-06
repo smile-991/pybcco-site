@@ -63,7 +63,7 @@ const COST_REPORTS = [
     excerpt:
       "مقال يشرح ما الذي يميز تكلفة تشطيب الشقق عن الفلل، وكيف يختلف التقدير بحسب المساحة والحالة الحالية ونوعية المواد.",
     slug: "/engineering-insights/cost/apartment-finishing-cost-riyadh",
-    published: false,
+    published: true,
   },
   {
     title: "التشطيب الاقتصادي والمتوسط والفاخر: فرق التكلفة",
