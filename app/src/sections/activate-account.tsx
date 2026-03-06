@@ -38,18 +38,18 @@ export default function ActivateAccountSection() {
           throw new Error(data?.error || "فشل تفعيل الحساب.");
         }
 
-        const email = data?.email || "";
+        const phone = data?.phone || "";
 
-        if (email) {
+        if (phone) {
           const checkRes = await fetch(
-            `/api/check-user-client?email=${encodeURIComponent(email)}`
+            `/api/check-user-client?phone=${encodeURIComponent(phone)}`
           );
 
           const checkData: ClientCheckResponse = await checkRes.json();
 
           if (!checkRes.ok) {
-            throw new Error("تعذر التحقق من حالة المشروع.");
-          }
+  throw new Error("تعذر التحقق من حالة المشروع.");
+}
 
           setHasProject(!!checkData.found);
         } else {
@@ -92,61 +92,61 @@ export default function ActivateAccountSection() {
           )}
 
           {!loading && success && hasProject === false && (
-  <div className="space-y-6">
-    <div className="rounded-2xl border border-yellow-200 bg-yellow-50 p-5 text-center">
-      <p className="text-lg font-semibold text-black mb-2">
-        تم تفعيل حسابك بنجاح
-      </p>
-      <p className="text-gray-700 leading-8">
-        لا يوجد مشروع مرتبط بحسابك حاليًا، ويمكنك البدء من خلال إحدى الخدمات التالية:
-      </p>
-    </div>
+            <div className="space-y-6">
+              <div className="rounded-2xl border border-yellow-200 bg-yellow-50 p-5 text-center">
+                <p className="mb-2 text-lg font-semibold text-black">
+                  تم تفعيل حسابك بنجاح
+                </p>
+                <p className="leading-8 text-gray-700">
+                  لا يوجد مشروع مرتبط بحسابك حاليًا، ويمكنك البدء من خلال إحدى الخدمات التالية:
+                </p>
+              </div>
 
-    <div className="grid gap-4 md:grid-cols-2 text-right">
-      <Link
-        to="/contact"
-        className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-yellow-400 hover:shadow-md"
-      >
-        <div className="text-lg font-bold text-black mb-2">طلب مشروع جديد</div>
-        <p className="text-sm leading-7 text-gray-600">
-          أرسل طلبك وسنتواصل معك لدراسة المشروع وتقديم العرض المناسب.
-        </p>
-      </Link>
+              <div className="grid gap-4 text-right md:grid-cols-2">
+                <Link
+                  to="/contact"
+                  className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-yellow-400 hover:shadow-md"
+                >
+                  <div className="mb-2 text-lg font-bold text-black">طلب مشروع جديد</div>
+                  <p className="text-sm leading-7 text-gray-600">
+                    أرسل طلبك وسنتواصل معك لدراسة المشروع وتقديم العرض المناسب.
+                  </p>
+                </Link>
 
-      <a
-        href="https://wa.me/966550604837"
-        target="_blank"
-        rel="noreferrer"
-        className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-yellow-400 hover:shadow-md"
-      >
-        <div className="text-lg font-bold text-black mb-2">إرسال استفسار واتساب</div>
-        <p className="text-sm leading-7 text-gray-600">
-          تواصل معنا مباشرة عبر واتساب لأي استفسار سريع أو طلب متابعة.
-        </p>
-      </a>
+                <a
+                  href="https://wa.me/966550604837"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-yellow-400 hover:shadow-md"
+                >
+                  <div className="mb-2 text-lg font-bold text-black">إرسال استفسار واتساب</div>
+                  <p className="text-sm leading-7 text-gray-600">
+                    تواصل معنا مباشرة عبر واتساب لأي استفسار سريع أو طلب متابعة.
+                  </p>
+                </a>
 
-      <Link
-        to="/villa-finishing-price-riyadh"
-        className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-yellow-400 hover:shadow-md"
-      >
-        <div className="text-lg font-bold text-black mb-2">التسعير اليدوي / الحاسبة</div>
-        <p className="text-sm leading-7 text-gray-600">
-          احسب تكلفة مشروعك التقريبية واحفظ التقدير للرجوع إليه لاحقًا.
-        </p>
-      </Link>
+                <Link
+                  to="/villa-finishing-price-riyadh"
+                  className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-yellow-400 hover:shadow-md"
+                >
+                  <div className="mb-2 text-lg font-bold text-black">التسعير اليدوي / الحاسبة</div>
+                  <p className="text-sm leading-7 text-gray-600">
+                    احسب تكلفة مشروعك التقريبية واحفظ التقدير للرجوع إليه لاحقًا.
+                  </p>
+                </Link>
 
-      <Link
-        to="/decor"
-        className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-yellow-400 hover:shadow-md"
-      >
-        <div className="text-lg font-bold text-black mb-2">طلب شراء من المتجر</div>
-        <p className="text-sm leading-7 text-gray-600">
-          تصفح منتجات المتجر وابدأ طلب الشراء مباشرة من المنصة.
-        </p>
-      </Link>
-    </div>
-  </div>
-)}
+                <Link
+                  to="/decor"
+                  className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-yellow-400 hover:shadow-md"
+                >
+                  <div className="mb-2 text-lg font-bold text-black">طلب شراء من المتجر</div>
+                  <p className="text-sm leading-7 text-gray-600">
+                    تصفح منتجات المتجر وابدأ طلب الشراء مباشرة من المنصة.
+                  </p>
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>
