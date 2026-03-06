@@ -84,7 +84,7 @@ const COST_REPORTS = [
     excerpt:
       "فهم تكلفة البنود التأسيسية مثل الكهرباء والسباكة، وكيف تؤثر المواصفات ونطاق الأعمال على الميزانية النهائية.",
     slug: "/engineering-insights/cost/plumbing-and-electrical-cost-finishing",
-    published: false,
+    published: true,
   },
   {
     title: "كيف تحسب تكلفة مشروعك بشكل مبدئي؟",

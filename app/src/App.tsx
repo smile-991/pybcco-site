@@ -39,7 +39,7 @@ import VillaShellToFinishCostRiyadh from "@/engineering-insights/cost/villa-shel
 import ApartmentFinishingCostRiyadh from "@/engineering-insights/cost/apartment-finishing-cost-riyadh";
 import EconomyVsStandardVsLuxuryFinishing from "@/engineering-insights/cost/economy-vs-standard-vs-luxury-finishing";
 import WhatIncreasesFinishingCostRiyadh from "@/engineering-insights/cost/what-increases-finishing-cost-riyadh";
-
+import PlumbingAndElectricalCostFinishing from "@/engineering-insights/cost/plumbing-and-electrical-cost-finishing";
 
 export default function App() {
   return (
@@ -73,6 +73,10 @@ export default function App() {
           <Route path="/terms" element={<TermsAndConditions />} />
           <Route path="/engineering-insights" element={<EngineeringInsightsSection />} />
           <Route path="/engineering-insights/cost" element={<EngineeringInsightsCostPage />} />
+          <Route
+  path="/engineering-insights/cost/plumbing-and-electrical-cost-finishing"
+  element={<PlumbingAndElectricalCostFinishing />}
+/>
           <Route
   path="/engineering-insights/cost/what-increases-finishing-cost-riyadh"
   element={<WhatIncreasesFinishingCostRiyadh />}
