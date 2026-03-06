@@ -1,11 +1,20 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import BoqCalculator from "@/components/BoqCalculator";
 import SeoHead from "@/components/SeoHead";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 type WorkType = "finishing" | "bone";
 type Level = "commercial" | "standard" | "luxury";
+
+type ActivatedUser = {
+  phone: string;
+  activatedAt: string;
+  hasProject: boolean;
+  clientId: string | null;
+};
+
+const ACTIVATED_USER_STORAGE_KEY = "pybcco_activated_user";
 
 const PRICES_PER_M2: Record<WorkType, Record<Level, number>> = {
   finishing: { commercial: 450, standard: 550, luxury: 800 },
@@ -94,8 +103,33 @@ export default function VillaFinishingPriceRiyadh() {
   const [extrasTotal, setExtrasTotal] = useState<number>(0);
   const [boqResetKey, setBoqResetKey] = useState(0);
 
+  const [activatedUser, setActivatedUser] = useState<ActivatedUser | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [saveMessage, setSaveMessage] = useState("");
+
   // ✅ Mobile UX: اختيار المسار
   const [mobileMode, setMobileMode] = useState<"lumpsum" | "boq">("lumpsum");
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(ACTIVATED_USER_STORAGE_KEY);
+
+      if (!raw) {
+        setActivatedUser(null);
+        return;
+      }
+
+      const parsed = JSON.parse(raw) as ActivatedUser;
+
+      if (parsed?.phone) {
+        setActivatedUser(parsed);
+      } else {
+        setActivatedUser(null);
+      }
+    } catch {
+      setActivatedUser(null);
+    }
+  }, []);
 
   const areaNumber = useMemo(() => {
     const n = Number(area);
@@ -114,23 +148,71 @@ export default function VillaFinishingPriceRiyadh() {
     () => baseTotal + extrasTotal,
     [baseTotal, extrasTotal]
   );
+
   const levelLabel =
-  level === "commercial" ? "تجاري" : level === "standard" ? "قياسي" : "فاخر";
+    level === "commercial" ? "تجاري" : level === "standard" ? "قياسي" : "فاخر";
 
-const workLabel = workType === "finishing" ? "تشطيب" : "عظم";
+  const workLabel = workType === "finishing" ? "تشطيب" : "عظم";
 
-const waText = encodeURIComponent(
-  `السلام عليكم، أريد عرض سعر من بنيان الهرم (PYBCCO).\n` +
-    `نوع العمل: ${workLabel}\n` +
-    `المستوى: ${levelLabel}\n` +
-    `المساحة: ${areaNumber || 0} م²\n` +
-    `إجمالي المقطوعة: ${formatSAR(baseTotal)} ريال\n` +
-    `إضافات البنود: ${formatSAR(extrasTotal)} ريال\n` +
-    `الإجمالي النهائي: ${formatSAR(grandTotal)} ريال\n` +
-    `رابط الحاسبة: ${canonical}`
-);
+  const waText = encodeURIComponent(
+    `السلام عليكم، أريد عرض سعر من بنيان الهرم (PYBCCO).\n` +
+      `نوع العمل: ${workLabel}\n` +
+      `المستوى: ${levelLabel}\n` +
+      `المساحة: ${areaNumber || 0} م²\n` +
+      `إجمالي المقطوعة: ${formatSAR(baseTotal)} ريال\n` +
+      `إضافات البنود: ${formatSAR(extrasTotal)} ريال\n` +
+      `الإجمالي النهائي: ${formatSAR(grandTotal)} ريال\n` +
+      `رابط الحاسبة: ${canonical}`
+  );
 
-const waLink = `https://wa.me/966550604837?text=${waText}`;
+  const waLink = `https://wa.me/966550604837?text=${waText}`;
+
+  const handleSaveEstimate = async () => {
+    setSaveMessage("");
+
+    if (!activatedUser?.phone) {
+      setSaveMessage("يجب تفعيل الحساب أولًا حتى تتمكن من حفظ التقدير.");
+      return;
+    }
+
+    if (!canCalculate) {
+      setSaveMessage("أدخل بيانات صحيحة أولًا قبل حفظ التقدير.");
+      return;
+    }
+
+    try {
+      setSaving(true);
+
+      const res = await fetch("/api/save-calculator-result", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          phone: activatedUser.phone,
+          area: areaNumber,
+          finishing_level: level,
+          estimated_cost: grandTotal,
+          work_type: workType,
+          extras_total: extrasTotal,
+          base_total: baseTotal,
+        }),
+      });
+
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok) {
+        setSaveMessage(data?.error || "تعذر حفظ التقدير.");
+        return;
+      }
+
+      setSaveMessage("تم حفظ التقدير داخل حسابك بنجاح.");
+    } catch {
+      setSaveMessage("حدث خطأ في الاتصال أثناء الحفظ.");
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black text-white" dir="rtl">
@@ -193,7 +275,6 @@ const waLink = `https://wa.me/966550604837?text=${waText}`;
       {/* CALCULATOR */}
       <section id="calc" className="container mx-auto px-4 py-14">
         <div className="max-w-4xl mx-auto space-y-6">
-
           {/* ✅ Mobile Step Header (Tabs + Level) */}
           <div className="md:hidden rounded-2xl border border-white/10 bg-white/5 p-4">
             <div className="text-sm text-white/70 mb-3">
@@ -277,7 +358,6 @@ const waLink = `https://wa.me/966550604837?text=${waText}`;
           {/* ✅ القسم الأساسي: المقطوعية */}
           <div
             className={`rounded-2xl border border-white/10 bg-white/5 p-5 md:p-7 ${
-              // موبايل: نخفيه إذا المستخدم اختار "بنود تفصيلية"
               mobileMode === "boq" ? "md:block hidden" : ""
             }`}
           >
@@ -486,60 +566,73 @@ const waLink = `https://wa.me/966550604837?text=${waText}`;
                 )}
 
                 <div className="mt-4 text-xs text-white/60 leading-relaxed">
-  * الرقم أعلاه تقديري ويعتمد على البيانات المُدخلة فقط. السعر
-  النهائي يُحدد بعد المعاينة.
-</div>
+                  * الرقم أعلاه تقديري ويعتمد على البيانات المُدخلة فقط. السعر
+                  النهائي يُحدد بعد المعاينة.
+                </div>
 
-{/* ✅ CTA احترافي بعد ظهور النتيجة */}
-<div className="mt-5 rounded-2xl border border-gold/30 bg-gold/10 p-5 md:p-6">
-  <div className="text-base md:text-lg font-extrabold text-gold">
-    احفظ هذا التقدير داخل حسابك
-  </div>
+                <div className="mt-5 rounded-2xl border border-gold/30 bg-gold/10 p-5 md:p-6">
+                  <div className="text-base md:text-lg font-extrabold text-gold">
+                    احفظ هذا التقدير داخل حسابك
+                  </div>
 
-  <p className="mt-2 text-sm md:text-base text-white/85 leading-8">
-    للاستفادة من <span className="font-bold text-gold">حفظ التقدير</span> داخل
-    حسابك، والحصول على{" "}
-    <span className="font-bold text-gold">خصم خاص</span> وميزة{" "}
-    <span className="font-bold text-gold">ضمان أعمال إضافي</span> عند بدء
-    التنفيذ، أنشئ حسابك الآن وابدأ متابعة مشروعك بشكل احترافي.
-  </p>
+                  <p className="mt-2 text-sm md:text-base text-white/85 leading-8">
+                    للاستفادة من <span className="font-bold text-gold">حفظ التقدير</span> داخل
+                    حسابك، والحصول على <span className="font-bold text-gold">خصم خاص</span> وميزة{" "}
+                    <span className="font-bold text-gold">ضمان أعمال إضافي</span> عند بدء
+                    التنفيذ، أنشئ حسابك الآن أو احفظ التقدير مباشرة إذا كنت مسجلًا.
+                  </p>
 
-  <div className="mt-4 flex flex-col md:flex-row gap-3">
-    <Link
-      to="/create-account"
-      className="inline-flex items-center justify-center rounded-lg bg-gold px-5 py-3 text-sm font-extrabold text-black hover:opacity-90 transition"
-    >
-      إنشاء حساب وحفظ التقدير
-    </Link>
+                  <div className="mt-4 flex flex-col md:flex-row gap-3">
+                    <button
+                      type="button"
+                      onClick={handleSaveEstimate}
+                      disabled={saving}
+                      className="inline-flex items-center justify-center rounded-lg bg-gold px-5 py-3 text-sm font-extrabold text-black hover:opacity-90 transition disabled:opacity-60"
+                    >
+                      {saving ? "جاري حفظ التقدير..." : "حفظ التقدير داخل حسابي"}
+                    </button>
 
-    <a
-      href={waLink}
-      target="_blank"
-      rel="noreferrer"
-      className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/10 px-5 py-3 text-sm font-bold text-white hover:bg-white/15 transition"
-    >
-      طلب عرض سعر عبر واتساب
-    </a>
-  </div>
-</div>
+                    <Link
+                      to="/create-account"
+                      className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/10 px-5 py-3 text-sm font-bold text-white hover:bg-white/15 transition"
+                    >
+                      إنشاء حساب
+                    </Link>
 
-<div className="mt-5 flex flex-col md:flex-row gap-3">
-  <a
-    href="#contact"
-    className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/10 px-4 py-2 text-sm hover:bg-white/15"
-  >
-    اطلب معاينة / تواصل معنا
-  </a>
+                    <a
+                      href={waLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white hover:bg-white/10 transition"
+                    >
+                      طلب عرض سعر عبر واتساب
+                    </a>
+                  </div>
 
-  <a
-    href={waLink}
-    target="_blank"
-    rel="noreferrer"
-    className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-4 py-2 text-sm hover:bg-white/10"
-  >
-    واتساب مباشر
-  </a>
-</div> 
+                  {saveMessage && (
+                    <div className="mt-3 text-sm text-white/85">
+                      {saveMessage}
+                    </div>
+                  )}
+                </div>
+
+                <div className="mt-5 flex flex-col md:flex-row gap-3">
+                  <a
+                    href="#contact"
+                    className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/10 px-4 py-2 text-sm hover:bg-white/15"
+                  >
+                    اطلب معاينة / تواصل معنا
+                  </a>
+
+                  <a
+                    href={waLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-4 py-2 text-sm hover:bg-white/10"
+                  >
+                    واتساب مباشر
+                  </a>
+                </div>
               </div>
             )}
           </div>
@@ -635,63 +728,69 @@ const waLink = `https://wa.me/966550604837?text=${waText}`;
         </div>
       </section>
 
-{/* SEO PRICE INTENT BOOST */}
-<section className="container mx-auto px-4 py-14 text-right max-w-4xl">
-  <h2 className="text-2xl md:text-3xl font-bold text-gold">
-    كم سعر تشطيب فيلا بالرياض حسب المساحة؟
-  </h2>
+      {/* SEO PRICE INTENT BOOST */}
+      <section className="container mx-auto px-4 py-14 text-right max-w-4xl">
+        <h2 className="text-2xl md:text-3xl font-bold text-gold">
+          كم سعر تشطيب فيلا بالرياض حسب المساحة؟
+        </h2>
 
-  <p className="mt-4 text-white/80 leading-relaxed">
-    تختلف تكلفة تشطيب الفيلا في الرياض حسب المساحة ونوع العمل (تشطيب/عظم) والمستوى المختار.
-    فيما يلي أمثلة تقديرية تساعدك على فهم الصورة العامة — ويمكنك الحصول على رقم أدق عبر الحاسبة أعلاه.
-  </p>
+        <p className="mt-4 text-white/80 leading-relaxed">
+          تختلف تكلفة تشطيب الفيلا في الرياض حسب المساحة ونوع العمل (تشطيب/عظم) والمستوى المختار.
+          فيما يلي أمثلة تقديرية تساعدك على فهم الصورة العامة — ويمكنك الحصول على رقم أدق عبر الحاسبة أعلاه.
+        </p>
 
-  <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3">
-    {[
-      { a: 250, label: "فيلا 250م²" },
-      { a: 300, label: "فيلا 300م²" },
-      { a: 400, label: "فيلا 400م²" },
-    ].map((x, i) => {
-      const commercial = x.a * PRICES_PER_M2.finishing.commercial
-      const standard = x.a * PRICES_PER_M2.finishing.standard
-      const luxury = x.a * PRICES_PER_M2.finishing.luxury
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3">
+          {[
+            { a: 250, label: "فيلا 250م²" },
+            { a: 300, label: "فيلا 300م²" },
+            { a: 400, label: "فيلا 400م²" },
+          ].map((x, i) => {
+            const commercial = x.a * PRICES_PER_M2.finishing.commercial;
+            const standard = x.a * PRICES_PER_M2.finishing.standard;
+            const luxury = x.a * PRICES_PER_M2.finishing.luxury;
 
-      return (
-        <div key={i} className="rounded-2xl border border-white/10 bg-white/5 p-5">
-          <div className="text-lg font-extrabold text-white">{x.label}</div>
-          <div className="mt-3 text-sm text-white/70 space-y-2">
-            <div>تجاري: <span className="text-white font-bold">{formatSAR(commercial)} ريال</span></div>
-            <div>قياسي: <span className="text-white font-bold">{formatSAR(standard)} ريال</span></div>
-            <div>فاخر: <span className="text-white font-bold">{formatSAR(luxury)} ريال</span></div>
-          </div>
-          <div className="mt-3 text-xs text-white/50">
-            * تقديري وقد يختلف حسب المواد ونطاق العمل والمعاينة.
-          </div>
+            return (
+              <div key={i} className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <div className="text-lg font-extrabold text-white">{x.label}</div>
+                <div className="mt-3 text-sm text-white/70 space-y-2">
+                  <div>
+                    تجاري: <span className="text-white font-bold">{formatSAR(commercial)} ريال</span>
+                  </div>
+                  <div>
+                    قياسي: <span className="text-white font-bold">{formatSAR(standard)} ريال</span>
+                  </div>
+                  <div>
+                    فاخر: <span className="text-white font-bold">{formatSAR(luxury)} ريال</span>
+                  </div>
+                </div>
+                <div className="mt-3 text-xs text-white/50">
+                  * تقديري وقد يختلف حسب المواد ونطاق العمل والمعاينة.
+                </div>
+              </div>
+            );
+          })}
         </div>
-      )
-    })}
-  </div>
 
-  <h2 className="mt-12 text-2xl md:text-3xl font-bold text-gold">
-    سعر المتر لتشطيب الفلل في الرياض 2026
-  </h2>
+        <h2 className="mt-12 text-2xl md:text-3xl font-bold text-gold">
+          سعر المتر لتشطيب الفلل في الرياض 2026
+        </h2>
 
-  <p className="mt-4 text-white/80 leading-relaxed">
-    كثير من العملاء يبحثون عن “سعر المتر”، لكن السعر الحقيقي يتغير حسب نوع المواد، مستوى التشطيب،
-    وعدد دورات المياه والمطابخ، ومستوى الجبس والإضاءة، وحجم الأعمال الإضافية. لذلك نعتمد في PYBCCO
-    على الحسبة الإجمالية لإعطائك رقم أقرب للواقع مع الحفاظ على الشفافية.
-  </p>
+        <p className="mt-4 text-white/80 leading-relaxed">
+          كثير من العملاء يبحثون عن “سعر المتر”، لكن السعر الحقيقي يتغير حسب نوع المواد، مستوى التشطيب،
+          وعدد دورات المياه والمطابخ، ومستوى الجبس والإضاءة، وحجم الأعمال الإضافية. لذلك نعتمد في PYBCCO
+          على الحسبة الإجمالية لإعطائك رقم أقرب للواقع مع الحفاظ على الشفافية.
+        </p>
 
-  <div className="mt-6 rounded-2xl border border-white/10 bg-black/30 p-5 text-white/80 text-sm leading-relaxed">
-    <div className="font-bold text-white mb-2">متى يزيد السعر عادة؟</div>
-    <ul className="space-y-2">
-      <li>✔️ عند اختيار مواد أعلى جودة (أرضيات/دهانات/أبواب/رخام...)</li>
-      <li>✔️ زيادة الأعمال المخفية: عزل، تمديدات، معالجة عيوب، إعادة تأهيل</li>
-      <li>✔️ التفاصيل: جبس مع إضاءة معقدة، أعمال خشب ديكوري، رخام/ستون</li>
-      <li>✔️ كثرة دورات المياه والمطابخ والتجهيزات</li>
-    </ul>
-  </div>
-</section>
+        <div className="mt-6 rounded-2xl border border-white/10 bg-black/30 p-5 text-white/80 text-sm leading-relaxed">
+          <div className="font-bold text-white mb-2">متى يزيد السعر عادة؟</div>
+          <ul className="space-y-2">
+            <li>✔️ عند اختيار مواد أعلى جودة (أرضيات/دهانات/أبواب/رخام...)</li>
+            <li>✔️ زيادة الأعمال المخفية: عزل، تمديدات، معالجة عيوب، إعادة تأهيل</li>
+            <li>✔️ التفاصيل: جبس مع إضاءة معقدة، أعمال خشب ديكوري، رخام/ستون</li>
+            <li>✔️ كثرة دورات المياه والمطابخ والتجهيزات</li>
+          </ul>
+        </div>
+      </section>
 
       {/* PRICE DETAILS */}
       <section className="container mx-auto px-4 py-14 text-right max-w-4xl">
@@ -708,25 +807,25 @@ const waLink = `https://wa.me/966550604837?text=${waText}`;
         </ul>
       </section>
 
-{/* PROJECT TRACKING SYSTEM LINK */}
-<section className="container mx-auto px-4 pb-6 text-right max-w-4xl">
-  <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-    <h2 className="text-xl md:text-2xl font-bold text-gold">
-      بعد ما تحدد الميزانية… تابع التنفيذ بشفافية كاملة
-    </h2>
+      {/* PROJECT TRACKING SYSTEM LINK */}
+      <section className="container mx-auto px-4 pb-6 text-right max-w-4xl">
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+          <h2 className="text-xl md:text-2xl font-bold text-gold">
+            بعد ما تحدد الميزانية… تابع التنفيذ بشفافية كاملة
+          </h2>
 
-    <p className="mt-4 text-white/80 leading-relaxed">
-      في PYBCCO لا نكتفي بحساب التكلفة فقط، بل ندير مشروعك عبر{" "}
-      <Link
-        to="/project-tracking-system-riyadh"
-        className="text-gold font-bold hover:underline"
-      >
-        نظام متابعة رقمي احترافي
-      </Link>{" "}
-      يتيح لك متابعة نسبة الإنجاز، مراجعة الدفعات، تحميل العقود، والاطلاع على التحديثات بالصور ضمن حساب العميل — لحفظ حقوقك ووضوح كل مرحلة.
-    </p>
-  </div>
-</section>
+          <p className="mt-4 text-white/80 leading-relaxed">
+            في PYBCCO لا نكتفي بحساب التكلفة فقط، بل ندير مشروعك عبر{" "}
+            <Link
+              to="/project-tracking-system-riyadh"
+              className="text-gold font-bold hover:underline"
+            >
+              نظام متابعة رقمي احترافي
+            </Link>{" "}
+            يتيح لك متابعة نسبة الإنجاز، مراجعة الدفعات، تحميل العقود، والاطلاع على التحديثات بالصور ضمن حساب العميل — لحفظ حقوقك ووضوح كل مرحلة.
+          </p>
+        </div>
+      </section>
 
       {/* FAQ SECTION */}
       <section className="container mx-auto px-4 py-14 text-right max-w-4xl">
@@ -830,28 +929,29 @@ const waLink = `https://wa.me/966550604837?text=${waText}`;
           ))}
         </div>
       </section>
-      {/* ✅ Mobile Sticky Total (shows only on mobile) */}
-{(areaNumber > 0 || extrasTotal > 0) && (
-  <div className="md:hidden fixed bottom-3 left-3 right-3 z-50">
-    <div className="rounded-2xl border border-white/10 bg-black/75 backdrop-blur-md p-3 flex items-center justify-between gap-3">
-      <div className="text-xs text-white/70">
-        الإجمالي الحالي
-        <div className="text-base font-extrabold text-gold">
-          {formatSAR(grandTotal)} ريال
-        </div>
-      </div>
 
-      <a
-        href={waLink}
-        target="_blank"
-        rel="noreferrer"
-        className="rounded-xl bg-gold px-4 py-3 text-sm font-extrabold text-black"
-      >
-        واتساب عرض السعر
-      </a>
-    </div>
-  </div>
-)}
+      {/* ✅ Mobile Sticky Total (shows only on mobile) */}
+      {(areaNumber > 0 || extrasTotal > 0) && (
+        <div className="md:hidden fixed bottom-3 left-3 right-3 z-50">
+          <div className="rounded-2xl border border-white/10 bg-black/75 backdrop-blur-md p-3 flex items-center justify-between gap-3">
+            <div className="text-xs text-white/70">
+              الإجمالي الحالي
+              <div className="text-base font-extrabold text-gold">
+                {formatSAR(grandTotal)} ريال
+              </div>
+            </div>
+
+            <a
+              href={waLink}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-xl bg-gold px-4 py-3 text-sm font-extrabold text-black"
+            >
+              واتساب عرض السعر
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -13,33 +13,24 @@ export async function onRequestPost(context: any) {
     const base_total = Number(body?.base_total || 0);
 
     if (!phone) {
-      return new Response(
-        JSON.stringify({ error: "Phone is required" }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      return new Response(JSON.stringify({ error: "Phone is required" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     if (!area || area <= 0) {
-      return new Response(
-        JSON.stringify({ error: "Area must be greater than zero" }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      return new Response(JSON.stringify({ error: "Area must be greater than zero" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     if (!finishing_level) {
-      return new Response(
-        JSON.stringify({ error: "finishing_level is required" }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      return new Response(JSON.stringify({ error: "finishing_level is required" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     const headers = {
@@ -49,7 +40,6 @@ export async function onRequestPost(context: any) {
       "Content-Type": "application/json",
     };
 
-    // 1) ابحث عن المستخدم عبر رقم الجوال
     const userRes = await fetch(
       `${env.SUPABASE_URL}/rest/v1/users?phone=eq.${encodeURIComponent(
         phone
@@ -87,7 +77,6 @@ export async function onRequestPost(context: any) {
     const user = users[0];
     const userId = user.id;
 
-    // 2) احفظ النتيجة في calculator_results
     const insertPayload = {
       user_id: userId,
       area,
@@ -98,17 +87,14 @@ export async function onRequestPost(context: any) {
       base_total,
     };
 
-    const insertRes = await fetch(
-      `${env.SUPABASE_URL}/rest/v1/calculator_results`,
-      {
-        method: "POST",
-        headers: {
-          ...headers,
-          Prefer: "return=representation",
-        },
-        body: JSON.stringify(insertPayload),
-      }
-    );
+    const insertRes = await fetch(`${env.SUPABASE_URL}/rest/v1/calculator_results`, {
+      method: "POST",
+      headers: {
+        ...headers,
+        Prefer: "return=representation",
+      },
+      body: JSON.stringify(insertPayload),
+    });
 
     const inserted = await insertRes.json().catch(() => null);
 
