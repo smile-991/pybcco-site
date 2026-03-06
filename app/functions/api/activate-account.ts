@@ -52,7 +52,7 @@ export async function onRequestGet(context: any) {
     const { data: existingUser } = await supabase
       .from("users")
       .select("id")
-      .eq("email", lead.email)
+      .eq("phone", lead.phone)
       .maybeSingle();
 
     if (existingUser?.id) {
@@ -95,16 +95,16 @@ export async function onRequestGet(context: any) {
       .eq("id", lead.id);
 
     return new Response(
-  JSON.stringify({
-    success: true,
-    message: "تم تفعيل الحساب بنجاح.",
-    email: lead.email,
-  }),
-  {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  }
-);
+      JSON.stringify({
+        success: true,
+        message: "تم تفعيل الحساب بنجاح.",
+        phone: lead.phone,
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   } catch (err: any) {
     return new Response(
       JSON.stringify({ error: err?.message || "Unknown error" }),
