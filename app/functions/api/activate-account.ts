@@ -95,12 +95,16 @@ export async function onRequestGet(context: any) {
       .eq("id", lead.id);
 
     return new Response(
-      JSON.stringify({ success: true, message: "تم تفعيل الحساب بنجاح." }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+  JSON.stringify({
+    success: true,
+    message: "تم تفعيل الحساب بنجاح.",
+    email: lead.email,
+  }),
+  {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  }
+);
   } catch (err: any) {
     return new Response(
       JSON.stringify({ error: err?.message || "Unknown error" }),
