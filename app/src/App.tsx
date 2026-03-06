@@ -37,7 +37,7 @@ import Villa300mConstructionCostRiyadh from "@/engineering-insights/cost/villa-3
 import GrayStructureCostRiyadh from "@/engineering-insights/cost/gray-structure-cost-riyadh";
 import VillaShellToFinishCostRiyadh from "@/engineering-insights/cost/villa-shell-to-finish-cost-riyadh";
 import ApartmentFinishingCostRiyadh from "@/engineering-insights/cost/apartment-finishing-cost-riyadh";
-
+import EconomyVsStandardVsLuxuryFinishing from "@/engineering-insights/cost/economy-vs-standard-vs-luxury-finishing";
 export default function App() {
   return (
     <div className="min-h-screen bg-white" dir="rtl">
@@ -70,6 +70,10 @@ export default function App() {
           <Route path="/terms" element={<TermsAndConditions />} />
           <Route path="/engineering-insights" element={<EngineeringInsightsSection />} />
           <Route path="/engineering-insights/cost" element={<EngineeringInsightsCostPage />} />
+          <Route
+  path="/engineering-insights/cost/economy-vs-standard-vs-luxury-finishing"
+  element={<EconomyVsStandardVsLuxuryFinishing />}
+/>
           <Route
   path="/engineering-insights/cost/apartment-finishing-cost-riyadh"
   element={<ApartmentFinishingCostRiyadh />}

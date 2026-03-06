@@ -70,7 +70,7 @@ const COST_REPORTS = [
     excerpt:
       "مقارنة عملية بين مستويات التشطيب المختلفة، ومتى يكون كل خيار مناسبًا، وكيف ينعكس ذلك على السعر والجودة.",
     slug: "/engineering-insights/cost/economy-vs-standard-vs-luxury-finishing",
-    published: false,
+    published: true,
   },
   {
     title: "ما الذي يرفع تكلفة التشطيب في الرياض؟",
