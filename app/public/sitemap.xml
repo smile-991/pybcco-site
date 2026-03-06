@@ -111,18 +111,113 @@
     <priority>0.3</priority>
   </url>
 
-  <url>
-  <loc>https://pybcco.com/engineering-insights</loc>
-  <lastmod>2026-03-03</lastmod>
-  <changefreq>weekly</changefreq>
-  <priority>0.6</priority>
-</url>
+  <!-- Engineering Insights -->
 
-<url>
-  <loc>https://pybcco.com/engineering-insights/how-to-choose-construction-company-riyadh</loc>
-  <lastmod>2026-03-03</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.7</priority>
-</url>
+  <url>
+    <loc>https://pybcco.com/engineering-insights</loc>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/how-to-choose-construction-company-riyadh</loc>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Cost Category -->
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/cost</loc>
+    <lastmod>2026-03-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/cost/villa-finishing-cost-riyadh</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/cost/finishing-price-per-meter-riyadh</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/cost/turnkey-finishing-riyadh</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/cost/villa-construction-cost-riyadh</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/cost/villa-300m-construction-cost-riyadh</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/cost/gray-structure-cost-riyadh</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/cost/villa-shell-to-finish-cost-riyadh</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/cost/apartment-finishing-cost-riyadh</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/cost/economy-vs-standard-vs-luxury-finishing</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/cost/what-increases-finishing-cost-riyadh</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/cost/plumbing-and-electrical-cost-finishing</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/cost/how-to-estimate-project-cost-initially</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/cost/misleading-quotation-mistakes</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/cost/how-to-compare-finishing-quotations</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 
 </urlset>
