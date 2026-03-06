@@ -105,7 +105,7 @@ const COST_REPORTS = [
     excerpt:
       "دليل عملي لمقارنة عروض الأسعار بشكل صحيح بناءً على البنود والمواصفات والضمان والإشراف، وليس على الرقم فقط.",
     slug: "/engineering-insights/cost/how-to-compare-finishing-quotations",
-    published: false,
+    published: true,
   },
 ];
 

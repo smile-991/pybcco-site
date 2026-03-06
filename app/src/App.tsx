@@ -42,6 +42,7 @@ import WhatIncreasesFinishingCostRiyadh from "@/engineering-insights/cost/what-i
 import PlumbingAndElectricalCostFinishing from "@/engineering-insights/cost/plumbing-and-electrical-cost-finishing";
 import HowToEstimateProjectCostInitially from "@/engineering-insights/cost/how-to-estimate-project-cost-initially";
 import MisleadingQuotationMistakes from "@/engineering-insights/cost/misleading-quotation-mistakes";
+import HowToCompareFinishingQuotations from "@/engineering-insights/cost/how-to-compare-finishing-quotations";
 
 export default function App() {
   return (
@@ -75,6 +76,10 @@ export default function App() {
           <Route path="/terms" element={<TermsAndConditions />} />
           <Route path="/engineering-insights" element={<EngineeringInsightsSection />} />
           <Route path="/engineering-insights/cost" element={<EngineeringInsightsCostPage />} />
+          <Route
+  path="/engineering-insights/cost/how-to-compare-finishing-quotations"
+  element={<HowToCompareFinishingQuotations />}
+/>
           <Route
   path="/engineering-insights/cost/misleading-quotation-mistakes"
   element={<MisleadingQuotationMistakes />}
