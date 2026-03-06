@@ -539,7 +539,7 @@ const waLink = `https://wa.me/966550604837?text=${waText}`;
   >
     واتساب مباشر
   </a>
-</div>
+</div> 
               </div>
             )}
           </div>
