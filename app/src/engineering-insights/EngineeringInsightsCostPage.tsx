@@ -77,7 +77,7 @@ const COST_REPORTS = [
     excerpt:
       "أهم الأسباب التي تجعل تكلفة التشطيب ترتفع: التعديلات المتأخرة، سوء التخطيط، تغيّر المواد، وضعف وضوح البنود.",
     slug: "/engineering-insights/cost/what-increases-finishing-cost-riyadh",
-    published: false,
+    published: true,
   },
   {
     title: "تكلفة السباكة والكهرباء ضمن التشطيب",
