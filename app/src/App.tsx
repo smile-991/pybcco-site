@@ -70,7 +70,10 @@ export default function App() {
           <Route path="/terms" element={<TermsAndConditions />} />
           <Route path="/engineering-insights" element={<EngineeringInsightsSection />} />
           <Route path="/engineering-insights/cost" element={<EngineeringInsightsCostPage />} />
-          import ApartmentFinishingCostRiyadh from "@/engineering-insights/cost/apartment-finishing-cost-riyadh";
+          <Route
+  path="/engineering-insights/cost/apartment-finishing-cost-riyadh"
+  element={<ApartmentFinishingCostRiyadh />}
+/>
           <Route
   path="/engineering-insights/cost/villa-shell-to-finish-cost-riyadh"
   element={<VillaShellToFinishCostRiyadh />}
