@@ -16,7 +16,6 @@ export default function ActivateAccountSection() {
   const [message, setMessage] = useState("جاري تفعيل الحساب...");
   const [success, setSuccess] = useState(false);
   const [hasProject, setHasProject] = useState<boolean | null>(null);
-  const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
     async function activate() {
@@ -29,7 +28,10 @@ export default function ActivateAccountSection() {
           return;
         }
 
-        const res = await fetch(`/api/activate-account?token=${encodeURIComponent(token)}`);
+        const res = await fetch(
+          `/api/activate-account?token=${encodeURIComponent(token)}`
+        );
+
         const data = await res.json();
 
         if (!res.ok) {
@@ -37,12 +39,12 @@ export default function ActivateAccountSection() {
         }
 
         const email = data?.email || "";
-        setUserEmail(email);
 
         if (email) {
           const checkRes = await fetch(
             `/api/check-user-client?email=${encodeURIComponent(email)}`
           );
+
           const checkData: ClientCheckResponse = await checkRes.json();
 
           if (!checkRes.ok) {
@@ -92,8 +94,7 @@ export default function ActivateAccountSection() {
           {!loading && success && hasProject === false && (
             <div className="space-y-6 text-right">
               <p className="text-center text-gray-700">
-                تم تفعيل حسابك بنجاح، ولا يوجد مشروع مرتبط بحسابك حاليًا. يمكنك استخدام
-                الاختصارات التالية:
+                تم تفعيل حسابك بنجاح، ولا يوجد مشروع مرتبط بحسابك حاليًا.
               </p>
 
               <div className="grid gap-4 md:grid-cols-2">
