@@ -486,26 +486,60 @@ const waLink = `https://wa.me/966550604837?text=${waText}`;
                 )}
 
                 <div className="mt-4 text-xs text-white/60 leading-relaxed">
-                  * الرقم أعلاه تقديري ويعتمد على البيانات المُدخلة فقط. السعر
-                  النهائي يُحدد بعد المعاينة.
-                </div>
+  * الرقم أعلاه تقديري ويعتمد على البيانات المُدخلة فقط. السعر
+  النهائي يُحدد بعد المعاينة.
+</div>
 
-                <div className="mt-5 flex flex-col md:flex-row gap-3">
-                  <a
-                    href="#contact"
-                    className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/10 px-4 py-2 text-sm hover:bg-white/15"
-                  >
-                    اطلب معاينة / تواصل معنا
-                  </a>
-                  <a
-                    href={waLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-4 py-2 text-sm hover:bg-white/10"
-                  >
-                    واتساب مباشر
-                  </a>
-                </div>
+{/* ✅ CTA احترافي بعد ظهور النتيجة */}
+<div className="mt-5 rounded-2xl border border-gold/30 bg-gold/10 p-5 md:p-6">
+  <div className="text-base md:text-lg font-extrabold text-gold">
+    احفظ هذا التقدير داخل حسابك
+  </div>
+
+  <p className="mt-2 text-sm md:text-base text-white/85 leading-8">
+    للاستفادة من <span className="font-bold text-gold">حفظ التقدير</span> داخل
+    حسابك، والحصول على{" "}
+    <span className="font-bold text-gold">خصم خاص</span> وميزة{" "}
+    <span className="font-bold text-gold">ضمان أعمال إضافي</span> عند بدء
+    التنفيذ، أنشئ حسابك الآن وابدأ متابعة مشروعك بشكل احترافي.
+  </p>
+
+  <div className="mt-4 flex flex-col md:flex-row gap-3">
+    <Link
+      to="/create-account"
+      className="inline-flex items-center justify-center rounded-lg bg-gold px-5 py-3 text-sm font-extrabold text-black hover:opacity-90 transition"
+    >
+      إنشاء حساب وحفظ التقدير
+    </Link>
+
+    <a
+      href={waLink}
+      target="_blank"
+      rel="noreferrer"
+      className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/10 px-5 py-3 text-sm font-bold text-white hover:bg-white/15 transition"
+    >
+      طلب عرض سعر عبر واتساب
+    </a>
+  </div>
+</div>
+
+<div className="mt-5 flex flex-col md:flex-row gap-3">
+  <a
+    href="#contact"
+    className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/10 px-4 py-2 text-sm hover:bg-white/15"
+  >
+    اطلب معاينة / تواصل معنا
+  </a>
+
+  <a
+    href={waLink}
+    target="_blank"
+    rel="noreferrer"
+    className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-4 py-2 text-sm hover:bg-white/10"
+  >
+    واتساب مباشر
+  </a>
+</div>
               </div>
             )}
           </div>
