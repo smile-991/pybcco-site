@@ -29,6 +29,7 @@ import TermsAndConditions from "@/sections/TermsAndConditions";
 import HowToChooseConstructionCompanyRiyadh from "@/sections/HowToChooseConstructionCompanyRiyadh";
 import EngineeringInsightsSection from "@/sections/engineering-insights";
 import EngineeringInsightsCostPage from "@/engineering-insights/EngineeringInsightsCostPage";
+import VillaFinishingCostRiyadh from "@/engineering-insights/cost/villa-finishing-cost-riyadh";
 
 export default function App() {
   return (
@@ -62,6 +63,10 @@ export default function App() {
           <Route path="/terms" element={<TermsAndConditions />} />
           <Route path="/engineering-insights" element={<EngineeringInsightsSection />} />
           <Route path="/engineering-insights/cost" element={<EngineeringInsightsCostPage />} />
+          <Route
+ path="/engineering-insights/cost/villa-finishing-cost-riyadh"
+ element={<VillaFinishingCostRiyadh />}
+/>
           <Route
   path="/engineering-insights/how-to-choose-construction-company-riyadh"
   element={<HowToChooseConstructionCompanyRiyadh />}

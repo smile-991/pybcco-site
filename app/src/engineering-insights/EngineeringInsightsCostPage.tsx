@@ -14,7 +14,7 @@ const COST_REPORTS = [
     excerpt:
       "شرح منظم للعوامل التي تؤثر على تكلفة تشطيب الفلل في الرياض، وما الذي يرفع السعر، وكيف يحصل العميل على تصور مبدئي منطقي قبل البدء.",
     slug: "/engineering-insights/cost/villa-finishing-cost-riyadh",
-    published: false,
+    published: true,
   },
   {
     title: "سعر متر التشطيب في الرياض",
@@ -380,9 +380,9 @@ export default function EngineeringInsightsCostPage() {
                 </p>
 
                 <ul className="mt-4 list-disc pr-6 space-y-2 opacity-85 leading-relaxed">
-                  <li>جذب زيارات عالية النية من Google.</li>
+                  <li>توعية العميل قبل البدء بمشروعه.</li>
                   <li>مساعدة العميل على فهم المشروع قبل طلب عرض السعر.</li>
-                  <li>دعم الحاسبة وصفحات الخدمات بروابط داخلية قوية.</li>
+                  <li>انشاء محتوى مفيد يغني عن اخطاء متكررة بعالم الانشاء و التشطيب.</li>
                 </ul>
 
                 <div className="mt-6 flex flex-wrap gap-3">
@@ -438,12 +438,7 @@ export default function EngineeringInsightsCostPage() {
             </div>
           </div>
         </section>
-
-        <div className="mt-10 text-sm opacity-65 leading-relaxed">
-          ملاحظة تنظيمية: تم إعداد هذه الصفحة كبوابة موضوعية مستقلة داخل قسم
-          رؤى هندسية، بحيث يتم تجميع كل تقارير التكلفة والتسعير في مكان واحد
-          قابل للتوسع التدريجي مع الحفاظ على وضوح البنية الداخلية للموقع.
-        </div>
+       
       </div>
     </main>
   );
