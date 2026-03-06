@@ -35,7 +35,7 @@ const COST_REPORTS = [
     excerpt:
       "نظرة عامة على العوامل الأساسية التي تؤثر على تكلفة بناء الفيلا، من المساحة والتصميم إلى المواد ونطاق التنفيذ.",
     slug: "/engineering-insights/cost/villa-construction-cost-riyadh",
-    published: false,
+    published: true,
   },
   {
     title: "تكلفة بناء فيلا 300 متر بالرياض",
