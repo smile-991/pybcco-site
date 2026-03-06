@@ -21,7 +21,7 @@ const COST_REPORTS = [
     excerpt:
       "ما معنى سعر متر التشطيب فعليًا؟ ومتى يكون الرقم مضللًا؟ وكيف تتم قراءة السعر بشكل صحيح حسب مستوى المواد ونطاق العمل.",
     slug: "/engineering-insights/cost/finishing-price-per-meter-riyadh",
-    published: false,
+    published: true,
   },
   {
     title: "تشطيب تسليم مفتاح بالرياض: ماذا يشمل؟",
