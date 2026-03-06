@@ -38,4 +38,4 @@ export async function onRequestGet(context: any) {
       { status: 500 }
     );
   }
-}
+}  
