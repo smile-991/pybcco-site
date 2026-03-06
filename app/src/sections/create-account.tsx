@@ -64,7 +64,7 @@ export default function CreateAccountSection() {
         throw new Error(data?.error || "حدث خطأ أثناء حفظ الطلب.");
       }
 
-      setMessage("تم حفظ طلب إنشاء الحساب بنجاح.");
+      setMessage("تم استلام طلبك بنجاح. سيتم إرسال رابط تفعيل الحساب إلى بريدك الإلكتروني..");
       setName("");
       setPhone("");
       setEmail("");
