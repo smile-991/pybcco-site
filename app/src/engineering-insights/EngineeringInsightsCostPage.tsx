@@ -98,7 +98,7 @@ const COST_REPORTS = [
     excerpt:
       "مقال يساعد العميل على اكتشاف العروض غير الواضحة، والتمييز بين السعر الحقيقي والسعر المنخفض ظاهريًا فقط.",
     slug: "/engineering-insights/cost/misleading-quotation-mistakes",
-    published: false,
+    published: true,
   },
   {
     title: "كيف تقارن بين عرضي سعر لمشروع تشطيب؟",
