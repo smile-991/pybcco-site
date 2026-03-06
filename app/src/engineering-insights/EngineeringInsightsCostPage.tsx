@@ -28,7 +28,7 @@ const COST_REPORTS = [
     excerpt:
       "دليل مبسط لفهم مفهوم تسليم المفتاح، وما الذي يدخل ضمنه عادةً، وما البنود التي يجب توضيحها قبل التعاقد.",
     slug: "/engineering-insights/cost/turnkey-finishing-riyadh",
-    published: false,
+    published: true,
   },
   {
     title: "تكلفة بناء فيلا بالرياض",
