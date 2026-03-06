@@ -117,28 +117,34 @@ export default function CreateAccountSection() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
-              type="text"
-              placeholder="الاسم الكامل"
-              className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/20"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+  type="text"
+  name="name"
+  autoComplete="name"
+  placeholder="الاسم الكامل"
+  className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-yellow-500"
+  value={name}
+  onChange={(e) => setName(e.target.value)}
+/>
 
             <input
-              type="text"
-              placeholder="رقم الجوال"
-              className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/20"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
+  type="tel"
+  name="phone"
+  autoComplete="tel"
+  placeholder="رقم الجوال"
+  className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-yellow-500"
+  value={phone}
+  onChange={(e) => setPhone(e.target.value)}
+/>
 
             <input
-              type="email"
-              placeholder="البريد الإلكتروني"
-              className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/20"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+  type="email"
+  name="email"
+  autoComplete="email"
+  placeholder="البريد الإلكتروني"
+  className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-yellow-500"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+/>
 
             <button
               type="submit"
