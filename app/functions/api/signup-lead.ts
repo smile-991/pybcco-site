@@ -1,9 +1,12 @@
 import { createClient } from "@supabase/supabase-js";
+import { Resend } from "resend";
 
 export async function onRequestPost(context: any) {
   try {
     const supabaseUrl = context.env?.SUPABASE_URL;
     const supabaseServiceRoleKey = context.env?.SUPABASE_SERVICE_ROLE_KEY;
+    const resendApiKey = context.env?.RESEND_API_KEY;
+    const fromEmail = context.env?.FROM_EMAIL;
 
     if (!supabaseUrl || !supabaseServiceRoleKey) {
       return new Response(
@@ -15,7 +18,18 @@ export async function onRequestPost(context: any) {
       );
     }
 
+    if (!resendApiKey || !fromEmail) {
+      return new Response(
+        JSON.stringify({ error: "Missing email environment variables." }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+
     const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
+    const resend = new Resend(resendApiKey);
 
     const body = await context.request.json();
 
@@ -59,6 +73,45 @@ export async function onRequestPost(context: any) {
         }
       );
     }
+
+    const estimateText =
+      estimated_cost !== null && estimated_cost !== undefined
+        ? `<p><strong>التقدير التقريبي:</strong> ${Number(estimated_cost).toLocaleString("en-US")} ريال</p>`
+        : "";
+
+    const areaText =
+      area !== null && area !== undefined
+        ? `<p><strong>المساحة:</strong> ${area} م²</p>`
+        : "";
+
+    const levelText = finishing_level
+      ? `<p><strong>مستوى التشطيب:</strong> ${finishing_level}</p>`
+      : "";
+
+    await resend.emails.send({
+      from: fromEmail,
+      to: email,
+      subject: "تم استلام طلب إنشاء الحساب - PYBCCO",
+      html: `
+        <div style="font-family:Arial,sans-serif;line-height:1.8;color:#111">
+          <h2>مرحبًا ${name}</h2>
+          <p>تم استلام طلب إنشاء الحساب بنجاح في منصة <strong>PYBCCO</strong>.</p>
+          <p>سيتم إرسال رابط تفعيل الحساب إلى بريدك الإلكتروني في المرحلة التالية.</p>
+          ${areaText}
+          ${levelText}
+          ${estimateText}
+          <hr style="margin:24px 0;border:none;border-top:1px solid #ddd" />
+          <p><strong>مزايا الحساب:</strong></p>
+          <ul>
+            <li>خصم 2% على كامل عقد التشطيب</li>
+            <li>ضمان إضافي 6 أشهر</li>
+            <li>حفظ تقدير المشروع</li>
+            <li>متابعة المشروع عبر بوابة العملاء</li>
+          </ul>
+          <p>بنيان الهرم للمقاولات - PYBCCO</p>
+        </div>
+      `,
+    });
 
     return new Response(
       JSON.stringify({ success: true }),
