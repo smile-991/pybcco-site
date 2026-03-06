@@ -44,6 +44,7 @@ import HowToEstimateProjectCostInitially from "@/engineering-insights/cost/how-t
 import MisleadingQuotationMistakes from "@/engineering-insights/cost/misleading-quotation-mistakes";
 import HowToCompareFinishingQuotations from "@/engineering-insights/cost/how-to-compare-finishing-quotations";
 import CreateAccountPage from "./sections/create-account";
+import ActivateAccountPage from "./sections/activate-account";
 
 export default function App() {
   return (
@@ -78,6 +79,7 @@ export default function App() {
           <Route path="/engineering-insights" element={<EngineeringInsightsSection />} />
           <Route path="/engineering-insights/cost" element={<EngineeringInsightsCostPage />} />
           <Route path="/create-account" element={<CreateAccountPage />} />
+          <Route path="/activate-account" element={<ActivateAccountPage />} />
           <Route
   path="/engineering-insights/cost/how-to-compare-finishing-quotations"
   element={<HowToCompareFinishingQuotations />}

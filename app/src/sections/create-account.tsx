@@ -64,7 +64,7 @@ export default function CreateAccountSection() {
         throw new Error(data?.error || "حدث خطأ أثناء حفظ الطلب.");
       }
 
-      setMessage("تم استلام طلبك بنجاح. سيتم إرسال رابط تفعيل الحساب إلى بريدك الإلكتروني..");
+      setMessage("تم استلام طلبك بنجاح. أرسلنا رابط تفعيل الحساب إلى بريدك الإلكتروني.");
       setName("");
       setPhone("");
       setEmail("");

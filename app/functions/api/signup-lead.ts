@@ -53,6 +53,11 @@ export async function onRequestPost(context: any) {
       );
     }
 
+    const activationToken = crypto.randomUUID();
+    const activateUrl = `https://pybcco.com/activate-account?token=${encodeURIComponent(
+      activationToken
+    )}`;
+
     const { error } = await supabase.from("signup_leads").insert({
       email,
       name,
@@ -62,22 +67,16 @@ export async function onRequestPost(context: any) {
       finishing_level,
       estimated_cost,
       consumed: false,
+      activated: false,
+      activation_token: activationToken,
     });
 
     if (error) {
-      return new Response(
-        JSON.stringify({ error: error.message }),
-        {
-          status: 500,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      return new Response(JSON.stringify({ error: error.message }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
     }
-
-    const estimateText =
-      estimated_cost !== null && estimated_cost !== undefined
-        ? `<p><strong>التقدير التقريبي:</strong> ${Number(estimated_cost).toLocaleString("en-US")} ريال</p>`
-        : "";
 
     const areaText =
       area !== null && area !== undefined
@@ -88,19 +87,38 @@ export async function onRequestPost(context: any) {
       ? `<p><strong>مستوى التشطيب:</strong> ${finishing_level}</p>`
       : "";
 
+    const estimateText =
+      estimated_cost !== null && estimated_cost !== undefined
+        ? `<p><strong>التقدير التقريبي:</strong> ${Number(estimated_cost).toLocaleString(
+            "en-US"
+          )} ريال</p>`
+        : "";
+
     await resend.emails.send({
       from: fromEmail,
       to: email,
-      subject: "تم استلام طلب إنشاء الحساب - PYBCCO",
+      subject: "فعّل حسابك الآن - PYBCCO",
       html: `
         <div style="font-family:Arial,sans-serif;line-height:1.8;color:#111">
           <h2>مرحبًا ${name}</h2>
-          <p>تم استلام طلب إنشاء الحساب بنجاح في منصة <strong>PYBCCO</strong>.</p>
-          <p>سيتم إرسال رابط تفعيل الحساب إلى بريدك الإلكتروني في المرحلة التالية.</p>
+          <p>تم استلام طلب إنشاء الحساب بنجاح.</p>
+          <p>اضغط الزر التالي لتفعيل حسابك:</p>
+
+          <p style="margin:24px 0;">
+            <a
+              href="${activateUrl}"
+              style="background:#eab308;color:#111;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:bold;display:inline-block;"
+            >
+              تفعيل الحساب
+            </a>
+          </p>
+
           ${areaText}
           ${levelText}
           ${estimateText}
+
           <hr style="margin:24px 0;border:none;border-top:1px solid #ddd" />
+
           <p><strong>مزايا الحساب:</strong></p>
           <ul>
             <li>خصم 2% على كامل عقد التشطيب</li>
@@ -108,18 +126,16 @@ export async function onRequestPost(context: any) {
             <li>حفظ تقدير المشروع</li>
             <li>متابعة المشروع عبر بوابة العملاء</li>
           </ul>
+
           <p>بنيان الهرم للمقاولات - PYBCCO</p>
         </div>
       `,
     });
 
-    return new Response(
-      JSON.stringify({ success: true }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (err: any) {
     return new Response(
       JSON.stringify({ error: err?.message || "Unknown error" }),
