@@ -78,10 +78,12 @@ export async function onRequestPost(context: any) {
     const userId = user.id;
 
     const insertPayload = {
+  id: crypto.randomUUID(),
   user_id: userId,
   area: area > 0 ? area : 0,
   finishing_level,
   estimated_cost,
+  created_at: new Date().toISOString(),
 };
 
     const insertRes = await fetch(`${env.SUPABASE_URL}/rest/v1/calculator_results`, {
