@@ -506,22 +506,45 @@ export default function AccountHome() {
             </div>
 
             <div className="flex flex-wrap gap-2">
-              <Link
-                to="/villa-finishing-price-riyadh"
-                className="rounded-xl border border-black px-4 py-2 text-sm font-bold text-black transition hover:bg-black hover:text-white"
-              >
-                فتح الحاسبة
-              </Link>
+  <Link
+    to="/villa-finishing-price-riyadh"
+    className="rounded-xl border border-black px-4 py-2 text-sm font-bold text-black transition hover:bg-black hover:text-white"
+  >
+    فتح الحاسبة
+  </Link>
 
-              {latestResult && (
-                <button
-                  onClick={handleDownloadPdf}
-                  className="rounded-xl bg-yellow-400 px-4 py-2 text-sm font-bold text-black transition hover:bg-yellow-300"
-                >
-                  تحميل عرض السعر PDF
-                </button>
-              )}
-            </div>
+  {latestResult && (
+    <>
+      <button
+        onClick={handleDownloadPdf}
+        className="rounded-xl bg-yellow-400 px-4 py-2 text-sm font-bold text-black transition hover:bg-yellow-300"
+      >
+        تحميل عرض السعر PDF
+      </button>
+
+      <button
+        onClick={() =>
+          navigate("/request-project", {
+            state: {
+              calculator_result_id: latestResult.id,
+              work_type: latestResult.work_type,
+              finishing_level: latestResult.finishing_level,
+              area: latestResult.area,
+              items_json: latestResult.items_json || [],
+              grand_total:
+                Number(latestResult.grand_total || 0) > 0
+                  ? Number(latestResult.grand_total || 0)
+                  : Number(latestResult.estimated_cost || 0),
+            },
+          })
+        }
+        className="rounded-xl bg-black px-4 py-2 text-sm font-bold text-white transition hover:opacity-90"
+      >
+        طلب تنفيذ هذا المشروع
+      </button>
+    </>
+  )}
+</div>
           </div>
 
           {resultsLoading ? (

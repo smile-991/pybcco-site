@@ -51,6 +51,7 @@ import MisleadingQuotationMistakes from "@/engineering-insights/cost/misleading-
 import HowToCompareFinishingQuotations from "@/engineering-insights/cost/how-to-compare-finishing-quotations";
 
 import { Toaster } from "@/components/ui/sonner";
+import RequestProjectPage from "@/sections/RequestProjectPage";
 
 export default function App() {
   return (
@@ -84,6 +85,7 @@ export default function App() {
 
           <Route path="/create-account" element={<CreateAccountPage />} />
           <Route path="/activate-account" element={<ActivateAccountPage />} />
+          <Route path="/request-project" element={<RequestProjectPage />} />
 
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/profile" element={<ProfilePage />} />
