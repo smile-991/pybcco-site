@@ -19,12 +19,12 @@ export async function onRequestPost(context: any) {
       });
     }
 
-    if (!area || area <= 0) {
-      return new Response(JSON.stringify({ error: "Area must be greater than zero" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
+   if (estimated_cost <= 0) {
+  return new Response(JSON.stringify({ error: "Estimated cost must be greater than zero" }), {
+    status: 400,
+    headers: { "Content-Type": "application/json" },
+  });
+}
 
     if (!finishing_level) {
       return new Response(JSON.stringify({ error: "finishing_level is required" }), {
@@ -78,14 +78,14 @@ export async function onRequestPost(context: any) {
     const userId = user.id;
 
     const insertPayload = {
-      user_id: userId,
-      area,
-      finishing_level,
-      estimated_cost,
-      work_type,
-      extras_total,
-      base_total,
-    };
+  user_id: userId,
+  area: area > 0 ? area : 0,
+  finishing_level,
+  estimated_cost,
+  work_type,
+  extras_total,
+  base_total,
+};
 
     const insertRes = await fetch(`${env.SUPABASE_URL}/rest/v1/calculator_results`, {
       method: "POST",
