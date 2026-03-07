@@ -310,7 +310,7 @@ export default function EngineeringInsightsChooseContractorPage() {
           </div>
         </div>
 
-        <div className="grid gap-6">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {publishedArticles.map((article) => (
             <article
               key={article.title}
