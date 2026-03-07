@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 type ActivatedUser = {
@@ -81,6 +81,8 @@ function workTypeLabel(value?: string) {
 
   const v = String(value).toLowerCase();
 
+  if (v === "finishing") return "تشطيب";
+  if (v === "bone") return "عظم";
   if (v === "full") return "تشطيب كامل";
   if (v === "bone_to_finish") return "تشطيب عظم إلى تسليم";
   if (v === "renovation") return "ترميم / تجديد";
@@ -96,6 +98,35 @@ export default function AccountHome() {
 
   const [latestResult, setLatestResult] = useState<CalculatorResult | null>(null);
   const [resultsLoading, setResultsLoading] = useState(false);
+  const [deletingEstimate, setDeletingEstimate] = useState(false);
+  const [deletingItemIndex, setDeletingItemIndex] = useState<number | null>(null);
+
+  const loadLatestResult = useCallback(async (phone: string) => {
+    setResultsLoading(true);
+
+    try {
+      const res = await fetch("/api/get-user-calculator-results", {
+        method: "GET",
+        headers: {
+          "x-user-phone": phone,
+        },
+      });
+
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok) {
+        setLatestResult(null);
+        return;
+      }
+
+      const results = Array.isArray(data?.results) ? data.results : [];
+      setLatestResult(results.length > 0 ? results[0] : null);
+    } catch {
+      setLatestResult(null);
+    } finally {
+      setResultsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -125,34 +156,8 @@ export default function AccountHome() {
 
   useEffect(() => {
     if (!user?.phone) return;
-
-    (async () => {
-      setResultsLoading(true);
-
-      try {
-        const res = await fetch("/api/get-user-calculator-results", {
-          method: "GET",
-          headers: {
-            "x-user-phone": user.phone,
-          },
-        });
-
-        const data = await res.json().catch(() => null);
-
-        if (!res.ok) {
-          setLatestResult(null);
-          return;
-        }
-
-        const results = Array.isArray(data?.results) ? data.results : [];
-        setLatestResult(results.length > 0 ? results[0] : null);
-      } catch {
-        setLatestResult(null);
-      } finally {
-        setResultsLoading(false);
-      }
-    })();
-  }, [user?.phone]);
+    loadLatestResult(user.phone);
+  }, [user?.phone, loadLatestResult]);
 
   const accountStatus = useMemo(() => {
     if (!user) return "غير معروف";
@@ -180,6 +185,83 @@ export default function AccountHome() {
     }).catch(() => {});
 
     navigate("/portal", { replace: true });
+  };
+
+  const handleDeleteEstimate = async () => {
+    if (!latestResult || !user?.phone || deletingEstimate) return;
+
+    const confirmed = window.confirm("هل تريد حذف هذا التقدير بالكامل؟");
+    if (!confirmed) return;
+
+    try {
+      setDeletingEstimate(true);
+
+      const res = await fetch("/api/delete-calculator-result", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          result_id: latestResult.id,
+          phone: user.phone,
+        }),
+      });
+
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok) {
+        alert(data?.error || "تعذر حذف التقدير.");
+        return;
+      }
+
+      setLatestResult(null);
+    } catch {
+      alert("حدث خطأ أثناء حذف التقدير.");
+    } finally {
+      setDeletingEstimate(false);
+    }
+  };
+
+  const handleDeleteItem = async (itemIndex: number) => {
+    if (!latestResult || !user?.phone) return;
+
+    const confirmed = window.confirm("هل تريد حذف هذا البند من التقدير؟");
+    if (!confirmed) return;
+
+    try {
+      setDeletingItemIndex(itemIndex);
+
+      const res = await fetch("/api/update-calculator-result", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          result_id: latestResult.id,
+          phone: user.phone,
+          item_index: itemIndex,
+        }),
+      });
+
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok) {
+        alert(data?.error || "تعذر حذف البند.");
+        return;
+      }
+
+      const updated = data?.result || null;
+
+      if (updated) {
+        setLatestResult(updated);
+      } else {
+        await loadLatestResult(user.phone);
+      }
+    } catch {
+      alert("حدث خطأ أثناء حذف البند.");
+    } finally {
+      setDeletingItemIndex(null);
+    }
   };
 
   const handleDownloadPdf = () => {
@@ -506,45 +588,53 @@ export default function AccountHome() {
             </div>
 
             <div className="flex flex-wrap gap-2">
-  <Link
-    to="/villa-finishing-price-riyadh"
-    className="rounded-xl border border-black px-4 py-2 text-sm font-bold text-black transition hover:bg-black hover:text-white"
-  >
-    فتح الحاسبة
-  </Link>
+              <Link
+                to="/villa-finishing-price-riyadh"
+                className="rounded-xl border border-black px-4 py-2 text-sm font-bold text-black transition hover:bg-black hover:text-white"
+              >
+                فتح الحاسبة
+              </Link>
 
-  {latestResult && (
-    <>
-      <button
-        onClick={handleDownloadPdf}
-        className="rounded-xl bg-yellow-400 px-4 py-2 text-sm font-bold text-black transition hover:bg-yellow-300"
-      >
-        تحميل عرض السعر PDF
-      </button>
+              {latestResult && (
+                <>
+                  <button
+                    onClick={handleDownloadPdf}
+                    className="rounded-xl bg-yellow-400 px-4 py-2 text-sm font-bold text-black transition hover:bg-yellow-300"
+                  >
+                    تحميل عرض السعر PDF
+                  </button>
 
-      <button
-        onClick={() =>
-          navigate("/request-project", {
-            state: {
-              calculator_result_id: latestResult.id,
-              work_type: latestResult.work_type,
-              finishing_level: latestResult.finishing_level,
-              area: latestResult.area,
-              items_json: latestResult.items_json || [],
-              grand_total:
-                Number(latestResult.grand_total || 0) > 0
-                  ? Number(latestResult.grand_total || 0)
-                  : Number(latestResult.estimated_cost || 0),
-            },
-          })
-        }
-        className="rounded-xl bg-black px-4 py-2 text-sm font-bold text-white transition hover:opacity-90"
-      >
-        طلب تنفيذ هذا المشروع
-      </button>
-    </>
-  )}
-</div>
+                  <button
+                    onClick={() =>
+                      navigate("/request-project", {
+                        state: {
+                          calculator_result_id: latestResult.id,
+                          work_type: latestResult.work_type,
+                          finishing_level: latestResult.finishing_level,
+                          area: latestResult.area,
+                          items_json: latestResult.items_json || [],
+                          grand_total:
+                            Number(latestResult.grand_total || 0) > 0
+                              ? Number(latestResult.grand_total || 0)
+                              : Number(latestResult.estimated_cost || 0),
+                        },
+                      })
+                    }
+                    className="rounded-xl bg-black px-4 py-2 text-sm font-bold text-white transition hover:opacity-90"
+                  >
+                    طلب تنفيذ هذا المشروع
+                  </button>
+
+                  <button
+                    onClick={handleDeleteEstimate}
+                    disabled={deletingEstimate}
+                    className="rounded-xl border border-red-500 px-4 py-2 text-sm font-bold text-red-600 transition hover:bg-red-50 disabled:opacity-60"
+                  >
+                    {deletingEstimate ? "جاري الحذف..." : "حذف التقدير بالكامل"}
+                  </button>
+                </>
+              )}
+            </div>
           </div>
 
           {resultsLoading ? (
@@ -589,6 +679,7 @@ export default function AccountHome() {
                       <th className="px-4 py-3 text-sm font-bold">الكمية</th>
                       <th className="px-4 py-3 text-sm font-bold">الوحدة</th>
                       <th className="px-4 py-3 text-sm font-bold">الإجمالي</th>
+                      <th className="px-4 py-3 text-sm font-bold">إجراء</th>
                     </tr>
                   </thead>
 
@@ -611,12 +702,21 @@ export default function AccountHome() {
                           <td className="px-4 py-3 text-sm font-bold text-black">
                             {money(item.total)} ريال
                           </td>
+                          <td className="px-4 py-3 text-center">
+                            <button
+                              onClick={() => handleDeleteItem(index)}
+                              disabled={deletingItemIndex === index}
+                              className="text-sm font-bold text-red-600 transition hover:underline disabled:opacity-60"
+                            >
+                              {deletingItemIndex === index ? "جاري الحذف..." : "حذف"}
+                            </button>
+                          </td>
                         </tr>
                       ))
                     ) : (
                       <tr className="border-t bg-white">
                         <td
-                          colSpan={4}
+                          colSpan={5}
                           className="px-4 py-6 text-center text-sm text-gray-500"
                         >
                           لا توجد بنود إضافية محفوظة داخل هذا التقدير.
