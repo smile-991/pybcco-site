@@ -31,7 +31,6 @@ function groupByCategory(items: BoqItem[]) {
   }));
 }
 
-// ✅ لا نخزّن amount نهائي حتى ما يضل ثابت عند تغيير المستوى
 type CartLine = {
   name: string;
   unit: string;
@@ -39,12 +38,21 @@ type CartLine = {
   basePrice: number;
 };
 
+export type SavedBoqItem = {
+  title: string;
+  quantity: number;
+  unit: string;
+  total: number;
+};
+
 export default function BoqCalculator({
   level,
   onTotalChange,
+  onItemsChange,
 }: {
   level: Level;
-  onTotalChange: (total: number) => void; // إجمالي البنود بالكامل
+  onTotalChange: (total: number) => void;
+  onItemsChange?: (items: SavedBoqItem[]) => void;
 }) {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("الكل");
@@ -52,7 +60,6 @@ export default function BoqCalculator({
   const [cart, setCart] = useState<Record<string, CartLine>>({});
   const [showSummary, setShowSummary] = useState(false);
 
-  // لتفعيل الإضافة التلقائية بدون تكرار مزعج أثناء الكتابة
   const timersRef = useRef<Record<string, number>>({});
 
   const factor = LEVEL_FACTOR[level];
@@ -76,11 +83,9 @@ export default function BoqCalculator({
 
   const rows = useMemo(() => filtered, [filtered]);
 
-  // للعرض تحت الحقل (Preview)
   const calcPreviewAmount = (item: BoqItem, qty: number) =>
     qty * item.basePrice * factor;
 
-  // ✅ حساب مبلغ سطر من السلة حسب المستوى الحالي دائماً
   const calcLineAmount = (line: CartLine) => line.qty * line.basePrice * factor;
 
   const cartCount = useMemo(() => Object.keys(cart).length, [cart]);
@@ -89,12 +94,26 @@ export default function BoqCalculator({
     return Object.values(cart).reduce((sum, x) => sum + calcLineAmount(x), 0);
   }, [cart, factor]);
 
-  // ✅ أهم سطر: كل ما تغيّر level أو السلة → حدّث إجمالي الإضافات في الصفحة الأم
+  const savedItems = useMemo<SavedBoqItem[]>(() => {
+    return Object.values(cart)
+      .map((x) => ({
+        title: x.name,
+        quantity: x.qty,
+        unit: x.unit,
+        total: calcLineAmount(x),
+      }))
+      .filter((x) => x.title && x.quantity > 0 && x.total > 0)
+      .sort((a, b) => a.title.localeCompare(b.title, "ar"));
+  }, [cart, factor]);
+
   useEffect(() => {
     onTotalChange(cartTotal);
   }, [cartTotal, onTotalChange]);
 
-  // تنظيف التايمرز عند الخروج
+  useEffect(() => {
+    onItemsChange?.(savedItems);
+  }, [savedItems, onItemsChange]);
+
   useEffect(() => {
     return () => {
       Object.values(timersRef.current).forEach((t) => window.clearTimeout(t));
@@ -106,14 +125,12 @@ export default function BoqCalculator({
     const levelText =
       level === "commercial" ? "تجاري" : level === "standard" ? "قياسي" : "فاخر";
 
-    const lines = Object.values(cart)
-      .sort((a, b) => a.name.localeCompare(b.name, "ar"))
-      .map(
-        (x) =>
-          `- ${x.name} | الكمية: ${x.qty} ${x.unit} | الإجمالي: ${formatSAR(
-            calcLineAmount(x)
-          )} ريال`
-      );
+    const lines = savedItems.map(
+      (x) =>
+        `- ${x.title} | الكمية: ${x.quantity} ${x.unit} | الإجمالي: ${formatSAR(
+          x.total
+        )} ريال`
+    );
 
     return [
       "عرض سعر تقديري – بنيان الهرم للمقاولات (PYBCCO)",
@@ -129,7 +146,7 @@ export default function BoqCalculator({
   const waLink = useMemo(() => {
     const text = encodeURIComponent(buildWhatsAppText());
     return `https://wa.me/${WA_NUMBER}?text=${text}`;
-  }, [cart, cartTotal, level]);
+  }, [savedItems, cartTotal, level]);
 
   return (
     <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-5">
@@ -137,7 +154,6 @@ export default function BoqCalculator({
         <div className="text-lg font-bold">تفصيل البنود (اختياري)</div>
       </div>
 
-      {/* Filters */}
       <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
         <div className="md:col-span-1">
           <div className="text-sm text-white/70 mb-2">القسم</div>
@@ -168,7 +184,6 @@ export default function BoqCalculator({
         </div>
       </div>
 
-      {/* Items table */}
       <div className="mt-5 rounded-xl border border-white/10 overflow-hidden">
         <div className="grid grid-cols-12 gap-2 bg-black/40 px-3 py-2 text-xs text-white/70">
           <div className="col-span-7">البند</div>
@@ -197,7 +212,6 @@ export default function BoqCalculator({
                     const clean = e.target.value.replace(/[^\d.]/g, "");
                     setQtyByKey((s) => ({ ...s, [key]: clean }));
 
-                    // ✅ إضافة تلقائية بعد توقّف المستخدم عن الكتابة 500ms
                     const prevTimer = timersRef.current[key];
                     if (prevTimer) window.clearTimeout(prevTimer);
 
@@ -241,7 +255,6 @@ export default function BoqCalculator({
         })}
       </div>
 
-      {/* Summary controls */}
       <div className="mt-4 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
         <div className="flex items-center gap-3">
           <Button
@@ -264,13 +277,13 @@ export default function BoqCalculator({
             setQtyByKey({});
             setShowSummary(false);
             onTotalChange(0);
+            onItemsChange?.([]);
           }}
         >
           تصفير البنود
         </Button>
       </div>
 
-      {/* Summary output + WhatsApp */}
       {showSummary &&
         (cartCount > 0 ? (
           <div className="mt-4 rounded-2xl border border-white/10 bg-black/30 p-4">
@@ -298,13 +311,13 @@ export default function BoqCalculator({
                   </tr>
                 </thead>
                 <tbody>
-                  {Object.entries(cart).map(([id, x]) => (
-                    <tr key={id} className="border-b border-white/10">
-                      <td className="py-2 text-right">{x.name}</td>
-                      <td className="py-2 text-center">{x.qty}</td>
+                  {savedItems.map((x, index) => (
+                    <tr key={`${x.title}-${index}`} className="border-b border-white/10">
+                      <td className="py-2 text-right">{x.title}</td>
+                      <td className="py-2 text-center">{x.quantity}</td>
                       <td className="py-2 text-center text-white/70">{x.unit}</td>
                       <td className="py-2 text-left font-bold">
-                        {formatSAR(calcLineAmount(x))} ريال
+                        {formatSAR(x.total)} ريال
                       </td>
                     </tr>
                   ))}

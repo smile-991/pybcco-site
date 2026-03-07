@@ -5,13 +5,10 @@ export async function onRequestGet(context: any) {
     const phone = String(request.headers.get("x-user-phone") || "").trim();
 
     if (!phone) {
-      return new Response(
-        JSON.stringify({ error: "Phone is required" }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      return new Response(JSON.stringify({ error: "Phone is required" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     const headers = {
@@ -80,10 +77,35 @@ export async function onRequestGet(context: any) {
       );
     }
 
+    const normalizedResults = Array.isArray(results)
+      ? results.map((row: any) => {
+          const base_total = Number(row?.base_total || 0);
+          const extras_total = Number(row?.extras_total || 0);
+          const estimated_cost = Number(row?.estimated_cost || 0);
+          const grand_total =
+            Number(row?.grand_total || 0) > 0
+              ? Number(row?.grand_total || 0)
+              : estimated_cost > 0
+              ? estimated_cost
+              : base_total + extras_total;
+
+          return {
+            ...row,
+            area: Number(row?.area || 0),
+            estimated_cost,
+            base_total,
+            extras_total,
+            grand_total,
+            work_type: row?.work_type || "",
+            items_json: Array.isArray(row?.items_json) ? row.items_json : [],
+          };
+        })
+      : [];
+
     return new Response(
       JSON.stringify({
         user,
-        results: Array.isArray(results) ? results : [],
+        results: normalizedResults,
       }),
       {
         status: 200,

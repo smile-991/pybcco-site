@@ -7,10 +7,23 @@ export async function onRequestPost(context: any) {
     const phone = String(body?.phone || "").trim();
     const area = Number(body?.area || 0);
     const finishing_level = String(body?.finishing_level || "").trim();
-    const estimated_cost = Number(body?.estimated_cost || 0);
     const work_type = String(body?.work_type || "").trim();
-    const extras_total = Number(body?.extras_total || 0);
     const base_total = Number(body?.base_total || 0);
+    const extras_total = Number(body?.extras_total || 0);
+
+    // نعتمد estimated_cost كإجمالي نهائي إذا أُرسل،
+    // وإذا لم يُرسل نعتمد مجموع base + extras
+    const estimated_cost =
+      Number(body?.estimated_cost || 0) > 0
+        ? Number(body?.estimated_cost || 0)
+        : base_total + extras_total;
+
+    const grand_total =
+      Number(body?.grand_total || 0) > 0
+        ? Number(body?.grand_total || 0)
+        : estimated_cost;
+
+    const items_json = Array.isArray(body?.items_json) ? body.items_json : [];
 
     if (!phone) {
       return new Response(JSON.stringify({ error: "Phone is required" }), {
@@ -19,18 +32,24 @@ export async function onRequestPost(context: any) {
       });
     }
 
-   if (estimated_cost <= 0) {
-  return new Response(JSON.stringify({ error: "Estimated cost must be greater than zero" }), {
-    status: 400,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+    if (estimated_cost <= 0) {
+      return new Response(
+        JSON.stringify({ error: "Estimated cost must be greater than zero" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
 
     if (!finishing_level) {
-      return new Response(JSON.stringify({ error: "finishing_level is required" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ error: "finishing_level is required" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     const headers = {
@@ -78,22 +97,30 @@ export async function onRequestPost(context: any) {
     const userId = user.id;
 
     const insertPayload = {
-  id: crypto.randomUUID(),
-  user_id: userId,
-  area: area > 0 ? area : 0,
-  finishing_level,
-  estimated_cost,
-  created_at: new Date().toISOString(),
-};
+      id: crypto.randomUUID(),
+      user_id: userId,
+      area: area > 0 ? area : 0,
+      finishing_level,
+      work_type: work_type || null,
+      base_total,
+      extras_total,
+      grand_total,
+      estimated_cost: grand_total,
+      items_json,
+      created_at: new Date().toISOString(),
+    };
 
-    const insertRes = await fetch(`${env.SUPABASE_URL}/rest/v1/calculator_results`, {
-      method: "POST",
-      headers: {
-        ...headers,
-        Prefer: "return=representation",
-      },
-      body: JSON.stringify(insertPayload),
-    });
+    const insertRes = await fetch(
+      `${env.SUPABASE_URL}/rest/v1/calculator_results`,
+      {
+        method: "POST",
+        headers: {
+          ...headers,
+          Prefer: "return=representation",
+        },
+        body: JSON.stringify(insertPayload),
+      }
+    );
 
     const inserted = await insertRes.json().catch(() => null);
 
