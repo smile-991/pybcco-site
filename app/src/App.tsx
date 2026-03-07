@@ -32,6 +32,7 @@ import PrivacyPolicy from "@/sections/PrivacyPolicy";
 import TermsAndConditions from "@/sections/TermsAndConditions";
 import EngineeringInsightsSection from "@/sections/engineering-insights";
 import AccountHome from "@/sections/AccountHome";
+import Top10QuestionsBeforeHiringConstructionCompany from "@/engineering-insights/ChooseContractor/Top10QuestionsBeforeHiringConstructionCompany";
 
 import EngineeringInsightsCostPage from "@/engineering-insights/EngineeringInsightsCostPage";
 import VillaFinishingCostRiyadh from "@/engineering-insights/cost/villa-finishing-cost-riyadh";
@@ -95,6 +96,11 @@ export default function App() {
             path="/project-tracking-system-riyadh"
             element={<ProjectTrackingSystemRiyadh />}
           />
+
+          <Route
+  path="/engineering-insights/top-10-questions-before-hiring-construction-company"
+  element={<Top10QuestionsBeforeHiringConstructionCompany />}
+/>
 
           <Route
   path="/engineering-insights/how-to-choose-construction-company-riyadh"
