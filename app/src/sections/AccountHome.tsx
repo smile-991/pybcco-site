@@ -232,7 +232,7 @@ export default function AccountHome() {
             </button>
           ) : (
             <Link
-              to="/contact"
+              to="/#contact"
               className="rounded-2xl border bg-white p-5 text-right shadow-sm transition hover:border-yellow-400 hover:shadow-md"
             >
               <div className="mb-2 text-lg font-bold text-black">
