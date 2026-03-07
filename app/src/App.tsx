@@ -30,7 +30,6 @@ import ProfilePage from "@/sections/ProfilePage";
 import ProjectDetailsPage from "@/sections/ProjectDetailsPage";
 import PrivacyPolicy from "@/sections/PrivacyPolicy";
 import TermsAndConditions from "@/sections/TermsAndConditions";
-import HowToChooseConstructionCompanyRiyadh from "@/sections/HowToChooseConstructionCompanyRiyadh";
 import EngineeringInsightsSection from "@/sections/engineering-insights";
 import AccountHome from "@/sections/AccountHome";
 
@@ -50,6 +49,7 @@ import HowToEstimateProjectCostInitially from "@/engineering-insights/cost/how-t
 import MisleadingQuotationMistakes from "@/engineering-insights/cost/misleading-quotation-mistakes";
 import HowToCompareFinishingQuotations from "@/engineering-insights/cost/how-to-compare-finishing-quotations";
 import EngineeringInsightsChooseContractorPage from "./engineering-insights/EngineeringInsightsChooseContractorPage";
+import HowToChooseConstructionCompanyRiyadh from "@/engineering-insights/ChooseContractor/HowToChooseConstructionCompanyRiyadh";
 
 import { Toaster } from "@/components/ui/sonner";
 import RequestProjectPage from "@/sections/RequestProjectPage";
@@ -79,6 +79,7 @@ export default function App() {
           <Route path="/apartment-finishing-riyadh" element={<ApartmentFinishingRiyadh />} />
           <Route path="/home-renovation-company-riyadh" element={<HomeRenovationCompanyRiyadh />} />
           <Route path="/contractor-almalqa-riyadh" element={<ContractorAlMalqaRiyadh />} />
+          
 
           <Route path="/account" element={<AccountHome />} />
           <Route path="/portal" element={<PortalPage />} />
@@ -94,6 +95,11 @@ export default function App() {
             path="/project-tracking-system-riyadh"
             element={<ProjectTrackingSystemRiyadh />}
           />
+
+          <Route
+  path="/engineering-insights/how-to-choose-construction-company-riyadh"
+  element={<HowToChooseConstructionCompanyRiyadh />}
+/>
 
           <Route
   path="/engineering-insights/choose-contractor"
