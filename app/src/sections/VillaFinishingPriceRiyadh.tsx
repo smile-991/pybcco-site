@@ -592,12 +592,14 @@ export default function VillaFinishingPriceRiyadh() {
                       {saving ? "جاري حفظ التقدير..." : "حفظ التقدير داخل حسابي"}
                     </button>
 
-                    <Link
-                      to="/create-account"
-                      className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/10 px-5 py-3 text-sm font-bold text-white hover:bg-white/15 transition"
-                    >
-                      إنشاء حساب
-                    </Link>
+                    {!activatedUser?.phone && (
+  <Link
+    to="/create-account"
+    className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/10 px-5 py-3 text-sm font-bold text-white hover:bg-white/15 transition"
+  >
+    إنشاء حساب
+  </Link>
+)}
 
                     <a
                       href={waLink}
@@ -727,6 +729,60 @@ export default function VillaFinishingPriceRiyadh() {
           </div>
         </div>
       </section>
+
+            {(showResult || extrasTotal > 0) && (
+        <section className="container mx-auto px-4 pb-10">
+          <div className="max-w-4xl mx-auto">
+            <div className="rounded-2xl border border-gold/30 bg-gold/10 p-5 md:p-6">
+              <div className="text-base md:text-lg font-extrabold text-gold">
+                احفظ هذا التقدير داخل حسابك
+              </div>
+
+              <p className="mt-2 text-sm md:text-base text-white/85 leading-8">
+                للاستفادة من <span className="font-bold text-gold">حفظ التقدير</span> داخل
+                حسابك، والحصول على <span className="font-bold text-gold">خصم خاص</span> وميزة{" "}
+                <span className="font-bold text-gold">ضمان أعمال إضافي</span> عند بدء
+                التنفيذ، احفظ التقدير مباشرة إذا كنت مسجلًا، أو أنشئ حسابًا جديدًا.
+              </p>
+
+              <div className="mt-4 flex flex-col md:flex-row gap-3">
+                <button
+                  type="button"
+                  onClick={handleSaveEstimate}
+                  disabled={saving}
+                  className="inline-flex items-center justify-center rounded-lg bg-gold px-5 py-3 text-sm font-extrabold text-black hover:opacity-90 transition disabled:opacity-60"
+                >
+                  {saving ? "جاري حفظ التقدير..." : "حفظ التقدير داخل حسابي"}
+                </button>
+
+                {!activatedUser?.phone && (
+                  <Link
+                    to="/create-account"
+                    className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/10 px-5 py-3 text-sm font-bold text-white hover:bg-white/15 transition"
+                  >
+                    إنشاء حساب
+                  </Link>
+                )}
+
+                <a
+                  href={waLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white hover:bg-white/10 transition"
+                >
+                  طلب عرض سعر عبر واتساب
+                </a>
+              </div>
+
+              {saveMessage && (
+                <div className="mt-3 text-sm text-white/85">
+                  {saveMessage}
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* SEO PRICE INTENT BOOST */}
       <section className="container mx-auto px-4 py-14 text-right max-w-4xl">
