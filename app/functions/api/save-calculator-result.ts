@@ -82,9 +82,6 @@ export async function onRequestPost(context: any) {
   area: area > 0 ? area : 0,
   finishing_level,
   estimated_cost,
-  work_type,
-  extras_total,
-  base_total,
 };
 
     const insertRes = await fetch(`${env.SUPABASE_URL}/rest/v1/calculator_results`, {
