@@ -114,9 +114,6 @@ export default function VillaFinishingPriceRiyadh() {
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
 
-  // مهم:
-  // حاليًا هذا الملف لا يستقبل البنود من BoqCalculator، لذلك ستبقى فارغة
-  // إلى أن نعدّل BoqCalculator ليعيد البنود والكميات مع الإجمالي.
   const [boqItems, setBoqItems] = useState<SavedEstimateItem[]>([]);
 
   // ✅ Mobile UX: اختيار المسار
