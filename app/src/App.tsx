@@ -49,6 +49,7 @@ import PlumbingAndElectricalCostFinishing from "@/engineering-insights/cost/plum
 import HowToEstimateProjectCostInitially from "@/engineering-insights/cost/how-to-estimate-project-cost-initially";
 import MisleadingQuotationMistakes from "@/engineering-insights/cost/misleading-quotation-mistakes";
 import HowToCompareFinishingQuotations from "@/engineering-insights/cost/how-to-compare-finishing-quotations";
+import EngineeringInsightsChooseContractorPage from "./engineering-insights/EngineeringInsightsChooseContractorPage";
 
 import { Toaster } from "@/components/ui/sonner";
 import RequestProjectPage from "@/sections/RequestProjectPage";
@@ -93,6 +94,11 @@ export default function App() {
             path="/project-tracking-system-riyadh"
             element={<ProjectTrackingSystemRiyadh />}
           />
+
+          <Route
+  path="/engineering-insights/choose-contractor"
+  element={<EngineeringInsightsChooseContractorPage />}
+/>
 
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsAndConditions />} />
