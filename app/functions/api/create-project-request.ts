@@ -159,6 +159,91 @@ export async function onRequestPost(context: any) {
       );
     }
 
+    try {
+  const requestRow = Array.isArray(inserted) ? inserted[0] : inserted;
+
+  const safePhone = phone || "-";
+  const safeArea = Number(result.area || 0);
+  const safeWorkType = result.work_type || "-";
+  const safeFinishingLevel = result.finishing_level || "-";
+  const safeGrandTotal = Number(result.grand_total || result.estimated_cost || 0);
+  const safeDistrict = district || "-";
+  const safeFullName = full_name || user.name || "-";
+  const safePreferredStart = preferred_start_date || "-";
+  const safeHasDrawings = has_drawings ? "نعم" : "لا";
+  const safeNotes = notes || "لا يوجد";
+
+  const itemsHtml = Array.isArray(result.items_json) && result.items_json.length > 0
+    ? `
+      <table style="width:100%;border-collapse:collapse;margin-top:12px">
+        <thead>
+          <tr>
+            <th style="border:1px solid #ddd;padding:8px;background:#f8f8f8">البند</th>
+            <th style="border:1px solid #ddd;padding:8px;background:#f8f8f8">الكمية</th>
+            <th style="border:1px solid #ddd;padding:8px;background:#f8f8f8">الوحدة</th>
+            <th style="border:1px solid #ddd;padding:8px;background:#f8f8f8">الإجمالي</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${result.items_json
+            .map(
+              (item: any) => `
+                <tr>
+                  <td style="border:1px solid #ddd;padding:8px">${item?.title || "-"}</td>
+                  <td style="border:1px solid #ddd;padding:8px">${Number(item?.quantity || 0)}</td>
+                  <td style="border:1px solid #ddd;padding:8px">${item?.unit || "-"}</td>
+                  <td style="border:1px solid #ddd;padding:8px">${Number(item?.total || 0)} ريال</td>
+                </tr>
+              `
+            )
+            .join("")}
+        </tbody>
+      </table>
+    `
+    : `<p>لا توجد بنود تفصيلية.</p>`;
+
+  await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${env.RESEND_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: env.MAIL_FROM,
+      to: [env.MAIL_TO],
+      subject: "طلب مشروع جديد من موقع PYBCCO",
+      html: `
+        <div dir="rtl" style="font-family:Arial,sans-serif;line-height:1.9;color:#111">
+          <h2>تم إرسال طلب مشروع جديد من الموقع</h2>
+
+          <p><strong>رقم الطلب:</strong> ${requestRow?.id || "-"}</p>
+          <p><strong>الاسم:</strong> ${safeFullName}</p>
+          <p><strong>رقم الجوال:</strong> ${safePhone}</p>
+          <p><strong>الحي / الموقع:</strong> ${safeDistrict}</p>
+          <p><strong>موعد التنفيذ المتوقع:</strong> ${safePreferredStart}</p>
+          <p><strong>هل يوجد مخططات؟</strong> ${safeHasDrawings}</p>
+          <p><strong>نوع العمل:</strong> ${safeWorkType}</p>
+          <p><strong>مستوى التشطيب:</strong> ${safeFinishingLevel}</p>
+          <p><strong>المساحة:</strong> ${safeArea} م²</p>
+          <p><strong>الإجمالي التقديري:</strong> ${safeGrandTotal} ريال</p>
+          <p><strong>الملاحظات:</strong> ${safeNotes}</p>
+
+          <hr style="margin:20px 0" />
+
+          <h3>البنود التفصيلية</h3>
+          ${itemsHtml}
+
+          <hr style="margin:20px 0" />
+
+          <p>تم إرسال هذا الطلب من خلال صفحة طلب تنفيذ المشروع على موقع PYBCCO.</p>
+        </div>
+      `,
+    }),
+  });
+} catch (mailError) {
+  console.error("Resend email error:", mailError);
+}
+
     return new Response(
       JSON.stringify({
         success: true,
