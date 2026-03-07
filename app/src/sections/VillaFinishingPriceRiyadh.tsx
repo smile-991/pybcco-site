@@ -729,13 +729,16 @@ export default function VillaFinishingPriceRiyadh() {
 
               <div className="mt-5">
                 <BoqCalculator
-                  key={boqResetKey}
-                  level={level}
-                  onTotalChange={(total) => {
-                    setExtrasTotal(total);
-                    setShowResult(true);
-                  }}
-                />
+  key={boqResetKey}
+  level={level}
+  onTotalChange={(total) => {
+    setExtrasTotal(total);
+    setShowResult(true);
+  }}
+  onItemsChange={(items) => {
+    setBoqItems(items);
+  }}
+/>
               </div>
             </div>
 
