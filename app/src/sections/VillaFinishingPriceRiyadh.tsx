@@ -175,10 +175,10 @@ export default function VillaFinishingPriceRiyadh() {
       return;
     }
 
-    if (!canCalculate) {
-      setSaveMessage("أدخل بيانات صحيحة أولًا قبل حفظ التقدير.");
-      return;
-    }
+    if (grandTotal <= 0) {
+  setSaveMessage("أدخل بيانات صحيحة أولًا قبل حفظ التقدير.");
+  return;
+}
 
     try {
       setSaving(true);
@@ -547,7 +547,7 @@ export default function VillaFinishingPriceRiyadh() {
               </div>
             </div>
 
-            {showResult && (canCalculate || extrasTotal > 0) && (
+            {showResult && grandTotal > 0 && (
   <div className="mt-6 rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6">
                 <div className="text-sm text-white/70">
                   النتيجة النهائية التقديرية
