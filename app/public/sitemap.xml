@@ -111,13 +111,19 @@
     <priority>0.3</priority>
   </url>
 
-  <!-- Engineering Insights -->
-
+  <!-- Engineering Insights Main -->
   <url>
     <loc>https://pybcco.com/engineering-insights</loc>
     <lastmod>2026-03-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <!-- Choose Contractor Hub -->
+  <url>
+    <loc>https://pybcco.com/engineering-insights/choose-contractor</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <url>
@@ -127,8 +133,195 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Cost Category -->
+  <url>
+    <loc>https://pybcco.com/engineering-insights/top-10-questions-before-hiring-construction-company</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 
+  <url>
+    <loc>https://pybcco.com/engineering-insights/difference-between-general-contractor-and-finishing-contractor</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/how-to-verify-construction-company-quality-before-signing</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/signs-of-unprofessional-construction-company</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/is-it-better-to-hire-one-construction-company-or-multiple-contractors</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/how-to-read-construction-quotation-properly</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/common-mistakes-when-hiring-construction-company-riyadh</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/what-should-clear-construction-contract-include</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/how-to-compare-two-construction-companies-before-decision</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/when-low-construction-price-becomes-red-flag</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Construction & Finishing Stages Hub -->
+  <url>
+    <loc>https://pybcco.com/engineering-insights/construction-and-finishing-stages</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/construction-and-finishing-stages/villa-construction-stages-saudi-arabia</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/construction-and-finishing-stages/interior-finishing-stages-villas</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/construction-and-finishing-stages/how-long-does-it-take-to-build-villa-riyadh</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/construction-and-finishing-stages/construction-stage-inspection-checklist</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/construction-and-finishing-stages/structural-shell-construction-stages</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/construction-and-finishing-stages/common-finishing-sequence-mistakes</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/construction-and-finishing-stages/when-to-start-finishing-after-structure</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/construction-and-finishing-stages/difference-between-shell-and-finishing</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/construction-and-finishing-stages/villa-construction-execution-schedule</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/construction-and-finishing-stages/how-to-monitor-finishing-quality</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Common Mistakes Hub -->
+  <url>
+    <loc>https://pybcco.com/engineering-insights/common-mistakes</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/common-mistakes/mistakes-choosing-contractor-riyadh</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/common-mistakes/mistakes-comparing-quotations</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/common-mistakes/mistakes-finishing-contract</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/common-mistakes/plumbing-mistakes-before-closing-walls</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/common-mistakes/electrical-mistakes-before-finishing</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/common-mistakes/waterproofing-and-insulation-mistakes</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/common-mistakes/mistakes-choosing-finishing-materials</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/common-mistakes/scheduling-and-execution-mistakes</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pybcco.com/engineering-insights/common-mistakes/final-handover-mistakes-checklist</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Cost Category -->
   <url>
     <loc>https://pybcco.com/engineering-insights/cost</loc>
     <lastmod>2026-03-06</lastmod>
