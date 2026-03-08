@@ -27,7 +27,7 @@ const CATEGORIES = [
     description:
       "محتوى عملي يساعد العميل على اختيار شركة مقاولات في الرياض بناءً على وضوح العقد، الإشراف الهندسي، الشفافية، وسابقة الأعمال.",
     slug: "/engineering-insights/choose-contractor",
-    articleCount: 10,
+    articleCount: 11,
     keywords: [
       "شركة مقاولات بالرياض",
       "اختيار المقاول",
