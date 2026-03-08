@@ -23,7 +23,7 @@ const articles: Article[] = [
     title: "السيراميك أم البورسلان: ما الأفضل للأرضيات والجدران؟",
     description:
       "شرح الفروقات بين السيراميك والبورسلان من حيث المتانة، الامتصاص، الشكل، والسعر، ومتى يفضل استخدام كل نوع.",
-    href: "/engineering-insights/comparisons-options/ceramic-vs-porcelain",
+    href: "/engineering-insights/comparisons-options/ceramic-vs-porcelain-riyadh",
     readTime: "7 دقائق",
     tags: ["سيراميك", "بورسلان", "أرضيات"],
   },
@@ -32,8 +32,8 @@ const articles: Article[] = [
     title: "الجبس بورد أم الأسمنت بورد: أيهما أفضل في الحمامات؟",
     description:
       "مقارنة مهمة بين الجبس بورد والأسمنت بورد في المناطق الرطبة مثل الحمامات والمطابخ.",
-    href: "/engineering-insights/comparisons-options/gypsum-board-vs-cement-board",
-    readTime: "6 دقائق",
+    href: "/engineering-insights/comparisons-options/gypsum-board-vs-cement-board-wet-areas",
+    readTime: "8 دقائق",
     tags: ["جبس بورد", "أسمنت بورد"],
   },
 
@@ -41,8 +41,8 @@ const articles: Article[] = [
     title: "التكييف المركزي أم السبليت: أيهما أفضل للفلل في الرياض؟",
     description:
       "مقارنة بين أنظمة التكييف المختلفة من حيث التكلفة، الصيانة، الراحة، واستهلاك الطاقة.",
-    href: "/engineering-insights/comparisons-options/central-vs-split-ac",
-    readTime: "8 دقائق",
+    href: "/engineering-insights/comparisons-options/central-ac-vs-split-ac-villas-riyadh",
+    readTime: "9 دقائق",
     tags: ["تكييف مركزي", "سبليت"],
   },
 
@@ -50,8 +50,8 @@ const articles: Article[] = [
     title: "الرخام أم الكوارتز أم البورسلان: ما الأفضل للكاونترات؟",
     description:
       "تحليل الخيارات الأكثر استخدامًا في المطابخ والكاونترات من حيث الشكل والتحمل والصيانة.",
-    href: "/engineering-insights/comparisons-options/marble-vs-quartz",
-    readTime: "7 دقائق",
+    href: "/engineering-insights/comparisons-options/marble-vs-quartz-vs-porcelain-countertops",
+    readTime: "9 دقائق",
     tags: ["رخام", "كوارتز", "كاونترات"],
   },
 
@@ -59,8 +59,8 @@ const articles: Article[] = [
     title: "الألمنيوم أم uPVC: ما الأفضل للنوافذ؟",
     description:
       "مقارنة بين أنظمة النوافذ من حيث العزل الحراري، المتانة، السعر، والعمر الافتراضي.",
-    href: "/engineering-insights/comparisons-options/aluminum-vs-upvc",
-    readTime: "6 دقائق",
+    href: "/engineering-insights/comparisons-options/aluminum-vs-upvc-windows-riyadh",
+    readTime: "8 دقائق",
     tags: ["ألمنيوم", "UPVC"],
   },
 
@@ -68,8 +68,8 @@ const articles: Article[] = [
     title: "تسليم مفتاح أم التعاقد مع عدة مقاولين؟",
     description:
       "مقارنة بين نموذج المقاول الواحد ونموذج إدارة المشروع عبر عدة مقاولين.",
-    href: "/engineering-insights/comparisons-options/turnkey-vs-contractors",
-    readTime: "9 دقائق",
+    href: "/engineering-insights/comparisons-options/turnkey-vs-separate-contractors-riyadh",
+    readTime: "10 دقائق",
     tags: ["تسليم مفتاح", "إدارة مشروع"],
   },
 
@@ -77,8 +77,8 @@ const articles: Article[] = [
     title: "المطبخ المفتوح أم المغلق: أيهما أنسب للبيت السعودي؟",
     description:
       "مقارنة بين المطبخ المفتوح والمغلق من حيث الخصوصية والروائح والتصميم.",
-    href: "/engineering-insights/comparisons-options/open-vs-closed-kitchen",
-    readTime: "6 دقائق",
+    href: "/engineering-insights/comparisons-options/open-vs-closed-kitchen-saudi-home",
+    readTime: "8 دقائق",
     tags: ["مطبخ مفتوح", "تصميم داخلي"],
   },
 ];
