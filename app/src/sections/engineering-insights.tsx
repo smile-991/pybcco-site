@@ -52,7 +52,7 @@ const CATEGORIES = [
     title: "الأخطاء الشائعة",
     description:
       "دروس عملية حول أخطاء اختيار المقاول، أخطاء التشطيب، والمشاكل التنفيذية التي قد ترفع التكلفة أو تؤثر على جودة المشروع لاحقًا.",
-    slug: "/engineering-insights/mistakes",
+    slug: "/engineering-insights/common-mistakes",
     articleCount: 8,
     keywords: [
       "أخطاء تشطيب الفلل",
