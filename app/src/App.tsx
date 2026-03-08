@@ -90,6 +90,7 @@ import MisleadingQuotationMistakes from "@/engineering-insights/cost/misleading-
 import HowToCompareFinishingQuotations from "@/engineering-insights/cost/how-to-compare-finishing-quotations";
 
 import ComparisonsAndOptions from "./engineering-insights/comparisons-and-options";
+import EconomicVsLuxuryFinishingRiyadh from "./engineering-insights/comparisons-and-options/EconomicVsLuxuryFinishingRiyadh";
 
 
 
@@ -203,6 +204,10 @@ export default function App() {
           <Route
   path="/engineering-insights/comparisons-options"
   element={<ComparisonsAndOptions />}
+/>
+<Route
+  path="/engineering-insights/comparisons-options/economic-vs-luxury-finishing-riyadh"
+  element={<EconomicVsLuxuryFinishingRiyadh />}
 />
 
 
