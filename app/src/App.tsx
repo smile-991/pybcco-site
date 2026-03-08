@@ -73,7 +73,7 @@ import DifferenceBetweenShellAndFinishing from "@/engineering-insights/construct
 import VillaConstructionExecutionSchedule from "@/engineering-insights/construction-and-finishing-stages/VillaConstructionExecutionSchedule";
 import HowToMonitorFinishingQuality from "@/engineering-insights/construction-and-finishing-stages/HowToMonitorFinishingQuality";
 import ConstructionAndFinishingStagesPage from "@/engineering-insights/construction-and-finishing-stages";
-import CommonMistakesPage from "./engineering-insights/common-mistakes";
+import CommonMistakesPage from "@/engineering-insights/common-mistakes";
 
 export default function App() {
   return (
