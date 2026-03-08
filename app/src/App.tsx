@@ -118,7 +118,7 @@ export default function App() {
           />
 
           <Route
-  path="/engineering-insights/mistakes"
+  path="/engineering-insights/common-mistakes"
   element={<CommonMistakesPage />}
 />
           <Route
