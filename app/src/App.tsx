@@ -89,6 +89,12 @@ import HowToEstimateProjectCostInitially from "@/engineering-insights/cost/how-t
 import MisleadingQuotationMistakes from "@/engineering-insights/cost/misleading-quotation-mistakes";
 import HowToCompareFinishingQuotations from "@/engineering-insights/cost/how-to-compare-finishing-quotations";
 
+import ComparisonsAndOptions from "./engineering-insights/comparisons-and-options";
+
+
+
+
+
 import { Toaster } from "@/components/ui/sonner";
 
 export default function App() {
@@ -193,6 +199,12 @@ export default function App() {
           <Route path="/engineering-insights/cost/how-to-estimate-project-cost-initially" element={<HowToEstimateProjectCostInitially />} />
           <Route path="/engineering-insights/cost/misleading-quotation-mistakes" element={<MisleadingQuotationMistakes />} />
           <Route path="/engineering-insights/cost/how-to-compare-finishing-quotations" element={<HowToCompareFinishingQuotations />} />
+
+          <Route
+  path="/engineering-insights/comparisons-options"
+  element={<ComparisonsAndOptions />}
+/>
+
 
           <Route path="/case-study-villa-renovation-riyadh" element={<CaseStudyVillaRiyadh />} />
 
