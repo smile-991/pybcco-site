@@ -65,7 +65,7 @@ const CATEGORIES = [
     title: "المقارنات والخيارات",
     description:
       "مقارنات تساعد العميل على اتخاذ قرار أفضل بين المواد والأنظمة ومستويات التشطيب، مثل الاقتصادي مقابل الفاخر، والسيراميك مقابل البورسلان.",
-    slug: "/engineering-insights/comparisons",
+    slug: "/engineering-insights/comparisons-options",
     articleCount: 8,
     keywords: [
       "تشطيب اقتصادي أو فاخر",
