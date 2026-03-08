@@ -1,0 +1,660 @@
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+
+function setMeta(
+  name: string,
+  content: string,
+  attr: "name" | "property" = "name"
+) {
+  let element = document.head.querySelector(
+    `meta[${attr}="${name}"]`
+  ) as HTMLMetaElement | null;
+
+  if (!element) {
+    element = document.createElement("meta");
+    element.setAttribute(attr, name);
+    document.head.appendChild(element);
+  }
+
+  element.setAttribute("content", content);
+}
+
+function setCanonical(href: string) {
+  let link = document.head.querySelector(
+    'link[rel="canonical"]'
+  ) as HTMLLinkElement | null;
+
+  if (!link) {
+    link = document.createElement("link");
+    link.setAttribute("rel", "canonical");
+    document.head.appendChild(link);
+  }
+
+  link.setAttribute("href", href);
+}
+
+export default function MistakesChoosingContractorRiyadh() {
+  useEffect(() => {
+    const title =
+      "أخطاء اختيار المقاول في الرياض: 10 أخطاء قد ترفع تكلفة مشروعك وتؤخر التسليم | بنيان الهرم للمقاولات";
+    const description =
+      "دليل عملي يشرح أهم أخطاء اختيار المقاول في الرياض، وكيف تؤدي القرارات الخاطئة إلى زيادة التكلفة، وضعف الجودة، وتأخير التنفيذ، مع خطوات واضحة لاختيار أفضل شركة مقاولات.";
+    const canonical =
+      "https://pybcco.com/engineering-insights/common-mistakes/mistakes-choosing-contractor-riyadh";
+
+    document.title = title;
+
+    setMeta("description", description);
+    setMeta(
+      "keywords",
+      "أخطاء اختيار المقاول, اختيار مقاول في الرياض, شركة مقاولات في الرياض, أخطاء التعاقد مع المقاول, تشطيب فلل بالرياض, مقاول تشطيب"
+    );
+    setMeta("robots", "index, follow, max-image-preview:large");
+    setCanonical(canonical);
+
+    setMeta("og:type", "article", "property");
+    setMeta("og:title", title, "property");
+    setMeta("og:description", description, "property");
+    setMeta("og:url", canonical, "property");
+    setMeta("og:image", "https://pybcco.com/og-image.jpg", "property");
+
+    setMeta("twitter:card", "summary_large_image");
+    setMeta("twitter:title", title);
+    setMeta("twitter:description", description);
+    setMeta("twitter:image", "https://pybcco.com/og-image.jpg");
+
+    const oldSchemas = document.querySelectorAll(
+      'script[data-mistakes-choosing-contractor-schema="true"]'
+    );
+    oldSchemas.forEach((script) => script.remove());
+
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline:
+        "أخطاء اختيار المقاول في الرياض: 10 أخطاء قد ترفع تكلفة مشروعك وتؤخر التسليم",
+      description,
+      inLanguage: "ar",
+      mainEntityOfPage: canonical,
+      author: {
+        "@type": "Organization",
+        name: "بنيان الهرم للمقاولات",
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "بنيان الهرم للمقاولات",
+        logo: {
+          "@type": "ImageObject",
+          url: "https://pybcco.com/logo.png",
+        },
+      },
+      image: "https://pybcco.com/og-image.jpg",
+      articleSection: "الأخطاء الشائعة",
+      keywords: [
+        "أخطاء اختيار المقاول",
+        "اختيار مقاول في الرياض",
+        "شركة مقاولات في الرياض",
+        "تشطيب فلل بالرياض",
+        "عروض أسعار المقاولين",
+      ],
+    };
+
+    const breadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "الرئيسية",
+          item: "https://pybcco.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "الرؤى الهندسية",
+          item: "https://pybcco.com/engineering-insights",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "الأخطاء الشائعة",
+          item: "https://pybcco.com/engineering-insights/common-mistakes",
+        },
+        {
+          "@type": "ListItem",
+          position: 4,
+          name: "أخطاء اختيار المقاول",
+          item: canonical,
+        },
+      ],
+    };
+
+    const faqSchema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "ما أكبر خطأ عند اختيار المقاول؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "أكبر خطأ هو اختيار المقاول بناءً على أقل سعر فقط دون مراجعة نطاق العمل، جودة التنفيذ، الخبرة الفعلية، وآلية الإشراف والإدارة.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "هل أرخص مقاول يعني أفضل صفقة؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "ليس دائمًا. أحيانًا يكون السعر الأقل نتيجة بنود ناقصة أو مواد أضعف أو إدارة تنفيذ غير مستقرة، ما يؤدي لاحقًا إلى أوامر تغيير وزيادة في التكلفة وتأخير في المشروع.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "كيف أتأكد أن المقاول مناسب لمشروعي؟",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "تأكد من خبرته في مشاريع مشابهة، واطلب عرض سعر مفصل، وراجع العقد، وآلية الإشراف، والجدول الزمني، ووضوح المواد والبنود، ولا تعتمد على الكلام العام فقط.",
+          },
+        },
+      ],
+    };
+
+    [articleSchema, breadcrumbSchema, faqSchema].forEach((schemaObj) => {
+      const script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.setAttribute(
+        "data-mistakes-choosing-contractor-schema",
+        "true"
+      );
+      script.text = JSON.stringify(schemaObj);
+      document.head.appendChild(script);
+    });
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    return () => {
+      const schemas = document.querySelectorAll(
+        'script[data-mistakes-choosing-contractor-schema="true"]'
+      );
+      schemas.forEach((script) => script.remove());
+    };
+  }, []);
+
+  return (
+    <main className="min-h-screen bg-[#faf8f3] text-[#1f1f1f]">
+      <section className="border-b border-black/5 bg-gradient-to-b from-[#111111] via-[#181818] to-[#222222]">
+        <div className="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+          <div className="mb-4">
+            <Link
+              to="/engineering-insights/common-mistakes"
+              className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-bold text-white/85 transition hover:bg-white/10"
+            >
+              العودة إلى قسم الأخطاء الشائعة
+            </Link>
+          </div>
+
+          <div className="inline-flex rounded-full border border-[#d4a017]/30 bg-[#d4a017]/10 px-4 py-2 text-sm font-bold text-[#f3d77a]">
+            مقال 1 من قسم الأخطاء الشائعة
+          </div>
+
+          <h1 className="mt-6 text-3xl font-extrabold leading-tight text-white sm:text-4xl lg:text-5xl">
+            أخطاء اختيار المقاول في الرياض: 10 أخطاء قد ترفع تكلفة مشروعك
+            وتؤخر التسليم
+          </h1>
+
+          <p className="mt-6 text-base leading-8 text-white/80 sm:text-lg">
+            كثير من أصحاب المشاريع يظنون أن اختيار المقاول خطوة بسيطة: مقارنة
+            سريعة بين الأسعار، اتصالان أو ثلاثة، ثم توقيع العقد. لكن الواقع أن
+            هذه المرحلة هي من أخطر المراحل في المشروع كله. القرار الخاطئ هنا لا
+            يسبب فقط فرقًا في السعر، بل قد ينعكس على جودة التنفيذ، مدة الإنجاز،
+            كمية التعديلات، حجم الاستهلاك، وعدد المشاكل التي ستظهر لاحقًا بعد
+            السكن أو التشغيل.
+          </p>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link
+              to="/villa-finishing-price-riyadh"
+              className="rounded-2xl bg-[#d4a017] px-5 py-3 text-sm font-extrabold text-[#111111] transition hover:bg-[#c59600]"
+            >
+              احسب تكلفة التشطيب
+            </Link>
+            <Link
+              to="/construction-company-riyadh"
+              className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/10"
+            >
+              شركة مقاولات في الرياض
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <article className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <div className="rounded-[32px] border border-black/5 bg-white p-6 shadow-[0_12px_40px_rgba(0,0,0,0.05)] sm:p-8 lg:p-10">
+          <div className="prose prose-neutral max-w-none prose-headings:font-extrabold prose-headings:text-[#111111] prose-p:text-[#4d4d4d] prose-p:leading-8 prose-li:text-[#4d4d4d] prose-li:leading-8">
+            <p>
+              عندما يبحث المالك عن مقاول لمشروع بناء أو تشطيب في الرياض، فهو لا
+              يشتري منتجًا جاهزًا يمكن استبداله بسهولة، بل يسلّم جزءًا كبيرًا من
+              ميزانيته ووقته وراحته النفسية إلى جهة ستتولى التنفيذ اليومي على
+              أرض الواقع. لذلك فإن الخطأ في اختيار المقاول ليس خطأ بسيطًا
+              يُعالج لاحقًا بسهولة، بل قد يتحول إلى سلسلة من المشكلات المتتابعة:
+              تأخير في الجداول الزمنية، هدر في المواد، سوء تنسيق بين التخصصات،
+              ضعف في التفاصيل النهائية، وطلبات مالية إضافية لم تكن محسوبة في
+              البداية.
+            </p>
+
+            <p>
+              المشكلة أن كثيرًا من القرارات الخاطئة تبدو في البداية منطقية جدًا.
+              قد يبدو عرض السعر الأقل فرصة ممتازة، وقد يبدو المقاول الواثق في
+              كلامه أكثر إقناعًا من غيره، وقد يظن المالك أن العقد المختصر أسرع
+              وأسهل. لكن بعد بدء التنفيذ يظهر الفرق بين المقاول الذي يملك نظامًا
+              إداريًا واضحًا، ومقاول يعتمد على الارتجال؛ وبين من يقدّم عرضًا
+              مفصلًا يمكن قياسه ومراجعته، ومن يقدّم سعرًا جذابًا ظاهريًا لكنه
+              مليء بالفراغات.
+            </p>
+
+            <p>
+              في هذا المقال سنستعرض أهم أخطاء اختيار المقاول، ليس من زاوية عامة
+              أو نظرية، بل من زاوية عملية مرتبطة بما يحدث فعلًا في مشاريع
+              البناء والتشطيب في الرياض. والهدف ليس فقط تحذيرك من الأخطاء، بل
+              مساعدتك على بناء طريقة تقييم أفضل قبل اتخاذ القرار النهائي.
+            </p>
+
+            <h2>لماذا قرار اختيار المقاول أهم من كثير من القرارات الأخرى؟</h2>
+
+            <p>
+              لأن المقاول لا ينفذ بندًا واحدًا فقط، بل يدير سلسلة مترابطة من
+              الأعمال والفرق والمواد والمواعيد. إذا كان ضعيفًا في الإدارة، سينعكس
+              ذلك على التنسيق بين الأعمال. وإذا كان ضعيفًا في التسعير، قد يبدأ
+              بطلبات إضافية مبكرة. وإذا كان ضعيفًا في الإشراف، ستظهر عيوب تنفيذية
+              قد لا تراها في البداية لكنها ستؤثر لاحقًا على الاستلام والجودة.
+            </p>
+
+            <p>
+              لهذا السبب، لا يكفي أن تسأل: كم سعر المتر؟ بل يجب أن تسأل: ما نطاق
+              العمل بالتحديد؟ من يشرف على المشروع؟ كيف يتم الاستلام المرحلي؟ كيف
+              تُدار التعديلات؟ ما المواد الداخلة في العرض؟ ما البنود المستثناة؟
+              وما خبرة المقاول في نوع المشروع نفسه؟
+            </p>
+
+            <h2>الخطأ الأول: اختيار المقاول على أساس أقل سعر فقط</h2>
+
+            <p>
+              هذا هو الخطأ الأكثر شيوعًا، وغالبًا الأكثر كلفة. السعر الأقل قد
+              يكون حقيقيًا إذا كان المقاول أكثر كفاءة في الشراء والإدارة، لكن في
+              كثير من الحالات يكون انخفاض السعر نتيجة أحد ثلاثة أمور: بنود ناقصة
+              لم تُذكر بوضوح، جودة مواد أقل من المتوقع، أو تقدير غير دقيق سيؤدي
+              لاحقًا إلى إضافات وتعديلات.
+            </p>
+
+            <p>
+              المشكلة أن المالك لا يكتشف هذا عادة في يوم توقيع العقد، بل بعد بدء
+              التنفيذ. عندها يبدأ سماع عبارات مثل: هذا البند غير مشمول، هذه
+              المواصفة ليست ضمن السعر، هذا التعديل يحتاج أمر تغيير، أو هذه المادة
+              التي تريدها لها فرق كبير في التكلفة. وهنا يتحول العرض الأرخص إلى
+              مشروع أكثر تكلفة من العروض التي بدت أعلى في البداية.
+            </p>
+
+            <p>
+              لذلك، قبل مقارنة الأرقام، يجب مقارنة التفاصيل. ومن المهم جدًا أن
+              تقرأ أيضًا مقال{" "}
+              <Link
+                to="/engineering-insights/common-mistakes/mistakes-comparing-quotations"
+                className="font-extrabold text-[#111111] underline decoration-[#d4a017] underline-offset-4"
+              >
+                أخطاء مقارنة عروض الأسعار
+              </Link>{" "}
+              لأن كثيرًا من مشاكل اختيار المقاول تبدأ أصلًا من مقارنة غير صحيحة
+              بين العروض.
+            </p>
+
+            <h2>الخطأ الثاني: الاعتماد على الكلام العام بدل العرض المفصل</h2>
+
+            <p>
+              بعض المقاولين يتحدثون بثقة عالية ويعطون انطباعًا ممتازًا في أول
+              اجتماع، لكن عندما تطلب عرض سعر مفصلًا تجد أن المستند مختصر جدًا،
+              ولا يوضح المواد ولا حدود العمل ولا الاستثناءات. هنا يجب الانتباه:
+              المشروع لا يُدار بالانطباع، بل بالوضوح.
+            </p>
+
+            <p>
+              العرض الجيد ليس مجرد رقم نهائي، بل وثيقة تنظيمية. كلما كان العرض
+              أوضح، كان تقييمك للمقاول أدق. وكلما كان غامضًا، زادت احتمالات سوء
+              الفهم والنزاع وطلبات الإضافة. العرض المفصل يساعدك على معرفة ما إذا
+              كان المقاول يفهم المشروع فعلًا، أم أنه يسعّر بشكل عام ثم يحاول
+              معالجة التفاصيل لاحقًا أثناء التنفيذ.
+            </p>
+
+            <h2>الخطأ الثالث: عدم التحقق من خبرة المقاول في نفس نوع المشروع</h2>
+
+            <p>
+              ليس كل مقاول مناسبًا لكل مشروع. هناك فرق بين مقاول يجيد الأعمال
+              الإنشائية فقط، وآخر لديه خبرة قوية في التشطيبات الدقيقة، وآخر معتاد
+              على المشاريع التجارية، وآخر يفهم احتياجات الفلل السكنية الخاصة.
+              لذلك من الخطأ أن تعتمد فقط على فكرة أن المقاول “معروف” أو “نفذ
+              مشاريع كثيرة” دون أن تعرف: هل نفذ مشاريع مشابهة لمشروعك من حيث
+              النوع والمستوى والتفاصيل؟
+            </p>
+
+            <p>
+              على سبيل المثال، مشروع فيلا بتشطيب فاخر يحتاج قدرة أكبر على
+              التنسيق بين الأعمال المعمارية والميكانيكية والكهربائية، وإدارة أدق
+              للعينات والاعتمادات والواجهات والجبس والأرضيات والأعمال المعدنية
+              والخشبية. الخبرة العامة هنا لا تكفي وحدها، بل يجب أن تكون هناك
+              خبرة مرتبطة بمستوى التنفيذ المطلوب.
+            </p>
+
+            <h2>الخطأ الرابع: تجاهل طريقة إدارة الموقع والإشراف اليومي</h2>
+
+            <p>
+              كثير من الملاك يسألون عن السعر والمدة، لكنهم لا يسألون عن أهم نقطة
+              تشغيلية: من يدير الموقع يوميًا؟ هل يوجد مهندس أو فورمان واضح؟
+              كيف تتم المتابعة؟ من ينسق بين السباكة والكهرباء والجبس والأرضيات؟
+              كيف يتم توثيق الملاحظات ومعالجتها؟
+            </p>
+
+            <p>
+              المقاول القوي لا يعني فقط أنه يستطيع جلب عمال، بل يعني أنه يملك
+              منظومة متابعة واضحة. غياب الإشراف الحقيقي يؤدي عادة إلى تراكم
+              أخطاء صغيرة تبدو غير مهمة في وقتها، ثم تتحول إلى مشاكل كبيرة:
+              نقاط كهرباء في مواقع غير مدروسة، تمديدات سباكة تتعارض مع بنود
+              أخرى، فتحات تكييف غير منسقة، أو أعمال تعاد بعد إنهائها بسبب ضعف
+              التسلسل في التنفيذ.
+            </p>
+
+            <p>
+              لهذا السبب، من المفيد ربط هذا الموضوع أيضًا بمقال{" "}
+              <Link
+                to="/engineering-insights/common-mistakes/mistakes-site-supervision"
+                className="font-extrabold text-[#111111] underline decoration-[#d4a017] underline-offset-4"
+              >
+                أخطاء الإشراف والمتابعة
+              </Link>
+              ، لأن المقاول قد يبدو مناسبًا على الورق، لكن ضعفه الحقيقي يظهر في
+              إدارة الموقع.
+            </p>
+
+            <h2>الخطأ الخامس: عدم قراءة العقد قراءة تنفيذية حقيقية</h2>
+
+            <p>
+              بعض الملاك يوقّعون العقد بعد الاطمئنان العام، دون تفكيك البنود
+              التنفيذية. لكن العقد ليس إجراء شكليًا، بل أداة تنظيم المشروع. إذا
+              كان العقد غامضًا في نطاق العمل، أو لا يوضح المواد، أو لا ينظم
+              الدفعات، أو لا يعالج التعديلات والتأخير والاستلام، فالمخاطر ترتفع
+              جدًا حتى لو كان المقاول جيدًا نسبيًا.
+            </p>
+
+            <p>
+              ويزداد الخطر إذا كان هناك فرق بين ما قيل شفهيًا وما كُتب في العقد.
+              الكلام يتغير أو يُنسى، أما العقد فهو المرجع. لذلك يجب أن تكون
+              تفاصيل التنفيذ الأساسية واضحة داخل المستند نفسه أو ملحقاته.
+            </p>
+
+            <p>
+              ومن المهم بعد هذا المقال أن تنتقل إلى مقال{" "}
+              <Link
+                to="/engineering-insights/common-mistakes/mistakes-finishing-contract"
+                className="font-extrabold text-[#111111] underline decoration-[#d4a017] underline-offset-4"
+              >
+                أخطاء عقد التشطيب
+              </Link>
+              ، لأنه يكمل الصورة من جانب التعاقد والتنظيم القانوني والتنفيذي.
+            </p>
+
+            <h2>الخطأ السادس: عدم السؤال عن البنود المستثناة بوضوح</h2>
+
+            <p>
+              من أخطر مناطق الغموض في أي عرض سعر أو اتفاق هي البنود التي لم
+              تُذكر. أحيانًا يفترض المالك أن بعض الأعمال مشمولة تلقائيًا، بينما
+              يفترض المقاول أنها خارج العرض. وعندما يصل التنفيذ إلى تلك المرحلة
+              تبدأ المفاجآت.
+            </p>
+
+            <p>
+              لذلك يجب أن يكون لديك سؤال ثابت في كل مراجعة عرض أو عقد: ما الذي
+              لا يشمله السعر؟ اطلب إجابة واضحة ومكتوبة. لأن معرفة المستثنيات
+              أحيانًا أهم من معرفة البنود المشمولة، خاصة في الأعمال المترابطة
+              مثل التكييف، الأعمال الخفيفة، الفتحات، الاختبارات، أو بعض المواد
+              الخاصة.
+            </p>
+
+            <h2>الخطأ السابع: تجاهل الأعمال المخفية عند تقييم المقاول</h2>
+
+            <p>
+              بعض الملاك يركزون على التشطيب الظاهر: شكل البلاط، الدهانات،
+              الواجهات، أو الجبس. لكن جودة المقاول لا تُقاس فقط بما يُرى، بل بما
+              لا يُرى أيضًا. السباكة، الكهرباء، العزل، الاختبارات، التنسيق قبل
+              الإقفال، كلها أعمال تؤثر على المشروع أكثر من بعض العناصر الشكلية.
+            </p>
+
+            <p>
+              إذا كان المقاول لا يعطي اهتمامًا كافيًا لهذه المرحلة، أو لا يملك
+              آلية فحص واضحة قبل الإغلاق، فقد تبدو النتيجة النهائية جميلة بصريًا
+              في البداية، لكن المشاكل تبدأ بعد فترة قصيرة: تسرب، أعطال، ضعف
+              توزيع، أو تكسير لاحق لإصلاح أخطاء كان يمكن منعها مبكرًا.
+            </p>
+
+            <p>
+              لهذا أنصحك بعد قراءة هذا المقال بقراءة{" "}
+              <Link
+                to="/engineering-insights/common-mistakes/plumbing-mistakes-before-closing-walls"
+                className="font-extrabold text-[#111111] underline decoration-[#d4a017] underline-offset-4"
+              >
+                أخطاء السباكة قبل الإقفال
+              </Link>{" "}
+              و{" "}
+              <Link
+                to="/engineering-insights/common-mistakes/electrical-mistakes-before-finishing"
+                className="font-extrabold text-[#111111] underline decoration-[#d4a017] underline-offset-4"
+              >
+                أخطاء الكهرباء قبل التشطيب
+              </Link>
+              ، لأنهما يوضحان جانبًا حاسمًا في تقييم جودة المقاول.
+            </p>
+
+            <h2>الخطأ الثامن: تجاهل الجدول الزمني الواقعي</h2>
+
+            <p>
+              بعض المقاولين يعطون مدة تنفيذ قصيرة جدًا لكسب العميل. في البداية
+              يبدو هذا جذابًا، لكن المشكلة أن الجدول غير الواقعي يقود غالبًا إلى
+              واحد من أمرين: إما تأخير لاحق بسبب عدم القدرة على الالتزام، أو
+              استعجال في بعض المراحل على حساب الجودة.
+            </p>
+
+            <p>
+              المشروع الجيد يحتاج تسلسلًا منطقيًا بين الأعمال. لا يكفي أن يقول
+              المقاول: ننتهي خلال كذا شهر. المهم أن يوضح كيف سيتحقق ذلك، وما
+              عدد الفرق، وكيف ستتم المراحل، وكيف سيعالج التعارضات والتعديلات
+              والاعتمادات. الجدول الجيد ليس وعدًا، بل خطة قابلة للتنفيذ.
+            </p>
+
+            <h2>الخطأ التاسع: عدم تقييم التواصل والاستجابة من البداية</h2>
+
+            <p>
+              طريقة المقاول في التواصل قبل التعاقد غالبًا تعطيك مؤشرًا مهمًا على
+              طريقة تعامله أثناء التنفيذ. إذا كان بطيئًا في الرد، أو غير واضح في
+              الإجابات، أو يتهرب من التفاصيل، أو يرسل مستندات ناقصة، فهذه ليست
+              مجرد أمور بسيطة يمكن تجاهلها. في كثير من الأحيان، هي انعكاس لنمط
+              إدارة سيستمر داخل المشروع نفسه.
+            </p>
+
+            <p>
+              أنت لا تبحث فقط عن منفذ، بل عن جهة تستطيع التواصل معها بوضوح خلال
+              عشرات القرارات الصغيرة والكبيرة. وكلما كان التواصل أوضح وأسرع وأكثر
+              توثيقًا، كان احتمال الانحراف في المشروع أقل.
+            </p>
+
+            <h2>الخطأ العاشر: اتخاذ القرار بسرعة قبل المقارنة المنهجية</h2>
+
+            <p>
+              أحيانًا يتسرع المالك لأن لديه رغبة في بدء المشروع بسرعة، أو لأنه
+              شعر بارتياح مع مقاول معين، أو لأنه يريد إغلاق الملف والانتقال
+              للتنفيذ. لكن القرار السريع في هذه المرحلة قد يكلّف كثيرًا لاحقًا.
+            </p>
+
+            <p>
+              الأفضل أن تعتمد نموذج تقييم واضح: السعر، مستوى التفصيل، وضوح
+              المواد، البنود المستثناة، الخبرة في مشاريع مشابهة، آلية الإشراف،
+              الجدول الزمني، العقد، جودة التواصل، والانطباع المهني العام. عندما
+              تقارن بهذا الشكل، يصبح القرار أكثر اتزانًا وأقل اعتمادًا على
+              الانطباعات السريعة.
+            </p>
+
+            <h2>كيف تختار المقاول بطريقة أفضل؟</h2>
+
+            <p>
+              لا يكفي أن ترفض الأخطاء؛ يجب أن تستبدلها بمنهج واضح. ابدأ بتحديد
+              نطاق مشروعك قدر الإمكان، ثم اطلب عروضًا مفصلة من جهات مناسبة،
+              وقارن البنود لا الأرقام فقط. راجع العقد، واسأل عن الإشراف، وتأكد من
+              وجود فهم واضح للمواد والمراحل والاستلام. وإذا كنت ما زلت في مرحلة
+              التقدير الأولي للميزانية، فابدأ من{" "}
+              <Link
+                to="/villa-finishing-price-riyadh"
+                className="font-extrabold text-[#111111] underline decoration-[#d4a017] underline-offset-4"
+              >
+                حاسبة تكلفة التشطيب في الرياض
+              </Link>{" "}
+              لتكوين تصور أقرب للواقع قبل الدخول في مرحلة التعاقد.
+            </p>
+
+            <p>
+              كما يفيدك أيضًا الرجوع إلى صفحة{" "}
+              <Link
+                to="/construction-company-riyadh"
+                className="font-extrabold text-[#111111] underline decoration-[#d4a017] underline-offset-4"
+              >
+                شركة مقاولات في الرياض
+              </Link>{" "}
+              لفهم المعايير التي يجب أن تبحث عنها عند تقييم أي جهة تنفيذية، ثم
+              قراءة مقال{" "}
+              <Link
+                to="/engineering-insights/how-to-choose-construction-company-riyadh"
+                className="font-extrabold text-[#111111] underline decoration-[#d4a017] underline-offset-4"
+              >
+                كيف تختار شركة مقاولات في الرياض
+              </Link>{" "}
+              لأنه يكمل هذا الموضوع من زاوية أوسع تشمل التقييم قبل التعاقد.
+            </p>
+
+            <h2>الخلاصة</h2>
+
+            <p>
+              اختيار المقاول ليس مرحلة إدارية عابرة، بل هو القرار الذي تُبنى
+              عليه بقية قرارات المشروع. وإذا تم هذا الاختيار بشكل سطحي، فغالبًا
+              ستدفع الفرق لاحقًا في الوقت أو الجودة أو المال أو جميعها معًا.
+              أما إذا تم بطريقة منهجية، فحتى لو لم يكن السعر هو الأقل، ستكون
+              فرصتك أعلى في مشروع منظم، وتنفيذ أوضح، واستلام أفضل، ومشاكل أقل
+              على المدى الطويل.
+            </p>
+
+            <p>
+              لذلك، عندما تقارن بين المقاولين، لا تسأل فقط: من الأرخص؟ بل اسأل:
+              من الأوضح؟ من الأقدر على الإدارة؟ من يفهم مشروعي فعلًا؟ من يقدّم
+              تفاصيل يمكن الرجوع إليها؟ ومن يملك طريقة تنفيذ تقلل احتمالات
+              الفوضى والتعديل وإعادة العمل؟
+            </p>
+
+            <p>
+              هذا النوع من الأسئلة هو الذي يحمي المشروع من كثير من الأخطاء قبل
+              أن تبدأ أول خطوة في الموقع.
+            </p>
+          </div>
+        </div>
+
+        <section className="mt-8 rounded-[28px] border border-[#d4a017]/20 bg-white p-6 shadow-[0_10px_35px_rgba(0,0,0,0.04)] sm:p-8">
+          <h2 className="text-2xl font-extrabold text-[#111111]">
+            روابط مهمة تكمل هذا المقال
+          </h2>
+
+          <div className="mt-5 grid gap-4 md:grid-cols-2">
+            <Link
+              to="/engineering-insights/common-mistakes/mistakes-comparing-quotations"
+              className="rounded-2xl border border-black/5 bg-[#faf8f3] p-5 transition hover:-translate-y-0.5 hover:shadow-[0_10px_25px_rgba(0,0,0,0.05)]"
+            >
+              <div className="text-lg font-extrabold text-[#111111]">
+                أخطاء مقارنة عروض الأسعار
+              </div>
+              <p className="mt-2 text-sm leading-7 text-[#5a5a5a]">
+                لفهم لماذا لا تكفي المقارنة بين الأرقام النهائية وحدها.
+              </p>
+            </Link>
+
+            <Link
+              to="/engineering-insights/common-mistakes/mistakes-finishing-contract"
+              className="rounded-2xl border border-black/5 bg-[#faf8f3] p-5 transition hover:-translate-y-0.5 hover:shadow-[0_10px_25px_rgba(0,0,0,0.05)]"
+            >
+              <div className="text-lg font-extrabold text-[#111111]">
+                أخطاء عقد التشطيب
+              </div>
+              <p className="mt-2 text-sm leading-7 text-[#5a5a5a]">
+                لفهم البنود التي يجب ضبطها قبل توقيع الاتفاق النهائي.
+              </p>
+            </Link>
+
+            <Link
+              to="/villa-finishing-price-riyadh"
+              className="rounded-2xl border border-black/5 bg-[#faf8f3] p-5 transition hover:-translate-y-0.5 hover:shadow-[0_10px_25px_rgba(0,0,0,0.05)]"
+            >
+              <div className="text-lg font-extrabold text-[#111111]">
+                حاسبة تكلفة التشطيب
+              </div>
+              <p className="mt-2 text-sm leading-7 text-[#5a5a5a]">
+                للحصول على تقدير أولي يساعدك قبل مرحلة طلب العروض.
+              </p>
+            </Link>
+
+            <Link
+              to="/engineering-insights/common-mistakes"
+              className="rounded-2xl border border-black/5 bg-[#faf8f3] p-5 transition hover:-translate-y-0.5 hover:shadow-[0_10px_25px_rgba(0,0,0,0.05)]"
+            >
+              <div className="text-lg font-extrabold text-[#111111]">
+                جميع مقالات الأخطاء الشائعة
+              </div>
+              <p className="mt-2 text-sm leading-7 text-[#5a5a5a]">
+                للعودة إلى الصفحة الرئيسية لهذا القسم واستكمال بقية المقالات.
+              </p>
+            </Link>
+          </div>
+        </section>
+
+        <section className="mt-8 rounded-[28px] border border-black/5 bg-white p-6 shadow-[0_10px_35px_rgba(0,0,0,0.04)] sm:p-8">
+          <h2 className="text-2xl font-extrabold text-[#111111]">أسئلة شائعة</h2>
+
+          <div className="mt-6 space-y-4">
+            <details className="rounded-2xl border border-black/5 bg-[#faf8f3] p-5">
+              <summary className="cursor-pointer list-none text-base font-extrabold text-[#111111]">
+                هل أختار المقاول على أساس السمعة فقط؟
+              </summary>
+              <p className="mt-3 text-sm leading-7 text-[#5b5b5b]">
+                السمعة مؤشر مفيد، لكنها لا تكفي وحدها. يجب مراجعة العرض، العقد،
+                الخبرة الفعلية، الإشراف، والقدرة على تنفيذ مشروع مشابه لمشروعك.
+              </p>
+            </details>
+
+            <details className="rounded-2xl border border-black/5 bg-[#faf8f3] p-5">
+              <summary className="cursor-pointer list-none text-base font-extrabold text-[#111111]">
+                ما أهم سؤال يجب أن أطرحه على المقاول قبل التوقيع؟
+              </summary>
+              <p className="mt-3 text-sm leading-7 text-[#5b5b5b]">
+                من أهم الأسئلة: ما نطاق العمل المشمول؟ وما البنود المستثناة؟ ومن
+                المسؤول عن الإشراف اليومي؟ وكيف تُدار التعديلات والاستلام؟
+              </p>
+            </details>
+
+            <details className="rounded-2xl border border-black/5 bg-[#faf8f3] p-5">
+              <summary className="cursor-pointer list-none text-base font-extrabold text-[#111111]">
+                هل المقاول الأرخص دائمًا مخاطرة؟
+              </summary>
+              <p className="mt-3 text-sm leading-7 text-[#5b5b5b]">
+                ليس دائمًا، لكن يجب فهم سبب انخفاض السعر. إذا كان الانخفاض بسبب
+                كفاءة حقيقية فهذا جيد، أما إذا كان بسبب غموض البنود أو ضعف
+                المواصفات فالمخاطرة تكون عالية.
+              </p>
+            </details>
+          </div>
+        </section>
+      </article>
+    </main>
+  );
+}

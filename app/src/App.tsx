@@ -74,6 +74,16 @@ import VillaConstructionExecutionSchedule from "@/engineering-insights/construct
 import HowToMonitorFinishingQuality from "@/engineering-insights/construction-and-finishing-stages/HowToMonitorFinishingQuality";
 import ConstructionAndFinishingStagesPage from "@/engineering-insights/construction-and-finishing-stages";
 import CommonMistakesPage from "@/engineering-insights/common-mistakes";
+import MistakesChoosingContractorRiyadh from "@/engineering-insights/common-mistakes/MistakesChoosingContractorRiyadh";
+import MistakesComparingQuotations from "./engineering-insights/common-mistakes/MistakesComparingQuotations";
+import MistakesFinishingContract from "./engineering-insights/common-mistakes/MistakesFinishingContract";
+import PlumbingMistakesBeforeClosingWalls from "./engineering-insights/common-mistakes/PlumbingMistakesBeforeClosingWalls";
+import ElectricalMistakesBeforeFinishing from "./engineering-insights/common-mistakes/ElectricalMistakesBeforeFinishing";
+import WaterproofingAndInsulationMistakes from "./engineering-insights/common-mistakes/WaterproofingAndInsulationMistakes";
+import MistakesChoosingFinishingMaterials from "./engineering-insights/common-mistakes/MistakesChoosingFinishingMaterials";
+import SchedulingAndExecutionMistakes from "./engineering-insights/common-mistakes/SchedulingAndExecutionMistakes";
+import FinalHandoverMistakesChecklist from "./engineering-insights/common-mistakes/FinalHandoverMistakesChecklist";
+
 
 export default function App() {
   return (
@@ -116,6 +126,48 @@ export default function App() {
             path="/project-tracking-system-riyadh"
             element={<ProjectTrackingSystemRiyadh />}
           />
+
+          <Route
+  path="/engineering-insights/common-mistakes/final-handover-mistakes-checklist"
+  element={<FinalHandoverMistakesChecklist />}
+/>
+
+          <Route
+  path="/engineering-insights/common-mistakes/scheduling-and-execution-mistakes"
+  element={<SchedulingAndExecutionMistakes />}
+/>
+
+          <Route
+  path="/engineering-insights/common-mistakes/mistakes-choosing-finishing-materials"
+  element={<MistakesChoosingFinishingMaterials />}
+/>
+
+          <Route
+  path="/engineering-insights/common-mistakes/waterproofing-and-insulation-mistakes"
+  element={<WaterproofingAndInsulationMistakes />}
+/>
+          <Route
+  path="/engineering-insights/common-mistakes/electrical-mistakes-before-finishing"
+  element={<ElectricalMistakesBeforeFinishing />}
+/>
+
+          <Route
+  path="/engineering-insights/common-mistakes/plumbing-mistakes-before-closing-walls"
+  element={<PlumbingMistakesBeforeClosingWalls />}
+/>
+          <Route
+  path="/engineering-insights/common-mistakes/mistakes-finishing-contract"
+  element={<MistakesFinishingContract />}
+/>
+
+          <Route
+  path="/engineering-insights/common-mistakes/mistakes-comparing-quotations"
+  element={<MistakesComparingQuotations />}
+/>
+          <Route
+  path="/engineering-insights/common-mistakes/mistakes-choosing-contractor-riyadh"
+  element={<MistakesChoosingContractorRiyadh />}
+/>
 
           <Route
   path="/engineering-insights/common-mistakes"
