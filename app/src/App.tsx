@@ -91,8 +91,13 @@ import HowToCompareFinishingQuotations from "@/engineering-insights/cost/how-to-
 
 import ComparisonsAndOptions from "./engineering-insights/comparisons-and-options";
 import EconomicVsLuxuryFinishingRiyadh from "./engineering-insights/comparisons-and-options/EconomicVsLuxuryFinishingRiyadh";
-
-
+import CeramicVsPorcelainRiyadh from "./engineering-insights/comparisons-and-options/CeramicVsPorcelainRiyadh";
+import GypsumBoardVsCementBoardWetAreas from "./engineering-insights/comparisons-and-options/GypsumBoardVsCementBoardWetAreas";
+import CentralAcVsSplitAcVillasRiyadh from "./engineering-insights/comparisons-and-options/CentralAcVsSplitAcVillasRiyadh";
+import MarbleVsQuartzVsPorcelainCountertops from "./engineering-insights/comparisons-and-options/MarbleVsQuartzVsPorcelainCountertops";
+import AluminumVsUpvcWindowsRiyadh from "./engineering-insights/comparisons-and-options/AluminumVsUpvcWindowsRiyadh";
+import TurnkeyVsSeparateContractorsRiyadh from "./engineering-insights/comparisons-and-options/TurnkeyVsSeparateContractorsRiyadh";
+import OpenVsClosedKitchenSaudiHome from "./engineering-insights/comparisons-and-options/OpenVsClosedKitchenSaudiHome";
 
 
 
@@ -208,6 +213,34 @@ export default function App() {
 <Route
   path="/engineering-insights/comparisons-options/economic-vs-luxury-finishing-riyadh"
   element={<EconomicVsLuxuryFinishingRiyadh />}
+/>
+<Route
+  path="/engineering-insights/comparisons-options/ceramic-vs-porcelain-riyadh"
+  element={<CeramicVsPorcelainRiyadh />}
+/>
+<Route
+  path="/engineering-insights/comparisons-options/gypsum-board-vs-cement-board-wet-areas"
+  element={<GypsumBoardVsCementBoardWetAreas />}
+/>
+<Route
+  path="/engineering-insights/comparisons-options/central-ac-vs-split-ac-villas-riyadh"
+  element={<CentralAcVsSplitAcVillasRiyadh />}
+/>
+<Route
+  path="/engineering-insights/comparisons-options/marble-vs-quartz-vs-porcelain-countertops"
+  element={<MarbleVsQuartzVsPorcelainCountertops />}
+/>
+<Route
+  path="/engineering-insights/comparisons-options/aluminum-vs-upvc-windows-riyadh"
+  element={<AluminumVsUpvcWindowsRiyadh />}
+/>
+<Route
+  path="/engineering-insights/comparisons-options/turnkey-vs-separate-contractors-riyadh"
+  element={<TurnkeyVsSeparateContractorsRiyadh />}
+/>
+<Route
+  path="/engineering-insights/comparisons-options/open-vs-closed-kitchen-saudi-home"
+  element={<OpenVsClosedKitchenSaudiHome />}
 />
 
 

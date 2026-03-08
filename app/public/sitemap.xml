@@ -413,4 +413,49 @@
     <priority>0.7</priority>
   </url>
 
+  <url>
+  <loc>https://pybcco.com/engineering-insights/comparisons-options</loc>
+  <priority>0.8</priority>
+</url>
+
+<url>
+  <loc>https://pybcco.com/engineering-insights/comparisons-options/economic-vs-luxury-finishing-riyadh</loc>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://pybcco.com/engineering-insights/comparisons-options/ceramic-vs-porcelain-riyadh</loc>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://pybcco.com/engineering-insights/comparisons-options/gypsum-board-vs-cement-board-wet-areas</loc>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://pybcco.com/engineering-insights/comparisons-options/central-ac-vs-split-ac-villas-riyadh</loc>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://pybcco.com/engineering-insights/comparisons-options/marble-vs-quartz-vs-porcelain-countertops</loc>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://pybcco.com/engineering-insights/comparisons-options/aluminum-vs-upvc-windows-riyadh</loc>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://pybcco.com/engineering-insights/comparisons-options/turnkey-vs-separate-contractors-riyadh</loc>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://pybcco.com/engineering-insights/comparisons-options/open-vs-closed-kitchen-saudi-home</loc>
+  <priority>0.7</priority>
+</url>
+
 </urlset>
