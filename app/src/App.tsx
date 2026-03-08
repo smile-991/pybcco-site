@@ -60,9 +60,21 @@ import CommonMistakesWhenHiringConstructionCompanyRiyadh from "@/engineering-ins
 import WhatShouldClearConstructionContractInclude from "@/engineering-insights/ChooseContractor/WhatShouldClearConstructionContractInclude";
 import HowToCompareTwoConstructionCompaniesBeforeDecision from "@/engineering-insights/ChooseContractor/HowToCompareTwoConstructionCompaniesBeforeDecision";
 import WhenLowConstructionPriceBecomesRedFlag from "@/engineering-insights/ChooseContractor/WhenLowConstructionPriceBecomesRedFlag";
-
+import VillaConstructionStagesSaudiArabia from "@/engineering-insights/construction-and-finishing-stages/VillaConstructionStagesSaudiArabia";
+import InteriorFinishingStagesVillas from "@/engineering-insights/construction-and-finishing-stages/InteriorFinishingStagesVillas";
+import HowLongDoesItTakeToBuildVillaRiyadh from "@/engineering-insights/construction-and-finishing-stages/HowLongDoesItTakeToBuildVillaRiyadh";
+import ConstructionStageInspectionChecklist from "@/engineering-insights/construction-and-finishing-stages/ConstructionStageInspectionChecklist";
+import StructuralShellConstructionStages from "@/engineering-insights/construction-and-finishing-stages/StructuralShellConstructionStages";
+import CommonFinishingSequenceMistakes from "@/engineering-insights/construction-and-finishing-stages/CommonFinishingSequenceMistakes";
+import WhenToStartFinishingAfterStructure from "@/engineering-insights/construction-and-finishing-stages/WhenToStartFinishingAfterStructure";
 import { Toaster } from "@/components/ui/sonner";
 import RequestProjectPage from "@/sections/RequestProjectPage";
+import DifferenceBetweenShellAndFinishing from "@/engineering-insights/construction-and-finishing-stages/DifferenceBetweenShellAndFinishing";
+import VillaConstructionExecutionSchedule from "@/engineering-insights/construction-and-finishing-stages/VillaConstructionExecutionSchedule";
+import HowToMonitorFinishingQuality from "@/engineering-insights/construction-and-finishing-stages/HowToMonitorFinishingQuality";
+import ConstructionAndFinishingStagesPage from "@/engineering-insights/construction-and-finishing-stages";
+
+
 
 export default function App() {
   return (
@@ -105,6 +117,53 @@ export default function App() {
             path="/project-tracking-system-riyadh"
             element={<ProjectTrackingSystemRiyadh />}
           />
+          <Route
+  path="/engineering-insights/construction-and-finishing-stages"
+  element={<ConstructionAndFinishingStagesPage />}
+/>
+          <Route
+  path="/engineering-insights/construction-and-finishing-stages/how-to-monitor-finishing-quality"
+  element={<HowToMonitorFinishingQuality />}
+/>
+          <Route
+  path="/engineering-insights/construction-and-finishing-stages/villa-construction-execution-schedule"
+  element={<VillaConstructionExecutionSchedule />}
+/>
+          <Route
+  path="/engineering-insights/construction-and-finishing-stages/difference-between-shell-and-finishing"
+  element={<DifferenceBetweenShellAndFinishing />}
+/>
+          <Route
+  path="/engineering-insights/construction-and-finishing-stages/when-to-start-finishing-after-structure"
+  element={<WhenToStartFinishingAfterStructure />}
+/>
+          <Route
+  path="/engineering-insights/construction-and-finishing-stages/common-finishing-sequence-mistakes"
+  element={<CommonFinishingSequenceMistakes />}
+/>
+
+          <Route
+  path="/engineering-insights/construction-and-finishing-stages/structural-shell-construction-stages"
+  element={<StructuralShellConstructionStages />}
+/>
+          <Route
+  path="/engineering-insights/construction-and-finishing-stages/construction-stage-inspection-checklist"
+  element={<ConstructionStageInspectionChecklist />}
+/>
+
+          <Route
+  path="/engineering-insights/construction-and-finishing-stages/how-long-does-it-take-to-build-villa-riyadh"
+  element={<HowLongDoesItTakeToBuildVillaRiyadh />}
+/>
+
+          <Route
+  path="/engineering-insights/construction-and-finishing-stages/interior-finishing-stages-villas"
+  element={<InteriorFinishingStagesVillas />}
+/>
+          <Route
+  path="/engineering-insights/construction-and-finishing-stages/villa-construction-stages-saudi-arabia"
+  element={<VillaConstructionStagesSaudiArabia />}
+/>
           <Route
   path="/engineering-insights/when-low-construction-price-becomes-red-flag"
   element={<WhenLowConstructionPriceBecomesRedFlag />}
