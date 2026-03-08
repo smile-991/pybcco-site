@@ -18,70 +18,89 @@ const publishedArticles: ArticleCard[] = [
     tags: ["اختيار شركة مقاولات", "شركة مقاولات بالرياض", "تقييم المقاول"],
     published: true,
   },
-
   {
-  title: "أهم 10 أسئلة يجب طرحها على شركة المقاولات قبل التعاقد",
-  description:
-    "أسئلة عملية تكشف لك مستوى الاحتراف والتنظيم والوضوح قبل توقيع أي عقد أو دفع أي دفعة.",
-  href: "/engineering-insights/top-10-questions-before-hiring-construction-company",
-  tags: ["قبل التعاقد", "أسئلة مهمة", "اختيار المقاول"],
-  published: true,
-},
-
-
-];
-
-const upcomingArticles: ArticleCard[] = [
-  
+    title: "أهم 10 أسئلة يجب طرحها على شركة المقاولات قبل التعاقد",
+    description:
+      "أسئلة عملية تكشف لك مستوى الاحتراف والتنظيم والوضوح قبل توقيع أي عقد أو دفع أي دفعة.",
+    href: "/engineering-insights/top-10-questions-before-hiring-construction-company",
+    tags: ["قبل التعاقد", "أسئلة مهمة", "اختيار المقاول"],
+    published: true,
+  },
   {
     title: "ما الفرق بين المقاول العام ومقاول التشطيب؟",
     description:
       "متى تحتاج إلى مقاول عام، ومتى يكون مقاول التشطيب هو الخيار الأنسب لطبيعة مشروعك ومرحلة التنفيذ.",
+    href: "/engineering-insights/difference-between-general-contractor-and-finishing-contractor",
     tags: ["مقاول عام", "مقاول تشطيب", "مراحل التنفيذ"],
+    published: true,
   },
   {
     title: "كيف تتأكد من جودة شركة المقاولات قبل توقيع العقد؟",
     description:
       "خطوات واضحة لفحص الجودة والالتزام والتنظيم والخبرة قبل تسليم المشروع لأي جهة تنفيذية.",
+    href: "/engineering-insights/how-to-verify-construction-company-quality-before-signing",
     tags: ["جودة التنفيذ", "فحص الشركة", "الثقة"],
+    published: true,
   },
   {
     title: "ما العلامات التي تدل على أن شركة المقاولات غير احترافية؟",
     description:
       "علامات تحذيرية يجب الانتباه لها مبكرًا حتى لا تدخل مشروعك مع جهة غير منظمة أو غير واضحة.",
+    href: "/engineering-insights/signs-of-unprofessional-construction-company",
     tags: ["أخطاء الاختيار", "علامات الخطر", "شركة غير احترافية"],
+    published: true,
   },
   {
     title: "هل الأفضل التعامل مع شركة مقاولات واحدة أم عدة مقاولين؟",
     description:
       "مقارنة عملية بين التعاقد مع جهة واحدة تدير المشروع بالكامل وبين توزيع الأعمال على عدة مقاولين.",
+    href: "/engineering-insights/is-it-better-to-hire-one-construction-company-or-multiple-contractors",
     tags: ["إدارة المشروع", "مقاول واحد", "عدة مقاولين"],
+    published: true,
   },
   {
     title: "كيف تقرأ عرض السعر من شركة المقاولات بشكل صحيح؟",
     description:
       "شرح البنود التي يجب فحصها داخل عرض السعر حتى لا تقارن بالأرقام فقط وتغفل التفاصيل المؤثرة فعليًا.",
+    href: "/engineering-insights/how-to-read-construction-quotation-properly",
     tags: ["عرض السعر", "تحليل التسعير", "مقارنة العروض"],
+    published: true,
   },
   {
     title: "ما الذي يجب أن يتضمنه عقد المقاولات الواضح؟",
     description:
       "أهم البنود التي يجب أن تكون واضحة داخل العقد لحماية جميع الأطراف وتقليل الخلافات أثناء التنفيذ.",
+    href: "/engineering-insights/what-should-clear-construction-contract-include",
     tags: ["عقد المقاولات", "بنود العقد", "تنظيم العمل"],
+    published: true,
   },
   {
     title: "كيف تقارن بين شركتين مقاولات قبل اتخاذ القرار؟",
     description:
       "طريقة عملية للمقارنة بين شركتين بناءً على التنظيم والجودة والوضوح والخبرة، وليس السعر فقط.",
+    href: "/engineering-insights/how-to-compare-two-construction-companies-before-decision",
     tags: ["مقارنة شركات", "اتخاذ القرار", "اختيار الشركة"],
+    published: true,
   },
   {
     title: "متى يكون السعر المنخفض من شركة المقاولات إشارة خطر؟",
     description:
       "لماذا قد يكون السعر الأرخص مكلفًا لاحقًا، وكيف تميّز بين السعر التنافسي والسعر المضلل.",
+    href: "/engineering-insights/when-low-construction-price-becomes-red-flag",
     tags: ["السعر المنخفض", "خطر التوفير", "العروض المضللة"],
+    published: true,
+  },
+  {
+    title: "أخطاء شائعة عند التعاقد مع شركة مقاولات في الرياض",
+    description:
+      "أخطاء متكررة يقع فيها أصحاب المشاريع قبل التوقيع، وكيف تتجنب مشاكل السعر والنطاق والدفعات والتعديلات والإشراف.",
+    href: "/engineering-insights/common-mistakes-when-hiring-construction-company-riyadh",
+    tags: ["أخطاء التعاقد", "مشاكل المقاولين", "قبل التوقيع"],
+    published: true,
   },
 ];
+
+const upcomingArticles: ArticleCard[] = [];
 
 export default function EngineeringInsightsChooseContractorPage() {
   useEffect(() => {
@@ -278,10 +297,8 @@ export default function EngineeringInsightsChooseContractorPage() {
                   كثير من مشاكل المشاريع لا تبدأ أثناء التنفيذ، بل تبدأ من
                   <strong> اختيار الجهة المنفذة بشكل خاطئ</strong>.
                 </p>
-                <p>
-                  لذلك هذا المسار يركز على:
-                </p>
-                <ul className="space-y-2 pr-5 list-disc marker:text-yellow-500">
+                <p>لذلك هذا المسار يركز على:</p>
+                <ul className="list-disc space-y-2 pr-5 marker:text-yellow-500">
                   <li>فهم طريقة تقييم شركة المقاولات قبل التعاقد.</li>
                   <li>تجنب الاختيار المبني على السعر فقط.</li>
                   <li>التفريق بين الشركة المنظمة وغير المنظمة.</li>
@@ -297,10 +314,10 @@ export default function EngineeringInsightsChooseContractorPage() {
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
             <p className="mb-2 text-sm font-semibold text-yellow-700">
-              المقال المنشور الآن
+              جميع المقالات المنشورة
             </p>
             <h2 className="text-2xl font-extrabold md:text-3xl">
-              ابدأ من المقال الرئيسي
+              مقالات هذا المسار
             </h2>
           </div>
         </div>
@@ -354,58 +371,60 @@ export default function EngineeringInsightsChooseContractorPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 pb-14 md:px-6">
-        <div className="mb-8">
-          <p className="mb-2 text-sm font-semibold text-yellow-700">
-            التقارير القادمة
-          </p>
-          <h2 className="text-2xl font-extrabold md:text-3xl">
-            مواضيع سنكملها داخل هذا التصنيف
-          </h2>
-          <p className="mt-3 max-w-3xl text-base leading-8 text-neutral-700">
-            هذه المقالات تم اختيارها لأنها قريبة من نية التعاقد الفعلية، وتخدم
-            العميل الذي يريد أن يقارن ويفهم ويتأكد قبل أن يسلم مشروعه لشركة
-            مقاولات.
-          </p>
-        </div>
+      {upcomingArticles.length > 0 && (
+        <section className="mx-auto max-w-7xl px-4 pb-14 md:px-6">
+          <div className="mb-8">
+            <p className="mb-2 text-sm font-semibold text-yellow-700">
+              التقارير القادمة
+            </p>
+            <h2 className="text-2xl font-extrabold md:text-3xl">
+              مواضيع سنكملها داخل هذا التصنيف
+            </h2>
+            <p className="mt-3 max-w-3xl text-base leading-8 text-neutral-700">
+              هذه المقالات تم اختيارها لأنها قريبة من نية التعاقد الفعلية، وتخدم
+              العميل الذي يريد أن يقارن ويفهم ويتأكد قبل أن يسلم مشروعه لشركة
+              مقاولات.
+            </p>
+          </div>
 
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {upcomingArticles.map((article) => (
-            <article
-              key={article.title}
-              className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm"
-            >
-              <div className="mb-4 flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-bold text-neutral-700">
-                  قريبًا
-                </span>
-
-                {article.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full bg-neutral-50 px-3 py-1 text-xs text-neutral-500"
-                  >
-                    {tag}
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {upcomingArticles.map((article) => (
+              <article
+                key={article.title}
+                className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm"
+              >
+                <div className="mb-4 flex flex-wrap items-center gap-2">
+                  <span className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-bold text-neutral-700">
+                    قريبًا
                   </span>
-                ))}
-              </div>
 
-              <h3 className="mb-3 text-xl font-extrabold leading-8">
-                {article.title}
-              </h3>
+                  {article.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full bg-neutral-50 px-3 py-1 text-xs text-neutral-500"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
 
-              <p className="mb-6 flex-1 text-sm leading-7 text-neutral-700">
-                {article.description}
-              </p>
+                <h3 className="mb-3 text-xl font-extrabold leading-8">
+                  {article.title}
+                </h3>
 
-              <div className="rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 px-4 py-3 text-sm text-neutral-600">
-                سيتم نشر هذا التقرير ضمن نفس المسار مع ربط داخلي بصفحات الخدمات
-                والحاسبة.
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
+                <p className="mb-6 flex-1 text-sm leading-7 text-neutral-700">
+                  {article.description}
+                </p>
+
+                <div className="rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 px-4 py-3 text-sm text-neutral-600">
+                  سيتم نشر هذا التقرير ضمن نفس المسار مع ربط داخلي بصفحات الخدمات
+                  والحاسبة.
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="border-y border-neutral-200 bg-neutral-50">
         <div className="mx-auto max-w-7xl px-4 py-14 md:px-6">
@@ -415,7 +434,7 @@ export default function EngineeringInsightsChooseContractorPage() {
                 متى يكون هذا التصنيف مناسبًا لك؟
               </h2>
 
-              <ul className="space-y-3 pr-5 text-base leading-8 text-neutral-700 list-disc marker:text-yellow-500">
+              <ul className="list-disc space-y-3 pr-5 text-base leading-8 text-neutral-700 marker:text-yellow-500">
                 <li>إذا كنت في مرحلة مقارنة أكثر من شركة مقاولات.</li>
                 <li>إذا وصلك أكثر من عرض سعر ولا تعرف كيف تقرأه.</li>
                 <li>إذا كنت تخطط لتشطيب أو بناء أو ترميم وتريد قرارًا أوضح.</li>

@@ -33,6 +33,7 @@ import TermsAndConditions from "@/sections/TermsAndConditions";
 import EngineeringInsightsSection from "@/sections/engineering-insights";
 import AccountHome from "@/sections/AccountHome";
 import Top10QuestionsBeforeHiringConstructionCompany from "@/engineering-insights/ChooseContractor/Top10QuestionsBeforeHiringConstructionCompany";
+import DifferenceBetweenGeneralContractorAndFinishingContractor from "@/engineering-insights/ChooseContractor/DifferenceBetweenGeneralContractorAndFinishingContractor";
 
 import EngineeringInsightsCostPage from "@/engineering-insights/EngineeringInsightsCostPage";
 import VillaFinishingCostRiyadh from "@/engineering-insights/cost/villa-finishing-cost-riyadh";
@@ -51,6 +52,14 @@ import MisleadingQuotationMistakes from "@/engineering-insights/cost/misleading-
 import HowToCompareFinishingQuotations from "@/engineering-insights/cost/how-to-compare-finishing-quotations";
 import EngineeringInsightsChooseContractorPage from "./engineering-insights/EngineeringInsightsChooseContractorPage";
 import HowToChooseConstructionCompanyRiyadh from "@/engineering-insights/ChooseContractor/HowToChooseConstructionCompanyRiyadh";
+import HowToVerifyConstructionCompanyQualityBeforeSigning from "@/engineering-insights/ChooseContractor/HowToVerifyConstructionCompanyQualityBeforeSigning";
+import SignsOfUnprofessionalConstructionCompany from "@/engineering-insights/ChooseContractor/SignsOfUnprofessionalConstructionCompany";
+import IsItBetterToHireOneConstructionCompanyOrMultipleContractors from "@/engineering-insights/ChooseContractor/IsItBetterToHireOneConstructionCompanyOrMultipleContractors";
+import HowToReadConstructionQuotationProperly from "@/engineering-insights/ChooseContractor/HowToReadConstructionQuotationProperly";
+import CommonMistakesWhenHiringConstructionCompanyRiyadh from "@/engineering-insights/ChooseContractor/CommonMistakesWhenHiringConstructionCompanyRiyadh";
+import WhatShouldClearConstructionContractInclude from "@/engineering-insights/ChooseContractor/WhatShouldClearConstructionContractInclude";
+import HowToCompareTwoConstructionCompaniesBeforeDecision from "@/engineering-insights/ChooseContractor/HowToCompareTwoConstructionCompaniesBeforeDecision";
+import WhenLowConstructionPriceBecomesRedFlag from "@/engineering-insights/ChooseContractor/WhenLowConstructionPriceBecomesRedFlag";
 
 import { Toaster } from "@/components/ui/sonner";
 import RequestProjectPage from "@/sections/RequestProjectPage";
@@ -96,6 +105,42 @@ export default function App() {
             path="/project-tracking-system-riyadh"
             element={<ProjectTrackingSystemRiyadh />}
           />
+          <Route
+  path="/engineering-insights/when-low-construction-price-becomes-red-flag"
+  element={<WhenLowConstructionPriceBecomesRedFlag />}
+/>
+          <Route
+  path="/engineering-insights/how-to-compare-two-construction-companies-before-decision"
+  element={<HowToCompareTwoConstructionCompaniesBeforeDecision />}
+/>
+          <Route
+  path="/engineering-insights/what-should-clear-construction-contract-include"
+  element={<WhatShouldClearConstructionContractInclude />}
+/>
+          <Route
+  path="/engineering-insights/common-mistakes-when-hiring-construction-company-riyadh"
+  element={<CommonMistakesWhenHiringConstructionCompanyRiyadh />}
+/>
+          <Route
+ path="/engineering-insights/how-to-read-construction-quotation-properly"
+ element={<HowToReadConstructionQuotationProperly />}
+/>
+          <Route
+  path="/engineering-insights/is-it-better-to-hire-one-construction-company-or-multiple-contractors"
+  element={<IsItBetterToHireOneConstructionCompanyOrMultipleContractors />}
+/>
+          <Route
+  path="/engineering-insights/signs-of-unprofessional-construction-company"
+  element={<SignsOfUnprofessionalConstructionCompany />}
+/>
+          <Route
+  path="/engineering-insights/how-to-verify-construction-company-quality-before-signing"
+  element={<HowToVerifyConstructionCompanyQualityBeforeSigning />}
+/>
+          <Route
+  path="/engineering-insights/difference-between-general-contractor-and-finishing-contractor"
+  element={<DifferenceBetweenGeneralContractorAndFinishingContractor />}
+/>
 
           <Route
   path="/engineering-insights/top-10-questions-before-hiring-construction-company"
