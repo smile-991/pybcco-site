@@ -18,16 +18,13 @@ export async function onRequestGet(context: any) {
     const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
 
     const url = new URL(context.request.url);
-    const token = url.searchParams.get("token");
+    const token = String(url.searchParams.get("token") || "").trim();
 
     if (!token) {
-      return new Response(
-        JSON.stringify({ error: "Missing token." }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      return new Response(JSON.stringify({ error: "Missing token." }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     const { data: lead, error: leadError } = await supabase
@@ -37,7 +34,14 @@ export async function onRequestGet(context: any) {
       .eq("activated", false)
       .maybeSingle();
 
-    if (leadError || !lead) {
+    if (leadError) {
+      return new Response(JSON.stringify({ error: leadError.message }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    if (!lead) {
       return new Response(
         JSON.stringify({ error: "Invalid or expired token." }),
         {
@@ -47,24 +51,55 @@ export async function onRequestGet(context: any) {
       );
     }
 
-    let userId = crypto.randomUUID();
+    const phone = String(lead.phone || "").trim();
+    const email = String(lead.email || "").trim().toLowerCase();
+    const name = String(lead.name || "").trim();
+    const source = lead.source ?? null;
 
-    const { data: existingUser } = await supabase
+    if (!phone || !email || !name) {
+      return new Response(
+        JSON.stringify({ error: "Lead data is incomplete." }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    let finalUser: any = null;
+
+    const { data: existingUser, error: existingUserError } = await supabase
       .from("users")
-      .select("id")
-      .eq("phone", lead.phone)
+      .select("*")
+      .eq("phone", phone)
       .maybeSingle();
 
-    if (existingUser?.id) {
-      userId = existingUser.id;
+    if (existingUserError) {
+      return new Response(
+        JSON.stringify({ error: existingUserError.message }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    if (existingUser) {
+      finalUser = existingUser;
     } else {
-      const { error: insertUserError } = await supabase.from("users").insert({
-        id: userId,
-        name: lead.name,
-        email: lead.email,
-        phone: lead.phone,
-        source: lead.source,
-      });
+      const userId = crypto.randomUUID();
+
+      const { data: createdUser, error: insertUserError } = await supabase
+        .from("users")
+        .insert({
+          id: userId,
+          name,
+          email,
+          phone,
+          source,
+        })
+        .select("*")
+        .single();
 
       if (insertUserError) {
         return new Response(
@@ -75,15 +110,49 @@ export async function onRequestGet(context: any) {
           }
         );
       }
+
+      finalUser = createdUser;
     }
 
     if (lead.estimated_cost !== null && lead.estimated_cost !== undefined) {
-      await supabase.from("calculator_results").insert({
-        user_id: userId,
-        area: lead.area,
-        finishing_level: lead.finishing_level,
-        estimated_cost: lead.estimated_cost,
-      });
+      const { data: existingEstimate } = await supabase
+        .from("calculator_results")
+        .select("id")
+        .eq("user_id", finalUser.id)
+        .eq("estimated_cost", lead.estimated_cost)
+        .eq("area", lead.area)
+        .eq("finishing_level", lead.finishing_level)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (!existingEstimate) {
+        await supabase.from("calculator_results").insert({
+          user_id: finalUser.id,
+          phone,
+          area: lead.area,
+          finishing_level: lead.finishing_level,
+          estimated_cost: lead.estimated_cost,
+        });
+      }
+    }
+
+    const { error: updateLeadError } = await supabase
+      .from("signup_leads")
+      .update({
+        activated: true,
+        consumed: true,
+      })
+      .eq("id", lead.id);
+
+    if (updateLeadError) {
+      return new Response(
+        JSON.stringify({ error: updateLeadError.message }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     await supabase
@@ -92,13 +161,20 @@ export async function onRequestGet(context: any) {
         activated: true,
         consumed: true,
       })
-      .eq("id", lead.id);
+      .eq("phone", phone)
+      .eq("activated", false);
 
     return new Response(
       JSON.stringify({
         success: true,
         message: "تم تفعيل الحساب بنجاح.",
-        phone: lead.phone,
+        user: {
+          id: finalUser.id,
+          name: finalUser.name,
+          email: finalUser.email,
+          phone: finalUser.phone,
+          activatedAt: new Date().toISOString(),
+        },
       }),
       {
         status: 200,
