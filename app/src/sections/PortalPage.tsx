@@ -1,11 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 type ActivatedSession = {
   phone: string;
   activatedAt: string;
-  hasProject: boolean;
-  clientId: string | null;
 };
 
 type ProjectItem = {
@@ -18,17 +16,13 @@ type ProjectItem = {
 };
 
 const ACTIVATED_USER_STORAGE_KEY = "pybcco_activated_user";
-const CLIENT_TOKEN_STORAGE_KEY = "pybcco_client_token";
 
 export default function PortalPage() {
   const navigate = useNavigate();
   const [authorized, setAuthorized] = useState<boolean | null>(null);
-  const [phone, setPhone] = useState("");
-  const [code, setCode] = useState("");
-  const [step, setStep] = useState<"phone" | "code">("phone");
-  const [message, setMessage] = useState("");
   const [activatedSession, setActivatedSession] =
     useState<ActivatedSession | null>(null);
+  const [clientId, setClientId] = useState<string | null>(null);
 
   useEffect(() => {
     checkAccess();
@@ -38,94 +32,47 @@ export default function PortalPage() {
     try {
       const raw = localStorage.getItem(ACTIVATED_USER_STORAGE_KEY);
 
-      if (raw) {
-        try {
-          const parsed: ActivatedSession = JSON.parse(raw);
-
-          if (parsed?.phone) {
-            setActivatedSession(parsed);
-
-            // نتحقق من وجود client حقيقي في السيرفر
-const resClient = await fetch(
-  `/api/check-user-client?phone=${encodeURIComponent(parsed.phone)}`
-);
-
-const clientData = await resClient.json().catch(() => null);
-
-if (resClient.ok && clientData?.found && clientData?.projectsCount > 0) {
-  setAuthorized(true);
-  return;
-}
-
-// لا يوجد مشروع → تحويل لصفحة الحساب
-navigate("/account", { replace: true });
-return;
-          }
-        } catch {
-          localStorage.removeItem(ACTIVATED_USER_STORAGE_KEY);
-        }
+      if (!raw) {
+        setAuthorized(false);
+        return;
       }
 
-      const res = await fetch("/api/client-session", { credentials: "include" });
+      try {
+        const parsed: ActivatedSession = JSON.parse(raw);
 
-      if (res.ok) {
-        setAuthorized(true);
-      } else {
+        if (!parsed?.phone) {
+          localStorage.removeItem(ACTIVATED_USER_STORAGE_KEY);
+          setAuthorized(false);
+          return;
+        }
+
+        setActivatedSession(parsed);
+
+        const resClient = await fetch(
+          `/api/check-user-client?phone=${encodeURIComponent(parsed.phone)}`
+        );
+
+        const clientData = await resClient.json().catch(() => null);
+
+        if (
+          resClient.ok &&
+          clientData?.found &&
+          clientData?.client?.id &&
+          Number(clientData?.projectsCount || 0) > 0
+        ) {
+          setClientId(String(clientData.client.id));
+          setAuthorized(true);
+          return;
+        }
+
+        navigate("/account", { replace: true });
+        return;
+      } catch {
+        localStorage.removeItem(ACTIVATED_USER_STORAGE_KEY);
         setAuthorized(false);
       }
     } catch {
       setAuthorized(false);
-    }
-  };
-
-  const requestOtp = async () => {
-    setMessage("");
-
-    try {
-      const res = await fetch("/api/request-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone }),
-      });
-
-      const data = await res.json().catch(() => null);
-
-      if (!res.ok) {
-        setMessage(data?.error || "فشل في طلب الرمز.");
-        return;
-      }
-
-      setStep("code");
-      setMessage("أرسل LOGIN عبر واتساب ثم أدخل الرمز الذي وصلك.");
-    } catch {
-      setMessage("حدث خطأ في الاتصال.");
-    }
-  };
-
-  const verifyOtp = async () => {
-    setMessage("");
-
-    try {
-      const res = await fetch("/api/verify-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ phone, code }),
-      });
-
-      const data = await res.json().catch(() => null);
-
-      if (!res.ok) {
-        setMessage(data?.error || "رمز التحقق غير صحيح.");
-        return;
-      }
-
-      const token = String(data?.client_token || data?.access_token || "").trim();
-      if (token) localStorage.setItem(CLIENT_TOKEN_STORAGE_KEY, token);
-
-      setAuthorized(true);
-    } catch {
-      setMessage("حدث خطأ في الاتصال.");
     }
   };
 
@@ -137,9 +84,6 @@ return;
     );
   }
 
-  // لم نعد نعتمد على hasProject من localStorage
-// التحقق الحقيقي يتم من API
-
   if (!authorized) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -149,59 +93,24 @@ return;
               بوابة العملاء
             </h1>
 
-            <p className="mb-6 text-center text-sm leading-7 text-gray-600">
-              أدخل رقم الجوال ثم رمز التحقق لمتابعة مشاريعك.
+            <p className="mb-6 text-center text-sm leading-8 text-gray-600">
+              للوصول إلى حسابك ومشاريعك، يرجى إنشاء حسابك وتفعيله عبر البريد
+              الإلكتروني أولًا.
             </p>
 
-            {step === "phone" && (
-              <>
-                <input
-                  type="text"
-                  placeholder="أدخل رقم الجوال"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="mb-4 w-full rounded-xl border px-4 py-3 text-right"
-                />
-                <button
-                  onClick={requestOtp}
-                  className="w-full rounded-xl bg-yellow-500 py-3 font-bold text-black transition hover:opacity-90"
-                >
-                  طلب رمز التحقق
-                </button>
-              </>
-            )}
-
-            {step === "code" && (
-              <>
-                <input
-                  type="text"
-                  placeholder="أدخل رمز التحقق"
-                  value={code}
-                  onChange={(e) => setCode(e.target.value)}
-                  className="mb-4 w-full rounded-xl border px-4 py-3 text-right"
-                />
-                <button
-                  onClick={verifyOtp}
-                  className="w-full rounded-xl bg-yellow-500 py-3 font-bold text-black transition hover:opacity-90"
-                >
-                  تحقق وتسجيل الدخول
-                </button>
-              </>
-            )}
-
-            {message && (
-              <p className="mt-4 text-center text-sm text-red-500">{message}</p>
-            )}
-
-            <div className="mt-6 border-t pt-6 text-center">
-              <p className="mb-3 text-sm text-gray-600">
-                ليس لديك حساب أو لم تقم بالتفعيل بعد؟
-              </p>
+            <div className="space-y-3">
               <Link
                 to="/create-account"
-                className="inline-block rounded-xl border border-black px-5 py-2 font-bold text-black transition hover:bg-black hover:text-white"
+                className="block w-full rounded-xl bg-yellow-500 py-3 text-center font-bold text-black transition hover:opacity-90"
               >
                 إنشاء حساب جديد
+              </Link>
+
+              <Link
+                to="/account"
+                className="block w-full rounded-xl border border-black py-3 text-center font-bold text-black transition hover:bg-black hover:text-white"
+              >
+                الذهاب إلى حسابي
               </Link>
             </div>
           </div>
@@ -213,9 +122,11 @@ return;
   return (
     <ClientProjects
       activatedSession={activatedSession}
+      clientId={clientId}
       onLogout={() => {
         setAuthorized(false);
         setActivatedSession(null);
+        setClientId(null);
       }}
     />
   );
@@ -223,9 +134,11 @@ return;
 
 function ClientProjects({
   activatedSession,
+  clientId,
   onLogout,
 }: {
   activatedSession: ActivatedSession | null;
+  clientId: string | null;
   onLogout: () => void;
 }) {
   const [projects, setProjects] = useState<ProjectItem[]>([]);
@@ -233,57 +146,37 @@ function ClientProjects({
   const [err, setErr] = useState("");
   const navigate = useNavigate();
 
-  const hasActivatedClientId = useMemo(() => {
-    return !!activatedSession?.clientId;
-  }, [activatedSession]);
-
   useEffect(() => {
     (async () => {
       setErr("");
+      setLoading(true);
 
       try {
-        if (hasActivatedClientId && activatedSession?.clientId) {
-          const res = await fetch(
-            `/api/get-projects-by-client?clientId=${encodeURIComponent(
-              activatedSession.clientId
-            )}`
-          );
-
-          const data = await res.json().catch(() => null);
-
-          if (!res.ok) {
-            setErr(data?.error || "تعذر تحميل المشاريع.");
-            setProjects([]);
-            return;
-          }
-
-          if (!Array.isArray(data)) {
-            setErr(data?.error || "استجابة غير متوقعة من الخادم.");
-            setProjects([]);
-            return;
-          }
-
-          setProjects(data);
+        if (!clientId) {
+          setProjects([]);
+          setLoading(false);
           return;
         }
 
-        const res = await fetch("/api/get-client-projects", {
-          credentials: "include",
-        });
-
-        if (res.status === 401 || res.status === 403) {
-          onLogout();
-          return;
-        }
+        const res = await fetch(
+          `/api/get-projects-by-client?clientId=${encodeURIComponent(clientId)}`
+        );
 
         const data = await res.json().catch(() => null);
+
+        if (!res.ok) {
+          setErr(data?.error || "تعذر تحميل المشاريع.");
+          setProjects([]);
+          return;
+        }
 
         if (!Array.isArray(data)) {
           setErr(data?.error || "استجابة غير متوقعة من الخادم.");
           setProjects([]);
-        } else {
-          setProjects(data);
+          return;
         }
+
+        setProjects(data);
       } catch {
         setErr("حدث خطأ في الاتصال أثناء تحميل المشاريع.");
         setProjects([]);
@@ -291,19 +184,18 @@ function ClientProjects({
         setLoading(false);
       }
     })();
-  }, [activatedSession, hasActivatedClientId, onLogout]);
+  }, [clientId]);
 
   const handleLogout = async () => {
+    localStorage.removeItem(ACTIVATED_USER_STORAGE_KEY);
+
     await fetch("/api/client-logout", {
       method: "POST",
       credentials: "include",
     }).catch(() => {});
 
-    localStorage.removeItem(CLIENT_TOKEN_STORAGE_KEY);
-    localStorage.removeItem(ACTIVATED_USER_STORAGE_KEY);
-
     onLogout();
-    window.location.href = "/portal";
+    navigate("/portal", { replace: true });
   };
 
   if (loading) {
@@ -323,6 +215,11 @@ function ClientProjects({
             <p className="mt-1 text-sm text-gray-500">
               تابع التقدم والدفعات والتحديثات الخاصة بمشروعك.
             </p>
+            {activatedSession?.phone ? (
+              <p className="mt-2 text-xs text-gray-400">
+                رقم الجوال المرتبط بالحساب: {activatedSession.phone}
+              </p>
+            ) : null}
           </div>
 
           <button

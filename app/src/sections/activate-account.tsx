@@ -48,7 +48,7 @@ export default function ActivateAccountSection() {
           throw new Error(activateData?.error || "فشل تفعيل الحساب.");
         }
 
-        const phone = String(activateData?.phone || "").trim();
+        const phone = String(activateData?.user?.phone || "").trim();
 
         let projectFound = false;
         let matchedClientId: string | null = null;
@@ -77,7 +77,9 @@ export default function ActivateAccountSection() {
 
         const sessionData: ActivatedSession = {
           phone,
-          activatedAt: new Date().toISOString(),
+          activatedAt: String(
+            activateData?.user?.activatedAt || new Date().toISOString()
+          ),
           hasProject: projectFound,
           clientId: matchedClientId,
         };

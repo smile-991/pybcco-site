@@ -35,11 +35,19 @@ export default function CreateAccountSection() {
 
     try {
       const cleanedName = name.trim();
-      const cleanedPhone = phone.trim();
+      const cleanedPhone = phone.trim().replace(/\s+/g, "");
       const cleanedEmail = email.trim().toLowerCase();
 
       if (!cleanedName || !cleanedPhone || !cleanedEmail) {
         throw new Error("يرجى تعبئة الاسم الكامل ورقم الجوال والبريد الإلكتروني.");
+      }
+
+      if (cleanedPhone.startsWith("+966") || cleanedPhone.startsWith("966")) {
+        throw new Error("يجب استخدام صيغة رقم الجوال المحلية: 05XXXXXXXX");
+      }
+
+      if (!/^05\d{8}$/.test(cleanedPhone)) {
+        throw new Error("يرجى إدخال رقم جوال صحيح بصيغة: 05XXXXXXXX");
       }
 
       const res = await fetch("/api/signup-lead", {
@@ -58,13 +66,23 @@ export default function CreateAccountSection() {
         }),
       });
 
-      const data = await res.json();
+      const data = await res.json().catch(() => null);
+
+      if (res.status === 409) {
+        setMessage(
+          data?.message ||
+            "هذا الرقم مسجل بالفعل، وقد أرسلنا رابط تفعيل جديد إلى بريدك الإلكتروني."
+        );
+        return;
+      }
 
       if (!res.ok) {
         throw new Error(data?.error || "حدث خطأ أثناء حفظ الطلب.");
       }
 
-      setMessage("تم استلام طلبك بنجاح. أرسلنا رابط تفعيل الحساب إلى بريدك الإلكتروني.");
+      setMessage(
+        "تم استلام طلبك بنجاح. أرسلنا رابط تفعيل الحساب إلى بريدك الإلكتروني."
+      );
       setName("");
       setPhone("");
       setEmail("");
@@ -117,34 +135,36 @@ export default function CreateAccountSection() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
-  type="text"
-  name="name"
-  autoComplete="name"
-  placeholder="الاسم الكامل"
-  className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-yellow-500"
-  value={name}
-  onChange={(e) => setName(e.target.value)}
-/>
+              type="text"
+              name="name"
+              autoComplete="name"
+              placeholder="الاسم الكامل"
+              className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-yellow-500"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
 
             <input
-  type="tel"
-  name="phone"
-  autoComplete="tel"
-  placeholder="رقم الجوال"
-  className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-yellow-500"
-  value={phone}
-  onChange={(e) => setPhone(e.target.value)}
-/>
+              type="tel"
+              name="phone"
+              autoComplete="tel"
+              inputMode="numeric"
+              maxLength={10}
+              placeholder="05XXXXXXXX"
+              className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-yellow-500"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
 
             <input
-  type="email"
-  name="email"
-  autoComplete="email"
-  placeholder="البريد الإلكتروني"
-  className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-yellow-500"
-  value={email}
-  onChange={(e) => setEmail(e.target.value)}
-/>
+              type="email"
+              name="email"
+              autoComplete="email"
+              placeholder="البريد الإلكتروني"
+              className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-yellow-500"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
             <button
               type="submit"
