@@ -11,6 +11,7 @@ type ClientCheckResponse = {
 };
 
 type ActivatedSessionData = {
+  phone: string;
   activatedAt: string;
   hasProject: boolean;
   clientId: string | null;
@@ -76,14 +77,14 @@ export default function ActivateAccountSection() {
         }
 
         const sessionData: ActivatedSessionData = {
- activatedAt: String(
-  activateData?.user?.activatedAt || new Date().toISOString()
-),
+  phone,
+  activatedAt: String(
+    activateData?.user?.activatedAt || new Date().toISOString()
+  ),
   hasProject: projectFound,
   clientId: matchedClientId,
   expiresAt: Date.now() + 360 * 24 * 60 * 60 * 1000,
 };
-
         localStorage.setItem(
           ACTIVATED_USER_STORAGE_KEY,
           JSON.stringify(sessionData)
