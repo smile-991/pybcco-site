@@ -23,6 +23,12 @@ function SmartImage({
   const [currentSrc, setCurrentSrc] = useState(src);
   const [tried, setTried] = useState<{ webp?: boolean; jpg?: boolean; jpeg?: boolean }>({});
 
+  // 🔹 هذا هو الإصلاح
+  useEffect(() => {
+    setCurrentSrc(src);
+    setTried({});
+  }, [src]);
+
   const toWebp = (s: string) => s.replace(/\.(jpg|jpeg|png)$/i, ".webp");
   const toJpg = (s: string) => s.replace(/\.(webp|jpeg|png)$/i, ".jpg");
   const toJpeg = (s: string) => s.replace(/\.(webp|jpg|png)$/i, ".jpeg");
@@ -67,7 +73,7 @@ export default function ProjectsGallery() {
 
   const pageTitle = "معرض مشاريع بنيان الهرم | تشطيب وعظم وترميم بالرياض";
   const pageDescription =
-    "شاهد معرض مشاريع بنيان الهرم للمقاولات بالرياض: تشطيب فلل وشقق، بناء عظم، وأعمال ترفيه. نماذج حقيقية وصور من أرض الواقع.";
+    "شاهد معرض مشاريع بنيان الهرم للمقاولات بالرياض: تشطيب فلل وشقق، بناء عظم، وأعمال ترفيه.";
   const canonical = "https://pybcco.com/projects";
   const ogImage = "https://pybcco.com/og.jpg";
 
@@ -76,12 +82,12 @@ export default function ProjectsGallery() {
   const closeLightbox = () => setSelectedIndex(null);
 
   const showPrev = () => {
-    if (selectedIndex === null || items.length === 0) return;
+    if (selectedIndex === null) return;
     setSelectedIndex((selectedIndex - 1 + items.length) % items.length);
   };
 
   const showNext = () => {
-    if (selectedIndex === null || items.length === 0) return;
+    if (selectedIndex === null) return;
     setSelectedIndex((selectedIndex + 1) % items.length);
   };
 
@@ -101,7 +107,7 @@ export default function ProjectsGallery() {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [selectedIndex, items.length]);
+  }, [selectedIndex]);
 
   useEffect(() => {
     setSelectedIndex(null);
@@ -114,41 +120,6 @@ export default function ProjectsGallery() {
         description={pageDescription}
         canonical={canonical}
         ogImage={ogImage}
-        jsonLd={[
-          {
-            "@context": "https://schema.org",
-            "@type": "CollectionPage",
-            "@id": `${canonical}#webpage`,
-            name: pageTitle,
-            description: pageDescription,
-            url: canonical,
-            inLanguage: "ar-SA",
-            isPartOf: {
-              "@type": "WebSite",
-              "@id": "https://pybcco.com/#website",
-              url: "https://pybcco.com/",
-              name: "بنيان الهرم للمقاولات",
-            },
-          },
-          {
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                name: "الرئيسية",
-                item: "https://pybcco.com/",
-              },
-              {
-                "@type": "ListItem",
-                position: 2,
-                name: "معرض المشاريع",
-                item: canonical,
-              },
-            ],
-          },
-        ]}
       />
 
       <section className="pt-28 pb-10">
@@ -167,6 +138,7 @@ export default function ProjectsGallery() {
             </p>
           </div>
 
+          {/* Tabs */}
           <div className="mt-8 sticky top-[90px] z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 py-3">
             <div className="flex flex-wrap gap-2 justify-center">
               {CATS.map((t) => {
@@ -192,38 +164,34 @@ export default function ProjectsGallery() {
             <div className="text-center mt-2 text-sm text-gray-600">{title}</div>
           </div>
 
-          <div
-            key={cat}
-            className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4"
-          >
+          {/* Grid */}
+          <div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
             {items.map((img, i) => (
               <button
                 key={i}
                 type="button"
                 onClick={() => setSelectedIndex(i)}
-                className="group rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 shadow-sm text-right focus:outline-none focus:ring-2 focus:ring-gold"
-                aria-label={`عرض الصورة: ${img.alt}`}
+                className="group rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 shadow-sm text-right"
               >
                 <SmartImage
                   src={img.src}
                   alt={img.alt}
-                  className="w-full h-44 md:h-52 lg:h-56 object-cover transition-transform duration-300 group-hover:scale-[1.03] cursor-zoom-in"
+                  className="w-full h-44 md:h-52 lg:h-56 object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                 />
               </button>
             ))}
           </div>
-
-          <div className="h-10" />
         </div>
       </section>
 
+      {/* Lightbox */}
       {selectedImage && (
         <div
-          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-3 sm:p-6"
+          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4"
           onClick={closeLightbox}
         >
           <div
-            className="relative w-full max-w-6xl"
+            className="relative max-w-6xl w-full"
             onClick={(e) => e.stopPropagation()}
             onTouchStart={(e) => setTouchStartX(e.changedTouches[0].clientX)}
             onTouchEnd={(e) => {
@@ -238,53 +206,35 @@ export default function ProjectsGallery() {
             }}
           >
             <button
-              type="button"
               onClick={closeLightbox}
-              className="absolute top-3 left-3 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/55 text-white hover:bg-black/75 transition"
-              aria-label="إغلاق الصورة"
+              className="absolute top-3 left-3 text-white"
             >
-              <X className="w-5 h-5" />
+              <X />
             </button>
 
-            {items.length > 1 && (
-              <>
-                <button
-                  type="button"
-                  onClick={showPrev}
-                  className="absolute right-3 top-1/2 z-20 -translate-y-1/2 inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/55 text-white hover:bg-black/75 transition"
-                  aria-label="الصورة السابقة"
-                >
-                  <ChevronRight className="w-6 h-6" />
-                </button>
+            <button
+              onClick={showPrev}
+              className="absolute right-3 top-1/2 text-white"
+            >
+              <ChevronRight />
+            </button>
 
-                <button
-                  type="button"
-                  onClick={showNext}
-                  className="absolute left-3 top-1/2 z-20 -translate-y-1/2 inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/55 text-white hover:bg-black/75 transition"
-                  aria-label="الصورة التالية"
-                >
-                  <ChevronLeft className="w-6 h-6" />
-                </button>
-              </>
-            )}
+            <button
+              onClick={showNext}
+              className="absolute left-3 top-1/2 text-white"
+            >
+              <ChevronLeft />
+            </button>
 
-            <div className="overflow-hidden rounded-3xl bg-white/5 border border-white/10 shadow-2xl">
-              <SmartImage
-                src={selectedImage.src}
-                alt={selectedImage.alt}
-                className="w-full max-h-[82vh] object-contain bg-black"
-              />
+            <SmartImage
+              src={selectedImage.src}
+              alt={selectedImage.alt}
+              className="w-full max-h-[82vh] object-contain"
+            />
+
+            <div className="text-center text-white mt-3">
+              {selectedIndex! + 1} / {items.length}
             </div>
-
-            <div className="mt-4 text-center text-white/90 text-sm sm:text-base font-medium">
-              {selectedImage.alt}
-            </div>
-
-            {items.length > 1 && (
-              <div className="mt-2 text-center text-white/60 text-xs sm:text-sm">
-                {selectedIndex! + 1} / {items.length}
-              </div>
-            )}
           </div>
         </div>
       )}
