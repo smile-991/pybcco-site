@@ -23,18 +23,31 @@ export async function onRequestGet(context: any) {
       .eq("phone", phone)
       .maybeSingle();
 
-    if (error) {
-      throw error;
+    if (error) throw error;
+
+    if (!client) {
+      return new Response(
+        JSON.stringify({
+          found: false,
+          client: null,
+          projectsCount: 0,
+        }),
+        { headers: { "Content-Type": "application/json" } }
+      );
     }
+
+    const { count } = await supabase
+      .from("projects")
+      .select("id", { count: "exact", head: true })
+      .eq("client_id", client.id);
 
     return new Response(
       JSON.stringify({
-        found: !!client,
-        client: client || null,
+        found: true,
+        client,
+        projectsCount: count || 0,
       }),
-      {
-        headers: { "Content-Type": "application/json" },
-      }
+      { headers: { "Content-Type": "application/json" } }
     );
   } catch (error: any) {
     return new Response(

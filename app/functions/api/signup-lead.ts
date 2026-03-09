@@ -133,7 +133,6 @@ export async function onRequestPost(context: any) {
       return activateUrl;
     };
 
-    // 1) تحقق هل الرقم موجود بالفعل في users
     const { data: existingUser, error: existingUserError } = await supabase
       .from("users")
       .select("id, email, name, phone")
@@ -150,7 +149,6 @@ export async function onRequestPost(context: any) {
       );
     }
 
-    // 2) تحقق هل يوجد lead سابق لنفس الرقم
     const { data: existingLead, error: existingLeadError } = await supabase
       .from("signup_leads")
       .select(
@@ -171,8 +169,6 @@ export async function onRequestPost(context: any) {
       );
     }
 
-    // 3) إذا عنده حساب فعلي + يوجد lead غير مفعّل أو قابل لإعادة التفعيل
-    // نرسل له رابط جديد ونرجع رسالة واضحة
     if (existingUser || (existingLead && existingLead.activated === false)) {
       const activationToken = crypto.randomUUID();
 
@@ -227,7 +223,7 @@ export async function onRequestPost(context: any) {
         }
       }
 
-      const activateUrl = await buildAndSendActivationEmail({
+      await buildAndSendActivationEmail({
         toEmail: normalizedEmail,
         toName: normalizedName,
         token: activationToken,
@@ -241,10 +237,9 @@ export async function onRequestPost(context: any) {
           success: false,
           alreadyRegistered: true,
           resendActivation: true,
-          activateUrl,
           message:
             `رقم الجوال ${normalizedPhone} لديه حساب مسجل بالفعل. ` +
-            `في حال رغبت بإعادة التفعيل، تم إرسال رابط تفعيل جديد إلى بريدك الإلكتروني.`,
+            `تم إرسال رابط تفعيل جديد إلى بريدك الإلكتروني.`,
         }),
         {
           status: 409,
@@ -253,10 +248,9 @@ export async function onRequestPost(context: any) {
       );
     }
 
-    // 4) تسجيل جديد طبيعي
     const activationToken = crypto.randomUUID();
 
-    const { error } = await supabase.from("signup_leads").insert({
+    const { error: insertError } = await supabase.from("signup_leads").insert({
       email: normalizedEmail,
       name: normalizedName,
       phone: normalizedPhone,
@@ -269,8 +263,8 @@ export async function onRequestPost(context: any) {
       activation_token: activationToken,
     });
 
-    if (error) {
-      return new Response(JSON.stringify({ error: error.message }), {
+    if (insertError) {
+      return new Response(JSON.stringify({ error: insertError.message }), {
         status: 500,
         headers: { "Content-Type": "application/json" },
       });

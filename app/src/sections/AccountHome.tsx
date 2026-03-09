@@ -100,6 +100,39 @@ export default function AccountHome() {
   const [resultsLoading, setResultsLoading] = useState(false);
   const [deletingEstimate, setDeletingEstimate] = useState(false);
   const [deletingItemIndex, setDeletingItemIndex] = useState<number | null>(null);
+  const [hasProject, setHasProject] = useState(false);
+const [projectsCount, setProjectsCount] = useState(0);
+const [projectCheckLoading, setProjectCheckLoading] = useState(false);
+
+const checkProjectStatus = useCallback(async (phone: string) => {
+  setProjectCheckLoading(true);
+
+  try {
+    const res = await fetch(
+      `/api/check-user-client?phone=${encodeURIComponent(phone)}`
+    );
+
+    const data = await res.json().catch(() => null);
+
+    if (!res.ok) {
+      setHasProject(false);
+      setProjectsCount(0);
+      return;
+    }
+
+    const found = !!data?.found;
+    const count = Number(data?.projectsCount || 0);
+
+    setHasProject(found && count > 0);
+    setProjectsCount(count);
+  } catch {
+    setHasProject(false);
+    setProjectsCount(0);
+  } finally {
+    setProjectCheckLoading(false);
+  }
+}, []);
+  
 
   const loadLatestResult = useCallback(async (phone: string) => {
     setResultsLoading(true);
@@ -155,14 +188,16 @@ export default function AccountHome() {
   }, [navigate]);
 
   useEffect(() => {
-    if (!user?.phone) return;
-    loadLatestResult(user.phone);
-  }, [user?.phone, loadLatestResult]);
+  if (!user?.phone) return;
+  loadLatestResult(user.phone);
+  checkProjectStatus(user.phone);
+}, [user?.phone, loadLatestResult, checkProjectStatus]);
 
   const accountStatus = useMemo(() => {
-    if (!user) return "غير معروف";
-    return user.hasProject ? "يوجد مشروع مرتبط" : "الحساب مفعل بدون مشروع";
-  }, [user]);
+  if (!user) return "غير معروف";
+  if (projectCheckLoading) return "جاري التحقق من المشروع...";
+  return hasProject ? "يوجد مشروع مرتبط" : "الحساب مفعل بدون مشروع";
+}, [user, hasProject, projectCheckLoading]);
 
   const savedItems = useMemo(() => {
     return normalizeSavedItems(latestResult?.items_json);
@@ -769,7 +804,7 @@ export default function AccountHome() {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
-          {user.hasProject ? (
+          {hasProject ? (
             <button
               onClick={() => navigate("/portal")}
               className="rounded-2xl border bg-white p-5 text-right shadow-sm transition hover:border-yellow-400 hover:shadow-md"
@@ -778,8 +813,9 @@ export default function AccountHome() {
                 دخول بوابة العملاء
               </div>
               <p className="text-sm leading-7 text-gray-600">
-                تابع المشاريع، الدفعات، المستندات، التحديثات، والصور من مكان واحد.
-              </p>
+  تابع المشاريع، الدفعات، المستندات، التحديثات، والصور من مكان واحد.
+  {projectsCount > 0 ? ` لديك ${projectsCount} مشروع/مشاريع مرتبطة.` : ""}
+</p>
             </button>
           ) : (
             <Link
@@ -834,7 +870,7 @@ export default function AccountHome() {
           </Link>
         </div>
 
-        {!user.hasProject && (
+        {!hasProject && !projectCheckLoading && (
           <div className="rounded-2xl border border-yellow-200 bg-yellow-50 p-5">
             <p className="text-sm leading-8 text-gray-700">
               حسابك مفعل بنجاح، لكن لا يوجد مشروع مرتبط به حاليًا. يمكنك البدء

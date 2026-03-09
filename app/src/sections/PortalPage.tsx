@@ -45,15 +45,21 @@ export default function PortalPage() {
           if (parsed?.phone) {
             setActivatedSession(parsed);
 
-            if (parsed.hasProject && parsed.clientId) {
-              setAuthorized(true);
-              return;
-            }
+            // نتحقق من وجود client حقيقي في السيرفر
+const resClient = await fetch(
+  `/api/check-user-client?phone=${encodeURIComponent(parsed.phone)}`
+);
 
-            if (!parsed.hasProject) {
-              navigate("/account", { replace: true });
-              return;
-            }
+const clientData = await resClient.json().catch(() => null);
+
+if (resClient.ok && clientData?.found && clientData?.projectsCount > 0) {
+  setAuthorized(true);
+  return;
+}
+
+// لا يوجد مشروع → تحويل لصفحة الحساب
+navigate("/account", { replace: true });
+return;
           }
         } catch {
           localStorage.removeItem(ACTIVATED_USER_STORAGE_KEY);
@@ -131,9 +137,8 @@ export default function PortalPage() {
     );
   }
 
-  if (activatedSession && !activatedSession.hasProject) {
-    return <NoProjectDashboard />;
-  }
+  // لم نعد نعتمد على hasProject من localStorage
+// التحقق الحقيقي يتم من API
 
   if (!authorized) {
     return (
@@ -383,83 +388,6 @@ function ClientProjects({
               </div>
             );
           })}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function NoProjectDashboard() {
-  return (
-    <div className="min-h-screen bg-gray-50 p-6 md:p-10">
-      <div className="mx-auto max-w-5xl space-y-8">
-        <div className="rounded-2xl border bg-white p-6 shadow-xl">
-          <h1 className="text-2xl font-bold text-black">حسابي</h1>
-          <p className="mt-2 leading-8 text-gray-600">
-            تم تفعيل حسابك بنجاح، ولكن لا يوجد مشروع مرتبط بحسابك حتى الآن.
-            يمكنك البدء من إحدى الخطوات التالية.
-          </p>
-        </div>
-
-        <div className="grid gap-4 md:grid-cols-2">
-          <Link
-            to="/contact"
-            className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-yellow-400 hover:shadow-md"
-          >
-            <div className="mb-2 text-lg font-bold text-black">
-              طلب مشروع جديد
-            </div>
-            <p className="text-sm leading-7 text-gray-600">
-              أرسل تفاصيل مشروعك وسنتواصل معك لدراسته وتقديم العرض المناسب.
-            </p>
-          </Link>
-
-          <a
-            href="https://wa.me/966550604837"
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-yellow-400 hover:shadow-md"
-          >
-            <div className="mb-2 text-lg font-bold text-black">
-              تواصل عبر واتساب
-            </div>
-            <p className="text-sm leading-7 text-gray-600">
-              للاستفسارات السريعة أو المتابعة المباشرة مع فريقنا.
-            </p>
-          </a>
-
-          <Link
-            to="/villa-finishing-price-riyadh"
-            className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-yellow-400 hover:shadow-md"
-          >
-            <div className="mb-2 text-lg font-bold text-black">
-              الحاسبة / التسعير
-            </div>
-            <p className="text-sm leading-7 text-gray-600">
-              احسب التكلفة التقريبية لمشروعك واحتفظ بالتقدير داخل حسابك.
-            </p>
-          </Link>
-
-          <Link
-            to="/decor"
-            className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-yellow-400 hover:shadow-md"
-          >
-            <div className="mb-2 text-lg font-bold text-black">
-              زيارة المتجر
-            </div>
-            <p className="text-sm leading-7 text-gray-600">
-              تصفح منتجات الديكور وابدأ طلب الشراء مباشرة.
-            </p>
-          </Link>
-        </div>
-
-        <div className="rounded-2xl border bg-white p-6 text-center shadow-sm">
-          <Link
-            to="/create-account"
-            className="inline-block rounded-xl border border-black px-6 py-3 font-bold text-black transition hover:bg-black hover:text-white"
-          >
-            إنشاء حساب آخر
-          </Link>
         </div>
       </div>
     </div>
