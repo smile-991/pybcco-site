@@ -821,7 +821,7 @@ if (
               className="rounded-2xl border bg-white p-5 text-right shadow-sm transition hover:border-yellow-400 hover:shadow-md"
             >
               <div className="mb-2 text-lg font-bold text-black">
-                دخول بوابة العملاء
+                عرض مشاريعي
               </div>
               <p className="text-sm leading-7 text-gray-600">
   تابع المشاريع، الدفعات، المستندات، التحديثات، والصور من مكان واحد.
