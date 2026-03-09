@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Calculator,
@@ -9,6 +9,9 @@ import {
   Paintbrush2,
   Sparkles,
   MapPin,
+  ChevronLeft,
+  ChevronRight,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -104,7 +107,43 @@ function scrollToId(selector: string) {
 
 function GalleryTabs() {
   const [cat, setCat] = useState<GalleryCat>("finishing");
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
   const items = useMemo(() => GALLERY[cat].items.slice(0, 6), [cat]);
+
+  const openImage = (index: number) => setSelectedIndex(index);
+  const closeImage = () => setSelectedIndex(null);
+
+  const showPrev = () => {
+    if (selectedIndex === null) return;
+    setSelectedIndex((selectedIndex - 1 + items.length) % items.length);
+  };
+
+  const showNext = () => {
+    if (selectedIndex === null) return;
+    setSelectedIndex((selectedIndex + 1) % items.length);
+  };
+
+  useEffect(() => {
+    if (selectedIndex === null) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeImage();
+      if (e.key === "ArrowLeft") showPrev();
+      if (e.key === "ArrowRight") showNext();
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [selectedIndex, items.length]);
+
+  const selectedImage = selectedIndex !== null ? items[selectedIndex] : null;
 
   return (
     <div className="mt-6">
@@ -119,7 +158,10 @@ function GalleryTabs() {
             <button
               key={t.key}
               type="button"
-              onClick={() => setCat(t.key as GalleryCat)}
+              onClick={() => {
+                setCat(t.key as GalleryCat);
+                setSelectedIndex(null);
+              }}
               className={[
                 "px-4 py-2 rounded-full text-sm font-bold transition whitespace-nowrap",
                 active
@@ -139,9 +181,12 @@ function GalleryTabs() {
 
       <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-3">
         {items.map((img, i) => (
-          <div
+          <button
             key={i}
-            className="group rounded-2xl overflow-hidden bg-white shadow-sm border border-black/5"
+            type="button"
+            onClick={() => openImage(i)}
+            className="group rounded-2xl overflow-hidden bg-white shadow-sm border border-black/5 text-right focus:outline-none focus:ring-2 focus:ring-gold"
+            aria-label={`عرض الصورة: ${img.alt}`}
           >
             <img
               src={img.src}
@@ -149,9 +194,81 @@ function GalleryTabs() {
               className="w-full h-40 md:h-52 object-cover transition-transform duration-300 group-hover:scale-[1.03]"
               loading="lazy"
             />
-          </div>
+          </button>
         ))}
       </div>
+
+      {selectedImage && (
+        <div
+          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-3 sm:p-6"
+          onClick={closeImage}
+        >
+          <div
+            className="relative w-full max-w-6xl"
+            onClick={(e) => e.stopPropagation()}
+            onTouchStart={(e) => setTouchStartX(e.changedTouches[0].clientX)}
+            onTouchEnd={(e) => {
+              if (touchStartX === null) return;
+              const endX = e.changedTouches[0].clientX;
+              const delta = endX - touchStartX;
+
+              if (delta > 50) showPrev();
+              if (delta < -50) showNext();
+
+              setTouchStartX(null);
+            }}
+          >
+            <button
+              type="button"
+              onClick={closeImage}
+              className="absolute top-3 left-3 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/55 text-white hover:bg-black/75 transition"
+              aria-label="إغلاق الصورة"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {items.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={showPrev}
+                  className="absolute right-3 top-1/2 z-20 -translate-y-1/2 inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/55 text-white hover:bg-black/75 transition"
+                  aria-label="الصورة السابقة"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={showNext}
+                  className="absolute left-3 top-1/2 z-20 -translate-y-1/2 inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/55 text-white hover:bg-black/75 transition"
+                  aria-label="الصورة التالية"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+              </>
+            )}
+
+            <div className="overflow-hidden rounded-3xl bg-white/5 border border-white/10 shadow-2xl">
+              <img
+                src={selectedImage.src}
+                alt={selectedImage.alt}
+                className="w-full max-h-[82vh] object-contain bg-black"
+              />
+            </div>
+
+            <div className="mt-4 text-center text-white/90 text-sm sm:text-base font-medium">
+              {selectedImage.alt}
+            </div>
+
+            {items.length > 1 && (
+              <div className="mt-2 text-center text-white/60 text-xs sm:text-sm">
+                {selectedIndex! + 1} / {items.length}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -233,7 +350,6 @@ export default function Home() {
               زمني منضبط وجودة تسليم.
             </p>
 
-            {/* ✅ رابط دراسة الحالة داخل الهيرو (قوي للسيو + ثقة) */}
             <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
               <Link
                 to={CASE_STUDY_URL}
@@ -247,39 +363,37 @@ export default function Home() {
               </span>
             </div>
 
-<div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-  <Button
-    onClick={() => window.open(WA_LINK, "_blank")}
-    size="lg"
-    className="bg-gold hover:bg-gold/90 text-black font-bold px-8 py-6 text-lg w-full sm:w-auto"
-  >
-    <Phone className="w-5 h-5 ml-2" />
-    اطلب معاينة
-  </Button>
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Button
+                onClick={() => window.open(WA_LINK, "_blank")}
+                size="lg"
+                className="bg-gold hover:bg-gold/90 text-black font-bold px-8 py-6 text-lg w-full sm:w-auto"
+              >
+                <Phone className="w-5 h-5 ml-2" />
+                اطلب معاينة
+              </Button>
 
-  <Button
-    asChild
-    size="lg"
-    variant="outline"
-    className="text-gold bg-transparent hover:bg-white/10 px-8 py-6 text-lg w-full sm:w-auto"
-  >
-    <Link to="/villa-finishing-price-riyadh">
-      <Calculator className="w-5 h-5 ml-2" />
-      احسب التكلفة
-    </Link>
-  </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="text-gold bg-transparent hover:bg-white/10 px-8 py-6 text-lg w-full sm:w-auto"
+              >
+                <Link to="/villa-finishing-price-riyadh">
+                  <Calculator className="w-5 h-5 ml-2" />
+                  احسب التكلفة
+                </Link>
+              </Button>
 
-  <Button
-    asChild
-    size="lg"
-    variant="outline"
-    className="text-gold bg-transparent hover:bg-white/10 px-8 py-6 text-lg w-full sm:w-auto"
-  >
-    <Link to="/decor">
-      🛍 المتجر
-    </Link>
-  </Button>
-</div>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="text-gold bg-transparent hover:bg-white/10 px-8 py-6 text-lg w-full sm:w-auto"
+              >
+                <Link to="/decor">🛍 المتجر</Link>
+              </Button>
+            </div>
 
             <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 max-w-3xl mx-auto">
               {STATS.map((s, i) => (
@@ -410,7 +524,6 @@ export default function Home() {
             </Button>
           </div>
 
-          {/* ✅ كارد دراسة الحالة (أقوى ربط داخلي من الهوم) */}
           <div className="mt-8">
             <Link
               to={CASE_STUDY_URL}
@@ -467,54 +580,58 @@ export default function Home() {
         </div>
       </section>
 
-     {/* لماذا نحن */}
-<section id="why-us" className="section-padding bg-white">
-  <div className="container-custom px-4">
-    <div className="text-center mb-10">
-      <span className="inline-block bg-gold/10 text-gold-dark px-4 py-2 rounded-full text-sm font-semibold mb-4">
-        لماذا نحن؟
-      </span>
-      <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-        أسباب اختيار <span className="text-gold">بنيان الهرم</span>
-      </h2>
-    </div>
+      {/* لماذا نحن */}
+      <section id="why-us" className="section-padding bg-white">
+        <div className="container-custom px-4">
+          <div className="text-center mb-10">
+            <span className="inline-block bg-gold/10 text-gold-dark px-4 py-2 rounded-full text-sm font-semibold mb-4">
+              لماذا نحن؟
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+              أسباب اختيار <span className="text-gold">بنيان الهرم</span>
+            </h2>
+          </div>
 
-    <div className="grid md:grid-cols-2 gap-4">
-      {[
-        { text: "إشراف هندسي مباشر ومتابعة ميدانية", href: "/team" },
-        { text: "عقود واضحة وبنود مفهومة" },
-        { text: "جدول زمني وخطة تنفيذ قابلة للمتابعة", href: "/project-tracking-system-riyadh" },
-        { text: "جودة مواد ومواصفات محددة", href: "/services" },
-        { text: "تسليم مفتاح حسب الاتفاق", href: "/villa-finishing-riyadh" },
-        { text: "التزام بالتواصل والشفافية مع العميل", href: "/contact" },
-        { text: "نظام متابعة مشاريع إلكتروني خاص", href: "/project-tracking-system-riyadh" },
-      ].map((item, i) => (
-        <div
-          key={i}
-          className="bg-gray-50 rounded-2xl p-5 shadow-sm border border-black/5"
-        >
-          <div className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-gold mt-0.5" />
-
-            {item.href ? (
-              <Link
-                to={item.href}
-                className="text-gray-900 font-semibold hover:underline"
-                aria-label={item.text}
+          <div className="grid md:grid-cols-2 gap-4">
+            {[
+              { text: "إشراف هندسي مباشر ومتابعة ميدانية", href: "/team" },
+              { text: "عقود واضحة وبنود مفهومة" },
+              {
+                text: "جدول زمني وخطة تنفيذ قابلة للمتابعة",
+                href: "/project-tracking-system-riyadh",
+              },
+              { text: "جودة مواد ومواصفات محددة", href: "/services" },
+              { text: "تسليم مفتاح حسب الاتفاق", href: "/villa-finishing-riyadh" },
+              { text: "التزام بالتواصل والشفافية مع العميل", href: "/contact" },
+              {
+                text: "نظام متابعة مشاريع إلكتروني خاص",
+                href: "/project-tracking-system-riyadh",
+              },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="bg-gray-50 rounded-2xl p-5 shadow-sm border border-black/5"
               >
-                {item.text}
-              </Link>
-            ) : (
-              <div className="text-gray-900 font-semibold">
-                {item.text}
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-gold mt-0.5" />
+
+                  {item.href ? (
+                    <Link
+                      to={item.href}
+                      className="text-gray-900 font-semibold hover:underline"
+                      aria-label={item.text}
+                    >
+                      {item.text}
+                    </Link>
+                  ) : (
+                    <div className="text-gray-900 font-semibold">{item.text}</div>
+                  )}
+                </div>
               </div>
-            )}
+            ))}
           </div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </section>
 
       {/* فريق العمل */}
       <section id="team">
