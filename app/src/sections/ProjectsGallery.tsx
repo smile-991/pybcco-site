@@ -11,6 +11,44 @@ const CATS: { key: Cat; label: string }[] = [
   { key: "entertainment", label: "ترفيه" },
 ];
 
+function toAbsoluteUrl(src: string) {
+  if (src.startsWith("http://") || src.startsWith("https://")) return src;
+  return `https://pybcco.com${src.startsWith("/") ? src : `/${src}`}`;
+}
+
+function buildProjectsGalleryJsonLd(cat: Cat) {
+  const current = GALLERY[cat];
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: `معرض مشاريع بنيان الهرم - ${current.title}`,
+    url: "https://pybcco.com/projects",
+    description:
+      "معرض مشاريع بنيان الهرم للمقاولات بالرياض ويشمل صور تشطيب وعظم وترفيه من أعمال منفذة.",
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: current.items.map((img, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "ImageObject",
+          contentUrl: toAbsoluteUrl(img.src),
+          url: toAbsoluteUrl(img.src),
+          name: img.alt,
+          description: img.alt,
+          representativeOfPage: index === 0,
+          creator: {
+            "@type": "Organization",
+            name: "بنيان الهرم للمقاولات – PYBCCO",
+            url: "https://pybcco.com",
+          },
+        },
+      })),
+    },
+  };
+}
+
 function SmartImage({
   src,
   alt,
@@ -65,6 +103,7 @@ function SmartImage({
 
 export default function ProjectsGallery() {
   const [cat, setCat] = useState<Cat>("finishing");
+  const gallerySchema = buildProjectsGalleryJsonLd(cat);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
@@ -116,11 +155,12 @@ export default function ProjectsGallery() {
   return (
     <main dir="rtl" className="bg-white">
       <SeoHead
-        title={pageTitle}
-        description={pageDescription}
-        canonical={canonical}
-        ogImage={ogImage}
-      />
+  title={pageTitle}
+  description={pageDescription}
+  canonical={canonical}
+  ogImage={ogImage}
+  jsonLd={gallerySchema}
+/>
 
       <section className="pt-28 pb-10">
         <div className="container-custom px-4">
