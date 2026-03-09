@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 type ActivatedSession = {
   phone: string;
   activatedAt: string;
+  expiresAt?: number;
 };
 
 type ProjectItem = {
@@ -27,7 +28,6 @@ export default function PortalPage() {
   useEffect(() => {
     checkAccess();
   }, []);
-
   const checkAccess = async () => {
     try {
       const raw = localStorage.getItem(ACTIVATED_USER_STORAGE_KEY);
@@ -41,6 +41,16 @@ export default function PortalPage() {
         const parsed: ActivatedSession = JSON.parse(raw);
 
         if (!parsed?.phone) {
+          localStorage.removeItem(ACTIVATED_USER_STORAGE_KEY);
+          setAuthorized(false);
+          return;
+        }
+
+        if (
+          parsed?.expiresAt &&
+          Number(parsed.expiresAt) > 0 &&
+          Number(parsed.expiresAt) < Date.now()
+        ) {
           localStorage.removeItem(ACTIVATED_USER_STORAGE_KEY);
           setAuthorized(false);
           return;
@@ -76,6 +86,32 @@ export default function PortalPage() {
     }
   };
 
+  const getAccountLink = () => {
+    try {
+      const raw = localStorage.getItem(ACTIVATED_USER_STORAGE_KEY);
+
+      if (!raw) return "/create-account";
+
+      const parsed = JSON.parse(raw);
+
+      if (!parsed?.phone) return "/create-account";
+
+      if (
+        parsed?.expiresAt &&
+        Number(parsed.expiresAt) > 0 &&
+        Number(parsed.expiresAt) < Date.now()
+      ) {
+        localStorage.removeItem(ACTIVATED_USER_STORAGE_KEY);
+        return "/create-account";
+      }
+
+      return "/account";
+    } catch {
+      localStorage.removeItem(ACTIVATED_USER_STORAGE_KEY);
+      return "/create-account";
+    }
+  };
+
   if (authorized === null) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -107,7 +143,7 @@ export default function PortalPage() {
               </Link>
 
               <Link
-                to="/account"
+                to={getAccountLink()}
                 className="block w-full rounded-xl border border-black py-3 text-center font-bold text-black transition hover:bg-black hover:text-white"
               >
                 الذهاب إلى حسابي
@@ -118,7 +154,6 @@ export default function PortalPage() {
       </div>
     );
   }
-
   return (
     <ClientProjects
       activatedSession={activatedSession}

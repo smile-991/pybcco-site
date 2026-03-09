@@ -10,11 +10,11 @@ type ClientCheckResponse = {
   } | null;
 };
 
-type ActivatedSession = {
-  phone: string;
+type ActivatedSessionData = {
   activatedAt: string;
   hasProject: boolean;
   clientId: string | null;
+  expiresAt: number;
 };
 
 const ACTIVATED_USER_STORAGE_KEY = "pybcco_activated_user";
@@ -75,14 +75,14 @@ export default function ActivateAccountSection() {
           setHasProject(false);
         }
 
-        const sessionData: ActivatedSession = {
-          phone,
-          activatedAt: String(
-            activateData?.user?.activatedAt || new Date().toISOString()
-          ),
-          hasProject: projectFound,
-          clientId: matchedClientId,
-        };
+        const sessionData: ActivatedSessionData = {
+ activatedAt: String(
+  activateData?.user?.activatedAt || new Date().toISOString()
+),
+  hasProject: projectFound,
+  clientId: matchedClientId,
+  expiresAt: Date.now() + 360 * 24 * 60 * 60 * 1000,
+};
 
         localStorage.setItem(
           ACTIVATED_USER_STORAGE_KEY,

@@ -6,6 +6,7 @@ type ActivatedUser = {
   activatedAt: string;
   hasProject: boolean;
   clientId: string | null;
+  expiresAt?: number;
 };
 
 type SavedItem = {
@@ -173,10 +174,20 @@ const checkProjectStatus = useCallback(async (phone: string) => {
       const parsed = JSON.parse(raw) as ActivatedUser;
 
       if (!parsed?.phone) {
-        localStorage.removeItem(STORAGE_KEY);
-        navigate("/portal", { replace: true });
-        return;
-      }
+  localStorage.removeItem(STORAGE_KEY);
+  navigate("/portal", { replace: true });
+  return;
+}
+
+if (
+  parsed?.expiresAt &&
+  Number(parsed.expiresAt) > 0 &&
+  Number(parsed.expiresAt) < Date.now()
+) {
+  localStorage.removeItem(STORAGE_KEY);
+  navigate("/portal", { replace: true });
+  return;
+}
 
       setUser(parsed);
     } catch {

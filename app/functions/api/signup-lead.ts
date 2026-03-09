@@ -1,6 +1,33 @@
 import { createClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
 
+function normalizeSaudiPhone(phone: string) {
+  const raw = String(phone || "")
+    .trim()
+    .replace(/\s+/g, "")
+    .replace(/-/g, "");
+
+  if (!raw) return "";
+
+  if (raw.startsWith("+966")) {
+    return "0" + raw.slice(4);
+  }
+
+  if (raw.startsWith("966")) {
+    return "0" + raw.slice(3);
+  }
+
+  if (raw.startsWith("05")) {
+    return raw;
+  }
+
+  if (raw.startsWith("5") && raw.length === 9) {
+    return "0" + raw;
+  }
+
+  return raw;
+}
+
 export async function onRequestPost(context: any) {
   try {
     const supabaseUrl = context.env?.SUPABASE_URL;
@@ -53,7 +80,7 @@ export async function onRequestPost(context: any) {
       );
     }
 
-    const normalizedPhone = String(phone).trim();
+    const normalizedPhone = normalizeSaudiPhone(phone);
     const normalizedEmail = String(email).trim().toLowerCase();
     const normalizedName = String(name).trim();
 
@@ -129,8 +156,6 @@ export async function onRequestPost(context: any) {
           </div>
         `,
       });
-
-      return activateUrl;
     };
 
     const { data: existingUser, error: existingUserError } = await supabase
@@ -169,10 +194,11 @@ export async function onRequestPost(context: any) {
       );
     }
 
-    if (existingUser || (existingLead && existingLead.activated === false)) {
+    if (existingUser || existingLead) {
       const activationToken = crypto.randomUUID();
 
-      if (existingLead) {
+      // نحدّث فقط إذا كان الـ lead الأخير غير مفعّل
+      if (existingLead && existingLead.activated === false) {
         const { error: updateLeadError } = await supabase
           .from("signup_leads")
           .update({
@@ -184,6 +210,7 @@ export async function onRequestPost(context: any) {
             finishing_level,
             estimated_cost,
             consumed: false,
+            activated: false,
           })
           .eq("id", existingLead.id);
 
@@ -197,6 +224,7 @@ export async function onRequestPost(context: any) {
           );
         }
       } else {
+        // إذا لا يوجد lead، أو الموجود مفعّل سابقًا → ننشئ lead جديد
         const { error: insertLeadError } = await supabase
           .from("signup_leads")
           .insert({
