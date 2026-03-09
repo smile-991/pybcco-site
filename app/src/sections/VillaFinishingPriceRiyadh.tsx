@@ -117,7 +117,7 @@ export default function VillaFinishingPriceRiyadh() {
   const [boqItems, setBoqItems] = useState<SavedEstimateItem[]>([]);
 
   // ✅ Mobile UX: اختيار المسار
-  const [mobileMode, setMobileMode] = useState<"lumpsum" | "boq">("lumpsum");
+  const [mobileMode, setMobileMode] = useState<"lumpsum" | "boq">("boq");
 
   useEffect(() => {
     try {
