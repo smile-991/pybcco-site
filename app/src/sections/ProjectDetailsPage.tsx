@@ -227,35 +227,31 @@ const activatedUser: ActivatedSession | null = (() => {
     currentMilestone && currentMilestone.due_date ? String(currentMilestone.due_date) : null
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6 md:p-10">
+    <div className="min-h-screen bg-gray-50 p-6 pt-24 md:p-10 md:pt-28">
       <div className="max-w-5xl mx-auto space-y-8">
-        {/* Navigation */}
-<div className="flex flex-wrap gap-2">
-  <Link
-    to="/account"
-    className="px-4 py-2 text-sm rounded-xl border bg-white hover:bg-gray-50"
-  >
-    حسابي
-  </Link>
 
-  <Link
-    to="/portal"
-    className="px-4 py-2 text-sm rounded-xl border bg-white hover:bg-gray-50"
-  >
-    مشاريعي
-  </Link>
-</div>
-        {/* Top bar */}
-        <div className="flex items-center justify-between gap-4">
-          <button
-            onClick={() => navigate("/portal")}
-            className="px-4 py-2 rounded-xl border bg-white hover:bg-gray-50 text-sm"
-          >
-            ← العودة للمشاريع
-          </button>
+                {/* Top bar */}
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+            <Link to="/account" className="hover:text-black transition">
+              حسابي
+            </Link>
+
+            <span className="text-gray-300">/</span>
+
+            <Link to="/portal" className="hover:text-black transition">
+              مشاريعي
+            </Link>
+
+            <span className="text-gray-300">/</span>
+
+            <span className="font-medium text-black">
+              {project.project_code || "تفاصيل المشروع"}
+            </span>
+          </div>
 
           <div className="text-xs text-gray-500">
-            Last updated: {formatDate(project.updated_at || project.created_at)}
+            آخر تحديث: {formatDate(project.updated_at || project.created_at)}
           </div>
         </div>
 

@@ -242,28 +242,40 @@ function ClientProjects({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6 md:p-10">
+    <div className="min-h-screen bg-gray-50 p-6 pt-24 md:p-10 md:pt-28">
       <div className="mx-auto max-w-6xl space-y-8">
-        <div className="flex items-start justify-between gap-4 rounded-2xl border bg-white p-6 shadow-xl">
-          <div>
-            <h1 className="text-2xl font-bold text-black">مشاريعي</h1>
-            <p className="mt-1 text-sm text-gray-500">
-              تابع التقدم والدفعات والتحديثات الخاصة بمشروعك.
-            </p>
-            {activatedSession?.phone ? (
-              <p className="mt-2 text-xs text-gray-400">
-                رقم الجوال المرتبط بالحساب: {activatedSession.phone}
-              </p>
-            ) : null}
-          </div>
+        <div className="rounded-2xl border bg-white p-6 shadow-xl space-y-4">
+  <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+      <Link to="/account" className="hover:text-black transition">
+        حسابي
+      </Link>
 
-          <button
-            onClick={handleLogout}
-            className="rounded-xl bg-black px-4 py-2 text-sm text-white transition hover:bg-gray-800"
-          >
-            تسجيل الخروج
-          </button>
-        </div>
+      <span className="text-gray-300">/</span>
+
+      <span className="font-medium text-black">مشاريعي</span>
+    </div>
+
+    <button
+      onClick={handleLogout}
+      className="rounded-xl bg-black px-4 py-2 text-sm text-white transition hover:bg-gray-800"
+    >
+      تسجيل الخروج
+    </button>
+  </div>
+
+  <div>
+    <h1 className="text-2xl font-bold text-black">مشاريعي</h1>
+    <p className="mt-1 text-sm text-gray-500">
+      تابع التقدم والدفعات والتحديثات الخاصة بمشروعك.
+    </p>
+    {activatedSession?.phone ? (
+      <p className="mt-2 text-xs text-gray-400">
+        رقم الجوال المرتبط بالحساب: {activatedSession.phone}
+      </p>
+    ) : null}
+  </div>
+</div>
 
         {err && (
           <div className="rounded-xl border border-red-100 bg-red-50 p-4 text-sm text-red-700">
