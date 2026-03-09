@@ -53,15 +53,213 @@ export async function onRequestPost(context: any) {
       );
     }
 
+    const normalizedPhone = String(phone).trim();
+    const normalizedEmail = String(email).trim().toLowerCase();
+    const normalizedName = String(name).trim();
+
+    const buildAndSendActivationEmail = async ({
+      toEmail,
+      toName,
+      token,
+      areaValue,
+      finishingLevelValue,
+      estimatedCostValue,
+    }: {
+      toEmail: string;
+      toName: string;
+      token: string;
+      areaValue?: number | null;
+      finishingLevelValue?: string | null;
+      estimatedCostValue?: number | null;
+    }) => {
+      const activateUrl = `https://pybcco.com/activate-account?token=${encodeURIComponent(
+        token
+      )}`;
+
+      const areaText =
+        areaValue !== null && areaValue !== undefined
+          ? `<p><strong>المساحة:</strong> ${areaValue} م²</p>`
+          : "";
+
+      const levelText = finishingLevelValue
+        ? `<p><strong>مستوى التشطيب:</strong> ${finishingLevelValue}</p>`
+        : "";
+
+      const estimateText =
+        estimatedCostValue !== null && estimatedCostValue !== undefined
+          ? `<p><strong>التقدير التقريبي:</strong> ${Number(
+              estimatedCostValue
+            ).toLocaleString("en-US")} ريال</p>`
+          : "";
+
+      await resend.emails.send({
+        from: fromEmail,
+        to: toEmail,
+        subject: "فعّل حسابك الآن - PYBCCO",
+        html: `
+          <div style="font-family:Arial,sans-serif;line-height:1.8;color:#111">
+            <h2>مرحبًا ${toName}</h2>
+            <p>تم استلام طلب إنشاء الحساب بنجاح.</p>
+            <p>اضغط الزر التالي لتفعيل حسابك:</p>
+
+            <p style="margin:24px 0;">
+              <a
+                href="${activateUrl}"
+                style="background:#eab308;color:#111;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:bold;display:inline-block;"
+              >
+                تفعيل الحساب
+              </a>
+            </p>
+
+            ${areaText}
+            ${levelText}
+            ${estimateText}
+
+            <hr style="margin:24px 0;border:none;border-top:1px solid #ddd" />
+
+            <p><strong>مزايا الحساب:</strong></p>
+            <ul>
+              <li>خصم 2% على كامل عقد التشطيب</li>
+              <li>ضمان إضافي 6 أشهر</li>
+              <li>حفظ تقدير المشروع</li>
+              <li>متابعة المشروع عبر بوابة العملاء</li>
+            </ul>
+
+            <p>بنيان الهرم للمقاولات - PYBCCO</p>
+          </div>
+        `,
+      });
+
+      return activateUrl;
+    };
+
+    // 1) تحقق هل الرقم موجود بالفعل في users
+    const { data: existingUser, error: existingUserError } = await supabase
+      .from("users")
+      .select("id, email, name, phone")
+      .eq("phone", normalizedPhone)
+      .maybeSingle();
+
+    if (existingUserError) {
+      return new Response(
+        JSON.stringify({ error: existingUserError.message }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    // 2) تحقق هل يوجد lead سابق لنفس الرقم
+    const { data: existingLead, error: existingLeadError } = await supabase
+      .from("signup_leads")
+      .select(
+        "id, email, name, phone, source, area, finishing_level, estimated_cost, activated, consumed"
+      )
+      .eq("phone", normalizedPhone)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (existingLeadError) {
+      return new Response(
+        JSON.stringify({ error: existingLeadError.message }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    // 3) إذا عنده حساب فعلي + يوجد lead غير مفعّل أو قابل لإعادة التفعيل
+    // نرسل له رابط جديد ونرجع رسالة واضحة
+    if (existingUser || (existingLead && existingLead.activated === false)) {
+      const activationToken = crypto.randomUUID();
+
+      if (existingLead) {
+        const { error: updateLeadError } = await supabase
+          .from("signup_leads")
+          .update({
+            activation_token: activationToken,
+            email: normalizedEmail,
+            name: normalizedName,
+            source,
+            area,
+            finishing_level,
+            estimated_cost,
+            consumed: false,
+          })
+          .eq("id", existingLead.id);
+
+        if (updateLeadError) {
+          return new Response(
+            JSON.stringify({ error: updateLeadError.message }),
+            {
+              status: 500,
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+        }
+      } else {
+        const { error: insertLeadError } = await supabase
+          .from("signup_leads")
+          .insert({
+            email: normalizedEmail,
+            name: normalizedName,
+            phone: normalizedPhone,
+            source,
+            area,
+            finishing_level,
+            estimated_cost,
+            consumed: false,
+            activated: false,
+            activation_token: activationToken,
+          });
+
+        if (insertLeadError) {
+          return new Response(
+            JSON.stringify({ error: insertLeadError.message }),
+            {
+              status: 500,
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+        }
+      }
+
+      const activateUrl = await buildAndSendActivationEmail({
+        toEmail: normalizedEmail,
+        toName: normalizedName,
+        token: activationToken,
+        areaValue: area,
+        finishingLevelValue: finishing_level,
+        estimatedCostValue: estimated_cost,
+      });
+
+      return new Response(
+        JSON.stringify({
+          success: false,
+          alreadyRegistered: true,
+          resendActivation: true,
+          activateUrl,
+          message:
+            `رقم الجوال ${normalizedPhone} لديه حساب مسجل بالفعل. ` +
+            `في حال رغبت بإعادة التفعيل، تم إرسال رابط تفعيل جديد إلى بريدك الإلكتروني.`,
+        }),
+        {
+          status: 409,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    // 4) تسجيل جديد طبيعي
     const activationToken = crypto.randomUUID();
-    const activateUrl = `https://pybcco.com/activate-account?token=${encodeURIComponent(
-      activationToken
-    )}`;
 
     const { error } = await supabase.from("signup_leads").insert({
-      email,
-      name,
-      phone,
+      email: normalizedEmail,
+      name: normalizedName,
+      phone: normalizedPhone,
       source,
       area,
       finishing_level,
@@ -78,58 +276,13 @@ export async function onRequestPost(context: any) {
       });
     }
 
-    const areaText =
-      area !== null && area !== undefined
-        ? `<p><strong>المساحة:</strong> ${area} م²</p>`
-        : "";
-
-    const levelText = finishing_level
-      ? `<p><strong>مستوى التشطيب:</strong> ${finishing_level}</p>`
-      : "";
-
-    const estimateText =
-      estimated_cost !== null && estimated_cost !== undefined
-        ? `<p><strong>التقدير التقريبي:</strong> ${Number(estimated_cost).toLocaleString(
-            "en-US"
-          )} ريال</p>`
-        : "";
-
-    await resend.emails.send({
-      from: fromEmail,
-      to: email,
-      subject: "فعّل حسابك الآن - PYBCCO",
-      html: `
-        <div style="font-family:Arial,sans-serif;line-height:1.8;color:#111">
-          <h2>مرحبًا ${name}</h2>
-          <p>تم استلام طلب إنشاء الحساب بنجاح.</p>
-          <p>اضغط الزر التالي لتفعيل حسابك:</p>
-
-          <p style="margin:24px 0;">
-            <a
-              href="${activateUrl}"
-              style="background:#eab308;color:#111;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:bold;display:inline-block;"
-            >
-              تفعيل الحساب
-            </a>
-          </p>
-
-          ${areaText}
-          ${levelText}
-          ${estimateText}
-
-          <hr style="margin:24px 0;border:none;border-top:1px solid #ddd" />
-
-          <p><strong>مزايا الحساب:</strong></p>
-          <ul>
-            <li>خصم 2% على كامل عقد التشطيب</li>
-            <li>ضمان إضافي 6 أشهر</li>
-            <li>حفظ تقدير المشروع</li>
-            <li>متابعة المشروع عبر بوابة العملاء</li>
-          </ul>
-
-          <p>بنيان الهرم للمقاولات - PYBCCO</p>
-        </div>
-      `,
+    await buildAndSendActivationEmail({
+      toEmail: normalizedEmail,
+      toName: normalizedName,
+      token: activationToken,
+      areaValue: area,
+      finishingLevelValue: finishing_level,
+      estimatedCostValue: estimated_cost,
     });
 
     return new Response(JSON.stringify({ success: true }), {
