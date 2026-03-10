@@ -13,6 +13,14 @@ type ActivatedUser = {
   clientId: string | null;
 };
 
+type QuoteRow = {
+  title: string;
+  quantity: number | string;
+  unit: string;
+  unitPrice: number;
+  total: number;
+};
+
 const ACTIVATED_USER_STORAGE_KEY = "pybcco_activated_user";
 
 const BONE_RATE = 550;
@@ -39,6 +47,12 @@ const POOL_FINISHING_PRICES: Record<Level, number> = {
   commercial: 22000,
   standard: 25000,
   luxury: 35000,
+};
+
+const ROOF_SEATING_RATES: Record<Level, number> = {
+  commercial: 190,
+  standard: 250,
+  luxury: 320,
 };
 
 const DEFAULT_BUILD_RATIO_BY_STREETS: Record<string, number> = {
@@ -77,7 +91,7 @@ function getServiceLabel(serviceType: ServiceType) {
 export default function VillaConstructionCostCalculatorRiyadh() {
   const title = "حاسبة تكلفة بناء فيلا في الرياض 2026 | بنيان الهرم";
   const description =
-    "حاسبة تفاعلية لتقدير تكلفة بناء فيلا في الرياض حسب مساحة الأرض وعدد الشوارع ونوع الخدمة والبدروم والمصعد والمسبح. احصل على ملخص تقديري سريع قابل للطباعة.";
+    "حاسبة تفاعلية لتقدير تكلفة بناء فيلا في الرياض حسب مساحة الأرض وعدد الشوارع ونوع الخدمة والبدروم والمصعد والمسبح وجلسات السطح. احصل على عرض سعر تقديري واضح قابل للطباعة والحفظ.";
   const canonical =
     "https://pybcco.com/villa-construction-cost-calculator-riyadh";
 
@@ -119,10 +133,10 @@ export default function VillaConstructionCostCalculatorRiyadh() {
       },
       {
         "@type": "Question",
-        name: "هل يمكن استخدام الحاسبة لمعرفة تكلفة تسليم المفتاح؟",
+        name: "كيف يتم احتساب جلسات السطح؟",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "نعم، يمكن اختيار خدمة تسليم مفتاح داخل الحاسبة، وسيتم احتساب التكلفة التقديرية حسب المستوى المختار.",
+          text: "يتم احتساب جلسات السطح على المساحة المتبقية من السطح بعد خصم مساحة الملحق العلوي، وتختلف قيمة المتر حسب المستوى التجاري أو القياسي أو الفاخر.",
         },
       },
     ],
@@ -143,7 +157,7 @@ export default function VillaConstructionCostCalculatorRiyadh() {
     applicationCategory: "Calculator",
     operatingSystem: "All",
     description:
-      "أداة تفاعلية لحساب تكلفة بناء الفيلا في الرياض حسب مساحة الأرض وعدد الشوارع ونوع الخدمة والبدروم والمصعد والمسبح.",
+      "أداة تفاعلية لحساب تكلفة بناء الفيلا في الرياض حسب مساحة الأرض وعدد الشوارع ونوع الخدمة والبدروم والمصعد والمسبح وجلسات السطح.",
     offers: {
       "@type": "Offer",
       price: "0",
@@ -171,9 +185,10 @@ export default function VillaConstructionCostCalculatorRiyadh() {
   const [governmentFees, setGovernmentFees] = useState<string>("");
 
   const [hasRoofSeating, setHasRoofSeating] = useState(false);
-  const [roofSeatingAmount, setRoofSeatingAmount] = useState<string>("0");
 
   const [showResult, setShowResult] = useState(false);
+  const [isSavingEstimate, setIsSavingEstimate] = useState(false);
+  const [saveMessage, setSaveMessage] = useState<string>("");
 
   useEffect(() => {
     try {
@@ -195,7 +210,7 @@ export default function VillaConstructionCostCalculatorRiyadh() {
       setActivatedUser(null);
     }
   }, []);
-  
+
   useEffect(() => {
     setBuildRatio(DEFAULT_BUILD_RATIO_BY_STREETS[streetCount] ?? 70);
   }, [streetCount]);
@@ -229,13 +244,9 @@ export default function VillaConstructionCostCalculatorRiyadh() {
     return groundFloorArea + firstFloorArea + penthouseArea;
   }, [groundFloorArea, firstFloorArea, penthouseArea]);
 
-  const annexArea = mainBuiltArea * 0.6;
-
-  const roofRemainingArea = mainBuiltArea - annexArea;
-
-  const roofSeatingCost = hasRoofSeating
-    ? roofRemainingArea * 250
-    : 0;
+  const roofRemainingArea = useMemo(() => {
+    return Math.max(groundFloorArea - penthouseArea, 0);
+  }, [groundFloorArea, penthouseArea]);
 
   const basementArea = useMemo(() => {
     if (!hasBasement) return 0;
@@ -246,6 +257,11 @@ export default function VillaConstructionCostCalculatorRiyadh() {
     if (serviceType === "bone") return BONE_RATE;
     if (serviceType === "finishing") return FINISHING_RATES[level];
     return TURNKEY_RATES[level];
+  }, [serviceType, level]);
+
+  const roofSeatingRate = useMemo(() => {
+    if (serviceType === "bone") return 0;
+    return ROOF_SEATING_RATES[level];
   }, [serviceType, level]);
 
   const mainAreaCost = useMemo(() => {
@@ -286,6 +302,11 @@ export default function VillaConstructionCostCalculatorRiyadh() {
     return POOL_FINISHING_PRICES[level];
   }, [hasPool, serviceType, level]);
 
+  const roofSeatingCost = useMemo(() => {
+    if (!hasRoofSeating || serviceType === "bone") return 0;
+    return roofRemainingArea * roofSeatingRate;
+  }, [hasRoofSeating, serviceType, roofRemainingArea, roofSeatingRate]);
+
   const totalCost = useMemo(() => {
     return (
       mainAreaCost +
@@ -303,7 +324,6 @@ export default function VillaConstructionCostCalculatorRiyadh() {
     elevatorCost,
     poolCost,
     governmentFeesNumber,
-    hasRoofSeating,
     roofSeatingCost,
   ]);
 
@@ -333,136 +353,217 @@ export default function VillaConstructionCostCalculatorRiyadh() {
       `نسبة البناء: ${formatNumber(buildRatio)}%\n` +
       `مساحة البناء الكلية: ${formatNumber(mainBuiltArea)} م²\n` +
       `${hasBasement ? `مساحة البدروم: ${formatNumber(basementArea)} م²\n` : ""}` +
+      `${
+        hasRoofSeating && serviceType !== "bone"
+          ? `مساحة جلسات السطح: ${formatNumber(roofRemainingArea)} م²\n`
+          : ""
+      }` +
       `الإجمالي التقديري: ${formatSAR(totalCost)} ريال\n` +
       `رابط الحاسبة: ${canonical}`
   );
 
   const waLink = `https://wa.me/966550604837?text=${whatsappText}`;
+
   const quoteRows = useMemo(() => {
-  const rows: Array<{
-    title: string;
-    quantity: number | string;
-    unit: string;
-    unitPrice: number;
-    total: number;
-  }> = [];
+    const rows: QuoteRow[] = [];
 
-  if (serviceType === "bone") {
-    rows.push({
-      title: "أعمال العظم",
-      quantity: mainBuiltArea,
-      unit: "م²",
-      unitPrice: BONE_RATE,
-      total: mainBuiltArea * BONE_RATE,
-    });
-  }
+    if (serviceType === "bone") {
+      rows.push({
+        title: "أعمال العظم",
+        quantity: mainBuiltArea,
+        unit: "م²",
+        unitPrice: BONE_RATE,
+        total: mainBuiltArea * BONE_RATE,
+      });
+    }
 
-  if (serviceType === "finishing") {
-    rows.push({
-      title: `أعمال التشطيب (${levelLabel})`,
-      quantity: mainBuiltArea,
-      unit: "م²",
-      unitPrice: FINISHING_RATES[level],
-      total: mainAreaCost,
-    });
-  }
+    if (serviceType === "finishing") {
+      rows.push({
+        title: `أعمال التشطيب (${levelLabel})`,
+        quantity: mainBuiltArea,
+        unit: "م²",
+        unitPrice: FINISHING_RATES[level],
+        total: mainAreaCost,
+      });
+    }
 
-  if (serviceType === "turnkey") {
-    rows.push({
-      title: `تسليم مفتاح (${levelLabel})`,
-      quantity: mainBuiltArea,
-      unit: "م²",
-      unitPrice: TURNKEY_RATES[level],
-      total: mainAreaCost,
-    });
-  }
+    if (serviceType === "turnkey") {
+      rows.push({
+        title: `تسليم مفتاح (${levelLabel})`,
+        quantity: mainBuiltArea,
+        unit: "م²",
+        unitPrice: TURNKEY_RATES[level],
+        total: mainAreaCost,
+      });
+    }
 
-  if (serviceType !== "finishing") {
-    const excavationQty = hasBasement
-      ? mainBuiltArea * 1.7 + basementArea * 3.5
-      : mainBuiltArea * 1.7;
+    if (serviceType !== "finishing") {
+      const excavationQty = hasBasement
+        ? mainBuiltArea * 1.7 + basementArea * 3.5
+        : mainBuiltArea * 1.7;
 
-    rows.push({
-      title: "أعمال الحفر",
-      quantity: excavationQty,
-      unit: "م³",
-      unitPrice: 45,
-      total: excavationCost,
-    });
-  }
+      rows.push({
+        title: "أعمال الحفر",
+        quantity: excavationQty,
+        unit: "م³",
+        unitPrice: 45,
+        total: excavationCost,
+      });
+    }
 
-  if (hasBasement) {
-    rows.push({
-      title: "أعمال البدروم",
-      quantity: basementArea,
-      unit: "م²",
-      unitPrice: activeRate * 1.5,
-      total: basementCost,
-    });
-  }
+    if (hasBasement) {
+      rows.push({
+        title: "أعمال البدروم",
+        quantity: basementArea,
+        unit: "م²",
+        unitPrice: activeRate * 1.5,
+        total: basementCost,
+      });
+    }
 
-  if (hasElevator) {
-    rows.push({
-      title: serviceType === "bone" ? "بيت المصعد" : "توريد وتركيب المصعد",
-      quantity: 1,
-      unit: "بند",
-      unitPrice: elevatorCost,
-      total: elevatorCost,
-    });
-  }
+    if (hasElevator) {
+      rows.push({
+        title: serviceType === "bone" ? "بيت المصعد" : "توريد وتركيب المصعد",
+        quantity: 1,
+        unit: "بند",
+        unitPrice: elevatorCost,
+        total: elevatorCost,
+      });
+    }
 
-  if (hasPool) {
-    rows.push({
-      title: serviceType === "bone" ? "مسبح خرساني قياسي" : "مسبح قياسي",
-      quantity: 1,
-      unit: "بند",
-      unitPrice: poolCost,
-      total: poolCost,
-    });
-  }
+    if (hasPool) {
+      rows.push({
+        title: serviceType === "bone" ? "مسبح خرساني قياسي" : "مسبح قياسي",
+        quantity: 1,
+        unit: "بند",
+        unitPrice: poolCost,
+        total: poolCost,
+      });
+    }
 
-if (hasRoofSeating) {
-  rows.push({
-    title: "تشطيب جلسات السطح",
-    quantity: roofRemainingArea,
-    unit: "م²",
-    unitPrice: 250,
-    total: roofSeatingCost,
-  });
-}
+    if (hasRoofSeating && serviceType !== "bone") {
+      rows.push({
+        title: `تشطيب جلسات السطح (${levelLabel})`,
+        quantity: roofRemainingArea,
+        unit: "م²",
+        unitPrice: roofSeatingRate,
+        total: roofSeatingCost,
+      });
+    }
 
-  if (governmentFeesNumber > 0) {
-    rows.push({
-      title: "أوراق حكومية ورسوم تقديرية",
-      quantity: 1,
-      unit: "بند",
-      unitPrice: governmentFeesNumber,
-      total: governmentFeesNumber,
-    });
-  }
+    if (governmentFeesNumber > 0) {
+      rows.push({
+        title: "أوراق حكومية ورسوم تقديرية",
+        quantity: 1,
+        unit: "بند",
+        unitPrice: governmentFeesNumber,
+        total: governmentFeesNumber,
+      });
+    }
 
-  return rows;
-}, [
-  serviceType,
-  level,
-  levelLabel,
-  mainBuiltArea,
-  mainAreaCost,
-  excavationCost,
-  hasBasement,
-  basementArea,
-  basementCost,
-  hasElevator,
-  elevatorCost,
-  hasPool,
-  poolCost,
-  roofSeatingCost,
-  governmentFeesNumber,
-  activeRate,
-]);
+    return rows;
+  }, [
+    serviceType,
+    level,
+    levelLabel,
+    mainBuiltArea,
+    mainAreaCost,
+    excavationCost,
+    hasBasement,
+    basementArea,
+    basementCost,
+    hasElevator,
+    elevatorCost,
+    hasPool,
+    poolCost,
+    hasRoofSeating,
+    roofRemainingArea,
+    roofSeatingRate,
+    roofSeatingCost,
+    governmentFeesNumber,
+    activeRate,
+  ]);
+
+  const baseTotalForSave = useMemo(() => {
+    return mainAreaCost + basementCost;
+  }, [mainAreaCost, basementCost]);
+
+  const extrasTotalForSave = useMemo(() => {
+    return (
+      excavationCost +
+      elevatorCost +
+      poolCost +
+      governmentFeesNumber +
+      roofSeatingCost
+    );
+  }, [
+    excavationCost,
+    elevatorCost,
+    poolCost,
+    governmentFeesNumber,
+    roofSeatingCost,
+  ]);
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleSaveEstimate = async () => {
+    if (!activatedUser?.phone) {
+      setSaveMessage("يجب إنشاء حساب أو تسجيله أولًا حتى يتم حفظ التقدير.");
+      return;
+    }
+
+    try {
+      setIsSavingEstimate(true);
+      setSaveMessage("");
+
+      const items_json = quoteRows.map((row) => ({
+        title: row.title,
+        quantity:
+          typeof row.quantity === "number"
+            ? Number(row.quantity.toFixed(2))
+            : row.quantity,
+        unit: row.unit,
+        total: row.total,
+      }));
+
+      const response = await fetch("/api/save-calculator-result", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          phone: activatedUser.phone,
+          work_type: serviceType,
+          area: Number((mainBuiltArea + basementArea).toFixed(2)),
+          finishing_level: level,
+          base_total: Math.round(baseTotalForSave),
+          extras_total: Math.round(extrasTotalForSave),
+          grand_total: Math.round(totalCost),
+          estimated_cost: Math.round(totalCost),
+          items_json,
+        }),
+      });
+
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        throw new Error(
+          data?.error || "تعذر حفظ التقدير داخل الحساب في الوقت الحالي."
+        );
+      }
+
+      setSaveMessage("تم حفظ التقدير داخل حسابك بنجاح.");
+    } catch (error) {
+      setSaveMessage(
+        error instanceof Error
+          ? error.message
+          : "حدث خطأ أثناء حفظ التقدير."
+      );
+    } finally {
+      setIsSavingEstimate(false);
+    }
   };
 
   return (
@@ -478,14 +579,18 @@ if (hasRoofSeating) {
       <style>{`
   @page {
     size: A4;
-    margin: 10mm;
+    margin: 8mm;
   }
 
   @media print {
-    html, body {
-      background: #fff !important;
+    html,
+    body {
+      background: #ffffff !important;
       margin: 0 !important;
       padding: 0 !important;
+      width: 210mm !important;
+      height: auto !important;
+      overflow: hidden !important;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
@@ -500,16 +605,21 @@ if (hasRoofSeating) {
     }
 
     #quote-pdf {
-      position: absolute !important;
-      inset: 0 !important;
-      width: 100% !important;
+      display: block !important;
+      position: fixed !important;
+      top: 0 !important;
+      right: 0 !important;
+      width: 194mm !important;
+      max-width: 194mm !important;
       min-height: auto !important;
+      height: auto !important;
       background: #ffffff !important;
       color: #111111 !important;
       padding: 0 !important;
       margin: 0 !important;
       border: 0 !important;
       box-shadow: none !important;
+      overflow: hidden !important;
     }
 
     .no-print {
@@ -546,7 +656,7 @@ if (hasRoofSeating) {
 
           <p className="mt-6 text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
             حاسبة تفاعلية سريعة لحساب تكلفة البناء التقديرية حسب مساحة الأرض وعدد
-            الشوارع ونوع الخدمة والبدروم والمصعد والمسبح.
+            الشوارع ونوع الخدمة والبدروم والمصعد والمسبح وجلسات السطح.
           </p>
 
           <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm text-white/80">
@@ -555,7 +665,7 @@ if (hasRoofSeating) {
             </div>
 
             <div className="bg-black/40 border border-white/10 rounded-lg px-4 py-2">
-              ✔ يشمل البدروم والمصعد والمسبح
+              ✔ يشمل البدروم والمصعد والمسبح وجلسات السطح
             </div>
 
             <div className="bg-black/40 border border-white/10 rounded-lg px-4 py-2">
@@ -618,8 +728,9 @@ if (hasRoofSeating) {
               </h2>
 
               <p className="mt-3 text-white/70 max-w-3xl mx-auto">
-                أدخل بيانات المشروع ثم احصل على ملخص تقديري واضح قابل للطباعة،
-                مع توضيح المسطحات والحفر والبدروم والمصعد والمسبح.
+                أدخل بيانات المشروع ثم احصل على عرض سعر تقديري واضح داخل الصفحة
+                وقابل للطباعة، مع توضيح المسطحات والحفر والبدروم والمصعد والمسبح
+                وجلسات السطح.
               </p>
             </div>
 
@@ -632,6 +743,8 @@ if (hasRoofSeating) {
                     onClick={() => {
                       setServiceType("bone");
                       setShowResult(false);
+                      setHasRoofSeating(false);
+                      setSaveMessage("");
                     }}
                     className={`rounded-lg px-3 py-3 text-sm border ${
                       serviceType === "bone"
@@ -647,6 +760,7 @@ if (hasRoofSeating) {
                     onClick={() => {
                       setServiceType("finishing");
                       setShowResult(false);
+                      setSaveMessage("");
                     }}
                     className={`rounded-lg px-3 py-3 text-sm border ${
                       serviceType === "finishing"
@@ -662,6 +776,7 @@ if (hasRoofSeating) {
                     onClick={() => {
                       setServiceType("turnkey");
                       setShowResult(false);
+                      setSaveMessage("");
                     }}
                     className={`rounded-lg px-3 py-3 text-sm border ${
                       serviceType === "turnkey"
@@ -683,6 +798,7 @@ if (hasRoofSeating) {
                       onClick={() => {
                         setLevel("commercial");
                         setShowResult(false);
+                        setSaveMessage("");
                       }}
                       className={`rounded-lg px-3 py-3 text-sm border ${
                         level === "commercial"
@@ -698,6 +814,7 @@ if (hasRoofSeating) {
                       onClick={() => {
                         setLevel("standard");
                         setShowResult(false);
+                        setSaveMessage("");
                       }}
                       className={`rounded-lg px-3 py-3 text-sm border ${
                         level === "standard"
@@ -713,6 +830,7 @@ if (hasRoofSeating) {
                       onClick={() => {
                         setLevel("luxury");
                         setShowResult(false);
+                        setSaveMessage("");
                       }}
                       className={`rounded-lg px-3 py-3 text-sm border ${
                         level === "luxury"
@@ -733,6 +851,7 @@ if (hasRoofSeating) {
                   onChange={(e) => {
                     setLandArea(e.target.value.replace(/[^\d.]/g, ""));
                     setShowResult(false);
+                    setSaveMessage("");
                   }}
                   inputMode="decimal"
                   placeholder="مثال: 500"
@@ -747,6 +866,7 @@ if (hasRoofSeating) {
                   onChange={(e) => {
                     setStreetCount(e.target.value);
                     setShowResult(false);
+                    setSaveMessage("");
                   }}
                   className="w-full rounded-lg bg-black/40 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
                 >
@@ -764,6 +884,7 @@ if (hasRoofSeating) {
                     const n = Number(e.target.value.replace(/[^\d.]/g, ""));
                     setBuildRatio(Number.isFinite(n) ? n : 0);
                     setShowResult(false);
+                    setSaveMessage("");
                   }}
                   inputMode="decimal"
                   className="w-full rounded-lg bg-black/40 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
@@ -779,6 +900,7 @@ if (hasRoofSeating) {
                   onChange={(e) => {
                     setGovernmentFees(e.target.value.replace(/[^\d.]/g, ""));
                     setShowResult(false);
+                    setSaveMessage("");
                   }}
                   inputMode="decimal"
                   placeholder="مثال: 12000"
@@ -798,6 +920,7 @@ if (hasRoofSeating) {
                       onChange={(e) => {
                         setHasBasement(e.target.checked);
                         setShowResult(false);
+                        setSaveMessage("");
                       }}
                     />
                   </label>
@@ -810,6 +933,7 @@ if (hasRoofSeating) {
                       onChange={(e) => {
                         setHasElevator(e.target.checked);
                         setShowResult(false);
+                        setSaveMessage("");
                       }}
                     />
                   </label>
@@ -822,21 +946,25 @@ if (hasRoofSeating) {
                       onChange={(e) => {
                         setHasPool(e.target.checked);
                         setShowResult(false);
+                        setSaveMessage("");
                       }}
                     />
                   </label>
 
-                  <label className="flex items-center justify-between rounded-lg border border-white/10 bg-black/20 px-4 py-3">
-                    <span>تشطيب جلسات سطح</span>
-                    <input
-                      type="checkbox"
-                      checked={hasRoofSeating}
-                      onChange={(e) => {
-                        setHasRoofSeating(e.target.checked);
-                        setShowResult(false);
-                      }}
-                    />
-                  </label>
+                  {serviceType !== "bone" && (
+                    <label className="flex items-center justify-between rounded-lg border border-white/10 bg-black/20 px-4 py-3">
+                      <span>تشطيب جلسات سطح</span>
+                      <input
+                        type="checkbox"
+                        checked={hasRoofSeating}
+                        onChange={(e) => {
+                          setHasRoofSeating(e.target.checked);
+                          setShowResult(false);
+                          setSaveMessage("");
+                        }}
+                      />
+                    </label>
+                  )}
                 </div>
 
                 {hasBasement && (
@@ -849,6 +977,7 @@ if (hasRoofSeating) {
                       onChange={(e) => {
                         setBasementRatio(e.target.value.replace(/[^\d.]/g, ""));
                         setShowResult(false);
+                        setSaveMessage("");
                       }}
                       inputMode="decimal"
                       className="w-full rounded-lg bg-black/40 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
@@ -856,23 +985,18 @@ if (hasRoofSeating) {
                   </div>
                 )}
 
-                {hasRoofSeating && (
-                  <div className="mt-4">
-                    <div className="text-sm text-white/70 mb-2">
-                      تكلفة جلسات السطح
-                    </div>
-                    <input
-                      value={roofSeatingAmount}
-                      onChange={(e) => {
-                        setRoofSeatingAmount(
-                          e.target.value.replace(/[^\d.]/g, "")
-                        );
-                        setShowResult(false);
-                      }}
-                      inputMode="decimal"
-                      placeholder="مثال: 25000"
-                      className="w-full rounded-lg bg-black/40 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
-                    />
+                {hasRoofSeating && serviceType !== "bone" && (
+                  <div className="mt-4 rounded-xl border border-gold/20 bg-gold/5 p-4 text-sm text-white/80 leading-7">
+                    سيتم احتساب جلسات السطح تلقائيًا على المساحة المتبقية من
+                    السطح بعد خصم مساحة الملحق العلوي:
+                    <span className="block mt-2 text-gold font-bold">
+                      مساحة السطح المتبقية = مساحة الدور الأرضي - مساحة الملحق
+                      العلوي = {formatNumber(roofRemainingArea)} م²
+                    </span>
+                    <span className="block mt-1">
+                      سعر المتر الحالي حسب المستوى المختار:{" "}
+                      {formatSAR(roofSeatingRate)} ريال / م²
+                    </span>
                   </div>
                 )}
               </div>
@@ -893,240 +1017,383 @@ if (hasRoofSeating) {
             </div>
           </div>
 
-              {showResult && isValid && (
-  <>
-    <div className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6 no-print">
-      <div className="text-sm text-white/70">الملخص التقديري للمشروع</div>
+          {showResult && isValid && (
+            <>
+              <div className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6 no-print">
+                <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+                  <div>
+                    <div className="text-sm text-white/70">
+                      الملخص التقديري للمشروع
+                    </div>
+                    <div className="mt-2 text-3xl md:text-4xl font-extrabold">
+                      {formatSAR(totalCost)}{" "}
+                      <span className="text-lg font-semibold text-white/80">
+                        ريال
+                      </span>
+                    </div>
+                  </div>
 
-      <div className="mt-2 text-3xl md:text-4xl font-extrabold">
-        {formatSAR(totalCost)}{" "}
-        <span className="text-lg font-semibold text-white/80">ريال</span>
-      </div>
+                  <div className="text-sm text-white/75 leading-7">
+                    عرض سعر تقديري واضح داخل الصفحة، ويمكنك طباعته مباشرة أو
+                    حفظه داخل حسابك.
+                  </div>
+                </div>
 
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-        <div className="rounded-xl border border-white/10 bg-black/30 p-4">
-          <div className="text-white/60">نوع الخدمة</div>
-          <div className="mt-1 font-bold">{serviceLabel}</div>
-        </div>
+                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                  <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+                    <div className="text-white/60">نوع الخدمة</div>
+                    <div className="mt-1 font-bold">{serviceLabel}</div>
+                  </div>
 
-        <div className="rounded-xl border border-white/10 bg-black/30 p-4">
-          <div className="text-white/60">المستوى</div>
-          <div className="mt-1 font-bold">
-            {serviceType === "bone" ? "عظم" : levelLabel}
-          </div>
-        </div>
+                  <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+                    <div className="text-white/60">المستوى</div>
+                    <div className="mt-1 font-bold">
+                      {serviceType === "bone" ? "عظم" : levelLabel}
+                    </div>
+                  </div>
 
-        <div className="rounded-xl border border-white/10 bg-black/30 p-4">
-          <div className="text-white/60">مساحة البناء الكلية</div>
-          <div className="mt-1 font-bold text-gold">
-            {formatNumber(mainBuiltArea)} م²
-          </div>
-        </div>
+                  <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+                    <div className="text-white/60">مساحة البناء الكلية</div>
+                    <div className="mt-1 font-bold text-gold">
+                      {formatNumber(mainBuiltArea)} م²
+                    </div>
+                  </div>
 
-        <div className="rounded-xl border border-white/10 bg-black/30 p-4">
-          <div className="text-white/60">متوسط تكلفة المتر</div>
-          <div className="mt-1 font-bold">
-            {formatSAR(averageCostPerM2)} ريال / م²
-          </div>
-        </div>
-      </div>
+                  <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+                    <div className="text-white/60">متوسط تكلفة المتر</div>
+                    <div className="mt-1 font-bold">
+                      {formatSAR(averageCostPerM2)} ريال / م²
+                    </div>
+                  </div>
+                </div>
 
-      <div className="mt-6 rounded-2xl border border-gold/30 bg-gold/10 p-5 md:p-6">
-        <div className="text-base md:text-lg font-extrabold text-gold">
-          للطباعة أو الحفظ بصيغة PDF
-        </div>
+                <div className="mt-6 overflow-x-auto rounded-2xl border border-white/10 bg-black/25">
+                  <table className="w-full min-w-[760px] text-sm">
+                    <thead>
+                      <tr className="bg-white/5">
+                        <th className="px-4 py-3 text-right">#</th>
+                        <th className="px-4 py-3 text-right">البند</th>
+                        <th className="px-4 py-3 text-center">الكمية</th>
+                        <th className="px-4 py-3 text-center">الوحدة</th>
+                        <th className="px-4 py-3 text-center">سعر الوحدة</th>
+                        <th className="px-4 py-3 text-center">الإجمالي</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {quoteRows.map((row, index) => (
+                        <tr
+                          key={`${row.title}-${index}`}
+                          className="border-t border-white/10"
+                        >
+                          <td className="px-4 py-3 text-right">{index + 1}</td>
+                          <td className="px-4 py-3 text-right">{row.title}</td>
+                          <td className="px-4 py-3 text-center">
+                            {typeof row.quantity === "number"
+                              ? formatNumber(row.quantity)
+                              : row.quantity}
+                          </td>
+                          <td className="px-4 py-3 text-center">{row.unit}</td>
+                          <td className="px-4 py-3 text-center">
+                            {formatSAR(row.unitPrice)} ريال
+                          </td>
+                          <td className="px-4 py-3 text-center font-bold text-gold">
+                            {formatSAR(row.total)} ريال
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
 
-        <p className="mt-2 text-sm md:text-base text-white/85 leading-8">
-          تم تجهيز عرض سعر منسق في صفحة واحدة للطباعة بصيغة PDF، مع جدول البنود
-          والكميات والأسعار والملاحظات النهائية.
-        </p>
+                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+                    <div className="font-bold text-gold mb-3">
+                      المساحات المعتمدة
+                    </div>
+                    <div className="space-y-2 text-sm text-white/80">
+                      <div>الدور الأرضي: {formatNumber(groundFloorArea)} م²</div>
+                      <div>الدور الأول: {formatNumber(firstFloorArea)} م²</div>
+                      <div>الملحق العلوي: {formatNumber(penthouseArea)} م²</div>
+                      {hasBasement && (
+                        <div>البدروم: {formatNumber(basementArea)} م²</div>
+                      )}
+                      {hasRoofSeating && serviceType !== "bone" && (
+                        <div>
+                          جلسات السطح: {formatNumber(roofRemainingArea)} م²
+                        </div>
+                      )}
+                    </div>
+                  </div>
 
-        <div className="mt-4 flex flex-col md:flex-row gap-3">
-          <Button
-            className="bg-gold text-black font-extrabold"
-            onClick={handlePrint}
-          >
-            طباعة PDF
-          </Button>
+                  <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+                    <div className="font-bold text-gold mb-3">الإجمالي</div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-white/75">الإجمالي النهائي</span>
+                      <span className="font-extrabold text-2xl text-gold">
+                        {formatSAR(totalCost)} ريال
+                      </span>
+                    </div>
+                    <div className="mt-3 text-sm text-white/70">
+                      متوسط تكلفة المتر: {formatSAR(averageCostPerM2)} ريال / م²
+                    </div>
+                    <div className="text-sm text-white/70">
+                      القيمة السوقية المتوقعة: {formatSAR(marketValueRange.low)} –
+                      {` ${formatSAR(marketValueRange.high)} ريال`}
+                    </div>
+                  </div>
+                </div>
 
-          {!activatedUser?.phone && (
-            <Link
-              to="/create-account"
-              className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/10 px-5 py-3 text-sm font-bold text-white hover:bg-white/15 transition"
-            >
-              إنشاء حساب
-            </Link>
+                <div className="mt-6 rounded-2xl border border-gold/30 bg-gold/10 p-5 md:p-6">
+                  <div className="text-xl md:text-2xl font-extrabold text-gold">
+                    احفظ هذا التقدير داخل حسابك
+                  </div>
+
+                  <p className="mt-2 text-sm md:text-base text-white/85 leading-8">
+                    للاستفادة من حفظ التقدير داخل حسابك وطباعة PDF والحصول على
+                    خصم خاص وميزة ضمان أعمال إضافي عند بدء التنفيذ، احفظ التقدير
+                    مباشرة إذا كنت مسجلًا، أو أنشئ حسابًا جديدًا.
+                  </p>
+
+                  <div className="mt-4 flex flex-col md:flex-row gap-3">
+                    {activatedUser?.phone ? (
+                      <Button
+                        className="bg-gold text-black font-extrabold"
+                        onClick={handleSaveEstimate}
+                        disabled={isSavingEstimate}
+                      >
+                        {isSavingEstimate
+                          ? "جارٍ حفظ التقدير..."
+                          : "حفظ التقدير داخل حسابي"}
+                      </Button>
+                    ) : (
+                      <Link
+                        to="/create-account"
+                        className="inline-flex items-center justify-center rounded-lg bg-gold px-5 py-3 text-sm font-extrabold text-black hover:opacity-90 transition"
+                      >
+                        إنشاء حساب لحفظ التقدير
+                      </Link>
+                    )}
+
+                    <Button
+                      className="bg-white/10 border border-white/15 text-white font-bold hover:bg-white/15"
+                      onClick={handlePrint}
+                    >
+                      طباعة PDF
+                    </Button>
+
+                    <a
+                      href={waLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white hover:bg-white/10 transition"
+                    >
+                      طلب عرض سعر عبر واتساب
+                    </a>
+
+                    <Link
+                      to={detailedCalculatorLink}
+                      className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white hover:bg-white/10 transition"
+                    >
+                      لمعرفة الأسعار التفصيلية للبنود اضغط هنا
+                    </Link>
+                  </div>
+
+                  {saveMessage && (
+                    <div className="mt-4 text-sm font-medium text-white/90">
+                      {saveMessage}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div id="quote-pdf" className="hidden print:block">
+                <div className="w-full bg-white text-[#111] p-4 text-[11px] leading-5">
+                  <div className="flex items-start justify-between gap-4 print-page-break-avoid">
+                    <div className="text-right flex-1">
+                      <h1 className="text-[22px] font-extrabold leading-tight">
+                        عرض سعر تقديري
+                      </h1>
+                      <div className="mt-1 text-[12px] text-[#555]">
+                        بنيان الهرم للمقاولات
+                      </div>
+                      <div className="mt-1 text-[11px] text-[#444]">
+                        التاريخ: {new Date().toLocaleDateString("ar-SA")}
+                      </div>
+                      <div className="text-[11px] text-[#444]">الموقع: الرياض</div>
+                      <div className="text-[11px] text-[#444]">
+                        الموقع الإلكتروني: pybcco.com
+                      </div>
+                      <div className="text-[11px] text-[#444]">
+                        الجوال: 0550604837
+                      </div>
+                    </div>
+
+                    <div className="shrink-0">
+                      <img
+                        src="/favicon.webp"
+                        alt="شعار بنيان الهرم للمقاولات"
+                        className="w-[64px] h-[64px] object-contain"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mt-3 border-t-2 border-[#d4a017]" />
+
+                  <div className="mt-3 grid grid-cols-2 gap-2 print-page-break-avoid">
+                    <div className="border border-[#ddd] rounded-lg p-2">
+                      <div className="text-[#777] text-[10px]">نوع الخدمة</div>
+                      <div className="font-bold text-[13px] mt-1">
+                        {serviceLabel}
+                      </div>
+                    </div>
+
+                    <div className="border border-[#ddd] rounded-lg p-2">
+                      <div className="text-[#777] text-[10px]">المستوى</div>
+                      <div className="font-bold text-[13px] mt-1">
+                        {serviceType === "bone" ? "عظم" : levelLabel}
+                      </div>
+                    </div>
+
+                    <div className="border border-[#ddd] rounded-lg p-2">
+                      <div className="text-[#777] text-[10px]">مساحة الأرض</div>
+                      <div className="font-bold text-[13px] mt-1">
+                        {formatNumber(landAreaNumber)} م²
+                      </div>
+                    </div>
+
+                    <div className="border border-[#ddd] rounded-lg p-2">
+                      <div className="text-[#777] text-[10px]">نسبة البناء</div>
+                      <div className="font-bold text-[13px] mt-1">
+                        {formatNumber(buildRatio)}%
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-3 print-page-break-avoid">
+                    <table className="w-full border-collapse text-[11px]">
+                      <thead>
+                        <tr className="bg-[#f7f7f7]">
+                          <th className="border border-[#222] px-2 py-1.5 text-right">
+                            #
+                          </th>
+                          <th className="border border-[#222] px-2 py-1.5 text-right">
+                            البند
+                          </th>
+                          <th className="border border-[#222] px-2 py-1.5 text-center">
+                            الكمية
+                          </th>
+                          <th className="border border-[#222] px-2 py-1.5 text-center">
+                            الوحدة
+                          </th>
+                          <th className="border border-[#222] px-2 py-1.5 text-center">
+                            سعر الوحدة
+                          </th>
+                          <th className="border border-[#222] px-2 py-1.5 text-center">
+                            الإجمالي
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {quoteRows.map((row, index) => (
+                          <tr key={`${row.title}-${index}`}>
+                            <td className="border border-[#bbb] px-2 py-1.5 text-right">
+                              {index + 1}
+                            </td>
+                            <td className="border border-[#bbb] px-2 py-1.5 text-right">
+                              {row.title}
+                            </td>
+                            <td className="border border-[#bbb] px-2 py-1.5 text-center">
+                              {typeof row.quantity === "number"
+                                ? formatNumber(row.quantity)
+                                : row.quantity}
+                            </td>
+                            <td className="border border-[#bbb] px-2 py-1.5 text-center">
+                              {row.unit}
+                            </td>
+                            <td className="border border-[#bbb] px-2 py-1.5 text-center">
+                              {formatSAR(row.unitPrice)} ريال
+                            </td>
+                            <td className="border border-[#bbb] px-2 py-1.5 text-center font-bold">
+                              {formatSAR(row.total)} ريال
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="mt-3 grid grid-cols-2 gap-3 print-page-break-avoid">
+                    <div className="border border-[#ddd] rounded-lg p-2.5">
+                      <div className="font-bold text-[12px] mb-1.5">
+                        المساحات المعتمدة
+                      </div>
+                      <div>الدور الأرضي: {formatNumber(groundFloorArea)} م²</div>
+                      <div>الدور الأول: {formatNumber(firstFloorArea)} م²</div>
+                      <div>الملحق العلوي: {formatNumber(penthouseArea)} م²</div>
+                      {hasBasement && (
+                        <div>البدروم: {formatNumber(basementArea)} م²</div>
+                      )}
+                      {hasRoofSeating && serviceType !== "bone" && (
+                        <div>جلسات السطح: {formatNumber(roofRemainingArea)} م²</div>
+                      )}
+                      <div className="mt-1.5 font-bold text-[#d4a017]">
+                        مساحة البناء الكلية: {formatNumber(mainBuiltArea)} م²
+                      </div>
+                    </div>
+
+                    <div className="border border-[#ddd] rounded-lg p-2.5">
+                      <div className="font-bold text-[12px] mb-1.5">الإجمالي</div>
+                      <div className="flex items-center justify-between gap-2">
+                        <span>الإجمالي النهائي</span>
+                        <span className="font-extrabold text-[16px] text-[#d4a017]">
+                          {formatSAR(totalCost)} ريال
+                        </span>
+                      </div>
+                      <div className="mt-2 text-[10px] text-[#555]">
+                        متوسط تكلفة المتر: {formatSAR(averageCostPerM2)} ريال / م²
+                      </div>
+                      <div className="text-[10px] text-[#555]">
+                        القيمة السوقية المتوقعة: {formatSAR(marketValueRange.low)} –{" "}
+                        {formatSAR(marketValueRange.high)} ريال
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-3 border border-[#e6d28a] rounded-lg p-3 text-[10px] text-[#444] print-page-break-avoid">
+                    <div className="font-bold text-[12px] mb-1.5">ملاحظات</div>
+                    <div>• الأسعار تقديرية وتعتمد على المدخلات المختارة داخل الحاسبة.</div>
+                    <div>
+                      • السعر النهائي يعتمد على المخططات التنفيذية والمعاينة ونطاق
+                      العمل.
+                    </div>
+                    <div>
+                      • تم اعتماد نسبة البدروم الافتراضية 60% من مساحة الدور الأرضي
+                      مع إمكانية التعديل.
+                    </div>
+                    <div>
+                      • تم اعتماد مسبح قياسي بمقاس 2.5 × 4 م لأغراض الحساب التقديري.
+                    </div>
+                    {hasRoofSeating && serviceType !== "bone" && (
+                      <div>
+                        • تشطيب جلسات السطح محسوب على المساحة المتبقية من السطح
+                        بعد خصم مساحة الملحق العلوي، ويشمل مظلة حديد ديكورية
+                        وبحرة وحجر أو تكسية/تفنيش جدران بمنظر جيد وبلاط خارجي
+                        بمستوى جيد.
+                      </div>
+                    )}
+                    <div>
+                      • مدة التنفيذ التقريبية:
+                      {serviceType === "bone"
+                        ? " 4 إلى 6 أشهر."
+                        : serviceType === "finishing"
+                        ? " 3 إلى 5 أشهر."
+                        : " 8 إلى 12 شهرًا."}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
           )}
-
-          <Link
-            to={detailedCalculatorLink}
-            className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white hover:bg-white/10 transition"
-          >
-            لمعرفة الأسعار التفصيلية للبنود اضغط هنا
-          </Link>
-
-          <a
-            href={waLink}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white hover:bg-white/10 transition"
-          >
-            إرسال التقدير إلى واتساب
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div id="quote-pdf" className="hidden print:block">
-      <div className="w-full bg-white text-[#111] p-6 text-[13px] leading-6">
-        <div className="flex items-start justify-between gap-6 print-page-break-avoid">
-          <div className="text-right flex-1">
-            <h1 className="text-[28px] font-extrabold leading-tight">
-              عرض سعر تقديري
-            </h1>
-            <div className="mt-2 text-[14px] text-[#555]">
-              بنيان الهرم للمقاولات
-            </div>
-            <div className="mt-2 text-[13px] text-[#444]">
-              التاريخ: {new Date().toLocaleDateString("ar-SA")}
-            </div>
-            <div className="text-[13px] text-[#444]">الموقع: الرياض</div>
-            <div className="text-[13px] text-[#444]">
-              الموقع الإلكتروني: pybcco.com
-            </div>
-            <div className="text-[13px] text-[#444]">الجوال: 0550604837</div>
-          </div>
-
-          <div className="shrink-0">
-            <img
-              src="/favicon.webp"
-              alt="شعار بنيان الهرم للمقاولات"
-              className="w-[82px] h-[82px] object-contain"
-            />
-          </div>
-        </div>
-
-        <div className="mt-5 border-t-2 border-[#d4a017]" />
-
-        <div className="mt-5 grid grid-cols-2 gap-3 print-page-break-avoid">
-          <div className="border border-[#ddd] rounded-lg p-3">
-            <div className="text-[#777] text-[12px]">نوع الخدمة</div>
-            <div className="font-bold text-[16px] mt-1">{serviceLabel}</div>
-          </div>
-
-          <div className="border border-[#ddd] rounded-lg p-3">
-            <div className="text-[#777] text-[12px]">المستوى</div>
-            <div className="font-bold text-[16px] mt-1">
-              {serviceType === "bone" ? "عظم" : levelLabel}
-            </div>
-          </div>
-
-          <div className="border border-[#ddd] rounded-lg p-3">
-            <div className="text-[#777] text-[12px]">مساحة الأرض</div>
-            <div className="font-bold text-[16px] mt-1">
-              {formatNumber(landAreaNumber)} م²
-            </div>
-          </div>
-
-          <div className="border border-[#ddd] rounded-lg p-3">
-            <div className="text-[#777] text-[12px]">نسبة البناء</div>
-            <div className="font-bold text-[16px] mt-1">
-              {formatNumber(buildRatio)}%
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-5 print-page-break-avoid">
-          <table className="w-full border-collapse text-[13px]">
-            <thead>
-              <tr className="bg-[#f7f7f7]">
-                <th className="border border-[#222] px-3 py-2 text-right">#</th>
-                <th className="border border-[#222] px-3 py-2 text-right">البند</th>
-                <th className="border border-[#222] px-3 py-2 text-center">الكمية</th>
-                <th className="border border-[#222] px-3 py-2 text-center">الوحدة</th>
-                <th className="border border-[#222] px-3 py-2 text-center">سعر الوحدة</th>
-                <th className="border border-[#222] px-3 py-2 text-center">الإجمالي</th>
-              </tr>
-            </thead>
-            <tbody>
-              {quoteRows.map((row, index) => (
-                <tr key={`${row.title}-${index}`}>
-                  <td className="border border-[#bbb] px-3 py-2 text-right">
-                    {index + 1}
-                  </td>
-                  <td className="border border-[#bbb] px-3 py-2 text-right">
-                    {row.title}
-                  </td>
-                  <td className="border border-[#bbb] px-3 py-2 text-center">
-                    {typeof row.quantity === "number"
-                      ? formatNumber(row.quantity)
-                      : row.quantity}
-                  </td>
-                  <td className="border border-[#bbb] px-3 py-2 text-center">
-                    {row.unit}
-                  </td>
-                  <td className="border border-[#bbb] px-3 py-2 text-center">
-                    {formatSAR(row.unitPrice)} ريال
-                  </td>
-                  <td className="border border-[#bbb] px-3 py-2 text-center font-bold">
-                    {formatSAR(row.total)} ريال
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <div className="mt-5 grid grid-cols-2 gap-4 print-page-break-avoid">
-          <div className="border border-[#ddd] rounded-lg p-3">
-            <div className="font-bold text-[15px] mb-2">المساحات المعتمدة</div>
-            <div>الدور الأرضي: {formatNumber(groundFloorArea)} م²</div>
-            <div>الدور الأول: {formatNumber(firstFloorArea)} م²</div>
-            <div>الملحق العلوي: {formatNumber(penthouseArea)} م²</div>
-            {hasBasement && (
-              <div>البدروم: {formatNumber(basementArea)} م²</div>
-            )}
-            <div className="mt-2 font-bold text-[#d4a017]">
-              مساحة البناء الكلية: {formatNumber(mainBuiltArea)} م²
-            </div>
-          </div>
-
-          <div className="border border-[#ddd] rounded-lg p-3">
-            <div className="font-bold text-[15px] mb-2">الإجمالي</div>
-            <div className="flex items-center justify-between">
-              <span>الإجمالي النهائي</span>
-              <span className="font-extrabold text-[20px] text-[#d4a017]">
-                {formatSAR(totalCost)} ريال
-              </span>
-            </div>
-            <div className="mt-3 text-[12px] text-[#555]">
-              متوسط تكلفة المتر: {formatSAR(averageCostPerM2)} ريال / م²
-            </div>
-            <div className="text-[12px] text-[#555]">
-              القيمة السوقية المتوقعة: {formatSAR(marketValueRange.low)} –{" "}
-              {formatSAR(marketValueRange.high)} ريال
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-5 border border-[#e6d28a] rounded-lg p-4 text-[12px] text-[#444] print-page-break-avoid">
-          <div className="font-bold text-[14px] mb-2">ملاحظات</div>
-          <div>• الأسعار تقديرية وتعتمد على المدخلات المختارة داخل الحاسبة.</div>
-          <div>• السعر النهائي يعتمد على المخططات التنفيذية والمعاينة ونطاق العمل.</div>
-          <div>• تم اعتماد نسبة البدروم الافتراضية 60% من مساحة الدور الأرضي مع إمكانية التعديل.</div>
-          <div>• تم اعتماد مسبح قياسي بمقاس 2.5 × 4 م لأغراض الحساب التقديري.</div>
-          <div>• مدة التنفيذ التقريبية:
-            {serviceType === "bone"
-              ? " 4 إلى 6 أشهر."
-              : serviceType === "finishing"
-              ? " 3 إلى 5 أشهر."
-              : " 8 إلى 12 شهرًا."}
-          </div>
-        </div>
-      </div>
-    </div>
-  </>
-)}
 
           <section className="max-w-5xl mx-auto text-right no-print space-y-10">
             <div>
@@ -1164,33 +1431,25 @@ if (hasRoofSeating) {
                       <td className="py-2 text-right text-white/70">
                         الهيكل الخرساني
                       </td>
-                      <td className="py-2 text-left font-bold text-white">
-                        40%
-                      </td>
+                      <td className="py-2 text-left font-bold text-white">40%</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 text-right text-white/70">
                         أعمال التشطيب
                       </td>
-                      <td className="py-2 text-left font-bold text-white">
-                        40%
-                      </td>
+                      <td className="py-2 text-left font-bold text-white">40%</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 text-right text-white/70">
                         كهرباء وميكانيك
                       </td>
-                      <td className="py-2 text-left font-bold text-white">
-                        10%
-                      </td>
+                      <td className="py-2 text-left font-bold text-white">10%</td>
                     </tr>
                     <tr>
                       <td className="py-2 text-right text-white/70">
                         أعمال خارجية وملاحق
                       </td>
-                      <td className="py-2 text-left font-bold text-white">
-                        10%
-                      </td>
+                      <td className="py-2 text-left font-bold text-white">10%</td>
                     </tr>
                   </tbody>
                 </table>
@@ -1207,7 +1466,8 @@ if (hasRoofSeating) {
                   <div>✔️ التمديدات الأساسية حسب نوع الخدمة</div>
                   <div>✔️ التشطيب حسب المستوى المختار</div>
                   <div>
-                    ✔️ البنود الإضافية مثل البدروم والمصعد والمسبح عند تفعيلها
+                    ✔️ البنود الإضافية مثل البدروم والمصعد والمسبح وجلسات السطح عند
+                    تفعيلها
                   </div>
                 </div>
               </div>
@@ -1215,7 +1475,7 @@ if (hasRoofSeating) {
 
             <div className="rounded-2xl border border-white/10 bg-black/30 p-6">
               <h3 className="text-xl font-bold text-gold mb-4">
-                البدروم والمسبح والمصعد في مشاريع الفلل
+                البدروم والمسبح والمصعد وجلسات السطح في مشاريع الفلل
               </h3>
 
               <p className="text-white/80 leading-8">
@@ -1226,10 +1486,11 @@ if (hasRoofSeating) {
               </p>
 
               <p className="mt-4 text-white/80 leading-8">
-                كذلك يمكن أن يؤثر وجود المصعد أو المسبح بشكل واضح على إجمالي
-                التكلفة، ولهذا تتيح لك الحاسبة اختيار هذه العناصر ضمن النتيجة
-                النهائية. تم اعتماد مسبح قياسي بمقاس 2.5 × 4 م لأغراض الحساب
-                التقديري في هذه الصفحة.
+                كذلك يمكن أن يؤثر وجود المصعد أو المسبح أو جلسات السطح بشكل واضح
+                على إجمالي التكلفة، ولهذا تتيح لك الحاسبة اختيار هذه العناصر ضمن
+                النتيجة النهائية. ويتم احتساب جلسات السطح على المساحة المتبقية من
+                السطح بعد خصم مساحة الملحق العلوي، مع تسعير يختلف حسب المستوى
+                التجاري أو القياسي أو الفاخر.
               </p>
             </div>
 
@@ -1332,11 +1593,12 @@ if (hasRoofSeating) {
 
                 <div>
                   <h3 className="font-bold text-white mb-2">
-                    هل الحفر محسوب في النتيجة؟
+                    كيف تُحسب جلسات السطح؟
                   </h3>
                   <p>
-                    نعم، يتم احتساب الحفر كبند مستقل في العظم وتسليم المفتاح، بينما
-                    لا يظهر في التشطيب فقط.
+                    يتم احتساب جلسات السطح على المساحة المتبقية من السطح بعد خصم
+                    مساحة الملحق العلوي، وتختلف قيمة المتر حسب المستوى التجاري أو
+                    القياسي أو الفاخر.
                   </p>
                 </div>
               </div>
