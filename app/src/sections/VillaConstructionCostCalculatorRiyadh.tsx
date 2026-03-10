@@ -109,6 +109,22 @@ export default function VillaConstructionCostCalculatorRiyadh() {
           text: "نعم، يظهر الحفر كبند مستقل في العظم وتسليم المفتاح، ولا يظهر في التشطيب فقط.",
         },
       },
+      {
+        "@type": "Question",
+        name: "كيف يتم احتساب البدروم في الحاسبة؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "يتم احتساب البدروم بنسبة افتراضية تعادل 60% من مساحة الدور الأرضي مع إمكانية تعديلها حسب المشروع.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "هل يمكن استخدام الحاسبة لمعرفة تكلفة تسليم المفتاح؟",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "نعم، يمكن اختيار خدمة تسليم مفتاح داخل الحاسبة، وسيتم احتساب التكلفة التقديرية حسب المستوى المختار.",
+        },
+      },
     ],
   };
 
@@ -295,42 +311,6 @@ export default function VillaConstructionCostCalculatorRiyadh() {
     return totalCost / totalBuiltForAverage;
   }, [totalCost, mainBuiltArea, basementArea]);
 
-  const distribution = useMemo(() => {
-    if (totalCost <= 0) {
-      return {
-        structure: 0,
-        finishing: 0,
-        external: 0,
-        misc: 0,
-      };
-    }
-
-    if (serviceType === "bone") {
-      return {
-        structure: 78,
-        finishing: 0,
-        external: 10,
-        misc: 12,
-      };
-    }
-
-    if (serviceType === "finishing") {
-      return {
-        structure: 0,
-        finishing: 72,
-        external: 12,
-        misc: 16,
-      };
-    }
-
-    return {
-      structure: 40,
-      finishing: 42,
-      external: 8,
-      misc: 10,
-    };
-  }, [serviceType, totalCost]);
-
   const marketValueRange = useMemo(() => {
     const low = totalCost * 1.18;
     const high = totalCost * 1.35;
@@ -356,6 +336,129 @@ export default function VillaConstructionCostCalculatorRiyadh() {
   );
 
   const waLink = `https://wa.me/966550604837?text=${whatsappText}`;
+  const quoteRows = useMemo(() => {
+  const rows: Array<{
+    title: string;
+    quantity: number | string;
+    unit: string;
+    unitPrice: number;
+    total: number;
+  }> = [];
+
+  if (serviceType === "bone") {
+    rows.push({
+      title: "أعمال العظم",
+      quantity: mainBuiltArea,
+      unit: "م²",
+      unitPrice: BONE_RATE,
+      total: mainBuiltArea * BONE_RATE,
+    });
+  }
+
+  if (serviceType === "finishing") {
+    rows.push({
+      title: `أعمال التشطيب (${levelLabel})`,
+      quantity: mainBuiltArea,
+      unit: "م²",
+      unitPrice: FINISHING_RATES[level],
+      total: mainAreaCost,
+    });
+  }
+
+  if (serviceType === "turnkey") {
+    rows.push({
+      title: `تسليم مفتاح (${levelLabel})`,
+      quantity: mainBuiltArea,
+      unit: "م²",
+      unitPrice: TURNKEY_RATES[level],
+      total: mainAreaCost,
+    });
+  }
+
+  if (serviceType !== "finishing") {
+    const excavationQty = hasBasement
+      ? mainBuiltArea * 1.7 + basementArea * 3.5
+      : mainBuiltArea * 1.7;
+
+    rows.push({
+      title: "أعمال الحفر",
+      quantity: excavationQty,
+      unit: "م³",
+      unitPrice: 45,
+      total: excavationCost,
+    });
+  }
+
+  if (hasBasement) {
+    rows.push({
+      title: "أعمال البدروم",
+      quantity: basementArea,
+      unit: "م²",
+      unitPrice: activeRate * 1.5,
+      total: basementCost,
+    });
+  }
+
+  if (hasElevator) {
+    rows.push({
+      title: serviceType === "bone" ? "بيت المصعد" : "توريد وتركيب المصعد",
+      quantity: 1,
+      unit: "بند",
+      unitPrice: elevatorCost,
+      total: elevatorCost,
+    });
+  }
+
+  if (hasPool) {
+    rows.push({
+      title: serviceType === "bone" ? "مسبح خرساني قياسي" : "مسبح قياسي",
+      quantity: 1,
+      unit: "بند",
+      unitPrice: poolCost,
+      total: poolCost,
+    });
+  }
+
+  if (hasRoofSeating && roofSeatingAmountNumber > 0) {
+    rows.push({
+      title: "تشطيب جلسات السطح",
+      quantity: 1,
+      unit: "بند",
+      unitPrice: roofSeatingAmountNumber,
+      total: roofSeatingAmountNumber,
+    });
+  }
+
+  if (governmentFeesNumber > 0) {
+    rows.push({
+      title: "أوراق حكومية ورسوم تقديرية",
+      quantity: 1,
+      unit: "بند",
+      unitPrice: governmentFeesNumber,
+      total: governmentFeesNumber,
+    });
+  }
+
+  return rows;
+}, [
+  serviceType,
+  level,
+  levelLabel,
+  mainBuiltArea,
+  mainAreaCost,
+  excavationCost,
+  hasBasement,
+  basementArea,
+  basementCost,
+  hasElevator,
+  elevatorCost,
+  hasPool,
+  poolCost,
+  hasRoofSeating,
+  roofSeatingAmountNumber,
+  governmentFeesNumber,
+  activeRate,
+]);
 
   const handlePrint = () => {
     window.print();
@@ -372,33 +475,58 @@ export default function VillaConstructionCostCalculatorRiyadh() {
       />
 
       <style>{`
-        @media print {
-          body * {
-            visibility: hidden !important;
-          }
-          #print-estimate, #print-estimate * {
-            visibility: visible !important;
-          }
-          #print-estimate {
-            position: absolute !important;
-            left: 0;
-            top: 0;
-            width: 100%;
-            background: white !important;
-            color: black !important;
-            padding: 24px !important;
-          }
-          .no-print {
-            display: none !important;
-          }
-        }
-      `}</style>
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
 
-      <section className="relative min-h-[88vh] flex items-center justify-center overflow-hidden">
+  @media print {
+    html, body {
+      background: #fff !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body * {
+      visibility: hidden !important;
+    }
+
+    #quote-pdf,
+    #quote-pdf * {
+      visibility: visible !important;
+    }
+
+    #quote-pdf {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      min-height: auto !important;
+      background: #ffffff !important;
+      color: #111111 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: 0 !important;
+      box-shadow: none !important;
+    }
+
+    .no-print {
+      display: none !important;
+    }
+
+    .print-page-break-avoid {
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
+  }
+`}</style>
+
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <img
           src="/images/VillaFinishingPriceRiyadh.webp"
           alt="حاسبة تكلفة بناء فيلا في الرياض – بنيان الهرم للمقاولات"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover scale-105"
           loading="eager"
         />
         <div className="absolute inset-0 bg-black/75" />
@@ -420,6 +548,20 @@ export default function VillaConstructionCostCalculatorRiyadh() {
             الشوارع ونوع الخدمة والبدروم والمصعد والمسبح.
           </p>
 
+          <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm text-white/80">
+            <div className="bg-black/40 border border-white/10 rounded-lg px-4 py-2">
+              ✔ حساب تقديري خلال ثوانٍ
+            </div>
+
+            <div className="bg-black/40 border border-white/10 rounded-lg px-4 py-2">
+              ✔ يشمل البدروم والمصعد والمسبح
+            </div>
+
+            <div className="bg-black/40 border border-white/10 rounded-lg px-4 py-2">
+              ✔ مناسب لمشاريع الفلل في الرياض
+            </div>
+          </div>
+
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <Button
               className="bg-gold text-black font-bold px-8 py-6 text-lg"
@@ -428,7 +570,7 @@ export default function VillaConstructionCostCalculatorRiyadh() {
                 if (el) el.scrollIntoView({ behavior: "smooth" });
               }}
             >
-              ابدأ الحساب الآن
+              ابدأ حساب تكلفة مشروعك
             </Button>
 
             <Button
@@ -614,9 +756,7 @@ export default function VillaConstructionCostCalculatorRiyadh() {
               </div>
 
               <div className="rounded-xl border border-white/10 bg-black/30 p-4">
-                <div className="text-sm text-white/70 mb-2">
-                  نسبة البناء (%)
-                </div>
+                <div className="text-sm text-white/70 mb-2">نسبة البناء (%)</div>
                 <input
                   value={String(buildRatio)}
                   onChange={(e) => {
@@ -752,340 +892,466 @@ export default function VillaConstructionCostCalculatorRiyadh() {
             </div>
           </div>
 
-          {showResult && isValid && (
-            <div id="print-estimate" className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6">
-              <div className="text-sm text-white/70">الملخص التقديري للمشروع</div>
+              {showResult && isValid && (
+  <>
+    <div className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6 no-print">
+      <div className="text-sm text-white/70">الملخص التقديري للمشروع</div>
 
-              <div className="mt-2 text-3xl md:text-4xl font-extrabold">
-                {formatSAR(totalCost)}{" "}
-                <span className="text-lg font-semibold text-white/80">
-                  ريال
-                </span>
+      <div className="mt-2 text-3xl md:text-4xl font-extrabold">
+        {formatSAR(totalCost)}{" "}
+        <span className="text-lg font-semibold text-white/80">ريال</span>
+      </div>
+
+      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+        <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+          <div className="text-white/60">نوع الخدمة</div>
+          <div className="mt-1 font-bold">{serviceLabel}</div>
+        </div>
+
+        <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+          <div className="text-white/60">المستوى</div>
+          <div className="mt-1 font-bold">
+            {serviceType === "bone" ? "عظم" : levelLabel}
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+          <div className="text-white/60">مساحة البناء الكلية</div>
+          <div className="mt-1 font-bold text-gold">
+            {formatNumber(mainBuiltArea)} م²
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+          <div className="text-white/60">متوسط تكلفة المتر</div>
+          <div className="mt-1 font-bold">
+            {formatSAR(averageCostPerM2)} ريال / م²
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-6 rounded-2xl border border-gold/30 bg-gold/10 p-5 md:p-6">
+        <div className="text-base md:text-lg font-extrabold text-gold">
+          للطباعة أو الحفظ بصيغة PDF
+        </div>
+
+        <p className="mt-2 text-sm md:text-base text-white/85 leading-8">
+          تم تجهيز عرض سعر منسق في صفحة واحدة للطباعة بصيغة PDF، مع جدول البنود
+          والكميات والأسعار والملاحظات النهائية.
+        </p>
+
+        <div className="mt-4 flex flex-col md:flex-row gap-3">
+          <Button
+            className="bg-gold text-black font-extrabold"
+            onClick={handlePrint}
+          >
+            طباعة PDF
+          </Button>
+
+          {!activatedUser?.phone && (
+            <Link
+              to="/create-account"
+              className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/10 px-5 py-3 text-sm font-bold text-white hover:bg-white/15 transition"
+            >
+              إنشاء حساب
+            </Link>
+          )}
+
+          <Link
+            to={detailedCalculatorLink}
+            className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white hover:bg-white/10 transition"
+          >
+            لمعرفة الأسعار التفصيلية للبنود اضغط هنا
+          </Link>
+
+          <a
+            href={waLink}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white hover:bg-white/10 transition"
+          >
+            إرسال التقدير إلى واتساب
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="quote-pdf" className="hidden print:block">
+      <div className="w-full bg-white text-[#111] p-6 text-[13px] leading-6">
+        <div className="flex items-start justify-between gap-6 print-page-break-avoid">
+          <div className="text-right flex-1">
+            <h1 className="text-[28px] font-extrabold leading-tight">
+              عرض سعر تقديري
+            </h1>
+            <div className="mt-2 text-[14px] text-[#555]">
+              بنيان الهرم للمقاولات
+            </div>
+            <div className="mt-2 text-[13px] text-[#444]">
+              التاريخ: {new Date().toLocaleDateString("ar-SA")}
+            </div>
+            <div className="text-[13px] text-[#444]">الموقع: الرياض</div>
+            <div className="text-[13px] text-[#444]">
+              الموقع الإلكتروني: pybcco.com
+            </div>
+            <div className="text-[13px] text-[#444]">الجوال: 0550604837</div>
+          </div>
+
+          <div className="shrink-0">
+            <img
+              src="/favicon.webp"
+              alt="شعار بنيان الهرم للمقاولات"
+              className="w-[82px] h-[82px] object-contain"
+            />
+          </div>
+        </div>
+
+        <div className="mt-5 border-t-2 border-[#d4a017]" />
+
+        <div className="mt-5 grid grid-cols-2 gap-3 print-page-break-avoid">
+          <div className="border border-[#ddd] rounded-lg p-3">
+            <div className="text-[#777] text-[12px]">نوع الخدمة</div>
+            <div className="font-bold text-[16px] mt-1">{serviceLabel}</div>
+          </div>
+
+          <div className="border border-[#ddd] rounded-lg p-3">
+            <div className="text-[#777] text-[12px]">المستوى</div>
+            <div className="font-bold text-[16px] mt-1">
+              {serviceType === "bone" ? "عظم" : levelLabel}
+            </div>
+          </div>
+
+          <div className="border border-[#ddd] rounded-lg p-3">
+            <div className="text-[#777] text-[12px]">مساحة الأرض</div>
+            <div className="font-bold text-[16px] mt-1">
+              {formatNumber(landAreaNumber)} م²
+            </div>
+          </div>
+
+          <div className="border border-[#ddd] rounded-lg p-3">
+            <div className="text-[#777] text-[12px]">نسبة البناء</div>
+            <div className="font-bold text-[16px] mt-1">
+              {formatNumber(buildRatio)}%
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-5 print-page-break-avoid">
+          <table className="w-full border-collapse text-[13px]">
+            <thead>
+              <tr className="bg-[#f7f7f7]">
+                <th className="border border-[#222] px-3 py-2 text-right">#</th>
+                <th className="border border-[#222] px-3 py-2 text-right">البند</th>
+                <th className="border border-[#222] px-3 py-2 text-center">الكمية</th>
+                <th className="border border-[#222] px-3 py-2 text-center">الوحدة</th>
+                <th className="border border-[#222] px-3 py-2 text-center">سعر الوحدة</th>
+                <th className="border border-[#222] px-3 py-2 text-center">الإجمالي</th>
+              </tr>
+            </thead>
+            <tbody>
+              {quoteRows.map((row, index) => (
+                <tr key={`${row.title}-${index}`}>
+                  <td className="border border-[#bbb] px-3 py-2 text-right">
+                    {index + 1}
+                  </td>
+                  <td className="border border-[#bbb] px-3 py-2 text-right">
+                    {row.title}
+                  </td>
+                  <td className="border border-[#bbb] px-3 py-2 text-center">
+                    {typeof row.quantity === "number"
+                      ? formatNumber(row.quantity)
+                      : row.quantity}
+                  </td>
+                  <td className="border border-[#bbb] px-3 py-2 text-center">
+                    {row.unit}
+                  </td>
+                  <td className="border border-[#bbb] px-3 py-2 text-center">
+                    {formatSAR(row.unitPrice)} ريال
+                  </td>
+                  <td className="border border-[#bbb] px-3 py-2 text-center font-bold">
+                    {formatSAR(row.total)} ريال
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="mt-5 grid grid-cols-2 gap-4 print-page-break-avoid">
+          <div className="border border-[#ddd] rounded-lg p-3">
+            <div className="font-bold text-[15px] mb-2">المساحات المعتمدة</div>
+            <div>الدور الأرضي: {formatNumber(groundFloorArea)} م²</div>
+            <div>الدور الأول: {formatNumber(firstFloorArea)} م²</div>
+            <div>الملحق العلوي: {formatNumber(penthouseArea)} م²</div>
+            {hasBasement && (
+              <div>البدروم: {formatNumber(basementArea)} م²</div>
+            )}
+            <div className="mt-2 font-bold text-[#d4a017]">
+              مساحة البناء الكلية: {formatNumber(mainBuiltArea)} م²
+            </div>
+          </div>
+
+          <div className="border border-[#ddd] rounded-lg p-3">
+            <div className="font-bold text-[15px] mb-2">الإجمالي</div>
+            <div className="flex items-center justify-between">
+              <span>الإجمالي النهائي</span>
+              <span className="font-extrabold text-[20px] text-[#d4a017]">
+                {formatSAR(totalCost)} ريال
+              </span>
+            </div>
+            <div className="mt-3 text-[12px] text-[#555]">
+              متوسط تكلفة المتر: {formatSAR(averageCostPerM2)} ريال / م²
+            </div>
+            <div className="text-[12px] text-[#555]">
+              القيمة السوقية المتوقعة: {formatSAR(marketValueRange.low)} –{" "}
+              {formatSAR(marketValueRange.high)} ريال
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-5 border border-[#e6d28a] rounded-lg p-4 text-[12px] text-[#444] print-page-break-avoid">
+          <div className="font-bold text-[14px] mb-2">ملاحظات</div>
+          <div>• الأسعار تقديرية وتعتمد على المدخلات المختارة داخل الحاسبة.</div>
+          <div>• السعر النهائي يعتمد على المخططات التنفيذية والمعاينة ونطاق العمل.</div>
+          <div>• تم اعتماد نسبة البدروم الافتراضية 60% من مساحة الدور الأرضي مع إمكانية التعديل.</div>
+          <div>• تم اعتماد مسبح قياسي بمقاس 2.5 × 4 م لأغراض الحساب التقديري.</div>
+          <div>• مدة التنفيذ التقريبية:
+            {serviceType === "bone"
+              ? " 4 إلى 6 أشهر."
+              : serviceType === "finishing"
+              ? " 3 إلى 5 أشهر."
+              : " 8 إلى 12 شهرًا."}
+          </div>
+        </div>
+      </div>
+    </div>
+  </>
+)}
+
+          <section className="max-w-5xl mx-auto text-right no-print space-y-10">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-gold">
+                كم تكلفة بناء فيلا في الرياض؟
+              </h2>
+
+              <p className="mt-4 text-white/80 leading-8">
+                تختلف تكلفة بناء الفيلا في الرياض حسب مساحة الأرض، وعدد الشوارع،
+                ونسبة البناء، ونوع الخدمة المطلوبة، سواء كانت عظم أو تشطيب أو
+                تسليم مفتاح. كما تؤثر عناصر إضافية مثل البدروم والمصعد والمسبح
+                وجلسات السطح على إجمالي التكلفة النهائية. تساعدك هذه الحاسبة
+                التفاعلية على تكوين تصور سريع وعملي عن تكلفة المشروع قبل طلب العرض
+                النهائي أو بدء مراجعة المخططات.
+              </p>
+
+              <p className="mt-4 text-white/80 leading-8">
+                في المشاريع السكنية الخاصة يتم عادة احتساب المسطحات بناءً على نسبة
+                البناء المعتمدة للمخطط، ثم يتم احتساب تكلفة التنفيذ حسب نوع الخدمة
+                والمستوى المختار. لذلك تعتبر هذه الصفحة أداة مفيدة لكل من يبحث عن
+                حاسبة تكلفة بناء فيلا في الرياض أو يريد معرفة تكلفة العظم أو
+                التشطيب أو تسليم المفتاح بشكل أولي وواضح.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-5">
+                <h3 className="text-xl font-bold text-gold mb-4">
+                  توزيع تكلفة بناء الفيلا عادةً
+                </h3>
+
+                <table className="w-full text-sm">
+                  <tbody>
+                    <tr className="border-b border-white/10">
+                      <td className="py-2 text-right text-white/70">
+                        الهيكل الخرساني
+                      </td>
+                      <td className="py-2 text-left font-bold text-white">
+                        40%
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white/10">
+                      <td className="py-2 text-right text-white/70">
+                        أعمال التشطيب
+                      </td>
+                      <td className="py-2 text-left font-bold text-white">
+                        40%
+                      </td>
+                    </tr>
+                    <tr className="border-b border-white/10">
+                      <td className="py-2 text-right text-white/70">
+                        كهرباء وميكانيك
+                      </td>
+                      <td className="py-2 text-left font-bold text-white">
+                        10%
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="py-2 text-right text-white/70">
+                        أعمال خارجية وملاحق
+                      </td>
+                      <td className="py-2 text-left font-bold text-white">
+                        10%
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
 
-              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                <div className="rounded-xl border border-white/10 bg-black/30 p-4">
-                  <div className="text-white/60">نوع الخدمة</div>
-                  <div className="mt-1 font-bold">{serviceLabel}</div>
-                </div>
+              <div className="rounded-2xl border border-white/10 bg-black/30 p-5">
+                <h3 className="text-xl font-bold text-gold mb-4">
+                  ماذا يشمل السعر عادة؟
+                </h3>
 
-                <div className="rounded-xl border border-white/10 bg-black/30 p-4">
-                  <div className="text-white/60">المستوى</div>
-                  <div className="mt-1 font-bold">
-                    {serviceType === "bone" ? "عظم" : levelLabel}
+                <div className="space-y-2 text-white/80 leading-7 text-sm">
+                  <div>✔️ أعمال الحفر والأساسات</div>
+                  <div>✔️ الهيكل الخرساني والعظم</div>
+                  <div>✔️ التمديدات الأساسية حسب نوع الخدمة</div>
+                  <div>✔️ التشطيب حسب المستوى المختار</div>
+                  <div>
+                    ✔️ البنود الإضافية مثل البدروم والمصعد والمسبح عند تفعيلها
                   </div>
-                </div>
-
-                <div className="rounded-xl border border-white/10 bg-black/30 p-4">
-                  <div className="text-white/60">مساحة الأرض</div>
-                  <div className="mt-1 font-bold">{formatNumber(landAreaNumber)} م²</div>
-                </div>
-
-                <div className="rounded-xl border border-white/10 bg-black/30 p-4">
-                  <div className="text-white/60">نسبة البناء المعتمدة</div>
-                  <div className="mt-1 font-bold">{formatNumber(buildRatio)}%</div>
-                </div>
-              </div>
-
-              <div className="mt-6 rounded-2xl border border-white/10 bg-black/25 p-5">
-                <div className="text-lg font-extrabold text-gold">
-                  المساحات المعتمدة
-                </div>
-
-                <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                  <div className="rounded-xl border border-white/10 bg-black/20 p-4">
-                    <div className="text-white/60">الدور الأرضي</div>
-                    <div className="mt-1 font-bold">
-                      {formatNumber(groundFloorArea)} م²
-                    </div>
-                  </div>
-
-                  <div className="rounded-xl border border-white/10 bg-black/20 p-4">
-                    <div className="text-white/60">الدور الأول</div>
-                    <div className="mt-1 font-bold">
-                      {formatNumber(firstFloorArea)} م²
-                    </div>
-                  </div>
-
-                  <div className="rounded-xl border border-white/10 bg-black/20 p-4">
-                    <div className="text-white/60">الملحق العلوي</div>
-                    <div className="mt-1 font-bold">
-                      {formatNumber(penthouseArea)} م²
-                    </div>
-                  </div>
-
-                  <div className="rounded-xl border border-white/10 bg-black/20 p-4">
-                    <div className="text-white/60">مساحة البناء الكلية</div>
-                    <div className="mt-1 font-bold text-gold">
-                      {formatNumber(mainBuiltArea)} م²
-                    </div>
-                  </div>
-
-                  {hasBasement && (
-                    <div className="rounded-xl border border-white/10 bg-black/20 p-4 md:col-span-2">
-                      <div className="text-white/60">مساحة البدروم</div>
-                      <div className="mt-1 font-bold">
-                        {formatNumber(basementArea)} م²
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="mt-6 rounded-2xl border border-white/10 bg-black/25 p-5">
-                <div className="text-lg font-extrabold text-gold">
-                  التكلفة التفصيلية
-                </div>
-
-                <div className="mt-4 overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead className="text-white/70">
-                      <tr className="border-b border-white/10">
-                        <th className="py-2 text-right">البند</th>
-                        <th className="py-2 text-center">القيمة</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="border-b border-white/10">
-                        <td className="py-3 text-right">
-                          تكلفة المسطحات الأساسية
-                        </td>
-                        <td className="py-3 text-center font-bold">
-                          {formatSAR(mainAreaCost)} ريال
-                        </td>
-                      </tr>
-
-                      {hasBasement && (
-                        <tr className="border-b border-white/10">
-                          <td className="py-3 text-right">تكلفة البدروم</td>
-                          <td className="py-3 text-center font-bold">
-                            {formatSAR(basementCost)} ريال
-                          </td>
-                        </tr>
-                      )}
-
-                      {serviceType !== "finishing" && (
-                        <tr className="border-b border-white/10">
-                          <td className="py-3 text-right">الحفر التقديري</td>
-                          <td className="py-3 text-center font-bold">
-                            {formatSAR(excavationCost)} ريال
-                          </td>
-                        </tr>
-                      )}
-
-                      {hasElevator && (
-                        <tr className="border-b border-white/10">
-                          <td className="py-3 text-right">
-                            {serviceType === "bone"
-                              ? "بيت المصعد التقديري"
-                              : "المصعد"}
-                          </td>
-                          <td className="py-3 text-center font-bold">
-                            {formatSAR(elevatorCost)} ريال
-                          </td>
-                        </tr>
-                      )}
-
-                      {hasPool && (
-                        <tr className="border-b border-white/10">
-                          <td className="py-3 text-right">
-                            {serviceType === "bone"
-                              ? "مسبح خرساني تقديري"
-                              : "المسبح"}
-                          </td>
-                          <td className="py-3 text-center font-bold">
-                            {formatSAR(poolCost)} ريال
-                          </td>
-                        </tr>
-                      )}
-
-                      {hasRoofSeating && roofSeatingAmountNumber > 0 && (
-                        <tr className="border-b border-white/10">
-                          <td className="py-3 text-right">جلسات السطح</td>
-                          <td className="py-3 text-center font-bold">
-                            {formatSAR(roofSeatingAmountNumber)} ريال
-                          </td>
-                        </tr>
-                      )}
-
-                      {governmentFeesNumber > 0 && (
-                        <tr className="border-b border-white/10">
-                          <td className="py-3 text-right">الأوراق الحكومية</td>
-                          <td className="py-3 text-center font-bold">
-                            {formatSAR(governmentFeesNumber)} ريال
-                          </td>
-                        </tr>
-                      )}
-
-                      <tr>
-                        <td className="py-3 text-right font-extrabold text-gold">
-                          الإجمالي النهائي
-                        </td>
-                        <td className="py-3 text-center font-extrabold text-gold">
-                          {formatSAR(totalCost)} ريال
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <div className="text-gold font-bold mb-3">
-                    معلومات إضافية عن المشروع
-                  </div>
-
-                  <table className="w-full text-sm">
-                    <tbody>
-                      <tr className="border-b border-white/10">
-                        <td className="py-2 text-right text-white/70">
-                          متوسط تكلفة المتر
-                        </td>
-                        <td className="py-2 text-left font-bold">
-                          {formatSAR(averageCostPerM2)} ريال / م²
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="py-2 text-right text-white/70">
-                          القيمة السوقية المتوقعة
-                        </td>
-                        <td className="py-2 text-left font-bold">
-                          {formatSAR(marketValueRange.low)} –{" "}
-                          {formatSAR(marketValueRange.high)} ريال
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <div className="text-gold font-bold mb-3">
-                    توزيع التكلفة داخل المشروع
-                  </div>
-
-                  <table className="w-full text-sm">
-                    <tbody>
-                      <tr className="border-b border-white/10">
-                        <td className="py-2 text-right text-white/70">
-                          الهيكل والخرسانة
-                        </td>
-                        <td className="py-2 text-left font-bold">
-                          {distribution.structure}%
-                        </td>
-                      </tr>
-                      <tr className="border-b border-white/10">
-                        <td className="py-2 text-right text-white/70">
-                          التشطيب
-                        </td>
-                        <td className="py-2 text-left font-bold">
-                          {distribution.finishing}%
-                        </td>
-                      </tr>
-                      <tr className="border-b border-white/10">
-                        <td className="py-2 text-right text-white/70">
-                          الأعمال الخارجية
-                        </td>
-                        <td className="py-2 text-left font-bold">
-                          {distribution.external}%
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="py-2 text-right text-white/70">
-                          بنود أخرى
-                        </td>
-                        <td className="py-2 text-left font-bold">
-                          {distribution.misc}%
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <div className="mt-5 text-sm leading-8 text-white/80">
-                يشمل التقدير الأعمال الأساسية حسب نوع الخدمة المختار. وتظهر تكلفة
-                الحفر ضمن العظم وتسليم المفتاح فقط. مدة التنفيذ التقريبية:
-                {serviceType === "bone"
-                  ? " 4 إلى 6 أشهر."
-                  : serviceType === "finishing"
-                  ? " 3 إلى 5 أشهر."
-                  : " 8 إلى 12 شهرًا."}
-              </div>
-
-              <div className="mt-4 text-xs text-white/60 leading-7">
-                تم اعتماد نسبة البدروم الافتراضية 60% من مساحة الدور الأرضي مع
-                إمكانية التعديل. تم اعتماد مسبح قياسي بمقاس 2.5 × 4 م لأغراض
-                الحساب التقديري. هذا التقدير تم إنشاؤه عبر حاسبة تكلفة البناء على
-                موقع pybcco.com
-              </div>
-
-              <div className="mt-6 rounded-2xl border border-gold/30 bg-gold/10 p-5 md:p-6 no-print">
-                <div className="text-base md:text-lg font-extrabold text-gold">
-                  للاستفادة من خصم 3% على مشاريعك معنا
-                </div>
-
-                <p className="mt-2 text-sm md:text-base text-white/85 leading-8">
-                  سجّل حسابك أو أنشئ حسابًا جديدًا للاستفادة من خصم 3%، وحفظ
-                  التقدير، والانتقال لاحقًا إلى مسار الطلب والمتابعة بشكل أسهل.
-                </p>
-
-                <div className="mt-4 flex flex-col md:flex-row gap-3">
-                  <Button
-                    className="bg-gold text-black font-extrabold"
-                    onClick={handlePrint}
-                  >
-                    طباعة PDF
-                  </Button>
-
-                  {!activatedUser?.phone && (
-                    <Link
-                      to="/create-account"
-                      className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/10 px-5 py-3 text-sm font-bold text-white hover:bg-white/15 transition"
-                    >
-                      إنشاء حساب
-                    </Link>
-                  )}
-
-                  <Link
-                    to={detailedCalculatorLink}
-                    className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white hover:bg-white/10 transition"
-                  >
-                    لمعرفة الأسعار التفصيلية للبنود اضغط هنا
-                  </Link>
-
-                  <a
-                    href={waLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white hover:bg-white/10 transition"
-                  >
-                    إرسال التقدير إلى واتساب
-                  </a>
                 </div>
               </div>
             </div>
-          )}
 
-          <section className="max-w-4xl mx-auto text-right no-print">
-            <h2 className="text-2xl md:text-3xl font-bold text-gold">
-              كيف تعمل حاسبة تكلفة البناء هذه؟
-            </h2>
+            <div className="rounded-2xl border border-white/10 bg-black/30 p-6">
+              <h3 className="text-xl font-bold text-gold mb-4">
+                البدروم والمسبح والمصعد في مشاريع الفلل
+              </h3>
 
-            <p className="mt-4 text-white/80 leading-relaxed">
-              تعتمد هذه الحاسبة التفاعلية على مساحة الأرض، وعدد الشوارع، ونسبة
-              البناء، ونوع الخدمة، ثم تضيف البنود الاختيارية مثل البدروم والمصعد
-              والمسبح لتكوين ملخص سريع يساعدك على فهم التكلفة التقريبية قبل طلب
-              العرض النهائي.
-            </p>
+              <p className="text-white/80 leading-8">
+                في كثير من مشاريع الفلل في السعودية يتم اعتماد البدروم بنسبة
+                تقريبية تعادل 60% من مساحة الدور الأرضي، مع إمكانية تعديل هذه
+                النسبة حسب تصميم المشروع. كما يتم احتساب البدروم بمعامل أعلى من
+                المسطح العادي بسبب زيادة أعمال الحفر والعزل والخرسانة.
+              </p>
 
-            <div className="mt-6 rounded-2xl border border-white/10 bg-black/30 p-5 text-white/80 text-sm leading-relaxed">
-              <div className="font-bold text-white mb-2">مهم:</div>
-              <ul className="space-y-2">
-                <li>✔️ النتيجة تقديرية وليست عرض سعر نهائي.</li>
+              <p className="mt-4 text-white/80 leading-8">
+                كذلك يمكن أن يؤثر وجود المصعد أو المسبح بشكل واضح على إجمالي
+                التكلفة، ولهذا تتيح لك الحاسبة اختيار هذه العناصر ضمن النتيجة
+                النهائية. تم اعتماد مسبح قياسي بمقاس 2.5 × 4 م لأغراض الحساب
+                التقديري في هذه الصفحة.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-black/30 p-6">
+              <h3 className="text-xl font-bold text-gold mb-4">
+                جدول مراحل تنفيذ بناء فيلا
+              </h3>
+
+              <table className="w-full text-sm">
+                <tbody>
+                  <tr className="border-b border-white/10">
+                    <td className="py-3 text-right text-white/70">
+                      الحفر والأساسات
+                    </td>
+                    <td className="py-3 text-left font-bold text-white">
+                      2 – 3 أسابيع
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="py-3 text-right text-white/70">
+                      الهيكل الخرساني
+                    </td>
+                    <td className="py-3 text-left font-bold text-white">
+                      2 – 3 أشهر
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="py-3 text-right text-white/70">
+                      التمديدات الأساسية
+                    </td>
+                    <td className="py-3 text-left font-bold text-white">
+                      1 – 2 شهر
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 text-right text-white/70">
+                      التشطيبات والتسليم
+                    </td>
+                    <td className="py-3 text-left font-bold text-white">
+                      3 – 5 أشهر
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div className="mt-4 text-white/80 text-sm leading-7">
+                مدة التنفيذ الإجمالية التقريبية لفيلا سكنية غالبًا تتراوح بين 8
+                إلى 12 شهرًا، حسب حجم المشروع ومستوى التشطيب ونطاق الأعمال
+                الإضافية.
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-gold/20 bg-gold/5 p-6">
+              <h3 className="text-xl font-bold text-gold mb-4">
+                هل تريد معرفة أسعار البنود التفصيلية؟
+              </h3>
+
+              <p className="text-white/85 leading-8">
+                إذا كنت تريد معرفة تكلفة البنود والكميات بشكل تفصيلي، يمكنك
+                الانتقال إلى الحاسبة التفصيلية الخاصة بالتشطيب والبنود، والتي
+                تساعدك على تسعير الأعمال التفصيلية بشكل أوضح.
+              </p>
+
+              <div className="mt-4">
+                <Link
+                  to="/villa-finishing-price-riyadh"
+                  className="inline-flex items-center justify-center rounded-lg bg-gold px-5 py-3 text-sm font-extrabold text-black hover:opacity-90 transition"
+                >
+                  فتح الحاسبة التفصيلية
+                </Link>
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-gold mb-6">
+                أسئلة شائعة حول تكلفة بناء الفلل في الرياض
+              </h2>
+
+              <div className="space-y-6 text-white/80 leading-relaxed">
+                <div>
+                  <h3 className="font-bold text-white mb-2">
+                    هل هذه الحاسبة تعطي سعرًا نهائيًا؟
+                  </h3>
+                  <p>
+                    لا، الحاسبة تعطي تقديرًا أوليًا سريعًا بناءً على المدخلات التي
+                    يحددها المستخدم، بينما السعر النهائي يعتمد على المخططات
+                    والموقع والمعاينة.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-bold text-white mb-2">
+                    هل تشمل الحاسبة البدروم والمصعد والمسبح؟
+                  </h3>
+                  <p>
+                    نعم، يمكن احتساب البدروم والمصعد والمسبح ضمن النتيجة التقديرية
+                    حسب الخيارات المختارة داخل الحاسبة.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-bold text-white mb-2">
+                    هل الحفر محسوب في النتيجة؟
+                  </h3>
+                  <p>
+                    نعم، يتم احتساب الحفر كبند مستقل في العظم وتسليم المفتاح، بينما
+                    لا يظهر في التشطيب فقط.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-black/30 p-6">
+              <h3 className="text-xl font-bold text-gold mb-4">ملاحظات مهمة</h3>
+
+              <ul className="space-y-2 text-white/80 leading-7 text-sm">
+                <li>✔️ النتيجة التقديرية ليست عرض سعر نهائي.</li>
                 <li>✔️ تعتمد الدقة النهائية على المخططات والموقع ونطاق العمل.</li>
                 <li>✔️ يمكن تعديل نسبة البناء ونسبة البدروم حسب مشروعك.</li>
-                <li>✔️ تم تعريف الصفحة لجوجل كحاسبة تفاعلية وليست مقالًا عاديًا.</li>
+                <li>
+                  ✔️ تم اعتماد الصفحة كحاسبة تفاعلية مخصصة لتقدير تكلفة البناء في
+                  الرياض.
+                </li>
               </ul>
             </div>
           </section>
