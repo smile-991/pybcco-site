@@ -423,7 +423,7 @@ export default function VillaFinishingPriceRiyadh() {
 
               <p className="mt-2 text-sm md:text-base text-white/85 leading-8">
                 للاستفادة من <span className="font-bold text-gold">حفظ التقدير</span>{" "}
-                داخل حسابك، والحصول على{" "}
+                داخل حسابك وطباعته PDF، والحصول على{" "}
                 <span className="font-bold text-gold">خصم خاص</span> وميزة{" "}
                 <span className="font-bold text-gold">ضمان أعمال إضافي</span> عند
                 بدء التنفيذ، احفظ التقدير مباشرة إذا كنت مسجلًا، أو أنشئ حسابًا
