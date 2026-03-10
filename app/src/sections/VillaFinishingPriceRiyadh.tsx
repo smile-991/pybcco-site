@@ -39,7 +39,7 @@ export default function VillaFinishingPriceRiyadh() {
   const description =
     "احسب تكلفة التشطيب التفصيلية في الرياض 2026 عبر حاسبة تفاعلية تعتمد على البنود والكميات والإضافات، مع حفظ التقدير وطباعة PDF وطلب عرض سعر مباشر.";
   const canonical = "https://pybcco.com/villa-finishing-price-riyadh";
-  const lumpsumCalculatorUrl = "PASTE_NEW_LUMPSUM_URL_HERE";
+  const lumpsumCalculatorUrl = "/villa-construction-cost-calculator-riyadh";
 
   const faqSchema = {
     "@context": "https://schema.org",
