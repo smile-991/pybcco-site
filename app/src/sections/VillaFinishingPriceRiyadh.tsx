@@ -35,10 +35,11 @@ function formatSAR(value: number) {
 }
 
 export default function VillaFinishingPriceRiyadh() {
-  const title = "حاسبة تكلفة التشطيب بالرياض 2026 | بنيان الهرم";
+  const title = "حاسبة تكلفة التشطيب التفصيلية بالرياض 2026 | بنيان الهرم";
   const description =
-    "احسب تكلفة التشطيب التقديرية في الرياض 2026 عبر حاسبة تفاعلية حسب المساحة والمستوى ونوع العمل (تشطيب/عظم). الأسعار تقديرية وقد تختلف حسب المعاينة.";
+    "احسب تكلفة التشطيب التفصيلية في الرياض 2026 عبر حاسبة تفاعلية تعتمد على البنود والكميات والإضافات، مع حفظ التقدير وطباعة PDF وطلب عرض سعر مباشر.";
   const canonical = "https://pybcco.com/villa-finishing-price-riyadh";
+  const lumpsumCalculatorUrl = "PASTE_NEW_LUMPSUM_URL_HERE";
 
   const faqSchema = {
     "@context": "https://schema.org",
@@ -65,7 +66,7 @@ export default function VillaFinishingPriceRiyadh() {
         name: "هل السعر شامل المواد والعمالة؟",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "نعم، أسعار المقطوعية تشمل المواد والعمالة حسب المستوى المختار (تجاري/قياسي/فاخر).",
+          text: "الحاسبة التفصيلية الحالية مخصصة لتقدير البنود والكميات والإضافات، أما السعر النهائي وشمولية المواد والعمالة فيتم تثبيتهما بعد المعاينة واعتماد نطاق العمل.",
         },
       },
       {
@@ -98,13 +99,29 @@ export default function VillaFinishingPriceRiyadh() {
   const webPageSchema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: "حاسبة تكلفة التشطيب بالرياض 2026",
+    name: "حاسبة تكلفة التشطيب التفصيلية بالرياض 2026",
     url: canonical,
   };
 
-  const [workType, setWorkType] = useState<WorkType>("finishing");
-  const [level, setLevel] = useState<Level>("standard");
-  const [area, setArea] = useState<string>("");
+  const webApplicationSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "حاسبة تكلفة التشطيب التفصيلية بالرياض 2026",
+    url: canonical,
+    applicationCategory: "Calculator",
+    operatingSystem: "All",
+    description:
+      "حاسبة مجانية لتقدير تكلفة التشطيب التفصيلية في الرياض مع إمكانية إضافة البنود والكميات وحساب الإجمالي النهائي.",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "SAR",
+    },
+  };
+
+  const [workType] = useState<WorkType>("finishing");
+  const [level] = useState<Level>("standard");
+  const [area] = useState<string>("");
   const [showResult, setShowResult] = useState(false);
 
   const [extrasTotal, setExtrasTotal] = useState<number>(0);
@@ -115,9 +132,6 @@ export default function VillaFinishingPriceRiyadh() {
   const [saveMessage, setSaveMessage] = useState("");
 
   const [boqItems, setBoqItems] = useState<SavedEstimateItem[]>([]);
-
-  // ✅ Mobile UX: اختيار المسار
-  const [mobileMode, setMobileMode] = useState<"lumpsum" | "boq">("boq");
 
   useEffect(() => {
     try {
@@ -146,17 +160,9 @@ export default function VillaFinishingPriceRiyadh() {
     return n;
   }, [area]);
 
-  const canCalculate = areaNumber > 0;
+  const baseTotal = 0;
 
-  const baseTotal = useMemo(() => {
-    if (!canCalculate) return 0;
-    return areaNumber * PRICES_PER_M2[workType][level];
-  }, [areaNumber, canCalculate, level, workType]);
-
-  const grandTotal = useMemo(
-    () => baseTotal + extrasTotal,
-    [baseTotal, extrasTotal]
-  );
+  const grandTotal = useMemo(() => extrasTotal, [extrasTotal]);
 
   const levelLabel =
     level === "commercial" ? "تجاري" : level === "standard" ? "قياسي" : "فاخر";
@@ -178,10 +184,9 @@ export default function VillaFinishingPriceRiyadh() {
     `السلام عليكم، أريد عرض سعر من بنيان الهرم (PYBCCO).\n` +
       `نوع العمل: ${workLabel}\n` +
       `المستوى: ${levelLabel}\n` +
-      `المساحة: ${areaNumber || 0} م²\n` +
-      `إجمالي المقطوعة: ${formatSAR(baseTotal)} ريال\n` +
-      `إضافات البنود: ${formatSAR(extrasTotal)} ريال\n` +
-      `الإجمالي النهائي: ${formatSAR(grandTotal)} ريال\n` +
+      `المساحة المرجعية: ${areaNumber || 0} م²\n` +
+      `إجمالي البنود التفصيلية: ${formatSAR(extrasTotal)} ريال\n` +
+      `الإجمالي الحالي: ${formatSAR(grandTotal)} ريال\n` +
       `رابط الحاسبة: ${canonical}`
   );
 
@@ -243,13 +248,13 @@ export default function VillaFinishingPriceRiyadh() {
         description={description}
         canonical={canonical}
         ogImage="https://pybcco.com/images/VillaFinishingPriceRiyadh.webp"
-        jsonLd={[webPageSchema, faqSchema]}
+        jsonLd={[webPageSchema, webApplicationSchema, faqSchema]}
       />
 
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <img
           src="/images/VillaFinishingPriceRiyadh.webp"
-          alt="حاسبة تكلفة التشطيب بالرياض"
+          alt="حاسبة تكلفة التشطيب التفصيلية بالرياض"
           className="absolute inset-0 h-full w-full object-cover"
           loading="eager"
         />
@@ -264,12 +269,14 @@ export default function VillaFinishingPriceRiyadh() {
 
         <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-4xl md:text-5xl font-extrabold text-gold">
-            حاسبة تكلفة التشطيب بالرياض 2026
+            حاسبة تكلفة التشطيب التفصيلية بالرياض 2026
           </h1>
 
           <p className="mt-6 text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            أدخل بيانات مشروعك واحصل على رقم تقديري سريع حسب المساحة والمستوى ونوع
-            العمل — <span className="text-gold font-bold">بدون عرض سعر المتر</span>.
+            استخدم الحاسبة التفصيلية لإضافة البنود والكميات وحساب تكلفة التشطيب بشكل
+            أوضح، وإذا كنت تبحث عن{" "}
+            <span className="text-gold font-bold">حساب مقطوعي سريع</span> للمشروع
+            بالكامل فستجده في الصفحة المخصصة لذلك.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
@@ -295,380 +302,40 @@ export default function VillaFinishingPriceRiyadh() {
 
       <section id="calc" className="container mx-auto px-4 py-14">
         <div className="max-w-4xl mx-auto space-y-6">
-          <div className="md:hidden rounded-2xl border border-white/10 bg-white/5 p-4">
-            <div className="text-sm text-white/70 mb-3">
-              اختر طريقة الحساب ثم المستوى
-            </div>
-
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => setMobileMode("lumpsum")}
-                className={`rounded-xl px-3 py-3 text-sm font-bold border transition ${
-                  mobileMode === "lumpsum"
-                    ? "border-white/30 bg-white/10 text-white"
-                    : "border-white/10 bg-black/20 text-white/80 hover:bg-white/5"
-                }`}
-              >
-                المقطوعة
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setMobileMode("boq")}
-                className={`rounded-xl px-3 py-3 text-sm font-bold border transition ${
-                  mobileMode === "boq"
-                    ? "border-white/30 bg-white/10 text-white"
-                    : "border-white/10 bg-black/20 text-white/80 hover:bg-white/5"
-                }`}
-              >
-                بنود تفصيلية
-              </button>
-            </div>
-
-            <div className="mt-4 rounded-xl border border-white/10 bg-black/20 p-3">
-              <div className="text-xs text-white/60 mb-2">المستوى</div>
-              <div className="grid grid-cols-3 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setLevel("commercial")}
-                  className={`rounded-lg px-2 py-2 text-xs font-bold border ${
-                    level === "commercial"
-                      ? "border-white/30 bg-white/10"
-                      : "border-white/10 bg-transparent hover:bg-white/5"
-                  }`}
-                >
-                  تجاري
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setLevel("standard")}
-                  className={`rounded-lg px-2 py-2 text-xs font-bold border ${
-                    level === "standard"
-                      ? "border-white/30 bg-white/10"
-                      : "border-white/10 bg-transparent hover:bg-white/5"
-                  }`}
-                >
-                  قياسي
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setLevel("luxury")}
-                  className={`rounded-lg px-2 py-2 text-xs font-bold border ${
-                    level === "luxury"
-                      ? "border-white/30 bg-white/10"
-                      : "border-white/10 bg-transparent hover:bg-white/5"
-                  }`}
-                >
-                  فاخر
-                </button>
+          <div className="rounded-2xl border border-gold/20 bg-gold/5 p-4 md:p-5">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+              <div>
+                <div className="text-sm md:text-base font-bold text-gold">
+                  تريد حسابًا مقطوعيًا سريعًا للمشروع بالكامل؟
+                </div>
+                <div className="mt-1 text-sm text-white/75 leading-7">
+                  هذه الصفحة مخصصة للحساب التفصيلي حسب البنود والكميات. أما إذا كنت
+                  تريد تقديرًا سريعًا لمشروع كامل، فانتقل إلى حاسبة المقطوعية.
+                </div>
               </div>
-            </div>
 
-            <div className="mt-3 text-xs text-white/60">
-              {mobileMode === "lumpsum"
-                ? "اخترت المقطوعة: تدخل المساحة ونوع العمل ويظهر الإجمالي."
-                : "اخترت البنود التفصيلية: تدخل الكميات للبنود وتحصل على إجمالي الإضافات."}
+              <a
+                href={lumpsumCalculatorUrl}
+                className="inline-flex items-center justify-center rounded-lg bg-gold px-5 py-3 text-sm font-extrabold text-black hover:opacity-90 transition"
+              >
+                فتح حاسبة المقطوعية
+              </a>
             </div>
           </div>
 
           <div
-            className={`rounded-2xl border border-white/10 bg-white/5 p-5 md:p-7 ${
-              mobileMode === "boq" ? "md:block hidden" : ""
-            }`}
-          >
-            <div className="text-center">
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-4 py-1 text-xs text-white/70">
-                القسم الأساسي
-              </div>
-
-              <h2 className="mt-3 text-2xl md:text-3xl font-extrabold">
-                احسب <span className="text-gold">التكلفة التقديرية (للمقطوعة)</span>
-              </h2>
-
-              <p className="mt-3 text-white/70">
-                اختر نوع العمل والمستوى، ثم أدخل المساحة واضغط “احسب”.
-              </p>
-
-              <div className="mt-4 md:hidden">
-                <button
-                  type="button"
-                  onClick={() => setMobileMode("boq")}
-                  className="text-xs text-white/60 hover:text-white underline underline-offset-4"
-                >
-                  تريد بنود تفصيلية بدل المقطوعة؟ اضغط هنا
-                </button>
-              </div>
-
-              <div className="mt-4 hidden md:block">
-                <button
-                  type="button"
-                  onClick={() => {
-                    const el = document.getElementById("boq");
-                    if (el) el.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="text-xs text-white/60 hover:text-white underline underline-offset-4"
-                >
-                  عندك إضافات؟ انتقل للبنود التفصيلية ↓
-                </button>
-              </div>
-            </div>
-
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="rounded-xl border border-white/10 bg-black/30 p-4">
-                <div className="text-sm text-white/70 mb-2">نوع العمل</div>
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setWorkType("finishing");
-                      setShowResult(false);
-                    }}
-                    className={`flex-1 rounded-lg px-3 py-2 text-sm border ${
-                      workType === "finishing"
-                        ? "border-white/30 bg-white/10"
-                        : "border-white/10 bg-transparent hover:bg-white/5"
-                    }`}
-                  >
-                    تشطيب
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setWorkType("bone");
-                      setShowResult(false);
-                    }}
-                    className={`flex-1 rounded-lg px-3 py-2 text-sm border ${
-                      workType === "bone"
-                        ? "border-white/30 bg-white/10"
-                        : "border-white/10 bg-transparent hover:bg-white/5"
-                    }`}
-                  >
-                    عظم
-                  </button>
-                </div>
-              </div>
-
-              <div className="hidden md:block rounded-xl border border-white/10 bg-black/30 p-4">
-                <div className="text-sm text-white/70 mb-2">المستوى</div>
-                <div className="grid grid-cols-3 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setLevel("commercial");
-                      setShowResult(false);
-                    }}
-                    className={`rounded-lg px-3 py-2 text-sm border ${
-                      level === "commercial"
-                        ? "border-white/30 bg-white/10"
-                        : "border-white/10 bg-transparent hover:bg-white/5"
-                    }`}
-                  >
-                    تجاري
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setLevel("standard");
-                      setShowResult(false);
-                    }}
-                    className={`rounded-lg px-3 py-2 text-sm border ${
-                      level === "standard"
-                        ? "border-white/30 bg-white/10"
-                        : "border-white/10 bg-transparent hover:bg-white/5"
-                    }`}
-                  >
-                    قياسي
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setLevel("luxury");
-                      setShowResult(false);
-                    }}
-                    className={`rounded-lg px-3 py-2 text-sm border ${
-                      level === "luxury"
-                        ? "border-white/30 bg-white/10"
-                        : "border-white/10 bg-transparent hover:bg-white/5"
-                    }`}
-                  >
-                    فاخر
-                  </button>
-                </div>
-              </div>
-
-              <div className="rounded-xl border border-white/10 bg-black/30 p-4 md:col-span-2">
-                <div className="text-sm text-white/70 mb-2">المساحة (م²)</div>
-                <input
-                  value={area}
-                  onChange={(e) => {
-                    setArea(e.target.value.replace(/[^\d.]/g, ""));
-                    setShowResult(false);
-                  }}
-                  inputMode="decimal"
-                  placeholder="مثال: 350"
-                  className="w-full rounded-lg bg-black/40 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
-                />
-                {!canCalculate && area.length > 0 && (
-                  <div className="mt-2 text-xs text-red-300">
-                    أدخل مساحة صحيحة أكبر من صفر.
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
-              <div className="rounded-xl border border-white/10 bg-black/30 p-4">
-                <div className="text-xs text-white/60">إجمالي المقطوعية</div>
-                <div className="mt-1 text-lg font-extrabold">
-                  {formatSAR(baseTotal)} ريال
-                </div>
-              </div>
-
-              <div className="rounded-xl border border-white/10 bg-black/30 p-4">
-                <div className="text-xs text-white/60">إضافات البنود</div>
-                <div className="mt-1 text-lg font-extrabold">
-                  {formatSAR(extrasTotal)} ريال
-                </div>
-              </div>
-
-              <div className="rounded-xl border border-white/10 bg-black/30 p-4">
-                <div className="text-xs text-white/60">الإجمالي النهائي</div>
-                <div className="mt-1 text-lg font-extrabold text-gold">
-                  {formatSAR(grandTotal)} ريال
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-5 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
-              <Button
-                className="w-full md:w-auto bg-gold text-black font-bold"
-                onClick={() => setShowResult(true)}
-                disabled={!canCalculate}
-              >
-                احسب التكلفة التقديرية
-              </Button>
-
-              <div className="text-xs text-white/60">
-                الأسعار تقديرية وقد تختلف حسب الموقع والمعاينة النهائية.
-              </div>
-            </div>
-
-            {showResult && grandTotal > 0 && (
-              <div className="mt-6 rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6">
-                <div className="text-sm text-white/70">
-                  النتيجة النهائية التقديرية
-                </div>
-                <div className="mt-2 text-3xl md:text-4xl font-extrabold">
-                  {formatSAR(grandTotal)}{" "}
-                  <span className="text-lg font-semibold text-white/80">
-                    ريال
-                  </span>
-                </div>
-
-                {extrasTotal > 0 && (
-                  <div className="mt-2 text-xs text-white/60">
-                    (يشمل إضافات البنود: {formatSAR(extrasTotal)} ريال)
-                  </div>
-                )}
-
-                <div className="mt-4 text-xs text-white/60 leading-relaxed">
-                  * الرقم أعلاه تقديري ويعتمد على البيانات المُدخلة فقط. السعر
-                  النهائي يُحدد بعد المعاينة.
-                </div>
-
-                <div className="mt-5 rounded-2xl border border-gold/30 bg-gold/10 p-5 md:p-6">
-                  <div className="text-base md:text-lg font-extrabold text-gold">
-                    احفظ هذا التقدير داخل حسابك
-                  </div>
-
-                  <p className="mt-2 text-sm md:text-base text-white/85 leading-8">
-                    للاستفادة من <span className="font-bold text-gold">حفظ التقدير</span> داخل
-                    حسابك، والحصول على <span className="font-bold text-gold">خصم خاص</span> وميزة{" "}
-                    <span className="font-bold text-gold">ضمان أعمال إضافي</span> عند بدء
-                    التنفيذ، أنشئ حسابك الآن أو احفظ التقدير مباشرة إذا كنت مسجلًا.
-                  </p>
-
-                  <div className="mt-4 flex flex-col md:flex-row gap-3">
-                    <button
-                      type="button"
-                      onClick={handleSaveEstimate}
-                      disabled={saving}
-                      className="inline-flex items-center justify-center rounded-lg bg-gold px-5 py-3 text-sm font-extrabold text-black hover:opacity-90 transition disabled:opacity-60"
-                    >
-                      {saving ? "جاري حفظ التقدير..." : "حفظ التقدير داخل حسابي"}
-                    </button>
-
-                    {!activatedUser?.phone && (
-                      <Link
-                        to="/create-account"
-                        className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/10 px-5 py-3 text-sm font-bold text-white hover:bg-white/15 transition"
-                      >
-                        إنشاء حساب
-                      </Link>
-                    )}
-
-                    <a
-                      href={waLink}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white hover:bg-white/10 transition"
-                    >
-                      طلب عرض سعر عبر واتساب
-                    </a>
-                  </div>
-
-                  {saveMessage && (
-                    <div className="mt-3 text-sm text-white/85">
-                      {saveMessage}
-                    </div>
-                  )}
-                </div>
-
-                <div className="mt-5 flex flex-col md:flex-row gap-3">
-                  <a
-                    href="#contact"
-                    className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/10 px-4 py-2 text-sm hover:bg-white/15"
-                  >
-                    اطلب معاينة / تواصل معنا
-                  </a>
-
-                  <a
-                    href={waLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-4 py-2 text-sm hover:bg-white/10"
-                  >
-                    واتساب مباشر
-                  </a>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div
-            className={`rounded-2xl border border-white/10 bg-white/5 p-5 md:p-7`}
+            className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-7"
             id="boq"
           >
-            <div className={`md:hidden ${mobileMode === "boq" ? "" : "hidden"}`}>
+            <div className="md:hidden">
               <div className="text-center mb-4">
                 <div className="text-xl font-extrabold">
                   البنود التفصيلية <span className="text-gold">(اختياري)</span>
                 </div>
                 <div className="mt-2 text-xs text-white/60">
-                  استخدمها إذا عندك إضافات فوق المقطوعة أو تريد تسعير بنود محددة.
+                  أدخل الكميات المطلوبة لكل بند لتحصل على تقدير تفصيلي أوضح لتكلفة
+                  مشروعك.
                 </div>
-
-                <button
-                  type="button"
-                  onClick={() => setMobileMode("lumpsum")}
-                  className="mt-3 text-xs text-white/60 hover:text-white underline underline-offset-4"
-                >
-                  رجوع للمقطوعة
-                </button>
               </div>
 
               <Button
@@ -686,16 +353,16 @@ export default function VillaFinishingPriceRiyadh() {
 
               <div className="mt-5">
                 <BoqCalculator
-  key={boqResetKey}
-  level={level}
-  onTotalChange={(total) => {
-    setExtrasTotal(total);
-    setShowResult(true);
-  }}
-  onItemsChange={(items) => {
-    setBoqItems(items);
-  }}
-/>
+                  key={boqResetKey}
+                  level={level}
+                  onTotalChange={(total) => {
+                    setExtrasTotal(total);
+                    setShowResult(true);
+                  }}
+                  onItemsChange={(items) => {
+                    setBoqItems(items);
+                  }}
+                />
               </div>
             </div>
 
@@ -706,7 +373,11 @@ export default function VillaFinishingPriceRiyadh() {
                     اختياري
                   </div>
                   <div className="mt-2 text-xl font-extrabold">
-                    بنود تفصيلية وإضافات فوق المقطوعية
+                    احسب تكلفة التشطيب التفصيلية حسب البنود والكميات
+                  </div>
+                  <div className="mt-2 text-xs text-white/60">
+                    أدخل الكميات المطلوبة لكل بند لتحصل على تقدير تفصيلي أوضح لتكلفة
+                    مشروعك.
                   </div>
                 </div>
 
@@ -726,20 +397,18 @@ export default function VillaFinishingPriceRiyadh() {
 
               <div className="mt-5">
                 <BoqCalculator
-  key={boqResetKey}
-  level={level}
-  onTotalChange={(total) => {
-    setExtrasTotal(total);
-    setShowResult(true);
-  }}
-  onItemsChange={(items) => {
-    setBoqItems(items);
-  }}
-/>
+                  key={boqResetKey}
+                  level={level}
+                  onTotalChange={(total) => {
+                    setExtrasTotal(total);
+                    setShowResult(true);
+                  }}
+                  onItemsChange={(items) => {
+                    setBoqItems(items);
+                  }}
+                />
               </div>
             </div>
-
-            <div className="hidden" aria-hidden="true" />
           </div>
         </div>
       </section>
@@ -753,10 +422,12 @@ export default function VillaFinishingPriceRiyadh() {
               </div>
 
               <p className="mt-2 text-sm md:text-base text-white/85 leading-8">
-                للاستفادة من <span className="font-bold text-gold">حفظ التقدير</span> داخل
-                حسابك، والحصول على <span className="font-bold text-gold">خصم خاص</span> وميزة{" "}
-                <span className="font-bold text-gold">ضمان أعمال إضافي</span> عند بدء
-                التنفيذ، احفظ التقدير مباشرة إذا كنت مسجلًا، أو أنشئ حسابًا جديدًا.
+                للاستفادة من <span className="font-bold text-gold">حفظ التقدير</span>{" "}
+                داخل حسابك، والحصول على{" "}
+                <span className="font-bold text-gold">خصم خاص</span> وميزة{" "}
+                <span className="font-bold text-gold">ضمان أعمال إضافي</span> عند
+                بدء التنفيذ، احفظ التقدير مباشرة إذا كنت مسجلًا، أو أنشئ حسابًا
+                جديدًا.
               </p>
 
               <div className="mt-4 flex flex-col md:flex-row gap-3">
@@ -789,9 +460,7 @@ export default function VillaFinishingPriceRiyadh() {
               </div>
 
               {saveMessage && (
-                <div className="mt-3 text-sm text-white/85">
-                  {saveMessage}
-                </div>
+                <div className="mt-3 text-sm text-white/85">{saveMessage}</div>
               )}
             </div>
           </div>
@@ -800,12 +469,13 @@ export default function VillaFinishingPriceRiyadh() {
 
       <section className="container mx-auto px-4 py-14 text-right max-w-4xl">
         <h2 className="text-2xl md:text-3xl font-bold text-gold">
-          كم سعر تشطيب فيلا بالرياض حسب المساحة؟
+          متى تستخدم الحاسبة التفصيلية ومتى تستخدم حاسبة المقطوعية؟
         </h2>
 
         <p className="mt-4 text-white/80 leading-relaxed">
-          تختلف تكلفة تشطيب الفيلا في الرياض حسب المساحة ونوع العمل (تشطيب/عظم) والمستوى المختار.
-          فيما يلي أمثلة تقديرية تساعدك على فهم الصورة العامة — ويمكنك الحصول على رقم أدق عبر الحاسبة أعلاه.
+          الحاسبة الموجودة في هذه الصفحة مخصصة لمن يريد معرفة تكلفة البنود
+          التفصيلية والكميات بشكل أوضح. أما إذا كنت تبحث عن تقدير سريع لمشروع كامل
+          بالمقطوعية، فيمكنك الانتقال إلى حاسبة المقطوعية المخصصة لذلك.
         </p>
 
         <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -819,17 +489,29 @@ export default function VillaFinishingPriceRiyadh() {
             const luxury = x.a * PRICES_PER_M2.finishing.luxury;
 
             return (
-              <div key={i} className="rounded-2xl border border-white/10 bg-white/5 p-5">
+              <div
+                key={i}
+                className="rounded-2xl border border-white/10 bg-white/5 p-5"
+              >
                 <div className="text-lg font-extrabold text-white">{x.label}</div>
                 <div className="mt-3 text-sm text-white/70 space-y-2">
                   <div>
-                    تجاري: <span className="text-white font-bold">{formatSAR(commercial)} ريال</span>
+                    تجاري:{" "}
+                    <span className="text-white font-bold">
+                      {formatSAR(commercial)} ريال
+                    </span>
                   </div>
                   <div>
-                    قياسي: <span className="text-white font-bold">{formatSAR(standard)} ريال</span>
+                    قياسي:{" "}
+                    <span className="text-white font-bold">
+                      {formatSAR(standard)} ريال
+                    </span>
                   </div>
                   <div>
-                    فاخر: <span className="text-white font-bold">{formatSAR(luxury)} ريال</span>
+                    فاخر:{" "}
+                    <span className="text-white font-bold">
+                      {formatSAR(luxury)} ريال
+                    </span>
                   </div>
                 </div>
                 <div className="mt-3 text-xs text-white/50">
@@ -845,9 +527,10 @@ export default function VillaFinishingPriceRiyadh() {
         </h2>
 
         <p className="mt-4 text-white/80 leading-relaxed">
-          كثير من العملاء يبحثون عن “سعر المتر”، لكن السعر الحقيقي يتغير حسب نوع المواد، مستوى التشطيب،
-          وعدد دورات المياه والمطابخ، ومستوى الجبس والإضاءة، وحجم الأعمال الإضافية. لذلك نعتمد في PYBCCO
-          على الحسبة الإجمالية لإعطائك رقم أقرب للواقع مع الحفاظ على الشفافية.
+          كثير من العملاء يبحثون عن “سعر المتر”، لكن السعر الحقيقي يتغير حسب نوع
+          المواد، مستوى التشطيب، وعدد دورات المياه والمطابخ، ومستوى الجبس
+          والإضاءة، وحجم الأعمال الإضافية. لذلك نعتمد في PYBCCO على الحسبة
+          الإجمالية لإعطائك رقم أقرب للواقع مع الحفاظ على الشفافية.
         </p>
 
         <div className="mt-6 rounded-2xl border border-white/10 bg-black/30 p-5 text-white/80 text-sm leading-relaxed">
@@ -889,8 +572,29 @@ export default function VillaFinishingPriceRiyadh() {
             >
               نظام متابعة رقمي احترافي
             </Link>{" "}
-            يتيح لك متابعة نسبة الإنجاز، مراجعة الدفعات، تحميل العقود، والاطلاع على التحديثات بالصور ضمن حساب العميل — لحفظ حقوقك ووضوح كل مرحلة.
+            يتيح لك متابعة نسبة الإنجاز، مراجعة الدفعات، تحميل العقود، والاطلاع
+            على التحديثات بالصور ضمن حساب العميل — لحفظ حقوقك ووضوح كل مرحلة.
           </p>
+        </div>
+
+        <div className="mt-6 rounded-2xl border border-gold/20 bg-gold/5 p-5">
+          <div className="text-lg font-extrabold text-gold">
+            تريد معرفة التكلفة المقطوعية للمشروع بالكامل؟
+          </div>
+
+          <p className="mt-2 text-white/80 leading-7">
+            إذا كنت تريد حسابًا سريعًا يشمل المشروع بشكل إجمالي، فانتقل إلى حاسبة
+            المقطوعية.
+          </p>
+
+          <div className="mt-4">
+            <a
+              href={lumpsumCalculatorUrl}
+              className="inline-flex items-center justify-center rounded-lg bg-gold px-5 py-3 text-sm font-extrabold text-black hover:opacity-90 transition"
+            >
+              فتح حاسبة المقطوعية
+            </a>
+          </div>
         </div>
       </section>
 
@@ -925,8 +629,9 @@ export default function VillaFinishingPriceRiyadh() {
               هل السعر شامل المواد والعمالة؟
             </h3>
             <p>
-              نعم، أسعار المقطوعية تشمل المواد والعمالة حسب المستوى المختار (تجاري
-              – قياسي – فاخر).
+              الحاسبة التفصيلية الحالية مخصصة لتقدير البنود والكميات والإضافات،
+              أما شمولية المواد والعمالة فيتم تثبيتها ضمن عرض السعر النهائي بعد
+              المعاينة.
             </p>
           </div>
 
@@ -995,7 +700,7 @@ export default function VillaFinishingPriceRiyadh() {
         </div>
       </section>
 
-      {(areaNumber > 0 || extrasTotal > 0) && (
+      {extrasTotal > 0 && (
         <div className="md:hidden fixed bottom-3 left-3 right-3 z-50">
           <div className="rounded-2xl border border-white/10 bg-black/75 backdrop-blur-md p-3 flex items-center justify-between gap-3">
             <div className="text-xs text-white/70">

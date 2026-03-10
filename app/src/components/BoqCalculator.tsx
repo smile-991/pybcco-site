@@ -136,7 +136,7 @@ export default function BoqCalculator({
       "عرض سعر تقديري – بنيان الهرم للمقاولات (PYBCCO)",
       `المستوى: ${levelText}`,
       "",
-      "البنود:",
+      "البنود المختارة:",
       ...(lines.length ? lines : ["(لا يوجد بنود)"]),
       "",
       `إجمالي البنود: ${formatSAR(cartTotal)} ريال`,
@@ -188,7 +188,7 @@ export default function BoqCalculator({
         <div className="grid grid-cols-12 gap-2 bg-black/40 px-3 py-2 text-xs text-white/70">
           <div className="col-span-7">البند</div>
           <div className="col-span-2">الوحدة</div>
-          <div className="col-span-3">الكمية (تُضاف تلقائياً)</div>
+          <div className="col-span-3">الكمية</div>
         </div>
 
         {rows.map((it) => {
@@ -261,7 +261,7 @@ export default function BoqCalculator({
             className="bg-gold text-black font-bold"
             onClick={() => setShowSummary(true)}
           >
-            احسب إجمالي البنود
+            إظهار ملخص البنود
           </Button>
 
           <div className="text-xs text-white/60">
@@ -334,16 +334,17 @@ export default function BoqCalculator({
           </div>
         ) : (
           <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white/70">
-            ما أضفت أي بند بعد.
+            لم يتم إضافة أي بند بعد.
             <div className="mt-2 text-xs text-white/60">
-              ✅ فقط اكتب الكمية داخل أي بند، وسيُضاف تلقائياً.
+              اكتب الكمية داخل أي بند ليتم احتسابه وإضافته تلقائيًا إلى الملخص.
             </div>
           </div>
         ))}
 
       <div className="mt-3 text-xs text-white/60">
-        ملاحظة: هذه البنود لتفصيل إضافي اختياري فوق “المقطوعية”. يمكن لاحقاً تحويلها إلى “حساب شامل”
-        حسب نموذج العمل الذي تختاره.
+        ملاحظة: هذه الحاسبة مخصصة لتقدير البنود والكميات بشكل تفصيلي. إذا كنت تبحث
+        عن تقدير سريع للمشروع بالكامل، استخدم حاسبة المقطوعية من الرابط الموجود
+        أعلى الصفحة.
       </div>
     </div>
   );
