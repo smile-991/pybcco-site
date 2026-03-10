@@ -195,7 +195,7 @@ export default function VillaConstructionCostCalculatorRiyadh() {
       setActivatedUser(null);
     }
   }, []);
-
+  
   useEffect(() => {
     setBuildRatio(DEFAULT_BUILD_RATIO_BY_STREETS[streetCount] ?? 70);
   }, [streetCount]);
@@ -209,11 +209,6 @@ export default function VillaConstructionCostCalculatorRiyadh() {
     const n = Number(governmentFees);
     return Number.isFinite(n) ? n : 0;
   }, [governmentFees]);
-
-  const roofSeatingAmountNumber = useMemo(() => {
-    const n = Number(roofSeatingAmount);
-    return Number.isFinite(n) ? n : 0;
-  }, [roofSeatingAmount]);
 
   const basementRatioNumber = useMemo(() => {
     const n = Number(basementRatio);
@@ -233,6 +228,14 @@ export default function VillaConstructionCostCalculatorRiyadh() {
   const mainBuiltArea = useMemo(() => {
     return groundFloorArea + firstFloorArea + penthouseArea;
   }, [groundFloorArea, firstFloorArea, penthouseArea]);
+
+  const annexArea = mainBuiltArea * 0.6;
+
+  const roofRemainingArea = mainBuiltArea - annexArea;
+
+  const roofSeatingCost = hasRoofSeating
+    ? roofRemainingArea * 250
+    : 0;
 
   const basementArea = useMemo(() => {
     if (!hasBasement) return 0;
@@ -256,7 +259,6 @@ export default function VillaConstructionCostCalculatorRiyadh() {
 
   const excavationCost = useMemo(() => {
     if (serviceType === "finishing") return 0;
-
     const baseExcavation = mainBuiltArea * 1.7 * 45;
 
     if (!hasBasement) return baseExcavation;
@@ -292,7 +294,7 @@ export default function VillaConstructionCostCalculatorRiyadh() {
       elevatorCost +
       poolCost +
       governmentFeesNumber +
-      (hasRoofSeating ? roofSeatingAmountNumber : 0)
+      roofSeatingCost
     );
   }, [
     mainAreaCost,
@@ -302,7 +304,7 @@ export default function VillaConstructionCostCalculatorRiyadh() {
     poolCost,
     governmentFeesNumber,
     hasRoofSeating,
-    roofSeatingAmountNumber,
+    roofSeatingCost,
   ]);
 
   const averageCostPerM2 = useMemo(() => {
@@ -419,15 +421,15 @@ export default function VillaConstructionCostCalculatorRiyadh() {
     });
   }
 
-  if (hasRoofSeating && roofSeatingAmountNumber > 0) {
-    rows.push({
-      title: "تشطيب جلسات السطح",
-      quantity: 1,
-      unit: "بند",
-      unitPrice: roofSeatingAmountNumber,
-      total: roofSeatingAmountNumber,
-    });
-  }
+if (hasRoofSeating) {
+  rows.push({
+    title: "تشطيب جلسات السطح",
+    quantity: roofRemainingArea,
+    unit: "م²",
+    unitPrice: 250,
+    total: roofSeatingCost,
+  });
+}
 
   if (governmentFeesNumber > 0) {
     rows.push({
@@ -454,8 +456,7 @@ export default function VillaConstructionCostCalculatorRiyadh() {
   elevatorCost,
   hasPool,
   poolCost,
-  hasRoofSeating,
-  roofSeatingAmountNumber,
+  roofSeatingCost,
   governmentFeesNumber,
   activeRate,
 ]);
@@ -858,7 +859,7 @@ export default function VillaConstructionCostCalculatorRiyadh() {
                 {hasRoofSeating && (
                   <div className="mt-4">
                     <div className="text-sm text-white/70 mb-2">
-                      تكلفة جلسات السطح (اختياري)
+                      تكلفة جلسات السطح
                     </div>
                     <input
                       value={roofSeatingAmount}
