@@ -579,18 +579,18 @@ export default function VillaConstructionCostCalculatorRiyadh() {
       <style>{`
   @page {
     size: A4;
-    margin: 8mm;
+    margin: 6mm;
   }
 
   @media print {
     html,
     body {
-      background: #ffffff !important;
+      width: 210mm !important;
+      height: 297mm !important;
       margin: 0 !important;
       padding: 0 !important;
-      width: 210mm !important;
-      height: auto !important;
       overflow: hidden !important;
+      background: #fff !important;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
@@ -606,20 +606,21 @@ export default function VillaConstructionCostCalculatorRiyadh() {
 
     #quote-pdf {
       display: block !important;
-      position: fixed !important;
+      position: absolute !important;
       top: 0 !important;
       right: 0 !important;
-      width: 194mm !important;
-      max-width: 194mm !important;
-      min-height: auto !important;
+      left: 0 !important;
+      width: 198mm !important;
+      max-width: 198mm !important;
       height: auto !important;
-      background: #ffffff !important;
-      color: #111111 !important;
+      max-height: 285mm !important;
+      margin: 0 auto !important;
       padding: 0 !important;
-      margin: 0 !important;
-      border: 0 !important;
-      box-shadow: none !important;
       overflow: hidden !important;
+      background: #fff !important;
+      color: #111 !important;
+      box-shadow: none !important;
+      border: 0 !important;
     }
 
     .no-print {
@@ -1206,7 +1207,7 @@ export default function VillaConstructionCostCalculatorRiyadh() {
                 </div>
               </div>
 
-              <div id="quote-pdf" className="hidden print:block">
+              <div id="quote-pdf" className="hidden">
                 <div className="w-full bg-white text-[#111] p-4 text-[11px] leading-5">
                   <div className="flex items-start justify-between gap-4 print-page-break-avoid">
                     <div className="text-right flex-1">
