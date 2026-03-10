@@ -584,9 +584,9 @@ export default function VillaConstructionCostCalculatorRiyadh() {
 
   @media print {
     html,
-    body {
-      width: 210mm !important;
-      height: 297mm !important;
+body {
+  width: 210mm !important;
+  height: auto !important;
       margin: 0 !important;
       padding: 0 !important;
       overflow: hidden !important;
@@ -605,23 +605,25 @@ export default function VillaConstructionCostCalculatorRiyadh() {
     }
 
     #quote-pdf {
-      display: block !important;
-      position: absolute !important;
-      top: 0 !important;
-      right: 0 !important;
-      left: 0 !important;
-      width: 198mm !important;
-      max-width: 198mm !important;
-      height: auto !important;
-      max-height: 285mm !important;
-      margin: 0 auto !important;
-      padding: 0 !important;
-      overflow: hidden !important;
-      background: #fff !important;
-      color: #111 !important;
-      box-shadow: none !important;
-      border: 0 !important;
-    }
+  display: block !important;
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  left: 0 !important;
+  width: 190mm !important;
+  max-width: 190mm !important;
+  height: auto !important;
+  max-height: 270mm !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: #fff !important;
+  color: #111 !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  page-break-after: avoid !important;
+  break-after: avoid !important;
+}
 
     .no-print {
       display: none !important;
@@ -1208,7 +1210,7 @@ export default function VillaConstructionCostCalculatorRiyadh() {
               </div>
 
               <div id="quote-pdf" className="hidden">
-                <div className="w-full bg-white text-[#111] p-4 text-[11px] leading-5">
+                <div className="w-full bg-white text-[#111] p-3 text-[10px] leading-4">
                   <div className="flex items-start justify-between gap-4 print-page-break-avoid">
                     <div className="text-right flex-1">
                       <h1 className="text-[22px] font-extrabold leading-tight">
