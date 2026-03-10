@@ -20,7 +20,7 @@ const FAQS = [
   },
   {
     q: "كم مدة التنفيذ عادة؟",
-    a: "تختلف حسب حجم المشروع ونوع الأعمال. بعد المعاينة نضع جدول زمني واضح بمراحل استلام وتسليم.",
+    a: "تختلف حسب حجم المشروع ونوع الأعمال. بعد المعاينة نضع جدولًا زمنيًا واضحًا بمراحل استلام وتسليم.",
   },
   {
     q: "ما الخدمات الأساسية التي تقدمها شركة بنيان الهرم في الرياض؟",
@@ -28,7 +28,15 @@ const FAQS = [
   },
   {
     q: "هل الأسعار تشمل المواد والعمالة؟",
-    a: "حسب نوع العرض (مقطوعية شاملة أو بنود تفصيلية). نوضح ذلك صراحة داخل عرض السعر بعد المعاينة.",
+    a: "حسب نوع العرض، سواء كان مقطوعية شاملة أو بنودًا تفصيلية، ونوضح ذلك صراحة داخل عرض السعر بعد المعاينة.",
+  },
+  {
+    q: "هل تقدمون عرض سعر تفصيلي قبل التنفيذ؟",
+    a: "نعم، بعد المعاينة وتحديد نطاق العمل نقدّم عرض سعر واضح يشرح البنود وطبيعة التنفيذ وما إذا كان شاملاً أو بنظام بنود.",
+  },
+  {
+    q: "هل تعملون في جميع أحياء الرياض؟",
+    a: "نخدم مشاريع داخل مدينة الرياض في عدة أحياء ومناطق، ويتم ترتيب المعاينة حسب موقع المشروع ونوع الأعمال المطلوبة.",
   },
 ];
 
@@ -54,13 +62,19 @@ export default function ConstructionCompanyRiyadh() {
       "@context": "https://schema.org",
       "@type": "Service",
       name: "شركة مقاولات بالرياض",
+      description:
+        "شركة مقاولات بالرياض تقدم تشطيب فلل وشقق، ترميم وتجديد، بناء عظم، وإدارة مشاريع مع إشراف هندسي وجودة تنفيذ.",
       serviceType: "Construction / Finishing / Renovation",
       url: canonical,
-      areaServed: { "@type": "City", name: "Riyadh" },
+      areaServed: {
+        "@type": "City",
+        name: "Riyadh",
+      },
       provider: {
         "@type": ["LocalBusiness", "ConstructionCompany"],
         name: "PYBCCO – بنيان الهرم للمقاولات",
         url: SITE,
+        image: ogImage,
         telephone: "+966550604837",
       },
     };
@@ -73,8 +87,27 @@ export default function ConstructionCompanyRiyadh() {
       description,
     };
 
-    return [webpageSchema, serviceSchema, faqSchema];
-  }, [canonical, description, title]);
+    const breadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "الرئيسية",
+          item: SITE,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "شركة مقاولات بالرياض",
+          item: canonical,
+        },
+      ],
+    };
+
+    return [webpageSchema, serviceSchema, faqSchema, breadcrumbSchema];
+  }, [canonical, description, title, ogImage]);
 
   const WA_NUMBER = "966550604837";
   const waPrefill = (text: string) =>
@@ -118,34 +151,39 @@ export default function ConstructionCompanyRiyadh() {
         />
 
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gold text-center">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gold text-center leading-tight">
             شركة مقاولات بالرياض لتنفيذ المشاريع والتشطيب والترميم باحتراف
           </h1>
 
           <p className="mt-6 text-lg text-gray-300 leading-relaxed text-center max-w-3xl mx-auto">
             <span className="text-gold font-bold">بنيان الهرم (PYBCCO)</span> شركة
             مقاولات في الرياض تقدم حلول تنفيذ متكاملة تشمل{" "}
-            <a
-              href="/villa-finishing-riyadh"
+            <Link
+              to="/villa-finishing-riyadh"
               className="text-gold font-bold hover:underline"
             >
               تشطيب فلل وشقق
-            </a>{" "}
-            تسليم مفتاح،{" "}
-            <a
-              href="/villa-renovation-riyadh"
+            </Link>{" "}
+            تسليم مفتاح، و{" "}
+            <Link
+              to="/villa-renovation-riyadh"
               className="text-gold font-bold hover:underline"
             >
               ترميم وصيانة وتجديد
-            </a>{" "}
+            </Link>{" "}
             شامل، و{" "}
-            <a
-              href="/villa-bone-construction-riyadh"
+            <Link
+              to="/villa-bone-construction-riyadh"
               className="text-gold font-bold hover:underline"
             >
               بناء عظم
-            </a>{" "}
-            حسب المخططات — مع إشراف هندسي وجودة تنفيذ والتزام بالوقت.
+            </Link>{" "}
+            حسب المخططات — مع إشراف هندسي، وجودة تنفيذ، والتزام بالمواعيد.
+          </p>
+
+          <p className="mt-4 text-white/80 text-base md:text-lg max-w-3xl mx-auto">
+            شركة مقاولات بالرياض بخطة عمل واضحة، وتسعير منظم، ومتابعة هندسية من
+            المعاينة حتى التسليم.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
@@ -164,7 +202,7 @@ export default function ConstructionCompanyRiyadh() {
               onClick={() => {
                 track("whatsapp_click_construction_page");
                 window.location.href = waPrefill(
-                  "أريد طلب معاينة لمشروع في الرياض. مساحة المشروع: (اكتبها) — نوع العمل: (تشطيب/ترميم/عظم) — الموقع/الحي:"
+                  "السلام عليكم، أريد طلب معاينة لمشروع في الرياض.\nنوع العمل: تشطيب / ترميم / بناء عظم\nالمساحة التقريبية:\nالحي:\nموعد مناسب للتواصل:"
                 );
               }}
             >
@@ -174,11 +212,11 @@ export default function ConstructionCompanyRiyadh() {
             <Button
               className="bg-white/10 border border-white/15 text-white font-bold px-8 py-6 text-lg hover:bg-white/15"
               onClick={() => {
-                const el = document.getElementById("services");
-                if (el) el.scrollIntoView({ behavior: "smooth" });
+                track("open_calculator_from_construction_hero");
+                window.location.href = "/villa-construction-cost-calculator-riyadh";
               }}
             >
-              استعرض الخدمات
+              أنشئ عرض سعرك بنفسك
             </Button>
           </div>
 
@@ -199,14 +237,14 @@ export default function ConstructionCompanyRiyadh() {
               },
               {
                 title: "تسعير واضح",
-                desc: "نثبت نطاق العمل بعد المعاينة ونوضح (شامل/بنود) بشكل صريح.",
+                desc: "نثبت نطاق العمل بعد المعاينة ونوضح شامل أو بنود بشكل صريح.",
               },
             ].map((x, i) => (
               <div
                 key={i}
                 className="bg-white/5 p-6 rounded-2xl border border-gold/20 backdrop-blur-sm"
               >
-                <h3 className="text-xl font-bold text-gold mb-3">{x.title}</h3>
+                <h2 className="text-xl font-bold text-gold mb-3">{x.title}</h2>
                 <p className="text-white/80 leading-relaxed">{x.desc}</p>
               </div>
             ))}
@@ -218,63 +256,65 @@ export default function ConstructionCompanyRiyadh() {
       <section className="container mx-auto px-4 py-14">
         <div className="max-w-5xl mx-auto text-right space-y-5 text-white/80 leading-relaxed">
           <h2 className="text-2xl sm:text-3xl font-bold text-center">
-            لماذا تختار <span className="text-gold">شركة مقاولات بالرياض</span> لديها نظام واضح؟
+            لماذا تختار <span className="text-gold">شركة مقاولات بالرياض</span>{" "}
+            لديها نظام واضح؟
           </h2>
 
           <p>
             اختيار <strong className="text-gold">شركة مقاولات في الرياض</strong>{" "}
-            ليس مجرد سعر. العميل يحتاج وضوح في نطاق العمل، جودة تنفيذ، والتزام في
-            الوقت. لذلك نحن نعتمد أسلوب عمل يبدأ بـ{" "}
-            <strong className="text-gold">المعاينة</strong> ثم تحديد البنود
-            والمستوى (تجاري/قياسي/فاخر)، وبعدها خطة تنفيذ بمراحل استلام واضحة.
+            ليس مجرد سعر فقط. العميل يحتاج إلى وضوح في نطاق العمل، جودة تنفيذ،
+            التزام بالمواعيد، ومتابعة حقيقية خلال مراحل المشروع. لذلك نعتمد أسلوب
+            عمل يبدأ بـ <strong className="text-gold">المعاينة</strong> ثم تحديد
+            البنود والمستوى المطلوب، وبعدها وضع خطة تنفيذ بمراحل استلام واضحة.
           </p>
 
           <p>
-  ولتعزيز الشفافية وحفظ الحقوق، نعتمد{" "}
-  <Link
-    to="/project-tracking-system-riyadh"
-    className="text-gold font-bold hover:underline"
-  >
-    نظام متابعة رقمي احترافي
-  </Link>{" "}
-  يمكّن العميل من متابعة نسبة الإنجاز، مراجعة الدفعات، تحميل الوثائق، والاطلاع
-  على التحديثات بالصور ضمن حساب خاص — بحيث تكون الصورة واضحة في كل مرحلة من
-  مراحل التنفيذ.
-</p>
+            ولتعزيز الشفافية وحفظ الحقوق، نعتمد{" "}
+            <Link
+              to="/project-tracking-system-riyadh"
+              className="text-gold font-bold hover:underline"
+            >
+              نظام متابعة رقمي احترافي
+            </Link>{" "}
+            يمكّن العميل من متابعة نسبة الإنجاز، مراجعة الدفعات، تحميل الوثائق،
+            والاطلاع على التحديثات بالصور ضمن حساب خاص، بحيث تكون الصورة واضحة في
+            كل مرحلة من مراحل التنفيذ.
+          </p>
 
           <p>
-            خدماتنا تغطي مشاريع سكنية وتجارية داخل الرياض:{" "}
+            خدماتنا تغطي مشاريع سكنية وتجارية داخل الرياض، وتشمل{" "}
             <strong className="text-gold">تشطيب فلل</strong> و{" "}
             <strong className="text-gold">تشطيب شقق</strong> و{" "}
             <strong className="text-gold">ترميم وتجديد</strong> و{" "}
-            <strong className="text-gold">بناء عظم</strong>. ونقدر نشتغل كنظام
-            تسليم مفتاح أو ضمن نطاق محدد حسب احتياج العميل.
+            <strong className="text-gold">بناء عظم</strong>. ويمكن تنفيذ المشروع
+            كنظام تسليم مفتاح أو ضمن نطاق محدد حسب احتياج العميل وميزانية التنفيذ.
           </p>
 
           <p>
-            إذا بدك تقدير مبدئي قبل المعاينة، جهزنا صفحة{" "}
-            <a
-              href="/villa-finishing-price-riyadh"
+            وإذا كنت تريد تصورًا مبدئيًا قبل المعاينة، جهزنا{" "}
+            <Link
+              to="/villa-construction-cost-calculator-riyadh"
               className="text-gold font-bold hover:underline"
             >
-              حاسبة أسعار التشطيب في الرياض
-            </a>{" "}
-            لتأخذ تصور سريع، وبعدها نثبّت السعر النهائي عند المعاينة.
+              حاسبة تكلفة البناء وإنشاء عرض سعر مبدئي
+            </Link>{" "}
+            لتأخذ فكرة أولية، وبعدها نثبت السعر النهائي عند المعاينة ورفع نطاق
+            العمل الفعلي.
           </p>
         </div>
       </section>
 
       <div className="container mx-auto px-4 mt-6">
-  <p className="text-sm opacity-80 text-center">
-    قبل توقيع أي عقد، اطلع على{" "}
-    <Link
-      to="/engineering-insights/how-to-choose-construction-company-riyadh"
-      className="underline underline-offset-4 text-gold hover:opacity-80"
-    >
-      رؤى هندسية: كيف تختار أفضل شركة مقاولات في الرياض؟
-    </Link>
-  </p>
-</div>
+        <p className="text-sm opacity-80 text-center">
+          قبل توقيع أي عقد، اطلع على{" "}
+          <Link
+            to="/engineering-insights/how-to-choose-construction-company-riyadh"
+            className="underline underline-offset-4 text-gold hover:opacity-80"
+          >
+            رؤى هندسية: كيف تختار أفضل شركة مقاولات في الرياض؟
+          </Link>
+        </p>
+      </div>
 
       {/* SERVICES */}
       <section id="services" className="container mx-auto px-4 pb-14">
@@ -283,8 +323,8 @@ export default function ConstructionCompanyRiyadh() {
         </h2>
 
         <p className="mt-4 text-white/70 text-center max-w-3xl mx-auto">
-          مجموعة خدمات متكاملة داخل الرياض، مع جودة تنفيذ عالية وإدارة مشروع
-          محترفة حسب المعاينة.
+          مجموعة خدمات متكاملة داخل الرياض مع جودة تنفيذ عالية، وإدارة مشروع
+          محترفة، وتسعير واضح حسب المعاينة.
         </p>
 
         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -306,32 +346,69 @@ export default function ConstructionCompanyRiyadh() {
         </div>
       </section>
 
+      {/* HOW WE WORK */}
+      <section className="container mx-auto px-4 pb-14">
+        <h2 className="text-2xl sm:text-3xl font-bold text-center">
+          كيف نعمل في <span className="text-gold">بنيان الهرم</span>؟
+        </h2>
+
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            {
+              title: "1) تواصل ومعاينة",
+              desc: "نستقبل تفاصيل المشروع ونرتب زيارة ميدانية لفهم الحالة الفعلية ونطاق الأعمال المطلوبة.",
+            },
+            {
+              title: "2) تحديد البنود",
+              desc: "نحدد نطاق التنفيذ والمستوى المطلوب ونوضح ما هو شامل وما هو غير شامل بشكل واضح.",
+            },
+            {
+              title: "3) عرض سعر واضح",
+              desc: "نقدم عرض سعر منظم يشرح البنود وطريقة التنفيذ والمدة المتوقعة وخطوات العمل.",
+            },
+            {
+              title: "4) تنفيذ ومتابعة",
+              desc: "نبدأ التنفيذ مع إشراف هندسي ومتابعة جودة وتقارير واضحة حتى التسليم النهائي.",
+            },
+          ].map((x, i) => (
+            <div
+              key={i}
+              className="bg-white/5 border border-white/10 rounded-2xl p-6 text-right"
+            >
+              <h3 className="text-lg font-bold text-gold">{x.title}</h3>
+              <p className="mt-3 text-white/75 leading-relaxed">{x.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* INTERNAL LINK: AL MALQA */}
       <section className="container mx-auto px-4 pb-12">
         <div className="bg-white/5 border border-white/10 rounded-2xl p-8 text-right">
           <h2 className="text-2xl sm:text-3xl font-bold">
-            مقاول تشطيب وبناء في <span className="text-gold">حي الملقا</span> بالرياض
+            مقاول تشطيب وبناء في <span className="text-gold">حي الملقا</span>{" "}
+            بالرياض
           </h2>
 
           <p className="mt-4 text-white/80 leading-relaxed">
-            جهزنا صفحة مخصصة لحي الملقا تشمل تفاصيل الخدمات + صور + أسئلة شائعة +
-            أزرار تواصل مباشرة، لتقوية الظهور المحلي في شمال الرياض.
+            جهزنا صفحة مخصصة لحي الملقا تشمل تفاصيل الخدمات، صورًا، أسئلة شائعة،
+            وأزرار تواصل مباشرة، لتقوية الظهور المحلي في شمال الرياض.
           </p>
 
           <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-end">
-            <a
-              href="/contractor-almalqa-riyadh"
+            <Link
+              to="/contractor-almalqa-riyadh"
               className="bg-gold hover:bg-gold/90 text-black font-bold px-6 py-3 rounded-xl transition text-center"
             >
               افتح صفحة حي الملقا
-            </a>
+            </Link>
 
-            <a
-              href="/villa-finishing-price-riyadh"
+            <Link
+              to="/villa-construction-cost-calculator-riyadh"
               className="bg-white/10 hover:bg-white/20 text-white font-bold px-6 py-3 rounded-xl transition text-center"
             >
-              افتح حاسبة الأسعار
-            </a>
+              افتح الحاسبة
+            </Link>
           </div>
         </div>
       </section>
@@ -345,49 +422,49 @@ export default function ConstructionCompanyRiyadh() {
         <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             {
-              href: "/villa-finishing-riyadh",
+              to: "/villa-finishing-riyadh",
               title: "تشطيب فلل بالرياض",
               desc: "تفاصيل التشطيب وتسليم المفتاح مع طرق تواصل مباشرة.",
             },
             {
-              href: "/villa-renovation-riyadh",
+              to: "/villa-renovation-riyadh",
               title: "ترميم فلل بالرياض",
               desc: "تجديد وترميم شامل ومعالجة التشققات والرطوبة حسب الحالة.",
             },
             {
-              href: "/villa-bone-construction-riyadh",
+              to: "/villa-bone-construction-riyadh",
               title: "بناء عظم بالرياض",
               desc: "تنفيذ العظم حسب المخططات والمواصفات مع إشراف هندسي.",
             },
             {
-              href: "/apartment-finishing-riyadh",
+              to: "/apartment-finishing-riyadh",
               title: "تشطيب شقق بالرياض",
               desc: "تشطيب شقق سكنية بتصاميم عصرية وجودة تنفيذ عالية.",
             },
             {
-              href: "/villa-finishing-price-riyadh",
+              to: "/villa-finishing-price-riyadh",
               title: "أسعار تشطيب فلل بالرياض",
               desc: "تقدير تكلفة التشطيب حسب المساحة والمستوى قبل المعاينة.",
             },
             {
-              href: "/home-renovation-company-riyadh",
+              to: "/home-renovation-company-riyadh",
               title: "مقاول ترميم منازل بالرياض",
               desc: "حلول ترميم وإعادة تأهيل بإدارة هندسية متكاملة.",
             },
           ].map((x, i) => (
-            <a
+            <Link
               key={i}
-              href={x.href}
+              to={x.to}
               className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-gold/40 transition text-right"
             >
               <div className="text-lg font-bold text-gold">{x.title}</div>
               <div className="mt-2 text-white/70">{x.desc}</div>
-            </a>
+            </Link>
           ))}
         </div>
       </section>
 
-      {/* FAQ (VISIBLE + MATCHES SCHEMA) */}
+      {/* FAQ */}
       <section className="container mx-auto px-4 pb-14">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
           أسئلة شائعة عن <span className="text-gold">شركة مقاولات بالرياض</span>
@@ -409,9 +486,10 @@ export default function ConstructionCompanyRiyadh() {
       {/* FINAL CTA */}
       <section className="container mx-auto px-4 pb-20">
         <div className="bg-gradient-to-b from-white/10 to-white/5 border border-white/10 rounded-2xl p-8 text-center">
-          <h3 className="text-2xl font-bold">جاهز تبدأ مشروعك في الرياض؟</h3>
+          <h2 className="text-2xl font-bold">جاهز تبدأ مشروعك في الرياض؟</h2>
           <p className="mt-3 text-white/70">
-            تواصل معنا الآن وخذ استشارة أولية، ونرتّب معاينة ونقدّم عرض سعر واضح.
+            تواصل معنا الآن وخذ استشارة أولية، أو استخدم الحاسبة وأنشئ تصورًا
+            أوليًا لسعرك بنفسك.
           </p>
 
           <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
@@ -430,11 +508,21 @@ export default function ConstructionCompanyRiyadh() {
               onClick={() => {
                 track("whatsapp_click_construction_bottom");
                 window.location.href = waPrefill(
-                  "أريد عرض سعر لمشروع في الرياض. مساحة المشروع: (اكتبها) — نوع العمل: (تشطيب/ترميم/عظم) — الموقع/الحي:"
+                  "السلام عليكم، أريد عرض سعر لمشروع في الرياض.\nنوع العمل: تشطيب / ترميم / بناء عظم\nالمساحة التقريبية:\nالحي:\nتفاصيل إضافية:"
                 );
               }}
             >
               واتساب
+            </Button>
+
+            <Button
+              className="bg-white/10 border border-white/15 text-white font-bold px-8 py-6 text-lg hover:bg-white/15"
+              onClick={() => {
+                track("open_calculator_from_construction_bottom");
+                window.location.href = "/villa-construction-cost-calculator-riyadh";
+              }}
+            >
+              أنشئ عرض سعرك بنفسك
             </Button>
           </div>
         </div>
@@ -442,4 +530,3 @@ export default function ConstructionCompanyRiyadh() {
     </div>
   );
 }
-
