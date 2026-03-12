@@ -431,33 +431,40 @@ export default function VillaFinishingPriceRiyadh() {
               </p>
 
               <div className="mt-4 flex flex-col md:flex-row gap-3">
-                <button
-                  type="button"
-                  onClick={handleSaveEstimate}
-                  disabled={saving}
-                  className="inline-flex items-center justify-center rounded-lg bg-gold px-5 py-3 text-sm font-extrabold text-black hover:opacity-90 transition disabled:opacity-60"
-                >
-                  {saving ? "جاري حفظ التقدير..." : "حفظ التقدير داخل حسابي"}
-                </button>
+  <button
+    type="button"
+    onClick={handleSaveEstimate}
+    disabled={saving}
+    className="inline-flex items-center justify-center rounded-lg bg-gold px-5 py-3 text-sm font-extrabold text-black hover:opacity-90 transition disabled:opacity-60"
+  >
+    {saving ? "جاري حفظ التقدير..." : "حفظ التقدير داخل حسابي"}
+  </button>
 
-                {!activatedUser?.phone && (
-                  <Link
-                    to="/create-account"
-                    className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/10 px-5 py-3 text-sm font-bold text-white hover:bg-white/15 transition"
-                  >
-                    إنشاء حساب
-                  </Link>
-                )}
+  <Link
+    to={lumpsumCalculatorUrl}
+    className="inline-flex items-center justify-center rounded-lg bg-gold px-5 py-3 text-sm font-extrabold text-black hover:opacity-90 transition"
+  >
+    انتقل إلى حاسبة المقطوعية
+  </Link>
 
-                <a
-                  href={waLink}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white hover:bg-white/10 transition"
-                >
-                  طلب عرض سعر عبر واتساب
-                </a>
-              </div>
+  {!activatedUser?.phone && (
+    <Link
+      to="/create-account"
+      className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/10 px-5 py-3 text-sm font-bold text-white hover:bg-white/15 transition"
+    >
+      إنشاء حساب
+    </Link>
+  )}
+
+  <a
+    href={waLink}
+    target="_blank"
+    rel="noreferrer"
+    className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white hover:bg-white/10 transition"
+  >
+    طلب عرض سعر عبر واتساب
+  </a>
+</div>
 
               {saveMessage && (
                 <div className="mt-3 text-sm text-white/85">{saveMessage}</div>
