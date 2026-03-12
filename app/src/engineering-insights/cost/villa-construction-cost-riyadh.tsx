@@ -162,7 +162,80 @@ export default function VillaConstructionCostRiyadh() {
         jsonLd={jsonLd}
       />
 
-      <div className="container mx-auto px-4">
+      <div className="fixed left-4 top-1/2 z-40 hidden w-[300px] -translate-y-1/2 xl:block">
+        <div className="overflow-hidden rounded-3xl border border-yellow-500/30 bg-neutral-950 text-white shadow-2xl">
+          <div className="bg-gradient-to-r from-yellow-500/20 via-yellow-400/10 to-transparent px-5 py-4">
+            <p className="text-xs font-semibold tracking-wide text-yellow-400">
+              عرض إضافي لزوار هذه الصفحة
+            </p>
+            <h2 className="mt-2 text-xl font-extrabold leading-snug">
+              احصل على خصم 3% و ضمان 6 أشهر إضافية
+            </h2>
+            <p className="mt-2 text-sm leading-7 text-white/90">
+              في حال سجلت في الموقع{" "}
+              <span className="font-bold text-yellow-400">
+                (جرب الحاسبة التفاعلية و احسب مشروعك بنفسك)
+              </span>
+            </p>
+          </div>
+
+          <div className="px-5 pb-5 pt-2">
+            <p className="text-sm leading-7 text-white/75">
+              ابدأ بتقدير مبدئي سريع، ثم سجّل بياناتك لتحصل على المزايا الإضافية
+              عند المتابعة.
+            </p>
+
+            <div className="mt-4 grid gap-3">
+              <Button
+                asChild
+                className="h-12 rounded-2xl bg-yellow-500 font-bold text-black hover:bg-yellow-400"
+              >
+                <Link to="/villa-finishing-price-riyadh">
+                  افتح الحاسبة التفاعلية
+                </Link>
+              </Button>
+
+              <Button
+                asChild
+                variant="outline"
+                className="h-12 rounded-2xl border-yellow-500/40 bg-white/5 text-white hover:bg-white/10 hover:text-white"
+              >
+                <Link to="/portal">سجل في الموقع</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="fixed inset-x-3 bottom-3 z-40 xl:hidden">
+        <div className="rounded-2xl border border-yellow-500/30 bg-neutral-950/95 p-3 text-white shadow-2xl backdrop-blur">
+          <p className="text-sm font-bold leading-6">
+            احصل على خصم 3% و ضمان 6 أشهر إضافية{" "}
+            <span className="text-yellow-400">
+              (جرب الحاسبة التفاعلية و احسب مشروعك بنفسك)
+            </span>
+          </p>
+
+          <div className="mt-3 grid grid-cols-2 gap-2">
+            <Button
+              asChild
+              className="rounded-xl bg-yellow-500 font-bold text-black hover:bg-yellow-400"
+            >
+              <Link to="/villa-finishing-price-riyadh">افتح الحاسبة</Link>
+            </Button>
+
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-xl border-yellow-500/40 bg-white/5 text-white hover:bg-white/10 hover:text-white"
+            >
+              <Link to="/portal">سجل الآن</Link>
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 xl:pl-[340px]">
         <article className="max-w-4xl">
           <div className="inline-flex items-center rounded-full border border-yellow-500/30 bg-yellow-500/10 px-4 py-1.5 text-sm font-medium">
             تقرير ضمن قسم التكلفة والتسعير
@@ -182,8 +255,8 @@ export default function VillaConstructionCostRiyadh() {
             <strong> كم تكلفة بناء فيلا بالرياض؟</strong> وهذا سؤال طبيعي جدًا،
             لأن قرار البناء يرتبط مباشرة بالقدرة المالية، وبوضوح الصورة من
             البداية. لكن المشكلة أن كثيرًا من الناس يبحثون عن رقم سريع ونهائي،
-            بينما الواقع أن <strong>تكلفة بناء الفيلا ليست رقمًا ثابتًا</strong>،
-            بل نتيجة مجموعة كبيرة من العوامل المرتبطة بالمساحة، والتصميم،
+            بينما الواقع أن <strong>تكلفة بناء الفيلا ليست رقمًا ثابتًا</strong>
+            ، بل نتيجة مجموعة كبيرة من العوامل المرتبطة بالمساحة، والتصميم،
             والمواصفات، وطريقة التنفيذ، ومستوى التشطيب المطلوب.
           </p>
 
