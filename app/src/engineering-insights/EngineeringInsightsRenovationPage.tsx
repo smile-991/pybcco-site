@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
-import Link from 'next/link';
-import { SeoHead } from '@/components/SeoHead';
+// Use React Router instead of Next.js for navigation.
+import { Link } from 'react-router-dom';
+// Import SeoHead as a default export.
+import SeoHead from '@/components/SeoHead';
 
 /**
  * الصفحة الرئيسية لقسم التجديد والترميم.
@@ -80,8 +82,15 @@ const EngineeringInsightsRenovationPage = () => {
             <div key={article.slug} className="border border-gray-200 rounded-lg p-4 shadow-sm">
               <h3 className="text-xl font-semibold mb-2">{article.title}</h3>
               <p className="mb-4 text-sm text-gray-600">{article.description}</p>
-              <Link href={`/${article.slug}`}>
-                <a className="text-blue-600 hover:underline">اقرأ المزيد</a>
+              {/*
+               * React Router Link usage: specify the "to" prop for navigation
+               * and apply classes directly without a nested <a> element.
+               */}
+              <Link
+                to={`/${article.slug}`}
+                className="text-blue-600 hover:underline"
+              >
+                اقرأ المزيد
               </Link>
             </div>
           ))}

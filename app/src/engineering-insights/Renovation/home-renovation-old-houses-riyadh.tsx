@@ -1,4 +1,5 @@
-import { SeoHead } from '@/components/SeoHead';
+// Import SeoHead as a default export rather than a named export
+import SeoHead from '@/components/SeoHead';
 
 /**
  * مقال حول إعادة بناء وتحديث المنازل القديمة في الرياض.

@@ -1,4 +1,5 @@
-import { SeoHead } from '@/components/SeoHead';
+// Use default import for SeoHead instead of named import
+import SeoHead from '@/components/SeoHead';
 
 /**
  * مقال حول تخطيط ميزانية تجديد الفلل في الرياض.
