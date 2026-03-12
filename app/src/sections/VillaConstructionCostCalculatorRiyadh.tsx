@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 type ServiceType = "bone" | "finishing" | "turnkey";
 type Level = "commercial" | "standard" | "luxury";
+type StreetWidthCategory = "lt15" | "15to30" | "gt30";
 
 type ActivatedUser = {
   phone: string;
@@ -55,10 +56,16 @@ const ROOF_SEATING_RATES: Record<Level, number> = {
   luxury: 320,
 };
 
-const DEFAULT_BUILD_RATIO_BY_STREETS: Record<string, number> = {
-  "1": 70,
-  "2": 60,
-  "3": 50,
+const BASE_BUILD_RATIO_BY_STREETS: Record<string, number> = {
+  "1": 75,
+  "2": 70,
+  "3": 70,
+};
+
+const STREET_WIDTH_ADJUSTMENT: Record<StreetWidthCategory, number> = {
+  lt15: 0,
+  "15to30": -2,
+  gt30: -3,
 };
 
 const POOL_AREA_STANDARD = 10; // 2.5 x 4
@@ -88,10 +95,16 @@ function getServiceLabel(serviceType: ServiceType) {
   return "تسليم مفتاح";
 }
 
+function getStreetWidthLabel(streetWidth: StreetWidthCategory) {
+  if (streetWidth === "lt15") return "أقل من 15م";
+  if (streetWidth === "15to30") return "بين 15م و 30م";
+  return "أكثر من 30م";
+}
+
 export default function VillaConstructionCostCalculatorRiyadh() {
   const title = "حاسبة تكلفة بناء فيلا في الرياض 2026 | بنيان الهرم";
   const description =
-    "حاسبة تفاعلية لتقدير تكلفة بناء فيلا في الرياض حسب مساحة الأرض وعدد الشوارع ونوع الخدمة والبدروم والمصعد والمسبح وجلسات السطح. احصل على عرض سعر تقديري واضح قابل للطباعة والحفظ.";
+    "حاسبة تفاعلية لتقدير تكلفة بناء فيلا في الرياض حسب مساحة الأرض وعدد الشوارع وعرض الشارع الرئيسي ونوع الخدمة والبدروم والمصعد والمسبح وجلسات السطح. احصل على عرض سعر تقديري واضح قابل للطباعة والحفظ.";
   const canonical =
     "https://pybcco.com/villa-construction-cost-calculator-riyadh";
 
@@ -157,7 +170,7 @@ export default function VillaConstructionCostCalculatorRiyadh() {
     applicationCategory: "Calculator",
     operatingSystem: "All",
     description:
-      "أداة تفاعلية لحساب تكلفة بناء الفيلا في الرياض حسب مساحة الأرض وعدد الشوارع ونوع الخدمة والبدروم والمصعد والمسبح وجلسات السطح.",
+      "أداة تفاعلية لحساب تكلفة بناء الفيلا في الرياض حسب مساحة الأرض وعدد الشوارع وعرض الشارع الرئيسي ونوع الخدمة والبدروم والمصعد والمسبح وجلسات السطح.",
     offers: {
       "@type": "Offer",
       price: "0",
@@ -172,9 +185,8 @@ export default function VillaConstructionCostCalculatorRiyadh() {
 
   const [landArea, setLandArea] = useState<string>("");
   const [streetCount, setStreetCount] = useState<string>("1");
-  const [buildRatio, setBuildRatio] = useState<number>(
-    DEFAULT_BUILD_RATIO_BY_STREETS["1"]
-  );
+  const [streetWidth, setStreetWidth] = useState<StreetWidthCategory>("lt15");
+  const [buildRatio, setBuildRatio] = useState<number>(75);
 
   const [hasBasement, setHasBasement] = useState(false);
   const [basementRatio, setBasementRatio] = useState<string>("60");
@@ -212,8 +224,11 @@ export default function VillaConstructionCostCalculatorRiyadh() {
   }, []);
 
   useEffect(() => {
-    setBuildRatio(DEFAULT_BUILD_RATIO_BY_STREETS[streetCount] ?? 70);
-  }, [streetCount]);
+    const baseRatio = BASE_BUILD_RATIO_BY_STREETS[streetCount] ?? 75;
+    const widthAdjustment = STREET_WIDTH_ADJUSTMENT[streetWidth] ?? 0;
+    const finalRatio = Math.max(baseRatio + widthAdjustment, 60);
+    setBuildRatio(finalRatio);
+  }, [streetCount, streetWidth]);
 
   const landAreaNumber = useMemo(() => {
     const n = Number(landArea);
@@ -341,6 +356,7 @@ export default function VillaConstructionCostCalculatorRiyadh() {
 
   const serviceLabel = getServiceLabel(serviceType);
   const levelLabel = getLevelLabel(level);
+  const streetWidthLabel = getStreetWidthLabel(streetWidth);
 
   const detailedCalculatorLink = "/villa-finishing-price-riyadh";
 
@@ -350,7 +366,8 @@ export default function VillaConstructionCostCalculatorRiyadh() {
       `${serviceType !== "bone" ? `المستوى: ${levelLabel}\n` : ""}` +
       `مساحة الأرض: ${formatNumber(landAreaNumber)} م²\n` +
       `عدد الشوارع: ${streetCount}\n` +
-      `نسبة البناء: ${formatNumber(buildRatio)}%\n` +
+      `عرض الشارع الرئيسي: ${streetWidthLabel}\n` +
+      `نسبة البناء التقديرية: ${formatNumber(buildRatio)}%\n` +
       `مساحة البناء الكلية: ${formatNumber(mainBuiltArea)} م²\n` +
       `${hasBasement ? `مساحة البدروم: ${formatNumber(basementArea)} م²\n` : ""}` +
       `${
@@ -659,7 +676,8 @@ body {
 
           <p className="mt-6 text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
             حاسبة تفاعلية سريعة لحساب تكلفة البناء التقديرية حسب مساحة الأرض وعدد
-            الشوارع ونوع الخدمة والبدروم والمصعد والمسبح وجلسات السطح.
+            الشوارع وعرض الشارع الرئيسي ونوع الخدمة والبدروم والمصعد والمسبح
+            وجلسات السطح.
           </p>
 
           <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm text-white/80">
@@ -880,21 +898,40 @@ body {
               </div>
 
               <div className="rounded-xl border border-white/10 bg-black/30 p-4">
-                <div className="text-sm text-white/70 mb-2">نسبة البناء (%)</div>
-                <input
-                  value={String(buildRatio)}
+                <div className="text-sm text-white/70 mb-2">
+                  عرض الشارع الرئيسي
+                </div>
+                <select
+                  value={streetWidth}
                   onChange={(e) => {
-                    const n = Number(e.target.value.replace(/[^\d.]/g, ""));
-                    setBuildRatio(Number.isFinite(n) ? n : 0);
+                    setStreetWidth(e.target.value as StreetWidthCategory);
                     setShowResult(false);
                     setSaveMessage("");
                   }}
-                  inputMode="decimal"
                   className="w-full rounded-lg bg-black/40 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
-                />
+                >
+                  <option value="lt15">أقل من 15م</option>
+                  <option value="15to30">بين 15م و 30م</option>
+                  <option value="gt30">أكثر من 30م</option>
+                </select>
               </div>
 
               <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+                <div className="text-sm text-white/70 mb-2">
+                  نسبة البناء التقديرية (%)
+                </div>
+                <input
+                  value={String(buildRatio)}
+                  readOnly
+                  className="w-full rounded-lg bg-black/30 border border-white/10 px-4 py-3 outline-none text-white/90"
+                />
+                <div className="mt-2 text-xs text-white/55 leading-6">
+                  تُحسب تلقائيًا حسب عدد الشوارع وعرض الشارع الرئيسي بافتراض أن
+                  الأرض مربعة.
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-white/10 bg-black/30 p-4 md:col-span-2">
                 <div className="text-sm text-white/70 mb-2">
                   الأوراق الحكومية (اختياري)
                 </div>
@@ -1056,13 +1093,30 @@ body {
                   </div>
 
                   <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+                    <div className="text-white/60">عدد الشوارع</div>
+                    <div className="mt-1 font-bold">{streetCount}</div>
+                  </div>
+
+                  <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+                    <div className="text-white/60">عرض الشارع الرئيسي</div>
+                    <div className="mt-1 font-bold">{streetWidthLabel}</div>
+                  </div>
+
+                  <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+                    <div className="text-white/60">نسبة البناء التقديرية</div>
+                    <div className="mt-1 font-bold text-gold">
+                      {formatNumber(buildRatio)}%
+                    </div>
+                  </div>
+
+                  <div className="rounded-xl border border-white/10 bg-black/30 p-4">
                     <div className="text-white/60">مساحة البناء الكلية</div>
                     <div className="mt-1 font-bold text-gold">
                       {formatNumber(mainBuiltArea)} م²
                     </div>
                   </div>
 
-                  <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+                  <div className="rounded-xl border border-white/10 bg-black/30 p-4 md:col-span-2">
                     <div className="text-white/60">متوسط تكلفة المتر</div>
                     <div className="mt-1 font-bold">
                       {formatSAR(averageCostPerM2)} ريال / م²
@@ -1265,7 +1319,25 @@ body {
                     </div>
 
                     <div className="border border-[#ddd] rounded-lg p-2">
-                      <div className="text-[#777] text-[10px]">نسبة البناء</div>
+                      <div className="text-[#777] text-[10px]">عدد الشوارع</div>
+                      <div className="font-bold text-[13px] mt-1">
+                        {streetCount}
+                      </div>
+                    </div>
+
+                    <div className="border border-[#ddd] rounded-lg p-2">
+                      <div className="text-[#777] text-[10px]">
+                        عرض الشارع الرئيسي
+                      </div>
+                      <div className="font-bold text-[13px] mt-1">
+                        {streetWidthLabel}
+                      </div>
+                    </div>
+
+                    <div className="border border-[#ddd] rounded-lg p-2">
+                      <div className="text-[#777] text-[10px]">
+                        نسبة البناء التقديرية
+                      </div>
                       <div className="font-bold text-[13px] mt-1">
                         {formatNumber(buildRatio)}%
                       </div>
@@ -1370,6 +1442,10 @@ body {
                       العمل.
                     </div>
                     <div>
+                      • تم اعتماد نسبة البناء التقديرية بناءً على عدد الشوارع
+                      وعرض الشارع الرئيسي بافتراض أن الأرض مربعة.
+                    </div>
+                    <div>
                       • تم اعتماد نسبة البدروم الافتراضية 60% من مساحة الدور الأرضي
                       مع إمكانية التعديل.
                     </div>
@@ -1406,19 +1482,19 @@ body {
 
               <p className="mt-4 text-white/80 leading-8">
                 تختلف تكلفة بناء الفيلا في الرياض حسب مساحة الأرض، وعدد الشوارع،
-                ونسبة البناء، ونوع الخدمة المطلوبة، سواء كانت عظم أو تشطيب أو
-                تسليم مفتاح. كما تؤثر عناصر إضافية مثل البدروم والمصعد والمسبح
-                وجلسات السطح على إجمالي التكلفة النهائية. تساعدك هذه الحاسبة
-                التفاعلية على تكوين تصور سريع وعملي عن تكلفة المشروع قبل طلب العرض
-                النهائي أو بدء مراجعة المخططات.
+                وعرض الشارع الرئيسي، ونسبة البناء التقديرية، ونوع الخدمة المطلوبة،
+                سواء كانت عظم أو تشطيب أو تسليم مفتاح. كما تؤثر عناصر إضافية مثل
+                البدروم والمصعد والمسبح وجلسات السطح على إجمالي التكلفة النهائية.
+                تساعدك هذه الحاسبة التفاعلية على تكوين تصور سريع وعملي عن تكلفة
+                المشروع قبل طلب العرض النهائي أو بدء مراجعة المخططات.
               </p>
 
               <p className="mt-4 text-white/80 leading-8">
-                في المشاريع السكنية الخاصة يتم عادة احتساب المسطحات بناءً على نسبة
-                البناء المعتمدة للمخطط، ثم يتم احتساب تكلفة التنفيذ حسب نوع الخدمة
-                والمستوى المختار. لذلك تعتبر هذه الصفحة أداة مفيدة لكل من يبحث عن
-                حاسبة تكلفة بناء فيلا في الرياض أو يريد معرفة تكلفة العظم أو
-                التشطيب أو تسليم المفتاح بشكل أولي وواضح.
+                في المشاريع السكنية الخاصة يتم عادة احتساب المسطحات بناءً على
+                المساحة المتوقعة القابلة للبناء، ثم يتم احتساب تكلفة التنفيذ حسب
+                نوع الخدمة والمستوى المختار. لذلك تعتبر هذه الصفحة أداة مفيدة لكل
+                من يبحث عن حاسبة تكلفة بناء فيلا في الرياض أو يريد معرفة تكلفة
+                العظم أو التشطيب أو تسليم المفتاح بشكل أولي وواضح.
               </p>
             </div>
 
@@ -1613,7 +1689,11 @@ body {
               <ul className="space-y-2 text-white/80 leading-7 text-sm">
                 <li>✔️ النتيجة التقديرية ليست عرض سعر نهائي.</li>
                 <li>✔️ تعتمد الدقة النهائية على المخططات والموقع ونطاق العمل.</li>
-                <li>✔️ يمكن تعديل نسبة البناء ونسبة البدروم حسب مشروعك.</li>
+                <li>
+                  ✔️ تم اعتماد نسبة البناء التقديرية حسب عدد الشوارع وعرض الشارع
+                  الرئيسي بافتراض أن الأرض مربعة.
+                </li>
+                <li>✔️ يمكن تعديل نسبة البدروم حسب مشروعك.</li>
                 <li>
                   ✔️ تم اعتماد الصفحة كحاسبة تفاعلية مخصصة لتقدير تكلفة البناء في
                   الرياض.
