@@ -190,7 +190,7 @@ export default function VillaConstructionCostRiyadh() {
                 asChild
                 className="h-12 rounded-2xl bg-yellow-500 font-bold text-black hover:bg-yellow-400"
               >
-                <Link to="/villa-finishing-price-riyadh">
+                <Link to="/villa-cost-calculator">
                   افتح الحاسبة التفاعلية
                 </Link>
               </Button>
@@ -208,32 +208,32 @@ export default function VillaConstructionCostRiyadh() {
       </div>
 
       <div className="fixed inset-x-3 bottom-3 z-40 xl:hidden">
-        <div className="rounded-2xl border border-yellow-500/30 bg-neutral-950/95 p-3 text-white shadow-2xl backdrop-blur">
-          <p className="text-sm font-bold leading-6">
-            احصل على خصم 3% و ضمان 6 أشهر إضافية{" "}
-            <span className="text-yellow-400">
-              (جرب الحاسبة التفاعلية و احسب مشروعك بنفسك)
-            </span>
-          </p>
+  <div className="rounded-2xl border border-yellow-500/30 bg-neutral-950/95 p-3 text-white shadow-2xl backdrop-blur">
+    <p className="text-sm font-bold leading-6">
+      احصل على خصم 3% و ضمان 6 أشهر إضافية{" "}
+      <span className="text-yellow-400">
+        (جرب الحاسبة التفاعلية و احسب مشروعك بنفسك)
+      </span>
+    </p>
 
-          <div className="mt-3 grid grid-cols-2 gap-2">
-            <Button
-              asChild
-              className="rounded-xl bg-yellow-500 font-bold text-black hover:bg-yellow-400"
-            >
-              <Link to="/villa-finishing-price-riyadh">افتح الحاسبة</Link>
-            </Button>
+    <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+      <Button
+        asChild
+        className="h-12 w-full rounded-xl bg-yellow-500 font-bold text-black hover:bg-yellow-400"
+      >
+        <Link to="/villa-finishing-price-riyadh">افتح الحاسبة</Link>
+      </Button>
 
-            <Button
-              asChild
-              variant="outline"
-              className="rounded-xl border-yellow-500/40 bg-white/5 text-white hover:bg-white/10 hover:text-white"
-            >
-              <Link to="/portal">سجل الآن</Link>
-            </Button>
-          </div>
-        </div>
-      </div>
+      <Button
+        asChild
+        variant="outline"
+        className="h-12 w-full rounded-xl border-yellow-500/40 bg-white/5 text-white hover:bg-white/10 hover:text-white"
+      >
+        <Link to="/portal">سجل الآن</Link>
+      </Button>
+    </div>
+  </div>
+</div>
 
       <div className="container mx-auto px-4 xl:pl-[340px]">
         <article className="max-w-4xl">
@@ -521,7 +521,7 @@ export default function VillaConstructionCostRiyadh() {
 
             <div className="mt-6 flex flex-wrap gap-3">
               <Button asChild className="rounded-2xl">
-                <Link to="/villa-finishing-price-riyadh">
+                <Link to="/villa-cost-calculator">
                   افتح حاسبة التكلفة
                 </Link>
               </Button>
