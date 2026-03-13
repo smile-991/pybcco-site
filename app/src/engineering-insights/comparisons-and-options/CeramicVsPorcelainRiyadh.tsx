@@ -273,6 +273,33 @@ export default function CeramicVsPorcelainRiyadh() {
                 مستخدم بكثرة في جدران الحمامات، وليس في هذا أي مشكلة إذا كانت
                 الجودة جيدة والتنفيذ صحيح.
               </p>
+
+              <div className="mt-6 overflow-hidden rounded-[28px] border border-zinc-200 bg-zinc-50 p-4 shadow-sm">
+  <p className="mb-4 text-sm font-bold text-[#8a6500]">
+    مثال تنفيذ فعلي لحمام فاخر في الرياض
+  </p>
+
+  <div
+    className="relative overflow-hidden rounded-2xl"
+    style={{ paddingTop: "177.78%" }}
+  >
+    <iframe
+      className="absolute inset-0 h-full w-full"
+      src="https://www.youtube.com/embed/RXlu9puTA-o"
+      title="تشطيب حمام فاخر في الرياض | بنيان الهرم للمقاولات"
+      frameBorder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerPolicy="strict-origin-when-cross-origin"
+      allowFullScreen
+    />
+  </div>
+
+  <p className="mt-4 text-sm leading-7 text-zinc-700">
+    هذا مثال حقيقي من أعمال التشطيب يوضح النتيجة النهائية في الحمامات عند اختيار
+    خامات مناسبة وتنفيذ مرتب ودقيق.
+  </p>
+</div>
+
               <p className="mt-5 text-base leading-8 text-zinc-700">
                 البورسلان أيضًا أصبح منتشرًا في الجدران، خصوصًا مع الاتجاه نحو
                 المقاسات الكبيرة والمساحات الهادئة والفواصل الأقل. هذه النتيجة
