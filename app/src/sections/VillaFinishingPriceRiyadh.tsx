@@ -306,7 +306,7 @@ export default function VillaFinishingPriceRiyadh() {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
               <div>
                 <div className="text-sm md:text-base font-bold text-gold">
-                  تريد حسابًا مقطوعيًا سريعًا للمشروع بالكامل؟
+                  تريد حسابًا مقطوعيًا سريعًا للمشروع بالكامل؟ انتقل الى حاسبة المقطوعية بالمتر
                 </div>
                 <div className="mt-1 text-sm text-white/75 leading-7">
                   هذه الصفحة مخصصة للحساب التفصيلي حسب البنود والكميات. أما إذا كنت
