@@ -106,7 +106,33 @@ export default function ConstructionCompanyRiyadh() {
       ],
     };
 
-    return [webpageSchema, serviceSchema, faqSchema, breadcrumbSchema];
+    const videoSchema = {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      name: "تشطيب وترميم فيلا سكنية في الرياض",
+      description:
+        "فيديو يوضح تنفيذ أعمال تشطيب وترميم فيلا سكنية في الرياض بواسطة شركة بنيان الهرم للمقاولات.",
+      thumbnailUrl: [ogImage],
+      uploadDate: "2026-03-14",
+      contentUrl: "https://youtube.com/shorts/qaKZukA1534",
+      embedUrl: "https://www.youtube.com/embed/qaKZukA1534",
+      publisher: {
+        "@type": "Organization",
+        name: "PYBCCO – بنيان الهرم للمقاولات",
+        logo: {
+          "@type": "ImageObject",
+          url: `${SITE}/logo.png`,
+        },
+      },
+    };
+
+    return [
+      webpageSchema,
+      serviceSchema,
+      faqSchema,
+      breadcrumbSchema,
+      videoSchema,
+    ];
   }, [canonical, description, title, ogImage]);
 
   const WA_NUMBER = "966550604837";
@@ -252,6 +278,35 @@ export default function ConstructionCompanyRiyadh() {
         </div>
       </section>
 
+      {/* PROJECT VIDEO */}
+      <section className="container mx-auto px-4 py-14">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-6">
+            تشطيب وترميم فيلا سكنية في <span className="text-gold">الرياض</span>
+          </h2>
+
+          <p className="text-white/70 mb-4 max-w-3xl mx-auto leading-relaxed">
+            مثال حقيقي من أعمال شركة بنيان الهرم للمقاولات في تنفيذ وتشطيب
+            وترميم الفلل السكنية داخل الرياض.
+          </p>
+
+          <p className="text-white/50 text-sm mb-8 break-all">
+            https://youtube.com/shorts/qaKZukA1534
+          </p>
+
+          <div className="aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+            <iframe
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/qaKZukA1534"
+              title="تشطيب وترميم فيلا سكنية في الرياض"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      </section>
+
       {/* LONG SEO CONTENT */}
       <section className="container mx-auto px-4 py-14">
         <div className="max-w-5xl mx-auto text-right space-y-5 text-white/80 leading-relaxed">
@@ -287,7 +342,8 @@ export default function ConstructionCompanyRiyadh() {
             <strong className="text-gold">تشطيب شقق</strong> و{" "}
             <strong className="text-gold">ترميم وتجديد</strong> و{" "}
             <strong className="text-gold">بناء عظم</strong>. ويمكن تنفيذ المشروع
-            كنظام تسليم مفتاح أو ضمن نطاق محدد حسب احتياج العميل وميزانية التنفيذ.
+            كنظام تسليم مفتاح أو ضمن نطاق محدد حسب احتياج العميل وميزانية
+            التنفيذ.
           </p>
 
           <p>
