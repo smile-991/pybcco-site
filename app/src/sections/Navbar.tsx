@@ -324,7 +324,7 @@ export default function Navbar() {
             </a>
 
             {/* ✅ Social (Desktop): 2x2 grid smaller */}
-            <div className="hidden xl:grid grid-cols-2 gap-1.5 shrink-0">
+            <div className="hidden xl:grid grid-cols-3 gap-1.5 shrink-0">
               <a
                 href="https://x.com/pybcco"
                 target="_blank"
