@@ -17,6 +17,11 @@ const CANONICAL =
 
 const DATE_PUBLISHED = "2026-03-06";
 const DATE_MODIFIED = "2026-03-06";
+const VIDEO_UPLOAD_DATE = "2026-03-14";
+const YOUTUBE_VIDEO_ID = "re44BUTtHUk";
+const YOUTUBE_SHORTS_URL = `https://youtube.com/shorts/${YOUTUBE_VIDEO_ID}`;
+const YOUTUBE_EMBED_URL = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`;
+const YOUTUBE_THUMBNAIL_URL = `https://img.youtube.com/vi/${YOUTUBE_VIDEO_ID}/maxresdefault.jpg`;
 
 function buildArticleJsonLd(): JsonLd {
   return {
@@ -28,7 +33,8 @@ function buildArticleJsonLd(): JsonLd {
       "@id": CANONICAL,
     },
     inLanguage: "ar",
-    headline: "تكلفة بناء فيلا 300 متر بالرياض | تقدير عملي للعظم والتشطيب وتسليم المفتاح",
+    headline:
+      "تكلفة بناء فيلا 300 متر بالرياض | تقدير عملي للعظم والتشطيب وتسليم المفتاح",
     description:
       "دليل عملي لفهم تكلفة بناء فيلا 300 متر بالرياض، وما الذي يؤثر على الميزانية، مع أمثلة تقريبية للعظم والتشطيب وتسليم المفتاح قبل طلب عرض السعر.",
     datePublished: DATE_PUBLISHED,
@@ -54,6 +60,38 @@ function buildArticleJsonLd(): JsonLd {
       "تكلفة العظم",
       "تكلفة التشطيب",
       "تسليم مفتاح",
+    ],
+  };
+}
+
+function buildVideoJsonLd(): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "@id": `${CANONICAL}#video`,
+    name: "قبل وأثناء وبعد تشطيب فيلا في الرياض | بنيان الهرم للمقاولات",
+    description:
+      "فيديو قصير يوضح مراحل تنفيذ مشروع فيلا في الرياض من قبل التنفيذ وأثناء العمل وحتى النتيجة النهائية.",
+    thumbnailUrl: [YOUTUBE_THUMBNAIL_URL],
+    uploadDate: VIDEO_UPLOAD_DATE,
+    embedUrl: YOUTUBE_EMBED_URL,
+    contentUrl: YOUTUBE_SHORTS_URL,
+    isFamilyFriendly: true,
+    inLanguage: "ar",
+    publisher: {
+      "@type": "Organization",
+      name: "بنيان الهرم للمقاولات – PYBCCO",
+      url: SITE_URL,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/logo.webp`,
+      },
+    },
+    about: [
+      "تشطيب فلل بالرياض",
+      "مراحل تنفيذ البناء",
+      "قبل وبعد التشطيب",
+      "مشاريع مقاولات بالرياض",
     ],
   };
 }
@@ -149,7 +187,12 @@ function buildBreadcrumbJsonLd(): JsonLd {
 
 export default function Villa300mConstructionCostRiyadh() {
   const jsonLd = useMemo(() => {
-    return [buildArticleJsonLd(), buildFaqJsonLd(), buildBreadcrumbJsonLd()];
+    return [
+      buildArticleJsonLd(),
+      buildVideoJsonLd(),
+      buildFaqJsonLd(),
+      buildBreadcrumbJsonLd(),
+    ];
   }, []);
 
   return (
@@ -198,6 +241,27 @@ export default function Villa300mConstructionCostRiyadh() {
             وما العوامل التي قد ترفع الميزانية أو تجعلها أكثر انضباطًا من
             البداية.
           </p>
+
+          <section className="mt-8 mb-10">
+            <div className="overflow-hidden rounded-2xl border border-yellow-500/20 bg-black/5 shadow-sm">
+              <div className="aspect-video w-full">
+                <iframe
+                  className="h-full w-full"
+                  src={YOUTUBE_EMBED_URL}
+                  title="قبل وأثناء وبعد تشطيب فيلا في الرياض - بنيان الهرم للمقاولات"
+                  loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+
+            <p className="mt-3 text-sm leading-relaxed opacity-70">
+              فيديو قصير يوضح مثالًا حقيقيًا لمراحل التنفيذ من قبل العمل وأثناءه
+              وحتى النتيجة النهائية في مشروع فيلا بالرياض.
+            </p>
+          </section>
 
           <div className="mt-8 rounded-2xl border border-yellow-500/20 bg-yellow-500/5 p-6">
             <h2 className="text-xl font-bold">الخلاصة السريعة</h2>
