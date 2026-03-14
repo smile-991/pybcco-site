@@ -8,6 +8,7 @@ import {
   Facebook,
   Calculator,
 } from "lucide-react";
+import { Youtube, Music2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
@@ -395,6 +396,42 @@ export default function Navbar() {
                   }`}
                 />
               </a>
+
+<a
+  href="https://www.youtube.com/@pybcco"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="YouTube"
+  className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
+    isScrolled
+      ? "bg-black/5 hover:bg-black/10"
+      : "bg-white/10 hover:bg-white/20"
+  }`}
+>
+  <Youtube
+    className={`w-3.5 h-3.5 ${
+      isScrolled ? "text-gray-800" : "text-white"
+    }`}
+  />
+</a>
+
+<a
+  href="https://www.tiktok.com/@pybcco"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="TikTok"
+  className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
+    isScrolled
+      ? "bg-black/5 hover:bg-black/10"
+      : "bg-white/10 hover:bg-white/20"
+  }`}
+>
+  <Music2
+    className={`w-3.5 h-3.5 ${
+      isScrolled ? "text-gray-800" : "text-white"
+    }`}
+  />
+</a>
             </div>
 
             <Button

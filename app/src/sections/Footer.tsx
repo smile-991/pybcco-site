@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { Youtube, Music2 } from "lucide-react";
 
 // ===== NAP الرسمي =====
 const PHONE_LOCAL = "055 060 4837";
@@ -58,6 +59,17 @@ const socialLinks = [
   },
   // ✅ Facebook
   { icon: Facebook, href: "https://www.facebook.com/pybcco", label: "Facebook" },
+
+  {
+  icon: Youtube,
+  href: "https://www.youtube.com/@pybcco",
+  label: "YouTube",
+},
+{
+  icon: Music2,
+  href: "https://www.tiktok.com/@pybcco",
+  label: "TikTok",
+},
 ];
 
 // ===== مكوّن صف التواصل =====
