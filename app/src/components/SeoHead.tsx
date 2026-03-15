@@ -8,7 +8,7 @@ type SeoHeadProps = {
   canonical: string; // absolute URL preferred
   ogImage?: string; // absolute URL recommended
   ogImageAlt?: string;
-  ogType?: string; // default: website
+  ogType?: string; // website | article | product ...
   twitterCard?: "summary" | "summary_large_image";
   robots?: string; // "index,follow" | "noindex,follow" ...
   jsonLd?: JsonLd | JsonLd[];
@@ -62,12 +62,15 @@ function normalizeAbsoluteUrl(url: string) {
   try {
     const parsed = new URL(url);
 
+    // force https
+    parsed.protocol = "https:";
+
     // force non-www
     if (parsed.hostname === "www.pybcco.com") {
       parsed.hostname = "pybcco.com";
     }
 
-    // remove hash and query from canonical
+    // canonical should not contain hash or query
     parsed.hash = "";
     parsed.search = "";
 
@@ -83,22 +86,25 @@ function normalizeAbsoluteUrl(url: string) {
 }
 
 // ✅ البيانات الرسمية المعتمدة
-const NAP = {
-  name_ar: "PYBCCO – شركة بنيان الهرم للمقاولات",
-  name_en: "PYBCCO – Bunyan Al Haram Contracting Company",
+const ENTITY = {
+  siteUrl: "https://pybcco.com",
+  siteName: "PYBCCO",
+  companyNameAr: "PYBCCO – شركة بنيان الهرم للمقاولات",
+  companyNameEn: "PYBCCO – Bunyan Al Haram Contracting Company",
   phone: "+966550604837",
   email: "info@pybcco.com",
-  url: "https://pybcco.com",
   logo: "https://pybcco.com/assets/logo.webp",
-  address_en: "Al Washm St, Al Murabba, Riyadh 12345, Saudi Arabia",
-  city_en: "Riyadh",
-  region_en: "Riyadh Province",
-  country_en: "SA",
-  postal: "12345",
+  address: {
+    streetAddress: "Al Washm St, Al Murabba",
+    addressLocality: "Riyadh",
+    addressRegion: "Riyadh Province",
+    postalCode: "12345",
+    addressCountry: "SA",
+  },
   foundingDate: "2013",
   hasMap: "https://maps.app.goo.gl/mQSMdPr2px1becUp8",
-  availableLanguage: ["Arabic"],
-  socials: [
+  availableLanguages: ["Arabic"],
+  sameAs: [
     "https://www.linkedin.com/company/pybcco",
     "https://x.com/pybcco",
     "https://instagram.com/pybcco.decor",
@@ -108,17 +114,36 @@ const NAP = {
   ],
 };
 
+function buildOrganizationJsonLd(): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${ENTITY.siteUrl}/#organization`,
+    name: ENTITY.companyNameAr,
+    alternateName: ENTITY.companyNameEn,
+    url: ENTITY.siteUrl,
+    logo: {
+      "@type": "ImageObject",
+      url: ENTITY.logo,
+    },
+    email: ENTITY.email,
+    telephone: ENTITY.phone,
+    foundingDate: ENTITY.foundingDate,
+    sameAs: ENTITY.sameAs,
+  };
+}
+
 function buildWebsiteJsonLd(): JsonLd {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": `${NAP.url}/#website`,
-    url: NAP.url,
-    name: NAP.name_ar,
-    alternateName: NAP.name_en,
+    "@id": `${ENTITY.siteUrl}/#website`,
+    url: ENTITY.siteUrl,
+    name: ENTITY.siteName,
+    alternateName: ENTITY.companyNameAr,
     inLanguage: "ar",
     publisher: {
-      "@id": `${NAP.url}/#localbusiness`,
+      "@id": `${ENTITY.siteUrl}/#organization`,
     },
   };
 }
@@ -127,65 +152,73 @@ function buildLocalBusinessJsonLd(): JsonLd {
   return {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "ConstructionCompany"],
-    "@id": `${NAP.url}/#localbusiness`,
-    name: NAP.name_ar,
-    alternateName: NAP.name_en,
-    url: NAP.url,
-    logo: NAP.logo,
-    telephone: NAP.phone,
-    email: NAP.email,
-    foundingDate: NAP.foundingDate,
+    "@id": `${ENTITY.siteUrl}/#localbusiness`,
+    name: ENTITY.companyNameAr,
+    alternateName: ENTITY.companyNameEn,
+    url: ENTITY.siteUrl,
+    logo: ENTITY.logo,
+    image: ENTITY.logo,
+    email: ENTITY.email,
+    telephone: ENTITY.phone,
+    foundingDate: ENTITY.foundingDate,
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Al Washm St, Al Murabba",
-      addressLocality: NAP.city_en,
-      addressRegion: NAP.region_en,
-      postalCode: NAP.postal,
-      addressCountry: NAP.country_en,
+      streetAddress: ENTITY.address.streetAddress,
+      addressLocality: ENTITY.address.addressLocality,
+      addressRegion: ENTITY.address.addressRegion,
+      postalCode: ENTITY.address.postalCode,
+      addressCountry: ENTITY.address.addressCountry,
     },
     areaServed: [
       {
         "@type": "City",
-        name: NAP.city_en,
+        name: "Riyadh",
       },
       {
         "@type": "AdministrativeArea",
-        name: "Riyadh",
+        name: "Riyadh Province",
+      },
+      {
+        "@type": "Country",
+        name: "Saudi Arabia",
       },
     ],
-    hasMap: NAP.hasMap,
-    availableLanguage: NAP.availableLanguage,
+    hasMap: ENTITY.hasMap,
+    availableLanguage: ENTITY.availableLanguages,
+    parentOrganization: {
+      "@id": `${ENTITY.siteUrl}/#organization`,
+    },
     contactPoint: [
       {
         "@type": "ContactPoint",
-        telephone: NAP.phone,
-        email: NAP.email,
+        telephone: ENTITY.phone,
+        email: ENTITY.email,
         contactType: "customer service",
         areaServed: "SA",
-        availableLanguage: NAP.availableLanguage,
+        availableLanguage: ENTITY.availableLanguages,
       },
       {
         "@type": "ContactPoint",
-        telephone: NAP.phone,
+        telephone: ENTITY.phone,
         contactType: "WhatsApp",
         areaServed: "SA",
-        availableLanguage: NAP.availableLanguage,
+        availableLanguage: ENTITY.availableLanguages,
       },
     ],
-    sameAs: NAP.socials,
+    sameAs: ENTITY.sameAs,
   };
 }
 
-function looksLikeLocalBusiness(obj: any) {
+function extractTypes(obj: any): string[] {
   const t = obj?.["@type"];
-  const types = Array.isArray(t) ? t : t ? [t] : [];
-  return types.includes("LocalBusiness") || types.includes("ConstructionCompany");
+  if (Array.isArray(t)) return t;
+  if (typeof t === "string") return [t];
+  return [];
 }
 
-function looksLikeWebsite(obj: any) {
-  const t = obj?.["@type"];
-  const types = Array.isArray(t) ? t : t ? [t] : [];
-  return types.includes("WebSite");
+function hasSchemaType(obj: any, targetTypes: string[]) {
+  const types = extractTypes(obj);
+  return targetTypes.some((t) => types.includes(t));
 }
 
 export default function SeoHead({
@@ -205,7 +238,7 @@ export default function SeoHead({
     // 1) Title
     document.title = title;
 
-    // 2) Basic meta
+    // 2) Core meta
     upsertMetaByName("description", description);
     upsertMetaByName("robots", robots);
     upsertMetaByName("googlebot", robots);
@@ -218,7 +251,7 @@ export default function SeoHead({
     upsertMetaByProperty("og:description", description);
     upsertMetaByProperty("og:url", canonicalUrl);
     upsertMetaByProperty("og:type", ogType);
-    upsertMetaByProperty("og:site_name", "PYBCCO");
+    upsertMetaByProperty("og:site_name", ENTITY.siteName);
     upsertMetaByProperty("og:locale", "ar_AR");
 
     if (ogImage) {
@@ -250,10 +283,18 @@ export default function SeoHead({
 
     const arrUser = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
-    const userHasLocalBusiness = arrUser.some((o) => looksLikeLocalBusiness(o));
-    const userHasWebsite = arrUser.some((o) => looksLikeWebsite(o));
+    const userHasOrganization = arrUser.some((o) =>
+      hasSchemaType(o, ["Organization"])
+    );
+    const userHasWebsite = arrUser.some((o) =>
+      hasSchemaType(o, ["WebSite"])
+    );
+    const userHasLocalBusiness = arrUser.some((o) =>
+      hasSchemaType(o, ["LocalBusiness", "ConstructionCompany"])
+    );
 
-    const arrFinal = [
+    const arrFinal: JsonLd[] = [
+      ...(userHasOrganization ? [] : [buildOrganizationJsonLd()]),
       ...(userHasWebsite ? [] : [buildWebsiteJsonLd()]),
       ...(userHasLocalBusiness ? [] : [buildLocalBusinessJsonLd()]),
       ...arrUser,
