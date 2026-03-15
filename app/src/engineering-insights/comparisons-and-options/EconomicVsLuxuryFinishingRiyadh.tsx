@@ -430,7 +430,7 @@ export default function EconomicVsLuxuryFinishingRiyadh() {
                   <p className="mt-3 text-sm leading-7 text-zinc-700">
                     استخدم{" "}
                     <Link
-                      to="/villa-finishing-cost-calculator-riyadh"
+                      to="/villa-finishing-price-riyadh"
                       className="font-bold text-[#8a6500] underline underline-offset-4"
                     >
                       الحاسبة
@@ -487,7 +487,7 @@ export default function EconomicVsLuxuryFinishingRiyadh() {
 
           <div className="mt-8 grid gap-6 md:grid-cols-3">
             <Link
-              to="/engineering-insights/comparisons-options/ceramic-vs-porcelain"
+              to="/engineering-insights/comparisons-options/ceramic-vs-porcelain-riyadh"
               className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
             >
               <p className="text-sm font-bold text-[#8a6500]">7 دقائق</p>
@@ -500,7 +500,7 @@ export default function EconomicVsLuxuryFinishingRiyadh() {
             </Link>
 
             <Link
-              to="/engineering-insights/comparisons-options/turnkey-vs-contractors"
+              to="/engineering-insights/comparisons-options/turnkey-vs-separate-contractors-riyadh"
               className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
             >
               <p className="text-sm font-bold text-[#8a6500]">9 دقائق</p>
@@ -513,7 +513,7 @@ export default function EconomicVsLuxuryFinishingRiyadh() {
             </Link>
 
             <Link
-              to="/engineering-insights/comparisons-options/aluminum-vs-upvc"
+              to="/engineering-insights/comparisons-options/aluminum-vs-upvc-windows-riyadh"
               className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
             >
               <p className="text-sm font-bold text-[#8a6500]">6 دقائق</p>
