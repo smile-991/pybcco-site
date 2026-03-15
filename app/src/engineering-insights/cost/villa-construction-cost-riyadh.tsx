@@ -153,12 +153,13 @@ export default function VillaConstructionCostRiyadh() {
   }, []);
 
   return (
-    <main dir="rtl" className="py-16">
+    <>
       <SeoHead
         title="تكلفة بناء فيلا بالرياض | كيف تُحسب فعليًا وما الذي يرفع السعر؟ | PYBCCO"
         description="تعرف على طريقة حساب تكلفة بناء فيلا بالرياض، والفرق بين العظم والتشطيب وتسليم المفتاح، والعوامل التي تؤثر على الميزانية الفعلية للمشروع."
         canonical={CANONICAL}
         robots="index,follow,max-image-preview:large"
+        ogType="article"
         jsonLd={jsonLd}
       />
 
@@ -648,6 +649,7 @@ export default function VillaConstructionCostRiyadh() {
           </section>
         </article>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

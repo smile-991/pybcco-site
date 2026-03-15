@@ -153,12 +153,13 @@ export default function GrayStructureCostRiyadh() {
   }, []);
 
   return (
-    <main dir="rtl" className="py-16">
+    <>
       <SeoHead
         title="تكلفة بناء عظم بالرياض | ما الذي يشمله العظم وما الذي يغير السعر؟ | PYBCCO"
         description="تعرف على تكلفة بناء عظم بالرياض، وما الذي يدخل عادة ضمن مرحلة العظم، والعوامل التي تؤثر على السعر، وكيف تبني تصورًا أوليًا للمشروع."
         canonical={CANONICAL}
         robots="index,follow,max-image-preview:large"
+        ogType="article"
         jsonLd={jsonLd}
       />
 
@@ -545,6 +546,7 @@ export default function GrayStructureCostRiyadh() {
           </section>
         </article>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

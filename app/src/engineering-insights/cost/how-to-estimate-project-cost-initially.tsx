@@ -154,12 +154,13 @@ export default function HowToEstimateProjectCostInitially() {
   }, []);
 
   return (
-    <main dir="rtl" className="py-16">
+    <>
       <SeoHead
         title="كيف تحسب تكلفة مشروعك بشكل مبدئي؟ دليل عملي قبل طلب عرض السعر | PYBCCO"
         description="تعرف على الطريقة الصحيحة لحساب تكلفة مشروعك بشكل مبدئي قبل طلب عرض السعر، مع فهم العوامل التي تؤثر على التقدير الأولي وكيف تبني تصورًا أقرب للواقع."
         canonical={CANONICAL}
         robots="index,follow,max-image-preview:large"
+        ogType="article"
         jsonLd={jsonLd}
       />
 
@@ -593,6 +594,7 @@ export default function HowToEstimateProjectCostInitially() {
           </section>
         </article>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

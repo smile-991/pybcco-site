@@ -153,12 +153,13 @@ export default function VillaFinishingCostRiyadh() {
   }, []);
 
   return (
-    <main dir="rtl" className="py-16">
+    <>
       <SeoHead
         title="تكلفة تشطيب فيلا بالرياض | دليل تقدير التكلفة قبل التنفيذ | PYBCCO"
         description="تعرف على العوامل التي تؤثر على تكلفة تشطيب الفلل في الرياض، مع مثال تقريبي لفيلا 300 متر وربط مباشر بحاسبة تكلفة التشطيب."
         canonical={CANONICAL}
         robots="index,follow,max-image-preview:large"
+        ogType="article"
         jsonLd={jsonLd}
       />
 
@@ -533,6 +534,7 @@ export default function VillaFinishingCostRiyadh() {
           </section>
         </article>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

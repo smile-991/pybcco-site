@@ -154,12 +154,13 @@ export default function PlumbingAndElectricalCostFinishing() {
   }, []);
 
   return (
-    <main dir="rtl" className="py-16">
+    <>
       <SeoHead
         title="تكلفة السباكة والكهرباء ضمن التشطيب | كيف تُقرأ هذه البنود وما الذي يرفع سعرها؟ | PYBCCO"
         description="تعرف على تكلفة السباكة والكهرباء ضمن التشطيب، وما العوامل التي ترفع السعر، وكيف تفهم البنود بشكل أدق قبل طلب عرض السعر أو بدء التنفيذ."
         canonical={CANONICAL}
         robots="index,follow,max-image-preview:large"
+        ogType="article"
         jsonLd={jsonLd}
       />
 
@@ -560,6 +561,7 @@ export default function PlumbingAndElectricalCostFinishing() {
           </section>
         </article>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

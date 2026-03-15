@@ -150,12 +150,13 @@ export default function FinishingPricePerMeterRiyadh() {
   }, []);
 
   return (
-    <main dir="rtl" className="py-16">
+    <>
       <SeoHead
         title="سعر متر التشطيب في الرياض | كيف يُحسب فعليًا وما الذي يغيّر السعر؟ | PYBCCO"
         description="تعرف على سعر متر التشطيب في الرياض بطريقة عملية، وما العوامل التي تؤثر عليه، وكيف تحسب تكلفة مشروعك بشكل مبدئي قبل طلب عرض السعر."
         canonical={CANONICAL}
         robots="index,follow,max-image-preview:large"
+        ogType="article"
         jsonLd={jsonLd}
       />
 
@@ -595,6 +596,7 @@ export default function FinishingPricePerMeterRiyadh() {
           </section>
         </article>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

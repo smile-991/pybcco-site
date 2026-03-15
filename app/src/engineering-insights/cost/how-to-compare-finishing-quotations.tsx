@@ -154,12 +154,13 @@ export default function HowToCompareFinishingQuotations() {
   }, []);
 
   return (
-    <main dir="rtl" className="py-16">
+    <>
       <SeoHead
         title="كيف تقارن بين عرضي سعر لمشروع تشطيب؟ دليل عملي قبل اتخاذ القرار | PYBCCO"
         description="تعرف على الطريقة الصحيحة لمقارنة عرضي سعر لمشروع تشطيب من حيث البنود والمواد والنطاق والدفعات، بدل الاكتفاء بمقارنة الرقم النهائي فقط."
         canonical={CANONICAL}
         robots="index,follow,max-image-preview:large"
+        ogType="article"
         jsonLd={jsonLd}
       />
 
@@ -599,6 +600,7 @@ export default function HowToCompareFinishingQuotations() {
           </section>
         </article>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

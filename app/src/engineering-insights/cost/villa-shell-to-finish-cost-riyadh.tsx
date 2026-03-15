@@ -154,12 +154,13 @@ export default function VillaShellToFinishCostRiyadh() {
   }, []);
 
   return (
-    <main dir="rtl" className="py-16">
+    <>
       <SeoHead
         title="تكلفة تشطيب فيلا عظم بالرياض | كيف تُحسب فعليًا وما الذي يرفع السعر؟ | PYBCCO"
         description="تعرف على تكلفة تشطيب فيلا عظم بالرياض، والعوامل التي تؤثر على السعر، وكيف تبني تصورًا أوليًا للتكلفة قبل طلب عرض السعر التفصيلي."
         canonical={CANONICAL}
         robots="index,follow,max-image-preview:large"
+        ogType="article"
         jsonLd={jsonLd}
       />
 
@@ -574,6 +575,7 @@ export default function VillaShellToFinishCostRiyadh() {
           </section>
         </article>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

@@ -154,12 +154,13 @@ export default function EconomyVsStandardVsLuxuryFinishing() {
   }, []);
 
   return (
-    <main dir="rtl" className="py-16">
+    <>
       <SeoHead
         title="التشطيب الاقتصادي والمتوسط والفاخر: فرق التكلفة وكيف تختار المستوى المناسب؟ | PYBCCO"
         description="تعرف على الفرق بين التشطيب الاقتصادي والمتوسط والفاخر من حيث التكلفة والمواد والجودة، وكيف تختار المستوى المناسب لمشروعك قبل طلب عرض السعر."
         canonical={CANONICAL}
         robots="index,follow,max-image-preview:large"
+        ogType="article"
         jsonLd={jsonLd}
       />
 
@@ -612,6 +613,7 @@ export default function EconomyVsStandardVsLuxuryFinishing() {
           </section>
         </article>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

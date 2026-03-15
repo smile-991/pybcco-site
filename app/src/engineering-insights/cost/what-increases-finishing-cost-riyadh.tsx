@@ -154,12 +154,13 @@ export default function WhatIncreasesFinishingCostRiyadh() {
   }, []);
 
   return (
-    <main dir="rtl" className="py-16">
+    <>
       <SeoHead
         title="ما الذي يرفع تكلفة التشطيب في الرياض؟ الأسباب الحقيقية قبل التنفيذ | PYBCCO"
         description="تعرف على أهم الأسباب التي ترفع تكلفة التشطيب في الرياض، وكيف تتجنب المفاجآت عبر التخطيط الصحيح ووضوح البنود والمواد قبل التنفيذ."
         canonical={CANONICAL}
         robots="index,follow,max-image-preview:large"
+        ogType="article"
         jsonLd={jsonLd}
       />
 
@@ -585,6 +586,7 @@ export default function WhatIncreasesFinishingCostRiyadh() {
           </section>
         </article>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

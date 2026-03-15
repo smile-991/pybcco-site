@@ -154,12 +154,13 @@ export default function MisleadingQuotationMistakes() {
   }, []);
 
   return (
-    <main dir="rtl" className="py-16">
+    <>
       <SeoHead
         title="الأخطاء التي تجعل عرض السعر مضللًا | كيف تقرأ عروض الأسعار بشكل صحيح؟ | PYBCCO"
         description="تعرف على الأخطاء التي تجعل عرض السعر مضللًا في مشاريع البناء والتشطيب، وكيف تميّز بين السعر الواضح والسعر الذي يبدو أقل فقط بسبب غموض البنود."
         canonical={CANONICAL}
         robots="index,follow,max-image-preview:large"
+        ogType="article"
         jsonLd={jsonLd}
       />
 
@@ -591,6 +592,7 @@ export default function MisleadingQuotationMistakes() {
           </section>
         </article>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

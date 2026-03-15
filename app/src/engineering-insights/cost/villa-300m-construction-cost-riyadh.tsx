@@ -196,12 +196,13 @@ export default function Villa300mConstructionCostRiyadh() {
   }, []);
 
   return (
-    <main dir="rtl" className="py-16">
+    <>
       <SeoHead
         title="تكلفة بناء فيلا 300 متر بالرياض | تقدير عملي للعظم والتشطيب وتسليم المفتاح | PYBCCO"
         description="تعرف على تكلفة بناء فيلا 300 متر بالرياض بطريقة عملية، مع شرح العوامل المؤثرة على السعر، وفروقات العظم والتشطيب وتسليم المفتاح."
         canonical={CANONICAL}
         robots="index,follow,max-image-preview:large"
+        ogType="article"
         jsonLd={jsonLd}
       />
 
@@ -628,6 +629,7 @@ export default function Villa300mConstructionCostRiyadh() {
           </section>
         </article>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

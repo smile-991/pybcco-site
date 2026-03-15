@@ -153,12 +153,13 @@ export default function TurnkeyFinishingRiyadh() {
   }, []);
 
   return (
-    <main dir="rtl" className="py-16">
+    <>
       <SeoHead
         title="تشطيب تسليم مفتاح بالرياض: ماذا يشمل؟ | دليل العميل قبل التعاقد | PYBCCO"
         description="دليل واضح لفهم تشطيب تسليم مفتاح بالرياض: ماذا يشمل، ما الذي قد لا يشمله، وما البنود التي يجب توضيحها في العقد قبل بدء المشروع."
         canonical={CANONICAL}
         robots="index,follow,max-image-preview:large"
+        ogType="article"
         jsonLd={jsonLd}
       />
 
@@ -572,6 +573,7 @@ export default function TurnkeyFinishingRiyadh() {
           </section>
         </article>
       </div>
-    </main>
+      </main>
+    </>
   );
 }
