@@ -51,7 +51,7 @@ export default function EconomicVsLuxuryFinishingRiyadh() {
 
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
-              to="/villa-finishing-cost-calculator-riyadh"
+              to="/villa-finishing-price-riyadh"
               className="inline-flex items-center justify-center rounded-2xl bg-[#f7b500] px-6 py-3 text-sm font-extrabold text-black transition hover:-translate-y-0.5 hover:shadow-lg"
             >
               احسب تكلفة التشطيب
@@ -100,7 +100,7 @@ export default function EconomicVsLuxuryFinishingRiyadh() {
             <p className="mt-3 text-sm leading-7 text-zinc-700">
               بعد قراءة المقارنة، استخدم{" "}
               <Link
-                to="/villa-finishing-cost-calculator-riyadh"
+                to="/villa-finishing-price-riyadh"
                 className="font-bold text-[#8a6500] underline underline-offset-4"
               >
                 حاسبة تكلفة التشطيب
@@ -138,7 +138,7 @@ export default function EconomicVsLuxuryFinishingRiyadh() {
                 للعقار.
               </p>
               <Link
-                to="/villa-finishing-cost-calculator-riyadh"
+                to="/villa-finishing-price-riyadh"
                 className="mt-5 inline-flex items-center justify-center rounded-2xl bg-[#f7b500] px-5 py-3 text-sm font-extrabold text-black"
               >
                 افتح الحاسبة
@@ -223,7 +223,7 @@ export default function EconomicVsLuxuryFinishingRiyadh() {
                 انطباع عام. لهذا نحن نربط دائمًا موضوع المقارنات بموضوع الميزانية
                 عبر{" "}
                 <Link
-                  to="/villa-finishing-cost-calculator-riyadh"
+                  to="/villa-finishing-price-riyadh"
                   className="font-bold text-[#8a6500] underline underline-offset-4"
                 >
                   حاسبة تكلفة التشطيب
@@ -458,7 +458,7 @@ export default function EconomicVsLuxuryFinishingRiyadh() {
                 لذلك قبل أن تعتمد أي مسار، اربط تصورك النظري برقم تقريبي واضح،
                 ثم قارن البنود بهدوء. ابدأ من{" "}
                 <Link
-                  to="/villa-finishing-cost-calculator-riyadh"
+                  to="/villa-finishing-price-riyadh"
                   className="font-bold text-[#8a6500] underline underline-offset-4"
                 >
                   حاسبة تكلفة التشطيب في الرياض
@@ -565,7 +565,7 @@ export default function EconomicVsLuxuryFinishingRiyadh() {
               ابدأ بتحديد هدف المشروع، ثم رتب البنود حسب الأولوية، وبعدها كوّن
               تصورًا أوليًا عبر{" "}
               <Link
-                to="/villa-finishing-cost-calculator-riyadh"
+                to="/villa-finishing-price-riyadh"
                 className="font-bold text-[#8a6500] underline underline-offset-4"
               >
                 الحاسبة
@@ -604,7 +604,7 @@ export default function EconomicVsLuxuryFinishingRiyadh() {
 
             <div className="mt-7 flex flex-wrap gap-3">
               <Link
-                to="/villa-finishing-cost-calculator-riyadh"
+                to="/villa-finishing-price-riyadh"
                 className="inline-flex items-center justify-center rounded-2xl bg-[#f7b500] px-6 py-3 text-sm font-extrabold text-black transition hover:-translate-y-0.5 hover:shadow-lg"
               >
                 احسب تكلفة التشطيب الآن
