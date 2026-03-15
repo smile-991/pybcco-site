@@ -163,6 +163,7 @@ export default function VillaConstructionCostRiyadh() {
         jsonLd={jsonLd}
       />
 
+      <main dir="rtl" className="py-16">
       <div className="fixed left-4 top-1/2 z-40 hidden w-[300px] -translate-y-1/2 xl:block">
         <div className="overflow-hidden rounded-3xl border border-yellow-500/30 bg-neutral-950 text-white shadow-2xl">
           <div className="bg-gradient-to-r from-yellow-500/20 via-yellow-400/10 to-transparent px-5 py-4">

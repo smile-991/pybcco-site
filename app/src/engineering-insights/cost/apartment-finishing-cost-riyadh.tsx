@@ -164,6 +164,7 @@ export default function ApartmentFinishingCostRiyadh() {
         jsonLd={jsonLd}
       />
 
+      <main dir="rtl" className="py-16">
       <div className="container mx-auto px-4">
         <article className="max-w-4xl">
           <div className="inline-flex items-center rounded-full border border-yellow-500/30 bg-yellow-500/10 px-4 py-1.5 text-sm font-medium">
