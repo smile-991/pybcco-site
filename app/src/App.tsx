@@ -74,6 +74,7 @@ import WaterproofingAndInsulationMistakes from "./engineering-insights/common-mi
 import MistakesChoosingFinishingMaterials from "./engineering-insights/common-mistakes/MistakesChoosingFinishingMaterials";
 import SchedulingAndExecutionMistakes from "./engineering-insights/common-mistakes/SchedulingAndExecutionMistakes";
 import FinalHandoverMistakesChecklist from "./engineering-insights/common-mistakes/FinalHandoverMistakesChecklist";
+import MistakesSiteSupervision from "./engineering-insights/common-mistakes/MistakesSiteSupervision";
 
 import VillaFinishingCostRiyadh from "@/engineering-insights/cost/villa-finishing-cost-riyadh";
 import FinishingPricePerMeterRiyadh from "@/engineering-insights/cost/finishing-price-per-meter-riyadh";
@@ -193,6 +194,7 @@ export default function App() {
           <Route path="/engineering-insights/common-mistakes/mistakes-choosing-finishing-materials" element={<MistakesChoosingFinishingMaterials />} />
           <Route path="/engineering-insights/common-mistakes/scheduling-and-execution-mistakes" element={<SchedulingAndExecutionMistakes />} />
           <Route path="/engineering-insights/common-mistakes/final-handover-mistakes-checklist" element={<FinalHandoverMistakesChecklist />} />
+          <Route path="/engineering-insights/common-mistakes/mistakes-site-supervision" element={<MistakesSiteSupervision />} />
 
           {/* Cost */}
 
