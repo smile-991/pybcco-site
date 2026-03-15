@@ -326,6 +326,10 @@
     <priority>0.7</priority>
   </url>
 
+  <url>
+  <loc>https://pybcco.com/engineering-insights/common-mistakes/mistakes-site-supervision</loc>
+</url>
+
   <!-- Cost Category -->
   <url>
     <loc>https://pybcco.com/engineering-insights/cost</loc>
