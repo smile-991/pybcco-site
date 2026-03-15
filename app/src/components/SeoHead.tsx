@@ -5,12 +5,13 @@ type JsonLd = Record<string, any>;
 type SeoHeadProps = {
   title: string;
   description: string;
-  canonical: string; // absolute URL (https://pybcco.com/...)
+  canonical: string; // absolute URL preferred
   ogImage?: string; // absolute URL recommended
+  ogImageAlt?: string;
   ogType?: string; // default: website
-  twitterCard?: "summary" | "summary_large_image"; // default summary_large_image
-  robots?: string; // مثال "index,follow" أو "noindex,follow"
-  jsonLd?: JsonLd | JsonLd[]; // FAQ / Service / Breadcrumb / WebPage ...
+  twitterCard?: "summary" | "summary_large_image";
+  robots?: string; // "index,follow" | "noindex,follow" ...
+  jsonLd?: JsonLd | JsonLd[];
 };
 
 function upsertMetaByName(name: string, content: string) {
@@ -57,23 +58,72 @@ function removeJsonLdScripts(prefix: string) {
   document.querySelectorAll(`script[id^="${prefix}"]`).forEach((s) => s.remove());
 }
 
-// ✅ NAP موحّد (لا تغيّره إلا إذا غيّرته في GBP نفسه)
+function normalizeAbsoluteUrl(url: string) {
+  try {
+    const parsed = new URL(url);
+
+    // force non-www
+    if (parsed.hostname === "www.pybcco.com") {
+      parsed.hostname = "pybcco.com";
+    }
+
+    // remove hash and query from canonical
+    parsed.hash = "";
+    parsed.search = "";
+
+    // normalize trailing slash except homepage
+    if (parsed.pathname.length > 1 && parsed.pathname.endsWith("/")) {
+      parsed.pathname = parsed.pathname.slice(0, -1);
+    }
+
+    return parsed.toString();
+  } catch {
+    return url;
+  }
+}
+
+// ✅ البيانات الرسمية المعتمدة
 const NAP = {
-  name_ar: "بنيان الهرم للمقاولات – PYBCCO",
-  name_en: "Bunyan Al Haram Contracting – PYBCCO",
+  name_ar: "PYBCCO – شركة بنيان الهرم للمقاولات",
+  name_en: "PYBCCO – Bunyan Al Haram Contracting Company",
   phone: "+966550604837",
   email: "info@pybcco.com",
   url: "https://pybcco.com",
+  logo: "https://pybcco.com/assets/logo.webp",
   address_en: "Al Washm St, Al Murabba, Riyadh 12345, Saudi Arabia",
-  address_ar: "شارع الوشم، حي المربع، الرياض 12345، المملكة العربية السعودية",
   city_en: "Riyadh",
-  city_ar: "الرياض",
   region_en: "Riyadh Province",
   country_en: "SA",
   postal: "12345",
+  foundingDate: "2013",
+  hasMap: "https://maps.app.goo.gl/mQSMdPr2px1becUp8",
+  availableLanguage: ["Arabic"],
+  socials: [
+    "https://www.linkedin.com/company/pybcco",
+    "https://x.com/pybcco",
+    "https://instagram.com/pybcco.decor",
+    "https://www.facebook.com/pybcco",
+    "https://www.youtube.com/@pybcco",
+    "https://www.tiktok.com/@pybcco",
+  ],
 };
 
-function buildLocalBusinessJsonLd() {
+function buildWebsiteJsonLd(): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${NAP.url}/#website`,
+    url: NAP.url,
+    name: NAP.name_ar,
+    alternateName: NAP.name_en,
+    inLanguage: "ar",
+    publisher: {
+      "@id": `${NAP.url}/#localbusiness`,
+    },
+  };
+}
+
+function buildLocalBusinessJsonLd(): JsonLd {
   return {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "ConstructionCompany"],
@@ -81,8 +131,10 @@ function buildLocalBusinessJsonLd() {
     name: NAP.name_ar,
     alternateName: NAP.name_en,
     url: NAP.url,
+    logo: NAP.logo,
     telephone: NAP.phone,
     email: NAP.email,
+    foundingDate: NAP.foundingDate,
     address: {
       "@type": "PostalAddress",
       streetAddress: "Al Washm St, Al Murabba",
@@ -92,18 +144,36 @@ function buildLocalBusinessJsonLd() {
       addressCountry: NAP.country_en,
     },
     areaServed: [
-      { "@type": "City", name: NAP.city_en },
-      { "@type": "AdministrativeArea", name: "North Riyadh" },
+      {
+        "@type": "City",
+        name: NAP.city_en,
+      },
+      {
+        "@type": "AdministrativeArea",
+        name: "Riyadh",
+      },
     ],
-    sameAs: [
-  "https://www.linkedin.com/company/pybcco",
-  "https://x.com/pybcco",
-  "https://instagram.com/pybcco.decor",
-  "https://www.facebook.com/pybcco",
-  "https://www.youtube.com/@pybcco",
-  "https://www.tiktok.com/@pybcco"
-],
-  } as JsonLd;
+    hasMap: NAP.hasMap,
+    availableLanguage: NAP.availableLanguage,
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        telephone: NAP.phone,
+        email: NAP.email,
+        contactType: "customer service",
+        areaServed: "SA",
+        availableLanguage: NAP.availableLanguage,
+      },
+      {
+        "@type": "ContactPoint",
+        telephone: NAP.phone,
+        contactType: "WhatsApp",
+        areaServed: "SA",
+        availableLanguage: NAP.availableLanguage,
+      },
+    ],
+    sameAs: NAP.socials,
+  };
 }
 
 function looksLikeLocalBusiness(obj: any) {
@@ -112,42 +182,51 @@ function looksLikeLocalBusiness(obj: any) {
   return types.includes("LocalBusiness") || types.includes("ConstructionCompany");
 }
 
+function looksLikeWebsite(obj: any) {
+  const t = obj?.["@type"];
+  const types = Array.isArray(t) ? t : t ? [t] : [];
+  return types.includes("WebSite");
+}
+
 export default function SeoHead({
   title,
   description,
   canonical,
   ogImage,
+  ogImageAlt = "PYBCCO – شركة بنيان الهرم للمقاولات",
   ogType = "website",
   twitterCard = "summary_large_image",
   robots = "index,follow,max-image-preview:large",
   jsonLd,
 }: SeoHeadProps) {
   useEffect(() => {
+    const canonicalUrl = normalizeAbsoluteUrl(canonical);
+
     // 1) Title
     document.title = title;
 
-    // 2) Meta description
+    // 2) Basic meta
     upsertMetaByName("description", description);
-
-    // 2.1) Robots (Dynamic)
     upsertMetaByName("robots", robots);
-
-    // ✅ إضافة googlebot للاتساق (اختياري لكنه مفيد)
     upsertMetaByName("googlebot", robots);
 
     // 3) Canonical
-    upsertLinkRel("canonical", canonical);
+    upsertLinkRel("canonical", canonicalUrl);
 
     // 4) Open Graph
     upsertMetaByProperty("og:title", title);
     upsertMetaByProperty("og:description", description);
-    upsertMetaByProperty("og:url", canonical);
+    upsertMetaByProperty("og:url", canonicalUrl);
     upsertMetaByProperty("og:type", ogType);
+    upsertMetaByProperty("og:site_name", "PYBCCO");
+    upsertMetaByProperty("og:locale", "ar_AR");
 
     if (ogImage) {
       upsertMetaByProperty("og:image", ogImage);
+      upsertMetaByProperty("og:image:alt", ogImageAlt);
     } else {
       removeMetaByProperty("og:image");
+      removeMetaByProperty("og:image:alt");
       removeMetaByProperty("og:image:width");
       removeMetaByProperty("og:image:height");
     }
@@ -157,19 +236,25 @@ export default function SeoHead({
     upsertMetaByName("twitter:title", title);
     upsertMetaByName("twitter:description", description);
 
-    if (ogImage) upsertMetaByName("twitter:image", ogImage);
-    else removeMetaByName("twitter:image");
+    if (ogImage) {
+      upsertMetaByName("twitter:image", ogImage);
+      upsertMetaByName("twitter:image:alt", ogImageAlt);
+    } else {
+      removeMetaByName("twitter:image");
+      removeMetaByName("twitter:image:alt");
+    }
 
-    // 6) JSON-LD (supports one or many) - avoid duplicates across route changes
+    // 6) JSON-LD
     const prefix = "seo-jsonld-";
     removeJsonLdScripts(prefix);
 
     const arrUser = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
-    // ✅ إذا الصفحة نفسها بتحط LocalBusiness، ما نكرره
     const userHasLocalBusiness = arrUser.some((o) => looksLikeLocalBusiness(o));
+    const userHasWebsite = arrUser.some((o) => looksLikeWebsite(o));
 
     const arrFinal = [
+      ...(userHasWebsite ? [] : [buildWebsiteJsonLd()]),
       ...(userHasLocalBusiness ? [] : [buildLocalBusinessJsonLd()]),
       ...arrUser,
     ];
@@ -185,7 +270,17 @@ export default function SeoHead({
     return () => {
       removeJsonLdScripts(prefix);
     };
-  }, [title, description, canonical, ogImage, ogType, twitterCard, robots, jsonLd]);
+  }, [
+    title,
+    description,
+    canonical,
+    ogImage,
+    ogImageAlt,
+    ogType,
+    twitterCard,
+    robots,
+    jsonLd,
+  ]);
 
   return null;
 }
