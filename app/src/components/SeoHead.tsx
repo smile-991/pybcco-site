@@ -95,7 +95,14 @@ function buildLocalBusinessJsonLd() {
       { "@type": "City", name: NAP.city_en },
       { "@type": "AdministrativeArea", name: "North Riyadh" },
     ],
-    sameAs: ["https://www.linkedin.com/company/pybcco/", "https://x.com/pybcco"],
+    sameAs: [
+  "https://www.linkedin.com/company/pybcco",
+  "https://x.com/pybcco",
+  "https://instagram.com/pybcco.decor",
+  "https://www.facebook.com/pybcco",
+  "https://www.youtube.com/@pybcco",
+  "https://www.tiktok.com/@pybcco"
+],
   } as JsonLd;
 }
 
