@@ -1,190 +1,50 @@
-import { useEffect } from "react";
+import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
 
-function setMeta(
-  name: string,
-  content: string,
-  attr: "name" | "property" = "name"
-) {
-  let element = document.head.querySelector(
-    `meta[${attr}="${name}"]`
-  ) as HTMLMetaElement | null;
+const SITE_URL = "https://pybcco.com";
+const CANONICAL =
+  "https://pybcco.com/engineering-insights/common-mistakes/mistakes-site-supervision";
 
-  if (!element) {
-    element = document.createElement("meta");
-    element.setAttribute(attr, name);
-    document.head.appendChild(element);
-  }
+const TITLE =
+  "أخطاء الإشراف على التشطيب: كيف يؤدي ضعف المتابعة إلى عيوب مكلفة وتأخير التنفيذ؟ | بنيان الهرم للمقاولات";
 
-  element.setAttribute("content", content);
-}
+const DESCRIPTION =
+  "مقال عملي وعميق يشرح أخطاء الإشراف والمتابعة في مشاريع التشطيب والبناء في الرياض، وكيف يسبب ضعف الإشراف عيوبًا تنفيذية وتأخيرًا وزيادة في التكلفة وإعادة أعمال كان يمكن تجنبها.";
 
-function setCanonical(href: string) {
-  let link = document.head.querySelector(
-    'link[rel="canonical"]'
-  ) as HTMLLinkElement | null;
-
-  if (!link) {
-    link = document.createElement("link");
-    link.setAttribute("rel", "canonical");
-    document.head.appendChild(link);
-  }
-
-  link.setAttribute("href", href);
-}
+const ARTICLE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${CANONICAL}#article`,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": CANONICAL,
+  },
+  headline: TITLE,
+  description: DESCRIPTION,
+  inLanguage: "ar",
+  author: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+};
 
 export default function MistakesSiteSupervision() {
-  useEffect(() => {
-    const title =
-      "أخطاء الإشراف على التشطيب: كيف يؤدي ضعف المتابعة إلى عيوب مكلفة وتأخير التنفيذ؟ | بنيان الهرم للمقاولات";
-
-    const description =
-      "مقال عملي وعميق يشرح أخطاء الإشراف والمتابعة في مشاريع التشطيب والبناء في الرياض، وكيف يسبب ضعف الإشراف عيوبًا تنفيذية وتأخيرًا وزيادة في التكلفة وإعادة أعمال كان يمكن تجنبها.";
-
-    const canonical =
-      "https://pybcco.com/engineering-insights/common-mistakes/mistakes-site-supervision";
-
-    document.title = title;
-
-    setMeta("description", description);
-    setMeta(
-      "keywords",
-      "أخطاء الإشراف على التشطيب, إشراف هندسي, متابعة التنفيذ, أخطاء الموقع, مشاكل التشطيب, عيوب التنفيذ, الإشراف على المقاول"
-    );
-    setMeta("robots", "index, follow, max-image-preview:large");
-    setCanonical(canonical);
-
-    setMeta("og:type", "article", "property");
-    setMeta("og:title", title, "property");
-    setMeta("og:description", description, "property");
-    setMeta("og:url", canonical, "property");
-    setMeta("og:image", "https://pybcco.com/og-image.jpg", "property");
-
-    setMeta("twitter:card", "summary_large_image");
-    setMeta("twitter:title", title);
-    setMeta("twitter:description", description);
-    setMeta("twitter:image", "https://pybcco.com/og-image.jpg");
-
-    const oldSchemas = document.querySelectorAll(
-      'script[data-mistakes-site-supervision-schema="true"]'
-    );
-    oldSchemas.forEach((script) => script.remove());
-
-    const articleSchema = {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      headline:
-        "أخطاء الإشراف على التشطيب: كيف يؤدي ضعف المتابعة إلى عيوب مكلفة وتأخير التنفيذ؟",
-      description,
-      inLanguage: "ar",
-      mainEntityOfPage: canonical,
-      author: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-        logo: {
-          "@type": "ImageObject",
-          url: "https://pybcco.com/logo.png",
-        },
-      },
-      image: "https://pybcco.com/og-image.jpg",
-      articleSection: "الأخطاء الشائعة",
-      keywords: [
-        "الإشراف على التشطيب",
-        "متابعة الموقع",
-        "أخطاء التنفيذ",
-        "عيوب التشطيب",
-        "إدارة الموقع",
-      ],
-    };
-
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "الرئيسية",
-          item: "https://pybcco.com/",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "الرؤى الهندسية",
-          item: "https://pybcco.com/engineering-insights",
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "الأخطاء الشائعة",
-          item: "https://pybcco.com/engineering-insights/common-mistakes",
-        },
-        {
-          "@type": "ListItem",
-          position: 4,
-          name: "أخطاء الإشراف والمتابعة",
-          item: canonical,
-        },
-      ],
-    };
-
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "هل يكفي وجود مقاول جيد من دون إشراف قوي؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "لا يكفي غالبًا. حتى مع وجود مقاول جيد، فإن ضعف الإشراف والمتابعة اليومية قد يؤدي إلى تعارضات بين الأعمال، وأخطاء لا تُكتشف مبكرًا، وإعادة تنفيذ مكلفة.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "ما أكثر نتيجة سلبية لضعف الإشراف في التشطيب؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "أكثر النتائج شيوعًا هي تراكم أخطاء صغيرة لا تُلاحظ في وقتها، ثم تظهر لاحقًا على شكل تأخير أو تكسير أو نقل نقاط أو عيوب جودة أو زيادة تكلفة.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "كيف أعرف أن الإشراف في مشروعي منظم فعلًا؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "يظهر ذلك في وجود تسلسل واضح للأعمال، واستلام مرحلي، وتوثيق للملاحظات، ومراجعة للمخططات قبل التنفيذ، وتنسيق مستمر بين التخصصات المختلفة داخل الموقع.",
-          },
-        },
-      ],
-    };
-
-    [articleSchema, breadcrumbSchema, faqSchema].forEach((schemaObj) => {
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.setAttribute(
-        "data-mistakes-site-supervision-schema",
-        "true"
-      );
-      script.text = JSON.stringify(schemaObj);
-      document.head.appendChild(script);
-    });
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    return () => {
-      const schemas = document.querySelectorAll(
-        'script[data-mistakes-site-supervision-schema="true"]'
-      );
-      schemas.forEach((script) => script.remove());
-    };
-  }, []);
-
-  return (
+return (
+  <>
+    <SeoHead
+      title={TITLE}
+      description={DESCRIPTION}
+      canonical={CANONICAL}
+      robots="index,follow,max-image-preview:large"
+      ogType="article"
+      jsonLd={ARTICLE_SCHEMA}
+    />
     <main className="min-h-screen bg-[#faf8f3] text-[#1f1f1f]">
       <section className="border-b border-black/5 bg-gradient-to-b from-[#111111] via-[#181818] to-[#222222]">
         <div className="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
@@ -685,6 +545,7 @@ export default function MistakesSiteSupervision() {
           </div>
         </section>
       </article>
-    </main>
+      </main>
+    </>
   );
 }

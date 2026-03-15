@@ -1,190 +1,50 @@
-import { useEffect } from "react";
+import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
 
-function setMeta(
-  name: string,
-  content: string,
-  attr: "name" | "property" = "name"
-) {
-  let element = document.head.querySelector(
-    `meta[${attr}="${name}"]`
-  ) as HTMLMetaElement | null;
+const SITE_URL = "https://pybcco.com";
+const CANONICAL =
+  "https://pybcco.com/engineering-insights/common-mistakes/mistakes-choosing-finishing-materials";
 
-  if (!element) {
-    element = document.createElement("meta");
-    element.setAttribute(attr, name);
-    document.head.appendChild(element);
-  }
+const TITLE =
+  "أخطاء اختيار مواد التشطيب: متى يكون التوفير ذكيًا ومتى يتحول إلى تكلفة مضاعفة؟ | بنيان الهرم للمقاولات";
 
-  element.setAttribute("content", content);
-}
+const DESCRIPTION =
+  "مقال عملي وعميق يشرح أهم أخطاء اختيار مواد التشطيب في الفلل والمشاريع السكنية بالرياض، وكيف يؤدي التركيز على السعر فقط أو ضعف الفهم الفني إلى هدر وإعادة تنفيذ وصيانة مبكرة وارتفاع التكلفة الفعلية.";
 
-function setCanonical(href: string) {
-  let link = document.head.querySelector(
-    'link[rel="canonical"]'
-  ) as HTMLLinkElement | null;
-
-  if (!link) {
-    link = document.createElement("link");
-    link.setAttribute("rel", "canonical");
-    document.head.appendChild(link);
-  }
-
-  link.setAttribute("href", href);
-}
+const ARTICLE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${CANONICAL}#article`,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": CANONICAL,
+  },
+  headline: TITLE,
+  description: DESCRIPTION,
+  inLanguage: "ar",
+  author: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+};
 
 export default function MistakesChoosingFinishingMaterials() {
-  useEffect(() => {
-    const title =
-      "أخطاء اختيار مواد التشطيب: متى يكون التوفير ذكيًا ومتى يتحول إلى تكلفة مضاعفة؟ | بنيان الهرم للمقاولات";
-
-    const description =
-      "مقال عملي وعميق يشرح أهم أخطاء اختيار مواد التشطيب في الفلل والمشاريع السكنية بالرياض، وكيف يؤدي التركيز على السعر فقط أو ضعف الفهم الفني إلى هدر وإعادة تنفيذ وصيانة مبكرة وارتفاع التكلفة الفعلية.";
-
-    const canonical =
-      "https://pybcco.com/engineering-insights/common-mistakes/mistakes-choosing-finishing-materials";
-
-    document.title = title;
-
-    setMeta("description", description);
-    setMeta(
-      "keywords",
-      "أخطاء اختيار مواد التشطيب, مواد التشطيب, تشطيب الفلل, جودة مواد البناء, اختيار البلاط والدهانات, تكلفة التشطيب, أخطاء مواد التشطيب"
-    );
-    setMeta("robots", "index, follow, max-image-preview:large");
-    setCanonical(canonical);
-
-    setMeta("og:type", "article", "property");
-    setMeta("og:title", title, "property");
-    setMeta("og:description", description, "property");
-    setMeta("og:url", canonical, "property");
-    setMeta("og:image", "https://pybcco.com/og-image.jpg", "property");
-
-    setMeta("twitter:card", "summary_large_image");
-    setMeta("twitter:title", title);
-    setMeta("twitter:description", description);
-    setMeta("twitter:image", "https://pybcco.com/og-image.jpg");
-
-    const oldSchemas = document.querySelectorAll(
-      'script[data-mistakes-choosing-finishing-materials-schema="true"]'
-    );
-    oldSchemas.forEach((script) => script.remove());
-
-    const articleSchema = {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      headline:
-        "أخطاء اختيار مواد التشطيب: متى يكون التوفير ذكيًا ومتى يتحول إلى تكلفة مضاعفة؟",
-      description,
-      inLanguage: "ar",
-      mainEntityOfPage: canonical,
-      author: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-        logo: {
-          "@type": "ImageObject",
-          url: "https://pybcco.com/logo.png",
-        },
-      },
-      image: "https://pybcco.com/og-image.jpg",
-      articleSection: "الأخطاء الشائعة",
-      keywords: [
-        "مواد التشطيب",
-        "اختيار مواد التشطيب",
-        "جودة المواد",
-        "تشطيب الفلل",
-        "تكلفة التشطيب",
-      ],
-    };
-
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "الرئيسية",
-          item: "https://pybcco.com/",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "الرؤى الهندسية",
-          item: "https://pybcco.com/engineering-insights",
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "الأخطاء الشائعة",
-          item: "https://pybcco.com/engineering-insights/common-mistakes",
-        },
-        {
-          "@type": "ListItem",
-          position: 4,
-          name: "أخطاء اختيار مواد التشطيب",
-          item: canonical,
-        },
-      ],
-    };
-
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "هل اختيار المادة الأرخص دائمًا قرار خاطئ؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "ليس دائمًا. التوفير قد يكون ذكيًا في بعض البنود إذا كانت البدائل مناسبة وظيفيًا وجودتها مقبولة، لكن الخطأ هو اختيار الأرخص من دون فهم أثر ذلك على الأداء والعمر والصيانة والتنفيذ.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "ما أكثر خطأ شائع عند اختيار مواد التشطيب؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "من أكثر الأخطاء شيوعًا التركيز على الشكل أو السعر فقط وإهمال ملاءمة المادة للاستخدام الفعلي، أو اختيار مادة جميلة لكنها غير مناسبة للموقع أو التحمل أو الصيانة.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل المواد الأفضل دائمًا هي الأغلى؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "ليس بالضرورة. المادة الأفضل هي الأنسب للمكان والاستخدام ومستوى المشروع والعمر المطلوب، وقد توجد بدائل متوازنة جدًا من دون أن تكون الأعلى سعرًا.",
-          },
-        },
-      ],
-    };
-
-    [articleSchema, breadcrumbSchema, faqSchema].forEach((schemaObj) => {
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.setAttribute(
-        "data-mistakes-choosing-finishing-materials-schema",
-        "true"
-      );
-      script.text = JSON.stringify(schemaObj);
-      document.head.appendChild(script);
-    });
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    return () => {
-      const schemas = document.querySelectorAll(
-        'script[data-mistakes-choosing-finishing-materials-schema="true"]'
-      );
-      schemas.forEach((script) => script.remove());
-    };
-  }, []);
-
-  return (
+return (
+  <>
+    <SeoHead
+      title={TITLE}
+      description={DESCRIPTION}
+      canonical={CANONICAL}
+      robots="index,follow,max-image-preview:large"
+      ogType="article"
+      jsonLd={ARTICLE_SCHEMA}
+    />
     <main className="min-h-screen bg-[#faf8f3] text-[#1f1f1f]">
       <section className="border-b border-black/5 bg-gradient-to-b from-[#111111] via-[#181818] to-[#222222]">
         <div className="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
@@ -662,6 +522,7 @@ export default function MistakesChoosingFinishingMaterials() {
           </div>
         </section>
       </article>
-    </main>
+      </main>
+    </>
   );
 }

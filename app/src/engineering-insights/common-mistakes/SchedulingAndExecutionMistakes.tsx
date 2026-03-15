@@ -1,190 +1,50 @@
-import { useEffect } from "react";
+import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
 
-function setMeta(
-  name: string,
-  content: string,
-  attr: "name" | "property" = "name"
-) {
-  let element = document.head.querySelector(
-    `meta[${attr}="${name}"]`
-  ) as HTMLMetaElement | null;
+const SITE_URL = "https://pybcco.com";
+const CANONICAL =
+  "https://pybcco.com/engineering-insights/common-mistakes/scheduling-and-execution-mistakes";
 
-  if (!element) {
-    element = document.createElement("meta");
-    element.setAttribute(attr, name);
-    document.head.appendChild(element);
-  }
+const TITLE =
+  "أخطاء الجدول الزمني والتنفيذ في التشطيب: كيف يؤدي سوء التسلسل إلى إعادة عمل وتأخير المشروع؟ | بنيان الهرم للمقاولات";
 
-  element.setAttribute("content", content);
-}
+const DESCRIPTION =
+  "مقال عملي وعميق يشرح أهم أخطاء الجدول الزمني والتنفيذ في مشاريع التشطيب والفلل بالرياض، وكيف يسبب سوء التسلسل والتنسيق بين البنود إعادة عمل وهدر مواد وتأخيرًا متراكمًا يرفع تكلفة المشروع.";
 
-function setCanonical(href: string) {
-  let link = document.head.querySelector(
-    'link[rel="canonical"]'
-  ) as HTMLLinkElement | null;
-
-  if (!link) {
-    link = document.createElement("link");
-    link.setAttribute("rel", "canonical");
-    document.head.appendChild(link);
-  }
-
-  link.setAttribute("href", href);
-}
+const ARTICLE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${CANONICAL}#article`,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": CANONICAL,
+  },
+  headline: TITLE,
+  description: DESCRIPTION,
+  inLanguage: "ar",
+  author: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+};
 
 export default function SchedulingAndExecutionMistakes() {
-  useEffect(() => {
-    const title =
-      "أخطاء الجدول الزمني والتنفيذ في التشطيب: كيف يؤدي سوء التسلسل إلى إعادة عمل وتأخير المشروع؟ | بنيان الهرم للمقاولات";
-
-    const description =
-      "مقال عملي وعميق يشرح أهم أخطاء الجدول الزمني والتنفيذ في مشاريع التشطيب والفلل بالرياض، وكيف يسبب سوء التسلسل والتنسيق بين البنود إعادة عمل وهدر مواد وتأخيرًا متراكمًا يرفع تكلفة المشروع.";
-
-    const canonical =
-      "https://pybcco.com/engineering-insights/common-mistakes/scheduling-and-execution-mistakes";
-
-    document.title = title;
-
-    setMeta("description", description);
-    setMeta(
-      "keywords",
-      "أخطاء الجدول الزمني في التشطيب, تسلسل أعمال التشطيب, تأخير مشروع التشطيب, أخطاء التنفيذ, إدارة تنفيذ الفلل, تنسيق الأعمال في الموقع, إعادة العمل في التشطيب"
-    );
-    setMeta("robots", "index, follow, max-image-preview:large");
-    setCanonical(canonical);
-
-    setMeta("og:type", "article", "property");
-    setMeta("og:title", title, "property");
-    setMeta("og:description", description, "property");
-    setMeta("og:url", canonical, "property");
-    setMeta("og:image", "https://pybcco.com/og-image.jpg", "property");
-
-    setMeta("twitter:card", "summary_large_image");
-    setMeta("twitter:title", title);
-    setMeta("twitter:description", description);
-    setMeta("twitter:image", "https://pybcco.com/og-image.jpg");
-
-    const oldSchemas = document.querySelectorAll(
-      'script[data-scheduling-execution-mistakes-schema="true"]'
-    );
-    oldSchemas.forEach((script) => script.remove());
-
-    const articleSchema = {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      headline:
-        "أخطاء الجدول الزمني والتنفيذ في التشطيب: كيف يؤدي سوء التسلسل إلى إعادة عمل وتأخير المشروع؟",
-      description,
-      inLanguage: "ar",
-      mainEntityOfPage: canonical,
-      author: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-        logo: {
-          "@type": "ImageObject",
-          url: "https://pybcco.com/logo.png",
-        },
-      },
-      image: "https://pybcco.com/og-image.jpg",
-      articleSection: "الأخطاء الشائعة",
-      keywords: [
-        "الجدول الزمني للتشطيب",
-        "تسلسل التنفيذ",
-        "أخطاء التنفيذ",
-        "تأخير المشروع",
-        "إعادة العمل",
-      ],
-    };
-
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "الرئيسية",
-          item: "https://pybcco.com/",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "الرؤى الهندسية",
-          item: "https://pybcco.com/engineering-insights",
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "الأخطاء الشائعة",
-          item: "https://pybcco.com/engineering-insights/common-mistakes",
-        },
-        {
-          "@type": "ListItem",
-          position: 4,
-          name: "أخطاء الجدول الزمني والتنفيذ",
-          item: canonical,
-        },
-      ],
-    };
-
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "ما أخطر خطأ في الجدول الزمني للتشطيب؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "من أخطر الأخطاء تنفيذ البنود بترتيب غير صحيح أو السماح بدخول فرق لاحقة قبل استلام البنود السابقة، لأن هذا يؤدي إلى تعارضات وإعادة عمل وتأخير متراكم يصعب السيطرة عليه لاحقًا.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل التأخير في مشروع التشطيب سببه دائمًا بطء العمال؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "ليس دائمًا. كثير من التأخير ينتج من ضعف التخطيط والتنسيق وسوء تسلسل الأعمال وغياب الاستلام المرحلي، حتى لو كانت الفرق التنفيذية نفسها جيدة نسبيًا.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "لماذا إعادة العمل في التشطيب مكلفة جدًا؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "لأنها لا تستهلك وقت البند نفسه فقط، بل تؤثر على البنود التي بعده، وتهدر موادًا وجهدًا وتخلق تعطيلًا لعدة فرق في الوقت نفسه، ما يرفع الكلفة الفعلية للمشروع.",
-          },
-        },
-      ],
-    };
-
-    [articleSchema, breadcrumbSchema, faqSchema].forEach((schemaObj) => {
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.setAttribute(
-        "data-scheduling-execution-mistakes-schema",
-        "true"
-      );
-      script.text = JSON.stringify(schemaObj);
-      document.head.appendChild(script);
-    });
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    return () => {
-      const schemas = document.querySelectorAll(
-        'script[data-scheduling-execution-mistakes-schema="true"]'
-      );
-      schemas.forEach((script) => script.remove());
-    };
-  }, []);
-
-  return (
+return (
+  <>
+    <SeoHead
+      title={TITLE}
+      description={DESCRIPTION}
+      canonical={CANONICAL}
+      robots="index,follow,max-image-preview:large"
+      ogType="article"
+      jsonLd={ARTICLE_SCHEMA}
+    />
     <main className="min-h-screen bg-[#faf8f3] text-[#1f1f1f]">
       <section className="border-b border-black/5 bg-gradient-to-b from-[#111111] via-[#181818] to-[#222222]">
         <div className="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
@@ -667,6 +527,7 @@ export default function SchedulingAndExecutionMistakes() {
           </div>
         </section>
       </article>
-    </main>
+      </main>
+    </>
   );
 }

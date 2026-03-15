@@ -1,188 +1,50 @@
-import { useEffect } from "react";
+import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
 
-function setMeta(
-  name: string,
-  content: string,
-  attr: "name" | "property" = "name"
-) {
-  let element = document.head.querySelector(
-    `meta[${attr}="${name}"]`
-  ) as HTMLMetaElement | null;
+const SITE_URL = "https://pybcco.com";
+const CANONICAL =
+  "https://pybcco.com/engineering-insights/common-mistakes/mistakes-choosing-contractor-riyadh";
 
-  if (!element) {
-    element = document.createElement("meta");
-    element.setAttribute(attr, name);
-    document.head.appendChild(element);
-  }
+const TITLE =
+  "أخطاء اختيار المقاول في الرياض: 10 أخطاء قد ترفع تكلفة مشروعك وتؤخر التسليم | بنيان الهرم للمقاولات";
 
-  element.setAttribute("content", content);
-}
+const DESCRIPTION =
+  "دليل عملي يشرح أهم أخطاء اختيار المقاول في الرياض، وكيف تؤدي القرارات الخاطئة إلى زيادة التكلفة، وضعف الجودة، وتأخير التنفيذ، مع خطوات واضحة لاختيار أفضل شركة مقاولات.";
 
-function setCanonical(href: string) {
-  let link = document.head.querySelector(
-    'link[rel="canonical"]'
-  ) as HTMLLinkElement | null;
-
-  if (!link) {
-    link = document.createElement("link");
-    link.setAttribute("rel", "canonical");
-    document.head.appendChild(link);
-  }
-
-  link.setAttribute("href", href);
-}
+const ARTICLE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${CANONICAL}#article`,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": CANONICAL,
+  },
+  headline: TITLE,
+  description: DESCRIPTION,
+  inLanguage: "ar",
+  author: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+};
 
 export default function MistakesChoosingContractorRiyadh() {
-  useEffect(() => {
-    const title =
-      "أخطاء اختيار المقاول في الرياض: 10 أخطاء قد ترفع تكلفة مشروعك وتؤخر التسليم | بنيان الهرم للمقاولات";
-    const description =
-      "دليل عملي يشرح أهم أخطاء اختيار المقاول في الرياض، وكيف تؤدي القرارات الخاطئة إلى زيادة التكلفة، وضعف الجودة، وتأخير التنفيذ، مع خطوات واضحة لاختيار أفضل شركة مقاولات.";
-    const canonical =
-      "https://pybcco.com/engineering-insights/common-mistakes/mistakes-choosing-contractor-riyadh";
-
-    document.title = title;
-
-    setMeta("description", description);
-    setMeta(
-      "keywords",
-      "أخطاء اختيار المقاول, اختيار مقاول في الرياض, شركة مقاولات في الرياض, أخطاء التعاقد مع المقاول, تشطيب فلل بالرياض, مقاول تشطيب"
-    );
-    setMeta("robots", "index, follow, max-image-preview:large");
-    setCanonical(canonical);
-
-    setMeta("og:type", "article", "property");
-    setMeta("og:title", title, "property");
-    setMeta("og:description", description, "property");
-    setMeta("og:url", canonical, "property");
-    setMeta("og:image", "https://pybcco.com/og-image.jpg", "property");
-
-    setMeta("twitter:card", "summary_large_image");
-    setMeta("twitter:title", title);
-    setMeta("twitter:description", description);
-    setMeta("twitter:image", "https://pybcco.com/og-image.jpg");
-
-    const oldSchemas = document.querySelectorAll(
-      'script[data-mistakes-choosing-contractor-schema="true"]'
-    );
-    oldSchemas.forEach((script) => script.remove());
-
-    const articleSchema = {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      headline:
-        "أخطاء اختيار المقاول في الرياض: 10 أخطاء قد ترفع تكلفة مشروعك وتؤخر التسليم",
-      description,
-      inLanguage: "ar",
-      mainEntityOfPage: canonical,
-      author: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-        logo: {
-          "@type": "ImageObject",
-          url: "https://pybcco.com/logo.png",
-        },
-      },
-      image: "https://pybcco.com/og-image.jpg",
-      articleSection: "الأخطاء الشائعة",
-      keywords: [
-        "أخطاء اختيار المقاول",
-        "اختيار مقاول في الرياض",
-        "شركة مقاولات في الرياض",
-        "تشطيب فلل بالرياض",
-        "عروض أسعار المقاولين",
-      ],
-    };
-
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "الرئيسية",
-          item: "https://pybcco.com/",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "الرؤى الهندسية",
-          item: "https://pybcco.com/engineering-insights",
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "الأخطاء الشائعة",
-          item: "https://pybcco.com/engineering-insights/common-mistakes",
-        },
-        {
-          "@type": "ListItem",
-          position: 4,
-          name: "أخطاء اختيار المقاول",
-          item: canonical,
-        },
-      ],
-    };
-
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "ما أكبر خطأ عند اختيار المقاول؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "أكبر خطأ هو اختيار المقاول بناءً على أقل سعر فقط دون مراجعة نطاق العمل، جودة التنفيذ، الخبرة الفعلية، وآلية الإشراف والإدارة.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل أرخص مقاول يعني أفضل صفقة؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "ليس دائمًا. أحيانًا يكون السعر الأقل نتيجة بنود ناقصة أو مواد أضعف أو إدارة تنفيذ غير مستقرة، ما يؤدي لاحقًا إلى أوامر تغيير وزيادة في التكلفة وتأخير في المشروع.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "كيف أتأكد أن المقاول مناسب لمشروعي؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "تأكد من خبرته في مشاريع مشابهة، واطلب عرض سعر مفصل، وراجع العقد، وآلية الإشراف، والجدول الزمني، ووضوح المواد والبنود، ولا تعتمد على الكلام العام فقط.",
-          },
-        },
-      ],
-    };
-
-    [articleSchema, breadcrumbSchema, faqSchema].forEach((schemaObj) => {
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.setAttribute(
-        "data-mistakes-choosing-contractor-schema",
-        "true"
-      );
-      script.text = JSON.stringify(schemaObj);
-      document.head.appendChild(script);
-    });
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    return () => {
-      const schemas = document.querySelectorAll(
-        'script[data-mistakes-choosing-contractor-schema="true"]'
-      );
-      schemas.forEach((script) => script.remove());
-    };
-  }, []);
-
-  return (
+return (
+  <>
+    <SeoHead
+      title={TITLE}
+      description={DESCRIPTION}
+      canonical={CANONICAL}
+      robots="index,follow,max-image-preview:large"
+      ogType="article"
+      jsonLd={ARTICLE_SCHEMA}
+    />
     <main className="min-h-screen bg-[#faf8f3] text-[#1f1f1f]">
       <section className="border-b border-black/5 bg-gradient-to-b from-[#111111] via-[#181818] to-[#222222]">
         <div className="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
@@ -655,6 +517,7 @@ export default function MistakesChoosingContractorRiyadh() {
           </div>
         </section>
       </article>
-    </main>
+      </main>
+    </>
   );
 }

@@ -1,190 +1,50 @@
-import { useEffect } from "react";
+import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
 
-function setMeta(
-  name: string,
-  content: string,
-  attr: "name" | "property" = "name"
-) {
-  let element = document.head.querySelector(
-    `meta[${attr}="${name}"]`
-  ) as HTMLMetaElement | null;
+const SITE_URL = "https://pybcco.com";
+const CANONICAL =
+  "https://pybcco.com/engineering-insights/common-mistakes/plumbing-mistakes-before-closing-walls";
 
-  if (!element) {
-    element = document.createElement("meta");
-    element.setAttribute(attr, name);
-    document.head.appendChild(element);
-  }
+const TITLE =
+  "أخطاء السباكة قبل إقفال الجدران: عيوب صغيرة قد تتحول إلى تكسير وخسائر كبيرة | بنيان الهرم للمقاولات";
 
-  element.setAttribute("content", content);
-}
+const DESCRIPTION =
+  "مقال عملي وعميق يشرح أهم أخطاء السباكة قبل إقفال الجدران والأرضيات في مشاريع التشطيب والفلل بالرياض، وكيف يؤدي ضعف الفحص والاختبار والتنسيق إلى تسربات وتكسير وإعادة تنفيذ مكلفة.";
 
-function setCanonical(href: string) {
-  let link = document.head.querySelector(
-    'link[rel="canonical"]'
-  ) as HTMLLinkElement | null;
-
-  if (!link) {
-    link = document.createElement("link");
-    link.setAttribute("rel", "canonical");
-    document.head.appendChild(link);
-  }
-
-  link.setAttribute("href", href);
-}
+const ARTICLE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${CANONICAL}#article`,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": CANONICAL,
+  },
+  headline: TITLE,
+  description: DESCRIPTION,
+  inLanguage: "ar",
+  author: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+};
 
 export default function PlumbingMistakesBeforeClosingWalls() {
-  useEffect(() => {
-    const title =
-      "أخطاء السباكة قبل إقفال الجدران: عيوب صغيرة قد تتحول إلى تكسير وخسائر كبيرة | بنيان الهرم للمقاولات";
-
-    const description =
-      "مقال عملي وعميق يشرح أهم أخطاء السباكة قبل إقفال الجدران والأرضيات في مشاريع التشطيب والفلل بالرياض، وكيف يؤدي ضعف الفحص والاختبار والتنسيق إلى تسربات وتكسير وإعادة تنفيذ مكلفة.";
-
-    const canonical =
-      "https://pybcco.com/engineering-insights/common-mistakes/plumbing-mistakes-before-closing-walls";
-
-    document.title = title;
-
-    setMeta("description", description);
-    setMeta(
-      "keywords",
-      "أخطاء السباكة قبل الإقفال, أخطاء تمديدات السباكة, تسربات المياه, اختبار ضغط السباكة, سباكة الفلل, تشطيب السباكة, أخطاء السباكة في التشطيب"
-    );
-    setMeta("robots", "index, follow, max-image-preview:large");
-    setCanonical(canonical);
-
-    setMeta("og:type", "article", "property");
-    setMeta("og:title", title, "property");
-    setMeta("og:description", description, "property");
-    setMeta("og:url", canonical, "property");
-    setMeta("og:image", "https://pybcco.com/og-image.jpg", "property");
-
-    setMeta("twitter:card", "summary_large_image");
-    setMeta("twitter:title", title);
-    setMeta("twitter:description", description);
-    setMeta("twitter:image", "https://pybcco.com/og-image.jpg");
-
-    const oldSchemas = document.querySelectorAll(
-      'script[data-plumbing-mistakes-before-closing-schema="true"]'
-    );
-    oldSchemas.forEach((script) => script.remove());
-
-    const articleSchema = {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      headline:
-        "أخطاء السباكة قبل إقفال الجدران: عيوب صغيرة قد تتحول إلى تكسير وخسائر كبيرة",
-      description,
-      inLanguage: "ar",
-      mainEntityOfPage: canonical,
-      author: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-        logo: {
-          "@type": "ImageObject",
-          url: "https://pybcco.com/logo.png",
-        },
-      },
-      image: "https://pybcco.com/og-image.jpg",
-      articleSection: "الأخطاء الشائعة",
-      keywords: [
-        "أخطاء السباكة",
-        "إقفال الجدران",
-        "اختبار ضغط",
-        "تسربات المياه",
-        "تمديدات السباكة",
-      ],
-    };
-
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "الرئيسية",
-          item: "https://pybcco.com/",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "الرؤى الهندسية",
-          item: "https://pybcco.com/engineering-insights",
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "الأخطاء الشائعة",
-          item: "https://pybcco.com/engineering-insights/common-mistakes",
-        },
-        {
-          "@type": "ListItem",
-          position: 4,
-          name: "أخطاء السباكة قبل الإقفال",
-          item: canonical,
-        },
-      ],
-    };
-
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "ما أخطر خطأ في السباكة قبل إقفال الجدران؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "من أخطر الأخطاء إقفال الجدران أو الأرضيات قبل اختبار الشبكة والتأكد من المواقع والمناسيب والميول والربط الصحيح بين النقاط، لأن أي خطأ بعد الإقفال قد يتحول إلى تكسير وإعادة تنفيذ.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل يكفي أن تبدو التمديدات جيدة بصريًا قبل الإقفال؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "لا يكفي. يجب فحص المسارات والاتصالات والمناسيب ومواقع النقاط وإجراء اختبارات مناسبة قبل الإقفال، لأن كثيرًا من مشاكل السباكة لا تظهر بمجرد النظر.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "لماذا أخطاء السباكة قبل التشطيب مكلفة جدًا؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "لأنها غالبًا تُكتشف بعد الجبس أو البلاط أو الدهانات أو الاستخدام الفعلي، وعندها تصبح المعالجة مرتبطة بالتكسير وإعادة التشطيب وتأخير المشروع وزيادة التكلفة.",
-          },
-        },
-      ],
-    };
-
-    [articleSchema, breadcrumbSchema, faqSchema].forEach((schemaObj) => {
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.setAttribute(
-        "data-plumbing-mistakes-before-closing-schema",
-        "true"
-      );
-      script.text = JSON.stringify(schemaObj);
-      document.head.appendChild(script);
-    });
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    return () => {
-      const schemas = document.querySelectorAll(
-        'script[data-plumbing-mistakes-before-closing-schema="true"]'
-      );
-      schemas.forEach((script) => script.remove());
-    };
-  }, []);
-
-  return (
+return (
+  <>
+    <SeoHead
+      title={TITLE}
+      description={DESCRIPTION}
+      canonical={CANONICAL}
+      robots="index,follow,max-image-preview:large"
+      ogType="article"
+      jsonLd={ARTICLE_SCHEMA}
+    />
     <main className="min-h-screen bg-[#faf8f3] text-[#1f1f1f]">
       <section className="border-b border-black/5 bg-gradient-to-b from-[#111111] via-[#181818] to-[#222222]">
         <div className="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
@@ -678,6 +538,7 @@ export default function PlumbingMistakesBeforeClosingWalls() {
           </div>
         </section>
       </article>
-    </main>
+      </main>
+    </>
   );
 }

@@ -1,187 +1,50 @@
-import { useEffect } from "react";
+import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
 
-function setMeta(
-  name: string,
-  content: string,
-  attr: "name" | "property" = "name"
-) {
-  let element = document.head.querySelector(
-    `meta[${attr}="${name}"]`
-  ) as HTMLMetaElement | null;
+const SITE_URL = "https://pybcco.com";
+const CANONICAL =
+  "https://pybcco.com/engineering-insights/common-mistakes/final-handover-mistakes-checklist";
 
-  if (!element) {
-    element = document.createElement("meta");
-    element.setAttribute(attr, name);
-    document.head.appendChild(element);
-  }
+const TITLE =
+  "أخطاء الاستلام النهائي بعد التشطيب: Checklist عملي لاكتشاف العيوب قبل التسليم | بنيان الهرم للمقاولات";
 
-  element.setAttribute("content", content);
-}
+const DESCRIPTION =
+  "مقال عملي وعميق يشرح أخطاء الاستلام النهائي بعد التشطيب في الفلل والمشاريع السكنية بالرياض، مع checklist واضح يساعد على اكتشاف العيوب قبل التسليم النهائي وتجنب الدفعة الأخيرة قبل إغلاق الملاحظات المهمة.";
 
-function setCanonical(href: string) {
-  let link = document.head.querySelector(
-    'link[rel="canonical"]'
-  ) as HTMLLinkElement | null;
-
-  if (!link) {
-    link = document.createElement("link");
-    link.setAttribute("rel", "canonical");
-    document.head.appendChild(link);
-  }
-
-  link.setAttribute("href", href);
-}
+const ARTICLE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${CANONICAL}#article`,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": CANONICAL,
+  },
+  headline: TITLE,
+  description: DESCRIPTION,
+  inLanguage: "ar",
+  author: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+};
 
 export default function FinalHandoverMistakesChecklist() {
-  useEffect(() => {
-    const title =
-      "أخطاء الاستلام النهائي بعد التشطيب: Checklist عملي لاكتشاف العيوب قبل التسليم | بنيان الهرم للمقاولات";
-
-    const description =
-      "مقال عملي وعميق يشرح أخطاء الاستلام النهائي بعد التشطيب في الفلل والمشاريع السكنية بالرياض، مع checklist واضح يساعد على اكتشاف العيوب قبل التسليم النهائي وتجنب الدفعة الأخيرة قبل إغلاق الملاحظات المهمة.";
-
-    const canonical =
-      "https://pybcco.com/engineering-insights/common-mistakes/final-handover-mistakes-checklist";
-
-    document.title = title;
-
-    setMeta("description", description);
-    setMeta(
-      "keywords",
-      "أخطاء الاستلام النهائي, استلام التشطيب, فحص التشطيب قبل التسليم, checklist الاستلام النهائي, عيوب التشطيب, استلام الفيلا بعد التشطيب, فحص المشروع قبل التسليم"
-    );
-    setMeta("robots", "index, follow, max-image-preview:large");
-    setCanonical(canonical);
-
-    setMeta("og:type", "article", "property");
-    setMeta("og:title", title, "property");
-    setMeta("og:description", description, "property");
-    setMeta("og:url", canonical, "property");
-    setMeta("og:image", "https://pybcco.com/og-image.jpg", "property");
-
-    setMeta("twitter:card", "summary_large_image");
-    setMeta("twitter:title", title);
-    setMeta("twitter:description", description);
-    setMeta("twitter:image", "https://pybcco.com/og-image.jpg");
-
-    const oldSchemas = document.querySelectorAll(
-      'script[data-final-handover-mistakes-schema="true"]'
-    );
-    oldSchemas.forEach((script) => script.remove());
-
-    const articleSchema = {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      headline:
-        "أخطاء الاستلام النهائي بعد التشطيب: Checklist عملي لاكتشاف العيوب قبل التسليم",
-      description,
-      inLanguage: "ar",
-      mainEntityOfPage: canonical,
-      author: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-        logo: {
-          "@type": "ImageObject",
-          url: "https://pybcco.com/logo.png",
-        },
-      },
-      image: "https://pybcco.com/og-image.jpg",
-      articleSection: "الأخطاء الشائعة",
-      keywords: [
-        "الاستلام النهائي",
-        "فحص التشطيب",
-        "checklist التشطيب",
-        "عيوب الاستلام",
-        "تسليم الفيلا",
-      ],
-    };
-
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "الرئيسية",
-          item: "https://pybcco.com/",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "الرؤى الهندسية",
-          item: "https://pybcco.com/engineering-insights",
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "الأخطاء الشائعة",
-          item: "https://pybcco.com/engineering-insights/common-mistakes",
-        },
-        {
-          "@type": "ListItem",
-          position: 4,
-          name: "أخطاء الاستلام النهائي",
-          item: canonical,
-        },
-      ],
-    };
-
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "ما أكبر خطأ في الاستلام النهائي بعد التشطيب؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "أكبر خطأ هو التعامل مع الاستلام النهائي كإجراء شكلي أو سريع من دون فحص تفصيلي منظم، ثم تسديد الدفعة الأخيرة قبل إغلاق الملاحظات الجوهرية والتأكد من تشغيل البنود الحساسة فعليًا.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل يكفي أن يكون شكل التشطيب جميلًا للاستلام؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "لا يكفي. الاستلام النهائي يجب أن يشمل الشكل والجودة والتشغيل والمطابقة ووظائف الأبواب والأدوات الصحية والكهرباء والميول والعزل والدهانات واللمسات النهائية، وليس المظهر فقط.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "متى أدفع الدفعة الأخيرة للمقاول؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "بعد الاستلام المنظم، وتوثيق الملاحظات، وإغلاق البنود الجوهرية، والتأكد من تشغيل العناصر الأساسية، ووضوح أي ملاحظات متبقية وآلية معالجتها ضمن اتفاق واضح.",
-          },
-        },
-      ],
-    };
-
-    [articleSchema, breadcrumbSchema, faqSchema].forEach((schemaObj) => {
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.setAttribute("data-final-handover-mistakes-schema", "true");
-      script.text = JSON.stringify(schemaObj);
-      document.head.appendChild(script);
-    });
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    return () => {
-      const schemas = document.querySelectorAll(
-        'script[data-final-handover-mistakes-schema="true"]'
-      );
-      schemas.forEach((script) => script.remove());
-    };
-  }, []);
-
-  return (
+return (
+  <>
+    <SeoHead
+      title={TITLE}
+      description={DESCRIPTION}
+      canonical={CANONICAL}
+      robots="index,follow,max-image-preview:large"
+      ogType="article"
+      jsonLd={ARTICLE_SCHEMA}
+    />
     <main className="min-h-screen bg-[#faf8f3] text-[#1f1f1f]">
       <section className="border-b border-black/5 bg-gradient-to-b from-[#111111] via-[#181818] to-[#222222]">
         <div className="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
@@ -658,6 +521,7 @@ export default function FinalHandoverMistakesChecklist() {
           </div>
         </section>
       </article>
-    </main>
+      </main>
+    </>
   );
 }
