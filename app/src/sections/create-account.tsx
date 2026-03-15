@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
+import SeoHead from "@/components/SeoHead";
 
 type LocationState = {
   area?: number;
@@ -94,6 +95,14 @@ export default function CreateAccountSection() {
   }
 
   return (
+  <>
+    <SeoHead
+      title="إنشاء حساب العميل | بنيان الهرم للمقاولات"
+      description="إنشاء حساب العميل لمتابعة المشروع والحصول على العروض."
+      canonical="https://pybcco.com/create-account"
+      robots="noindex,follow"
+    />
+
     <section className="w-full py-12 md:py-16">
       <div className="mx-auto max-w-2xl px-4">
         <div className="rounded-2xl border border-yellow-500/20 bg-white p-6 shadow-sm md:p-8">
@@ -182,6 +191,7 @@ export default function CreateAccountSection() {
           )}
         </div>
       </div>
-    </section>
-  );
+        </section>
+  </>
+);
 }

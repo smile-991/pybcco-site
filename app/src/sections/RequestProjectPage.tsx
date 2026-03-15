@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import SeoHead from "@/components/SeoHead";
 
 type ActivatedUser = {
   phone: string;
@@ -156,15 +157,31 @@ export default function RequestProjectPage() {
   };
 
   if (checkingUser) {
-    return (
+  return (
+    <>
+      <SeoHead
+        title="طلب مشروع | بنيان الهرم للمقاولات"
+        description="إرسال طلب تنفيذ مشروع."
+        canonical="https://pybcco.com/request-project"
+        robots="noindex,follow"
+      />
       <div className="flex min-h-screen items-center justify-center bg-gray-50">
         جاري التحقق من الحساب...
       </div>
-    );
-  }
+    </>
+  );
+}
 
   if (!activatedUser) {
-    return (
+  return (
+    <>
+      <SeoHead
+        title="طلب مشروع | بنيان الهرم للمقاولات"
+        description="إرسال طلب تنفيذ مشروع."
+        canonical="https://pybcco.com/request-project"
+        robots="noindex,follow"
+      />
+
       <div className="min-h-screen bg-gray-50 p-6 md:p-10">
         <div className="mx-auto max-w-3xl rounded-2xl border bg-white p-8 shadow-sm text-right">
           <h1 className="text-2xl font-bold text-black">طلب مشروع</h1>
@@ -188,12 +205,21 @@ export default function RequestProjectPage() {
             </Link>
           </div>
         </div>
-      </div>
-    );
-  }
+            </div>
+    </>
+  );
+}
 
   if (!state.calculator_result_id) {
-    return (
+  return (
+    <>
+      <SeoHead
+        title="طلب مشروع | بنيان الهرم للمقاولات"
+        description="إرسال طلب تنفيذ مشروع."
+        canonical="https://pybcco.com/request-project"
+        robots="noindex,follow"
+      />
+
       <div className="min-h-screen bg-gray-50 p-6 md:p-10">
         <div className="mx-auto max-w-3xl rounded-2xl border bg-white p-8 shadow-sm text-right">
           <h1 className="text-2xl font-bold text-black">طلب مشروع</h1>
@@ -211,11 +237,19 @@ export default function RequestProjectPage() {
             </Link>
           </div>
         </div>
-      </div>
-    );
-  }
-
+            </div>
+    </>
+  );
+}
   return (
+  <>
+    <SeoHead
+      title="طلب مشروع | بنيان الهرم للمقاولات"
+      description="إرسال طلب تنفيذ مشروع."
+      canonical="https://pybcco.com/request-project"
+      robots="noindex,follow"
+    />
+
     <div className="min-h-screen bg-gray-50 p-6 md:p-10">
       <div className="mx-auto max-w-5xl space-y-6">
         <div className="rounded-2xl border bg-white p-6 shadow-sm">
@@ -370,6 +404,7 @@ export default function RequestProjectPage() {
           )}
         </div>
       </div>
-    </div>
-  );
+        </div>
+  </>
+);
 }

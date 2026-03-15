@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, useCallback } from "react"
+import SeoHead from "@/components/SeoHead"
 
 type ClientRow = {
   id: string
@@ -154,15 +155,31 @@ export default function AdminPage() {
   }
 
   if (authorized === null) {
-    return (
+  return (
+    <>
+      <SeoHead
+        title="Admin | PYBCCO"
+        description="Admin dashboard."
+        canonical="https://pybcco.com/admin"
+        robots="noindex,nofollow"
+      />
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         Checking session...
       </div>
-    )
-  }
+    </>
+  )
+}
 
-  if (!authorized) {
-    return (
+ if (!authorized) {
+  return (
+    <>
+      <SeoHead
+        title="Admin | PYBCCO"
+        description="Admin dashboard."
+        canonical="https://pybcco.com/admin"
+        robots="noindex,nofollow"
+      />
+
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="w-full max-w-md bg-white shadow-2xl rounded-2xl p-8 border border-gray-100">
           <div className="text-center mb-6">
@@ -191,23 +208,33 @@ export default function AdminPage() {
           </div>
         </div>
       </div>
-    )
-  }
+    </>
+  )
+}
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6 md:p-10">
-      <div className="max-w-6xl mx-auto space-y-8">
-        <div className="bg-white shadow-xl rounded-2xl p-6 border border-gray-100">
-          <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard 🔐</h1>
-          <p className="text-gray-500 text-sm mt-1">
-            Manage clients & projects for PYBCCO Portal
-          </p>
-        </div>
+  <>
+    <SeoHead
+      title="Admin | PYBCCO"
+      description="Admin dashboard."
+      canonical="https://pybcco.com/admin"
+      robots="noindex,nofollow"
+    />
 
-        <ClientsAndProjects onUnauthorized={() => setAuthorized(false)} />
+      <div className="min-h-screen bg-gray-50 p-6 md:p-10">
+    <div className="max-w-6xl mx-auto space-y-8">
+      <div className="bg-white shadow-xl rounded-2xl p-6 border border-gray-100">
+        <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard 🔐</h1>
+        <p className="text-gray-500 text-sm mt-1">
+          Manage clients & projects for PYBCCO Portal
+        </p>
       </div>
+
+      <ClientsAndProjects onUnauthorized={() => setAuthorized(false)} />
     </div>
-  )
+  </div>
+  </>
+)
 }
 
 function ClientsAndProjects({ onUnauthorized }: { onUnauthorized: () => void }) {

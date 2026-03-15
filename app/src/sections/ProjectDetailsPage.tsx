@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react"
 import { useParams, useNavigate, Link } from "react-router-dom"
 import ProjectCommentsClient from "@/sections/ProjectCommentsClient"
+import SeoHead from "@/components/SeoHead"
 
 type AnyObj = Record<string, any>
 
@@ -147,13 +148,20 @@ const activatedUser: ActivatedSession | null = (() => {
   }, [documents])
 
   if (loading) {
-    return (
+  return (
+    <>
+      <SeoHead
+        title="تفاصيل المشروع | بنيان الهرم للمقاولات"
+        description="تفاصيل مشروع العميل."
+        canonical="https://pybcco.com/portal"
+        robots="noindex,follow"
+      />
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         Loading...
       </div>
-    )
-  }
-
+    </>
+  )
+}
   if (!project) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-gray-50">
@@ -227,6 +235,14 @@ const activatedUser: ActivatedSession | null = (() => {
     currentMilestone && currentMilestone.due_date ? String(currentMilestone.due_date) : null
 
   return (
+  <>
+    <SeoHead
+      title="تفاصيل المشروع | بنيان الهرم للمقاولات"
+      description="متابعة تفاصيل مشروع العميل."
+      canonical="https://pybcco.com/portal"
+      robots="noindex,follow"
+    />
+
     <div className="min-h-screen bg-gray-50 p-6 pt-24 md:p-10 md:pt-28">
       <div className="max-w-5xl mx-auto space-y-8">
 
@@ -517,7 +533,7 @@ const activatedUser: ActivatedSession | null = (() => {
       </div>
 
       {/* Lightbox */}
-      {imgOpen && (
+            {imgOpen && (
         <div
           className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4"
           onClick={() => setImgOpen(null)}
@@ -538,7 +554,8 @@ const activatedUser: ActivatedSession | null = (() => {
         </div>
       )}
     </div>
-  )
+  </>
+)
 }
 
 function DocGroup({ title, items }: { title: string; items?: any[] }) {
@@ -572,7 +589,7 @@ function DocGroup({ title, items }: { title: string; items?: any[] }) {
             </a>
           ))}
         </div>
-      )}
+            )}
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import SeoHead from "@/components/SeoHead";
 
 type ActivatedUser = {
   phone: string;
@@ -575,16 +576,31 @@ if (
   };
 
   if (checking) {
-    return (
+  return (
+    <>
+      <SeoHead
+        title="حسابي | بنيان الهرم للمقاولات"
+        description="صفحة حساب العميل."
+        canonical="https://pybcco.com/account"
+        robots="noindex,follow"
+      />
       <div className="flex min-h-screen items-center justify-center bg-gray-50">
         جاري التحقق من الحساب...
       </div>
-    );
-  }
-
+    </>
+  );
+}
   if (!user) return null;
 
   return (
+  <>
+    <SeoHead
+      title="حسابي | بنيان الهرم للمقاولات"
+      description="صفحة حساب العميل."
+      canonical="https://pybcco.com/account"
+      robots="noindex,follow"
+    />
+
     <div className="min-h-screen bg-gray-50 p-6 md:p-10">
       <div className="mx-auto max-w-6xl space-y-8">
         <div className="rounded-2xl border bg-white p-6 shadow-lg">
@@ -888,6 +904,7 @@ if (
           </div>
         )}
       </div>
-    </div>
-  );
+        </div>
+  </>
+);
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import SeoHead from "@/components/SeoHead";
 
 type ActivatedSession = {
   phone: string;
@@ -113,15 +114,31 @@ export default function PortalPage() {
   };
 
   if (authorized === null) {
-    return (
+  return (
+    <>
+      <SeoHead
+        title="بوابة العملاء | بنيان الهرم للمقاولات"
+        description="بوابة العملاء."
+        canonical="https://pybcco.com/portal"
+        robots="noindex,follow"
+      />
       <div className="flex min-h-screen items-center justify-center">
         جاري التحقق من حالة الدخول...
       </div>
-    );
-  }
+    </>
+  );
+}
 
   if (!authorized) {
-    return (
+  return (
+    <>
+      <SeoHead
+        title="بوابة العملاء | بنيان الهرم للمقاولات"
+        description="بوابة العملاء."
+        canonical="https://pybcco.com/portal"
+        robots="noindex,follow"
+      />
+
       <div className="min-h-screen bg-gray-50">
         <div className="mx-auto flex min-h-screen max-w-md items-center justify-center px-4 py-10">
           <div className="w-full rounded-2xl border bg-white p-8 shadow-xl">
@@ -152,8 +169,9 @@ export default function PortalPage() {
           </div>
         </div>
       </div>
-    );
-  }
+    </>
+  );
+}
   return (
     <ClientProjects
       activatedSession={activatedSession}
@@ -242,6 +260,14 @@ function ClientProjects({
   }
 
   return (
+  <>
+    <SeoHead
+      title="مشاريعي | بنيان الهرم للمقاولات"
+      description="متابعة مشاريع العميل."
+      canonical="https://pybcco.com/portal"
+      robots="noindex,follow"
+    />
+
     <div className="min-h-screen bg-gray-50 p-6 pt-24 md:p-10 md:pt-28">
       <div className="mx-auto max-w-6xl space-y-8">
         <div className="rounded-2xl border bg-white p-6 shadow-xl space-y-4">
@@ -334,6 +360,7 @@ function ClientProjects({
           })}
         </div>
       </div>
-    </div>
+          </div>
+    </>
   );
 }

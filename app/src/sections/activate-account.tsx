@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
+import SeoHead from "@/components/SeoHead";
 
 type ClientCheckResponse = {
   found: boolean;
@@ -103,6 +104,15 @@ export default function ActivateAccountSection() {
   }, [searchParams]);
 
   return (
+  <>
+    <SeoHead
+      title="تفعيل الحساب | بنيان الهرم للمقاولات"
+      description="تفعيل حساب العميل."
+      canonical="https://pybcco.com/activate-account"
+      robots="noindex,follow"
+    />
+
+
     <section className="w-full py-16">
       <div className="mx-auto max-w-3xl px-4">
         <div className="rounded-2xl border border-yellow-500/20 bg-white p-8 text-center shadow-sm">
@@ -241,6 +251,7 @@ export default function ActivateAccountSection() {
           )}
         </div>
       </div>
-    </section>
-  );
+        </section>
+  </>
+);
 }
