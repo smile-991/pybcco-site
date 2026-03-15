@@ -1,68 +1,49 @@
-import { useEffect } from "react";
+import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
 
+const SITE_URL = "https://pybcco.com";
+const CANONICAL = "https://pybcco.com/engineering-insights/how-to-read-construction-quotation-properly";
+
+const TITLE = "كيف تقرأ عرض السعر من شركة المقاولات بشكل صحيح؟ دليل تحليل عروض الأسعار | بنيان الهرم للمقاولات";
+
+const DESCRIPTION = "تعرف على الطريقة الصحيحة لقراءة عرض السعر من شركة المقاولات وكيف تقارن بين عروض المقاولين وتفهم البنود والتكاليف قبل توقيع العقد.";
+
+const ARTICLE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${CANONICAL}#article`,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": CANONICAL,
+  },
+  headline: TITLE,
+  description: DESCRIPTION,
+  inLanguage: "ar",
+  author: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+};
+
+
 export default function HowToReadConstructionQuotationProperly() {
-
-useEffect(() => {
-
-const title =
-"كيف تقرأ عرض السعر من شركة المقاولات بشكل صحيح؟ دليل تحليل عروض الأسعار | بنيان الهرم للمقاولات";
-
-const description =
-"تعرف على الطريقة الصحيحة لقراءة عرض السعر من شركة المقاولات وكيف تقارن بين عروض المقاولين وتفهم البنود والتكاليف قبل توقيع العقد.";
-
-const canonical =
-"https://pybcco.com/engineering-insights/how-to-read-construction-quotation-properly";
-
-document.title = title;
-
-function setMeta(name:string,content:string,attr:"name"|"property"="name"){
-
-let tag=document.head.querySelector(`meta[${attr}="${name}"]`) as HTMLMetaElement|null;
-
-if(!tag){
-tag=document.createElement("meta");
-tag.setAttribute(attr,name);
-document.head.appendChild(tag);
-}
-
-tag.setAttribute("content",content);
-
-}
-
-function setLink(rel:string,href:string){
-
-let tag=document.head.querySelector(`link[rel="${rel}"]`) as HTMLLinkElement|null;
-
-if(!tag){
-tag=document.createElement("link");
-tag.setAttribute("rel",rel);
-document.head.appendChild(tag);
-}
-
-tag.setAttribute("href",href);
-
-}
-
-setMeta("description",description);
-setMeta("robots","index, follow");
-
-setMeta("og:title",title,"property");
-setMeta("og:description",description,"property");
-setMeta("og:type","article","property");
-setMeta("og:url",canonical,"property");
-
-setMeta("twitter:card","summary_large_image");
-setMeta("twitter:title",title);
-setMeta("twitter:description",description);
-
-setLink("canonical",canonical);
-
-},[]);
-
 return (
-
-<main className="bg-white text-neutral-900">
+    <>
+      <SeoHead
+        title={TITLE}
+        description={DESCRIPTION}
+        canonical={CANONICAL}
+        robots="index,follow,max-image-preview:large"
+        ogType="article"
+        jsonLd={ARTICLE_SCHEMA}
+      />
+      <main className="bg-white text-neutral-900">
 
 <section className="border-b border-neutral-200 bg-gradient-to-b from-neutral-50 to-white">
 
@@ -304,8 +285,7 @@ return (
 </article>
 
 </section>
-
-</main>
-
-);
+      </main>
+    </>
+  );
 }
