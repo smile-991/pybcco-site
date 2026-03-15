@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -16,162 +16,52 @@ const CLUSTER_PATH = "/engineering-insights/construction-and-finishing-stages";
 const COMPANY_PATH = "/construction-company-riyadh";
 const FINISHING_SERVICE_PATH = "/villa-finishing-riyadh";
 
+const SITE_URL = "https://pybcco.com";
+const CANONICAL =
+  "https://pybcco.com/engineering-insights/construction-and-finishing-stages/how-long-does-it-take-to-build-villa-riyadh";
+
+const TITLE =
+  "كم تستغرق مدة بناء فيلا في الرياض؟ الجدول الزمني الواقعي من البداية حتى التسليم | بنيان الهرم للمقاولات";
+
+const DESCRIPTION =
+  "دليل عملي يشرح مدة بناء الفيلا في الرياض بشكل واقعي، مع تفصيل المدة المتوقعة لكل مرحلة من الحفر والعظم حتى التشطيب والتسليم، وأهم العوامل التي تؤثر على مدة المشروع وكيفية تقليل التأخير.";
+
+const ARTICLE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${CANONICAL}#article`,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": CANONICAL,
+  },
+  headline: TITLE,
+  description: DESCRIPTION,
+  inLanguage: "ar-SA",
+  author: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+};
+
 export default function HowLongDoesItTakeToBuildVillaRiyadh() {
-  const title =
-    "كم تستغرق مدة بناء فيلا في الرياض؟ الجدول الزمني الواقعي من البداية حتى التسليم | بنيان الهرم للمقاولات";
-
-  const description =
-    "دليل عملي يشرح مدة بناء الفيلا في الرياض بشكل واقعي، مع تفصيل المدة المتوقعة لكل مرحلة من الحفر والعظم حتى التشطيب والتسليم، وأهم العوامل التي تؤثر على مدة المشروع وكيفية تقليل التأخير.";
-
-  const canonical =
-    "https://pybcco.com/engineering-insights/construction-and-finishing-stages/how-long-does-it-take-to-build-villa-riyadh";
-
-  useEffect(() => {
-    document.title = title;
-
-    const setMeta = (
-      attr: "name" | "property",
-      key: string,
-      content: string
-    ) => {
-      let element = document.querySelector(`meta[${attr}="${key}"]`);
-      if (!element) {
-        element = document.createElement("meta");
-        element.setAttribute(attr, key);
-        document.head.appendChild(element);
-      }
-      element.setAttribute("content", content);
-    };
-
-    const setLink = (rel: string, href: string) => {
-      let element = document.querySelector(`link[rel="${rel}"]`);
-      if (!element) {
-        element = document.createElement("link");
-        element.setAttribute("rel", rel);
-        document.head.appendChild(element);
-      }
-      element.setAttribute("href", href);
-    };
-
-    setMeta("name", "description", description);
-    setMeta("name", "robots", "index, follow, max-image-preview:large");
-    setMeta("property", "og:type", "article");
-    setMeta("property", "og:title", title);
-    setMeta("property", "og:description", description);
-    setMeta("property", "og:url", canonical);
-    setMeta("property", "og:site_name", "بنيان الهرم للمقاولات");
-    setMeta("name", "twitter:card", "summary_large_image");
-    setMeta("name", "twitter:title", title);
-    setMeta("name", "twitter:description", description);
-    setLink("canonical", canonical);
-
-    const oldSchemas = document.querySelectorAll(
-      'script[data-seo="how-long-build-villa-riyadh"]'
-    );
-    oldSchemas.forEach((node) => node.remove());
-
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "الرئيسية",
-          item: "https://pybcco.com/",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "الرؤى الهندسية",
-          item: "https://pybcco.com/engineering-insights",
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "مراحل البناء والتشطيب",
-          item: "https://pybcco.com/engineering-insights/construction-and-finishing-stages",
-        },
-        {
-          "@type": "ListItem",
-          position: 4,
-          name: "كم تستغرق مدة بناء فيلا في الرياض؟",
-          item: canonical,
-        },
-      ],
-    };
-
-    const articleSchema = {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      headline: "كم تستغرق مدة بناء فيلا في الرياض؟",
-      description,
-      inLanguage: "ar-SA",
-      mainEntityOfPage: canonical,
-      url: canonical,
-      author: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-        url: "https://pybcco.com",
-      },
-      articleSection: "مراحل البناء والتشطيب",
-      keywords:
-        "مدة بناء فيلا, كم تستغرق بناء فيلا, مدة بناء منزل في الرياض, كم مدة التشطيب, الجدول الزمني لبناء فيلا, مدة العظم والتشطيب",
-    };
-
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "كم تستغرق مدة بناء فيلا في الرياض عادة؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "المدة تختلف بحسب المساحة ونطاق العمل ومستوى التشطيب وسرعة القرارات والتوريدات، لكن أغلب المشاريع تمر عبر مراحل تجعل المدة الإجمالية تمتد غالبًا لعدة أشهر وقد تزيد إذا حدثت تعديلات أو تأخير في المواد أو ضعف في إدارة التنفيذ.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "ما أكثر شيء يسبب تأخير مشروع البناء؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "من أكثر أسباب التأخير شيوعًا: تغييرات المالك أثناء التنفيذ، ضعف التنسيق بين البنود، تأخر التوريد، عدم وضوح نطاق العمل، التوقف بين المراحل، وضعف الإشراف والمتابعة.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل التشطيب يأخذ وقتًا أطول من العظم؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "في كثير من الحالات نعم، لأن التشطيب يتضمن عددًا كبيرًا من البنود المتداخلة والقرارات التفصيلية والمواد والاعتمادات، بينما العظم غالبًا يكون أوضح من حيث التسلسل وأقل تنوعًا في الخيارات.",
-          },
-        },
-      ],
-    };
-
-    [breadcrumbSchema, articleSchema, faqSchema].forEach((schema) => {
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.setAttribute("data-seo", "how-long-build-villa-riyadh");
-      script.text = JSON.stringify(schema);
-      document.head.appendChild(script);
-    });
-
-    return () => {
-      const schemas = document.querySelectorAll(
-        'script[data-seo="how-long-build-villa-riyadh"]'
-      );
-      schemas.forEach((node) => node.remove());
-    };
-  }, [title, description, canonical]);
 
   return (
-    <main className="bg-white text-zinc-900">
+    <>
+      <SeoHead
+        title={TITLE}
+        description={DESCRIPTION}
+        canonical={CANONICAL}
+        robots="index,follow,max-image-preview:large"
+        ogType="article"
+        jsonLd={ARTICLE_SCHEMA}
+      />
+      <main className="bg-white text-zinc-900">
       <section className="border-b border-zinc-100 bg-gradient-to-b from-[#fff8e7] via-white to-white">
         <div className="mx-auto max-w-4xl px-4 py-10 md:px-6 md:py-14">
           <nav
@@ -725,6 +615,7 @@ export default function HowLongDoesItTakeToBuildVillaRiyadh() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

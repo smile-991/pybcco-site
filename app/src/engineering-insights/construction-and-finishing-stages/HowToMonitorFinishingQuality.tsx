@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -16,162 +16,52 @@ const CLUSTER_PATH = "/engineering-insights/construction-and-finishing-stages";
 const COMPANY_PATH = "/construction-company-riyadh";
 const FINISHING_SERVICE_PATH = "/villa-finishing-riyadh";
 
+const SITE_URL = "https://pybcco.com";
+const CANONICAL =
+  "https://pybcco.com/engineering-insights/construction-and-finishing-stages/how-to-monitor-finishing-quality";
+
+const TITLE =
+  "كيف تراقب جودة التشطيب خطوة بخطوة؟ دليل عملي للمالك قبل الاستلام | بنيان الهرم للمقاولات";
+
+const DESCRIPTION =
+  "دليل عملي يشرح كيف تراقب جودة التشطيب خطوة بخطوة، وما الذي يجب ملاحظته في أعمال اللياسة والجبس والأرضيات والدهانات والتركيبات، مع توضيح كيف يكتشف المالك المشاكل مبكرًا قبل أن تتحول إلى إعادة عمل أو ضعف في النتيجة النهائية.";
+
+const ARTICLE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${CANONICAL}#article`,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": CANONICAL,
+  },
+  headline: TITLE,
+  description: DESCRIPTION,
+  inLanguage: "ar-SA",
+  author: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+};
+
 export default function HowToMonitorFinishingQuality() {
-  const title =
-    "كيف تراقب جودة التشطيب خطوة بخطوة؟ دليل عملي للمالك قبل الاستلام | بنيان الهرم للمقاولات";
-
-  const description =
-    "دليل عملي يشرح كيف تراقب جودة التشطيب خطوة بخطوة، وما الذي يجب ملاحظته في أعمال اللياسة والجبس والأرضيات والدهانات والتركيبات، مع توضيح كيف يكتشف المالك المشاكل مبكرًا قبل أن تتحول إلى إعادة عمل أو ضعف في النتيجة النهائية.";
-
-  const canonical =
-    "https://pybcco.com/engineering-insights/construction-and-finishing-stages/how-to-monitor-finishing-quality";
-
-  useEffect(() => {
-    document.title = title;
-
-    const setMeta = (
-      attr: "name" | "property",
-      key: string,
-      content: string
-    ) => {
-      let element = document.querySelector(`meta[${attr}="${key}"]`);
-      if (!element) {
-        element = document.createElement("meta");
-        element.setAttribute(attr, key);
-        document.head.appendChild(element);
-      }
-      element.setAttribute("content", content);
-    };
-
-    const setLink = (rel: string, href: string) => {
-      let element = document.querySelector(`link[rel="${rel}"]`);
-      if (!element) {
-        element = document.createElement("link");
-        element.setAttribute("rel", rel);
-        document.head.appendChild(element);
-      }
-      element.setAttribute("href", href);
-    };
-
-    setMeta("name", "description", description);
-    setMeta("name", "robots", "index, follow, max-image-preview:large");
-    setMeta("property", "og:type", "article");
-    setMeta("property", "og:title", title);
-    setMeta("property", "og:description", description);
-    setMeta("property", "og:url", canonical);
-    setMeta("property", "og:site_name", "بنيان الهرم للمقاولات");
-    setMeta("name", "twitter:card", "summary_large_image");
-    setMeta("name", "twitter:title", title);
-    setMeta("name", "twitter:description", description);
-    setLink("canonical", canonical);
-
-    const oldSchemas = document.querySelectorAll(
-      'script[data-seo="how-to-monitor-finishing-quality"]'
-    );
-    oldSchemas.forEach((node) => node.remove());
-
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "الرئيسية",
-          item: "https://pybcco.com/",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "الرؤى الهندسية",
-          item: "https://pybcco.com/engineering-insights",
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "مراحل البناء والتشطيب",
-          item: "https://pybcco.com/engineering-insights/construction-and-finishing-stages",
-        },
-        {
-          "@type": "ListItem",
-          position: 4,
-          name: "كيف تراقب جودة التشطيب خطوة بخطوة",
-          item: canonical,
-        },
-      ],
-    };
-
-    const articleSchema = {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      headline: "كيف تراقب جودة التشطيب خطوة بخطوة",
-      description,
-      inLanguage: "ar-SA",
-      mainEntityOfPage: canonical,
-      url: canonical,
-      author: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-        url: "https://pybcco.com",
-      },
-      articleSection: "مراحل البناء والتشطيب",
-      keywords:
-        "جودة التشطيب, مراقبة جودة التشطيب, فحص التشطيب, استلام التشطيب, جودة الدهانات, جودة الأرضيات, جودة اللياسة",
-    };
-
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "هل أحتاج خبرة هندسية كبيرة لمراقبة جودة التشطيب؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "لا يلزم أن تكون مهندسًا متخصصًا في كل بند، لكن يكفي أن تراقب بعين منظمة، وتفهم ما الذي يجب أن يكون مستقيمًا ونظيفًا ومكتملًا، وأن تتأكد من عدم انتقال العيوب من مرحلة إلى أخرى.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "ما أكثر شيء يكشف جودة التشطيب؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "أكثر ما يكشف الجودة هو التفاصيل الصغيرة المتكررة مثل استقامة الزوايا، نعومة الأسطح، انتظام الأرضيات، نظافة الفواصل، تجانس الدهان، وجودة المعالجات عند الالتقاء بين العناصر.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "متى أفضل وقت لاكتشاف مشاكل التشطيب؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "أفضل وقت هو أثناء التنفيذ وبعد كل مرحلة مباشرة، لأن اكتشاف المشكلة وهي ما زالت مكشوفة أسهل وأرخص بكثير من اكتشافها بعد تركيب أو تغطية بنود أخرى فوقها.",
-          },
-        },
-      ],
-    };
-
-    [breadcrumbSchema, articleSchema, faqSchema].forEach((schema) => {
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.setAttribute("data-seo", "how-to-monitor-finishing-quality");
-      script.text = JSON.stringify(schema);
-      document.head.appendChild(script);
-    });
-
-    return () => {
-      const schemas = document.querySelectorAll(
-        'script[data-seo="how-to-monitor-finishing-quality"]'
-      );
-      schemas.forEach((node) => node.remove());
-    };
-  }, [title, description, canonical]);
 
   return (
-    <main className="bg-white text-zinc-900">
+    <>
+      <SeoHead
+        title={TITLE}
+        description={DESCRIPTION}
+        canonical={CANONICAL}
+        robots="index,follow,max-image-preview:large"
+        ogType="article"
+        jsonLd={ARTICLE_SCHEMA}
+      />
+      <main className="bg-white text-zinc-900">
       <section className="border-b border-zinc-100 bg-gradient-to-b from-[#fff8e7] via-white to-white">
         <div className="mx-auto max-w-4xl px-4 py-10 md:px-6 md:py-14">
           <nav
@@ -703,6 +593,7 @@ export default function HowToMonitorFinishingQuality() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

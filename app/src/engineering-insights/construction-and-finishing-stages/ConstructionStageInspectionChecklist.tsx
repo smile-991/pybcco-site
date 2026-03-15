@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -16,165 +16,52 @@ const CLUSTER_PATH = "/engineering-insights/construction-and-finishing-stages";
 const COMPANY_PATH = "/construction-company-riyadh";
 const FINISHING_SERVICE_PATH = "/villa-finishing-riyadh";
 
+const SITE_URL = "https://pybcco.com";
+const CANONICAL =
+  "https://pybcco.com/engineering-insights/construction-and-finishing-stages/construction-stage-inspection-checklist";
+
+const TITLE =
+  "استلام مراحل البناء بالتفصيل قبل اعتماد الدفعات: دليل عملي للمالك | بنيان الهرم للمقاولات";
+
+const DESCRIPTION =
+  "دليل عملي يشرح استلام مراحل البناء والتشطيب قبل اعتماد الدفعات، مع توضيح ما الذي يجب مراجعته في كل مرحلة، وكيف يربط المالك بين جودة التنفيذ والدفع، وأهم الأخطاء التي تؤدي إلى اعتماد أعمال غير مكتملة أو ضعيفة.";
+
+const ARTICLE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${CANONICAL}#article`,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": CANONICAL,
+  },
+  headline: TITLE,
+  description: DESCRIPTION,
+  inLanguage: "ar-SA",
+  author: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+};
+
 export default function ConstructionStageInspectionChecklist() {
-  const title =
-    "استلام مراحل البناء بالتفصيل قبل اعتماد الدفعات: دليل عملي للمالك | بنيان الهرم للمقاولات";
-
-  const description =
-    "دليل عملي يشرح استلام مراحل البناء والتشطيب قبل اعتماد الدفعات، مع توضيح ما الذي يجب مراجعته في كل مرحلة، وكيف يربط المالك بين جودة التنفيذ والدفع، وأهم الأخطاء التي تؤدي إلى اعتماد أعمال غير مكتملة أو ضعيفة.";
-
-  const canonical =
-    "https://pybcco.com/engineering-insights/construction-and-finishing-stages/construction-stage-inspection-checklist";
-
-  useEffect(() => {
-    document.title = title;
-
-    const setMeta = (
-      attr: "name" | "property",
-      key: string,
-      content: string
-    ) => {
-      let element = document.querySelector(`meta[${attr}="${key}"]`);
-      if (!element) {
-        element = document.createElement("meta");
-        element.setAttribute(attr, key);
-        document.head.appendChild(element);
-      }
-      element.setAttribute("content", content);
-    };
-
-    const setLink = (rel: string, href: string) => {
-      let element = document.querySelector(`link[rel="${rel}"]`);
-      if (!element) {
-        element = document.createElement("link");
-        element.setAttribute("rel", rel);
-        document.head.appendChild(element);
-      }
-      element.setAttribute("href", href);
-    };
-
-    setMeta("name", "description", description);
-    setMeta("name", "robots", "index, follow, max-image-preview:large");
-    setMeta("property", "og:type", "article");
-    setMeta("property", "og:title", title);
-    setMeta("property", "og:description", description);
-    setMeta("property", "og:url", canonical);
-    setMeta("property", "og:site_name", "بنيان الهرم للمقاولات");
-    setMeta("name", "twitter:card", "summary_large_image");
-    setMeta("name", "twitter:title", title);
-    setMeta("name", "twitter:description", description);
-    setLink("canonical", canonical);
-
-    const oldSchemas = document.querySelectorAll(
-      'script[data-seo="construction-stage-inspection-checklist"]'
-    );
-    oldSchemas.forEach((node) => node.remove());
-
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "الرئيسية",
-          item: "https://pybcco.com/",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "الرؤى الهندسية",
-          item: "https://pybcco.com/engineering-insights",
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "مراحل البناء والتشطيب",
-          item: "https://pybcco.com/engineering-insights/construction-and-finishing-stages",
-        },
-        {
-          "@type": "ListItem",
-          position: 4,
-          name: "استلام مراحل البناء بالتفصيل قبل اعتماد الدفعات",
-          item: canonical,
-        },
-      ],
-    };
-
-    const articleSchema = {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      headline: "استلام مراحل البناء بالتفصيل قبل اعتماد الدفعات",
-      description,
-      inLanguage: "ar-SA",
-      mainEntityOfPage: canonical,
-      url: canonical,
-      author: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-        url: "https://pybcco.com",
-      },
-      articleSection: "مراحل البناء والتشطيب",
-      keywords:
-        "استلام مراحل البناء, استلام أعمال التشطيب, فحص أعمال البناء, اعتماد دفعات المقاول, استلام العظم, استلام اللياسة, استلام التشطيب",
-    };
-
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "لماذا يجب ربط الدفع باستلام المرحلة؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "لأن الدفعة يجب أن تقابل عملًا منفذًا فعليًا وبمستوى مقبول، وربط الدفع بالاستلام يقلل احتمال اعتماد أعمال ناقصة أو ضعيفة يصعب تصحيحها لاحقًا.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل يكفي أن يبدو التنفيذ جيدًا بصريًا؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "لا، لأن بعض العيوب لا تظهر من النظرة السريعة. الاستلام الجيد يعتمد على المراجعة العملية للتفاصيل الأساسية في كل مرحلة وليس فقط على الانطباع العام.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "ما أكثر خطأ يقع فيه المالك عند الاستلام؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "أكثر خطأ شائع هو الاستعجال في اعتماد الدفعة قبل إغلاق الملاحظات أو قبل التأكد من اكتمال المرحلة فعلًا، ثم اكتشاف المشاكل بعد انتقال المشروع إلى مرحلة جديدة.",
-          },
-        },
-      ],
-    };
-
-    [breadcrumbSchema, articleSchema, faqSchema].forEach((schema) => {
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.setAttribute(
-        "data-seo",
-        "construction-stage-inspection-checklist"
-      );
-      script.text = JSON.stringify(schema);
-      document.head.appendChild(script);
-    });
-
-    return () => {
-      const schemas = document.querySelectorAll(
-        'script[data-seo="construction-stage-inspection-checklist"]'
-      );
-      schemas.forEach((node) => node.remove());
-    };
-  }, [title, description, canonical]);
 
   return (
-    <main className="bg-white text-zinc-900">
+    <>
+      <SeoHead
+        title={TITLE}
+        description={DESCRIPTION}
+        canonical={CANONICAL}
+        robots="index,follow,max-image-preview:large"
+        ogType="article"
+        jsonLd={ARTICLE_SCHEMA}
+      />
+      <main className="bg-white text-zinc-900">
       <section className="border-b border-zinc-100 bg-gradient-to-b from-[#fff8e7] via-white to-white">
         <div className="mx-auto max-w-4xl px-4 py-10 md:px-6 md:py-14">
           <nav
@@ -729,6 +616,7 @@ export default function ConstructionStageInspectionChecklist() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

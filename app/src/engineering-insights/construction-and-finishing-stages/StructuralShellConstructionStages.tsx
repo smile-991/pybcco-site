@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -16,165 +16,52 @@ const CLUSTER_PATH = "/engineering-insights/construction-and-finishing-stages";
 const COMPANY_PATH = "/construction-company-riyadh";
 const FINISHING_SERVICE_PATH = "/villa-finishing-riyadh";
 
+const SITE_URL = "https://pybcco.com";
+const CANONICAL =
+  "https://pybcco.com/engineering-insights/construction-and-finishing-stages/structural-shell-construction-stages";
+
+const TITLE =
+  "مراحل العظم في البناء من القواعد حتى السقف: الدليل العملي الكامل | بنيان الهرم للمقاولات";
+
+const DESCRIPTION =
+  "دليل عملي يشرح مراحل العظم في البناء من الحفر والقواعد والميدات والأعمدة والجسور حتى الأسقف والبلوك، مع توضيح أهمية كل مرحلة والأخطاء الشائعة التي تؤثر على جودة الهيكل الإنشائي وتسلسل المشروع.";
+
+const ARTICLE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${CANONICAL}#article`,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": CANONICAL,
+  },
+  headline: TITLE,
+  description: DESCRIPTION,
+  inLanguage: "ar-SA",
+  author: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+};
+
 export default function StructuralShellConstructionStages() {
-  const title =
-    "مراحل العظم في البناء من القواعد حتى السقف: الدليل العملي الكامل | بنيان الهرم للمقاولات";
-
-  const description =
-    "دليل عملي يشرح مراحل العظم في البناء من الحفر والقواعد والميدات والأعمدة والجسور حتى الأسقف والبلوك، مع توضيح أهمية كل مرحلة والأخطاء الشائعة التي تؤثر على جودة الهيكل الإنشائي وتسلسل المشروع.";
-
-  const canonical =
-    "https://pybcco.com/engineering-insights/construction-and-finishing-stages/structural-shell-construction-stages";
-
-  useEffect(() => {
-    document.title = title;
-
-    const setMeta = (
-      attr: "name" | "property",
-      key: string,
-      content: string
-    ) => {
-      let element = document.querySelector(`meta[${attr}="${key}"]`);
-      if (!element) {
-        element = document.createElement("meta");
-        element.setAttribute(attr, key);
-        document.head.appendChild(element);
-      }
-      element.setAttribute("content", content);
-    };
-
-    const setLink = (rel: string, href: string) => {
-      let element = document.querySelector(`link[rel="${rel}"]`);
-      if (!element) {
-        element = document.createElement("link");
-        element.setAttribute("rel", rel);
-        document.head.appendChild(element);
-      }
-      element.setAttribute("href", href);
-    };
-
-    setMeta("name", "description", description);
-    setMeta("name", "robots", "index, follow, max-image-preview:large");
-    setMeta("property", "og:type", "article");
-    setMeta("property", "og:title", title);
-    setMeta("property", "og:description", description);
-    setMeta("property", "og:url", canonical);
-    setMeta("property", "og:site_name", "بنيان الهرم للمقاولات");
-    setMeta("name", "twitter:card", "summary_large_image");
-    setMeta("name", "twitter:title", title);
-    setMeta("name", "twitter:description", description);
-    setLink("canonical", canonical);
-
-    const oldSchemas = document.querySelectorAll(
-      'script[data-seo="structural-shell-construction-stages"]'
-    );
-    oldSchemas.forEach((node) => node.remove());
-
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "الرئيسية",
-          item: "https://pybcco.com/",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "الرؤى الهندسية",
-          item: "https://pybcco.com/engineering-insights",
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "مراحل البناء والتشطيب",
-          item: "https://pybcco.com/engineering-insights/construction-and-finishing-stages",
-        },
-        {
-          "@type": "ListItem",
-          position: 4,
-          name: "مراحل العظم في البناء من القواعد حتى السقف",
-          item: canonical,
-        },
-      ],
-    };
-
-    const articleSchema = {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      headline: "مراحل العظم في البناء من القواعد حتى السقف",
-      description,
-      inLanguage: "ar-SA",
-      mainEntityOfPage: canonical,
-      url: canonical,
-      author: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-        url: "https://pybcco.com",
-      },
-      articleSection: "مراحل البناء والتشطيب",
-      keywords:
-        "مراحل العظم, العظم في البناء, القواعد والأعمدة والأسقف, مراحل بناء العظم, الهيكل الإنشائي, القواعد حتى السقف, أعمال العظم",
-    };
-
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "ما المقصود بمرحلة العظم في البناء؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "مرحلة العظم هي الجزء الإنشائي الأساسي من المبنى، وتشمل عادة الحفر والأساسات والقواعد والميدات والأعمدة والجسور والأسقف والبلوك، قبل الدخول في مراحل التشطيب الداخلي والخارجي.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل العظم أهم من التشطيب؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "العظم والتشطيب مرحلتان مهمتان، لكن العظم يمثل القاعدة الإنشائية والدقة الأساسية للمبنى، وأي خلل كبير فيه يؤثر لاحقًا على بقية المراحل ويصعب تصحيحه مقارنة بكثير من أعمال التشطيب.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "ما أكثر الأخطاء شيوعًا في مرحلة العظم؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "من أكثر الأخطاء شيوعًا: ضعف ضبط المحاور والمناسيب، عدم الانتباه لاستقامة العناصر، التسرع في بعض أعمال الصب أو الشدات، وضعف التنسيق مع الفتحات والخدمات التي سيعتمد عليها التشطيب لاحقًا.",
-          },
-        },
-      ],
-    };
-
-    [breadcrumbSchema, articleSchema, faqSchema].forEach((schema) => {
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.setAttribute(
-        "data-seo",
-        "structural-shell-construction-stages"
-      );
-      script.text = JSON.stringify(schema);
-      document.head.appendChild(script);
-    });
-
-    return () => {
-      const schemas = document.querySelectorAll(
-        'script[data-seo="structural-shell-construction-stages"]'
-      );
-      schemas.forEach((node) => node.remove());
-    };
-  }, [title, description, canonical]);
 
   return (
-    <main className="bg-white text-zinc-900">
+    <>
+      <SeoHead
+        title={TITLE}
+        description={DESCRIPTION}
+        canonical={CANONICAL}
+        robots="index,follow,max-image-preview:large"
+        ogType="article"
+        jsonLd={ARTICLE_SCHEMA}
+      />
+      <main className="bg-white text-zinc-900">
       <section className="border-b border-zinc-100 bg-gradient-to-b from-[#fff8e7] via-white to-white">
         <div className="mx-auto max-w-4xl px-4 py-10 md:px-6 md:py-14">
           <nav
@@ -737,6 +624,7 @@ export default function StructuralShellConstructionStages() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

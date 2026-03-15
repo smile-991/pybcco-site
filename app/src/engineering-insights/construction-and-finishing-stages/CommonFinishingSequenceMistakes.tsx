@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
 import {
   AlertTriangle,
@@ -16,162 +16,52 @@ const CLUSTER_PATH = "/engineering-insights/construction-and-finishing-stages";
 const COMPANY_PATH = "/construction-company-riyadh";
 const FINISHING_SERVICE_PATH = "/villa-finishing-riyadh";
 
+const SITE_URL = "https://pybcco.com";
+const CANONICAL =
+  "https://pybcco.com/engineering-insights/construction-and-finishing-stages/common-finishing-sequence-mistakes";
+
+const TITLE =
+  "أخطاء ترتيب أعمال التشطيب التي تسبب مشاكل لاحقًا: دليل عملي لتجنب الهدر والتكسير | بنيان الهرم للمقاولات";
+
+const DESCRIPTION =
+  "دليل عملي يشرح أكثر أخطاء ترتيب أعمال التشطيب شيوعًا، وكيف تؤدي إلى التكسير وإعادة العمل وارتفاع التكلفة وتأخير المشروع، مع توضيح الترتيب الصحيح الذي يساعد على حماية الجودة والميزانية والوقت.";
+
+const ARTICLE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${CANONICAL}#article`,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": CANONICAL,
+  },
+  headline: TITLE,
+  description: DESCRIPTION,
+  inLanguage: "ar-SA",
+  author: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+};
+
 export default function CommonFinishingSequenceMistakes() {
-  const title =
-    "أخطاء ترتيب أعمال التشطيب التي تسبب مشاكل لاحقًا: دليل عملي لتجنب الهدر والتكسير | بنيان الهرم للمقاولات";
-
-  const description =
-    "دليل عملي يشرح أكثر أخطاء ترتيب أعمال التشطيب شيوعًا، وكيف تؤدي إلى التكسير وإعادة العمل وارتفاع التكلفة وتأخير المشروع، مع توضيح الترتيب الصحيح الذي يساعد على حماية الجودة والميزانية والوقت.";
-
-  const canonical =
-    "https://pybcco.com/engineering-insights/construction-and-finishing-stages/common-finishing-sequence-mistakes";
-
-  useEffect(() => {
-    document.title = title;
-
-    const setMeta = (
-      attr: "name" | "property",
-      key: string,
-      content: string
-    ) => {
-      let element = document.querySelector(`meta[${attr}="${key}"]`);
-      if (!element) {
-        element = document.createElement("meta");
-        element.setAttribute(attr, key);
-        document.head.appendChild(element);
-      }
-      element.setAttribute("content", content);
-    };
-
-    const setLink = (rel: string, href: string) => {
-      let element = document.querySelector(`link[rel="${rel}"]`);
-      if (!element) {
-        element = document.createElement("link");
-        element.setAttribute("rel", rel);
-        document.head.appendChild(element);
-      }
-      element.setAttribute("href", href);
-    };
-
-    setMeta("name", "description", description);
-    setMeta("name", "robots", "index, follow, max-image-preview:large");
-    setMeta("property", "og:type", "article");
-    setMeta("property", "og:title", title);
-    setMeta("property", "og:description", description);
-    setMeta("property", "og:url", canonical);
-    setMeta("property", "og:site_name", "بنيان الهرم للمقاولات");
-    setMeta("name", "twitter:card", "summary_large_image");
-    setMeta("name", "twitter:title", title);
-    setMeta("name", "twitter:description", description);
-    setLink("canonical", canonical);
-
-    const oldSchemas = document.querySelectorAll(
-      'script[data-seo="common-finishing-sequence-mistakes"]'
-    );
-    oldSchemas.forEach((node) => node.remove());
-
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "الرئيسية",
-          item: "https://pybcco.com/",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "الرؤى الهندسية",
-          item: "https://pybcco.com/engineering-insights",
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "مراحل البناء والتشطيب",
-          item: "https://pybcco.com/engineering-insights/construction-and-finishing-stages",
-        },
-        {
-          "@type": "ListItem",
-          position: 4,
-          name: "أخطاء ترتيب أعمال التشطيب التي تسبب مشاكل لاحقًا",
-          item: canonical,
-        },
-      ],
-    };
-
-    const articleSchema = {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      headline: "أخطاء ترتيب أعمال التشطيب التي تسبب مشاكل لاحقًا",
-      description,
-      inLanguage: "ar-SA",
-      mainEntityOfPage: canonical,
-      url: canonical,
-      author: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-        url: "https://pybcco.com",
-      },
-      articleSection: "مراحل البناء والتشطيب",
-      keywords:
-        "أخطاء التشطيب, أخطاء ترتيب التشطيب, ترتيب أعمال التشطيب, مشاكل التشطيب, إعادة العمل في التشطيب, تكسير بعد التشطيب",
-    };
-
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "ما أخطر خطأ في ترتيب أعمال التشطيب؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "من أخطر الأخطاء تنفيذ بند نهائي قبل التأكد من اكتمال البنود التأسيسية أو المعالجات التي تسبقه، لأن هذا يؤدي غالبًا إلى فك أو تكسير أو إعادة تنفيذ لاحقة.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل سوء ترتيب التشطيب يرفع التكلفة فعلًا؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "نعم، لأن سوء الترتيب يسبب إعادة عمل وتأخيرًا وتلفًا لبعض المواد أو الأعمال المنجزة، وقد يضيف أيضًا تكاليف توريد وتنفيذ غير محسوبة من البداية.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "كيف أتجنب أخطاء ترتيب التشطيب؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "بتقسيم المشروع إلى مراحل واضحة، وعدم الانتقال إلى أي بند نهائي قبل التأكد من اكتمال الجاهزية الفنية لما قبله، مع متابعة الاستلام والاعتمادات والتوريدات بشكل منظم.",
-          },
-        },
-      ],
-    };
-
-    [breadcrumbSchema, articleSchema, faqSchema].forEach((schema) => {
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.setAttribute("data-seo", "common-finishing-sequence-mistakes");
-      script.text = JSON.stringify(schema);
-      document.head.appendChild(script);
-    });
-
-    return () => {
-      const schemas = document.querySelectorAll(
-        'script[data-seo="common-finishing-sequence-mistakes"]'
-      );
-      schemas.forEach((node) => node.remove());
-    };
-  }, [title, description, canonical]);
 
   return (
-    <main className="bg-white text-zinc-900">
+    <>
+      <SeoHead
+        title={TITLE}
+        description={DESCRIPTION}
+        canonical={CANONICAL}
+        robots="index,follow,max-image-preview:large"
+        ogType="article"
+        jsonLd={ARTICLE_SCHEMA}
+      />
+      <main className="bg-white text-zinc-900">
       <section className="border-b border-zinc-100 bg-gradient-to-b from-[#fff8e7] via-white to-white">
         <div className="mx-auto max-w-4xl px-4 py-10 md:px-6 md:py-14">
           <nav
@@ -684,6 +574,7 @@ export default function CommonFinishingSequenceMistakes() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

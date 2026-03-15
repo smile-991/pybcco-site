@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -16,162 +16,52 @@ const CLUSTER_PATH = "/engineering-insights/construction-and-finishing-stages";
 const COMPANY_PATH = "/construction-company-riyadh";
 const FINISHING_SERVICE_PATH = "/villa-finishing-riyadh";
 
+const SITE_URL = "https://pybcco.com";
+const CANONICAL =
+  "https://pybcco.com/engineering-insights/construction-and-finishing-stages/interior-finishing-stages-villas";
+
+const TITLE =
+  "ترتيب مراحل التشطيب الداخلي للفلل بالشكل الصحيح: الدليل العملي الكامل | بنيان الهرم للمقاولات";
+
+const DESCRIPTION =
+  "دليل عملي يشرح ترتيب مراحل التشطيب الداخلي للفلل بالشكل الصحيح، من التأسيسات والعزل واللياسة حتى الأرضيات والدهانات والتركيبات النهائية، مع توضيح الأخطاء الشائعة وكيفية تجنب إعادة العمل والتكاليف الإضافية.";
+
+const ARTICLE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${CANONICAL}#article`,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": CANONICAL,
+  },
+  headline: TITLE,
+  description: DESCRIPTION,
+  inLanguage: "ar-SA",
+  author: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+};
+
 export default function InteriorFinishingStagesVillas() {
-  const title =
-    "ترتيب مراحل التشطيب الداخلي للفلل بالشكل الصحيح: الدليل العملي الكامل | بنيان الهرم للمقاولات";
-
-  const description =
-    "دليل عملي يشرح ترتيب مراحل التشطيب الداخلي للفلل بالشكل الصحيح، من التأسيسات والعزل واللياسة حتى الأرضيات والدهانات والتركيبات النهائية، مع توضيح الأخطاء الشائعة وكيفية تجنب إعادة العمل والتكاليف الإضافية.";
-
-  const canonical =
-    "https://pybcco.com/engineering-insights/construction-and-finishing-stages/interior-finishing-stages-villas";
-
-  useEffect(() => {
-    document.title = title;
-
-    const setMeta = (
-      attr: "name" | "property",
-      key: string,
-      content: string
-    ) => {
-      let element = document.querySelector(`meta[${attr}="${key}"]`);
-      if (!element) {
-        element = document.createElement("meta");
-        element.setAttribute(attr, key);
-        document.head.appendChild(element);
-      }
-      element.setAttribute("content", content);
-    };
-
-    const setLink = (rel: string, href: string) => {
-      let element = document.querySelector(`link[rel="${rel}"]`);
-      if (!element) {
-        element = document.createElement("link");
-        element.setAttribute("rel", rel);
-        document.head.appendChild(element);
-      }
-      element.setAttribute("href", href);
-    };
-
-    setMeta("name", "description", description);
-    setMeta("name", "robots", "index, follow, max-image-preview:large");
-    setMeta("property", "og:type", "article");
-    setMeta("property", "og:title", title);
-    setMeta("property", "og:description", description);
-    setMeta("property", "og:url", canonical);
-    setMeta("property", "og:site_name", "بنيان الهرم للمقاولات");
-    setMeta("name", "twitter:card", "summary_large_image");
-    setMeta("name", "twitter:title", title);
-    setMeta("name", "twitter:description", description);
-    setLink("canonical", canonical);
-
-    const oldSchemas = document.querySelectorAll(
-      'script[data-seo="interior-finishing-stages-villas"]'
-    );
-    oldSchemas.forEach((node) => node.remove());
-
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "الرئيسية",
-          item: "https://pybcco.com/",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "الرؤى الهندسية",
-          item: "https://pybcco.com/engineering-insights",
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "مراحل البناء والتشطيب",
-          item: "https://pybcco.com/engineering-insights/construction-and-finishing-stages",
-        },
-        {
-          "@type": "ListItem",
-          position: 4,
-          name: "ترتيب مراحل التشطيب الداخلي للفلل بالشكل الصحيح",
-          item: canonical,
-        },
-      ],
-    };
-
-    const articleSchema = {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      headline: "ترتيب مراحل التشطيب الداخلي للفلل بالشكل الصحيح",
-      description,
-      inLanguage: "ar-SA",
-      mainEntityOfPage: canonical,
-      url: canonical,
-      author: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "بنيان الهرم للمقاولات",
-        url: "https://pybcco.com",
-      },
-      articleSection: "مراحل البناء والتشطيب",
-      keywords:
-        "مراحل التشطيب, ترتيب أعمال التشطيب, تشطيب داخلي للفلل, خطوات التشطيب الداخلي, ترتيب بنود التشطيب, تشطيب الفيلا من البداية للنهاية",
-    };
-
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "ما الترتيب الصحيح لمراحل التشطيب الداخلي؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "يبدأ الترتيب الصحيح بمراجعة جاهزية الموقع والتأسيسات، ثم العزل واللياسة ومعالجة الأسطح، وبعدها الأسقف والأرضيات والكسوات والدهانات، ثم التركيبات النهائية والفحص والاستلام.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "لماذا يسبب سوء ترتيب التشطيب خسائر إضافية؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "لأن تنفيذ بند قبل اكتمال البند الذي يسبقه يؤدي غالبًا إلى تكسير أو إزالة أو إعادة عمل، وهذا يرفع التكلفة ويؤخر الجدول الزمني ويؤثر على الجودة النهائية.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "هل يمكن البدء بالأرضيات قبل التأكد من التمديدات والمعالجات؟",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "لا يفضل ذلك، لأن أي تعديل لاحق في التمديدات أو المناسيب أو المعالجات قد يضطر إلى فك الأرضيات أو إتلاف جزء منها وإعادة التنفيذ مرة أخرى.",
-          },
-        },
-      ],
-    };
-
-    [breadcrumbSchema, articleSchema, faqSchema].forEach((schema) => {
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.setAttribute("data-seo", "interior-finishing-stages-villas");
-      script.text = JSON.stringify(schema);
-      document.head.appendChild(script);
-    });
-
-    return () => {
-      const schemas = document.querySelectorAll(
-        'script[data-seo="interior-finishing-stages-villas"]'
-      );
-      schemas.forEach((node) => node.remove());
-    };
-  }, [title, description, canonical]);
 
   return (
-    <main className="bg-white text-zinc-900">
+    <>
+      <SeoHead
+        title={TITLE}
+        description={DESCRIPTION}
+        canonical={CANONICAL}
+        robots="index,follow,max-image-preview:large"
+        ogType="article"
+        jsonLd={ARTICLE_SCHEMA}
+      />
+      <main className="bg-white text-zinc-900">
       <section className="border-b border-zinc-100 bg-gradient-to-b from-[#fff8e7] via-white to-white">
         <div className="mx-auto max-w-4xl px-4 py-10 md:px-6 md:py-14">
           <nav
@@ -745,6 +635,7 @@ export default function InteriorFinishingStagesVillas() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }
