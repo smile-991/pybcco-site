@@ -1,14 +1,50 @@
-import { useEffect } from "react";
+import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
+const SITE_URL = "https://pybcco.com";
+const CANONICAL = "https://pybcco.com/engineering-insights/comparisons-options/marble-vs-quartz-vs-porcelain-countertops";
+
+const TITLE =
+  "الرخام أم الكوارتز أم البورسلان: ما الأفضل للكاونترات؟ | بنيان الهرم للمقاولات";
+
+const DESCRIPTION =
+  "مقارنة عملية بين الرخام والكوارتز والبورسلان للكاونترات من حيث الشكل، التحمل، مقاومة البقع، الصيانة، والتكلفة لمساعدة المالك على اختيار الخامة الأنسب.";
+
+const ARTICLE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${CANONICAL}#article`,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": CANONICAL,
+  },
+  headline: TITLE,
+  description: DESCRIPTION,
+  inLanguage: "ar",
+  author: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "بنيان الهرم للمقاولات",
+    url: SITE_URL,
+  },
+};
+
 
 export default function MarbleVsQuartzVsPorcelainCountertops() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    document.title =
-      "الرخام أم الكوارتز أم البورسلان: ما الأفضل للكاونترات؟ | PYBCCO";
-  }, []);
-
   return (
+    <>
+      <SeoHead
+        title={TITLE}
+        description={DESCRIPTION}
+        canonical={CANONICAL}
+        robots="index,follow,max-image-preview:large"
+        ogType="article"
+        jsonLd={ARTICLE_SCHEMA}
+      />
+
     <main className="min-h-screen bg-white text-zinc-900">
       {/* Hero */}
       <section className="border-b border-zinc-200 bg-gradient-to-b from-[#fff8e7] via-white to-white">
@@ -640,6 +676,7 @@ export default function MarbleVsQuartzVsPorcelainCountertops() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }
