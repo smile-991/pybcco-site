@@ -399,7 +399,7 @@ export default function CommonMistakesPage() {
                 </Link>
 
                 <Link
-                  to="/engineering-insights/how-to-compare-finishing-quotations"
+                  to="/engineering-insights/cost/how-to-compare-finishing-quotations"
                   className="inline-flex items-center gap-2 rounded-2xl border border-black/10 px-6 py-3 text-sm font-bold text-[#111111] transition hover:bg-[#faf8f3]"
                 >
                   مقال مقارنة عروض الأسعار
