@@ -171,7 +171,7 @@ export default function ActivateAccountSection() {
 
               <div className="grid gap-4 text-right md:grid-cols-2">
                 <Link
-                  to="/contact"
+                  to="/#contact"
                   className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-yellow-400 hover:shadow-md"
                 >
                   <div className="mb-2 text-lg font-bold text-black">

@@ -602,7 +602,7 @@ export default function Home() {
               },
               { text: "جودة مواد ومواصفات محددة", href: "/services" },
               { text: "تسليم مفتاح حسب الاتفاق", href: "/villa-finishing-riyadh" },
-              { text: "التزام بالتواصل والشفافية مع العميل", href: "/contact" },
+              { text: "التزام بالتواصل والشفافية مع العميل", href: "/#contact" },
               {
                 text: "نظام متابعة مشاريع إلكتروني خاص",
                 href: "/project-tracking-system-riyadh",
