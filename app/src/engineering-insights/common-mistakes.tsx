@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useMemo } from "react";
+import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
 import {
   AlertTriangle,
@@ -107,77 +108,14 @@ const articles: ArticleCard[] = [
   },
 ];
 
-function setMeta(
-  name: string,
-  content: string,
-  attr: "name" | "property" = "name"
-) {
-  let element = document.head.querySelector(
-    `meta[${attr}="${name}"]`
-  ) as HTMLMetaElement | null;
-
-  if (!element) {
-    element = document.createElement("meta");
-    element.setAttribute(attr, name);
-    document.head.appendChild(element);
-  }
-
-  element.setAttribute("content", content);
-}
-
-function setCanonical(href: string) {
-  let link = document.head.querySelector(
-    'link[rel="canonical"]'
-  ) as HTMLLinkElement | null;
-
-  if (!link) {
-    link = document.createElement("link");
-    link.setAttribute("rel", "canonical");
-    document.head.appendChild(link);
-  }
-
-  link.setAttribute("href", href);
-}
+const PAGE_TITLE =
+  "الأخطاء الشائعة في البناء والتشطيب | 10 مقالات مهمة قبل التنفيذ | بنيان الهرم للمقاولات";
+const PAGE_DESCRIPTION =
+  "دليل منظم يضم أهم المقالات حول الأخطاء الشائعة في البناء والتشطيب، من اختيار المقاول ومقارنة العروض إلى أعمال السباكة والكهرباء والعزل والاستلام النهائي.";
+const CANONICAL = "https://pybcco.com/engineering-insights/common-mistakes";
 
 export default function CommonMistakesPage() {
-  useEffect(() => {
-    const title =
-      "الأخطاء الشائعة في البناء والتشطيب | 10 مقالات مهمة قبل التنفيذ | بنيان الهرم للمقاولات";
-    const description =
-      "دليل منظم يضم أهم المقالات حول الأخطاء الشائعة في البناء والتشطيب، من اختيار المقاول ومقارنة العروض إلى أعمال السباكة والكهرباء والعزل والاستلام النهائي.";
-    const canonical =
-      "https://pybcco.com/engineering-insights/common-mistakes";
-
-    document.title = title;
-
-    setMeta("description", description);
-    setMeta(
-      "keywords",
-      "الأخطاء الشائعة في التشطيب, أخطاء البناء, أخطاء اختيار المقاول, أخطاء التشطيب الداخلي, أخطاء السباكة والكهرباء, أخطاء العزل, استلام التشطيب"
-    );
-    setMeta("robots", "index, follow, max-image-preview:large");
-    setCanonical(canonical);
-
-    setMeta("og:type", "website", "property");
-    setMeta("og:title", title, "property");
-    setMeta("og:description", description, "property");
-    setMeta("og:url", canonical, "property");
-    setMeta(
-      "og:image",
-      "https://pybcco.com/og-image.jpg",
-      "property"
-    );
-
-    setMeta("twitter:card", "summary_large_image");
-    setMeta("twitter:title", title);
-    setMeta("twitter:description", description);
-    setMeta("twitter:image", "https://pybcco.com/og-image.jpg");
-
-    const existingScripts = document.querySelectorAll(
-      'script[data-common-mistakes-schema="true"]'
-    );
-    existingScripts.forEach((script) => script.remove());
-
+  const jsonLd = useMemo(() => {
     const breadcrumbSchema = {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
@@ -198,7 +136,7 @@ export default function CommonMistakesPage() {
           "@type": "ListItem",
           position: 3,
           name: "الأخطاء الشائعة",
-          item: canonical,
+          item: CANONICAL,
         },
       ],
     };
@@ -207,8 +145,8 @@ export default function CommonMistakesPage() {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
       name: "الأخطاء الشائعة في البناء والتشطيب",
-      url: canonical,
-      description,
+      url: CANONICAL,
+      description: PAGE_DESCRIPTION,
       isPartOf: {
         "@type": "WebSite",
         name: "بنيان الهرم للمقاولات",
@@ -269,27 +207,19 @@ export default function CommonMistakesPage() {
       ],
     };
 
-    [breadcrumbSchema, collectionSchema, itemListSchema, faqSchema].forEach(
-      (schemaObj) => {
-        const script = document.createElement("script");
-        script.type = "application/ld+json";
-        script.setAttribute("data-common-mistakes-schema", "true");
-        script.text = JSON.stringify(schemaObj);
-        document.head.appendChild(script);
-      }
-    );
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    return () => {
-      const scripts = document.querySelectorAll(
-        'script[data-common-mistakes-schema="true"]'
-      );
-      scripts.forEach((script) => script.remove());
-    };
+    return [breadcrumbSchema, collectionSchema, itemListSchema, faqSchema];
   }, []);
 
   return (
+    <>
+      <SeoHead
+        title={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        canonical={CANONICAL}
+        robots="index,follow,max-image-preview:large"
+        ogType="website"
+        jsonLd={jsonLd}
+      />
     <main className="min-h-screen bg-[#faf8f3] text-[#1f1f1f]">
       <section className="relative overflow-hidden border-b border-black/5 bg-gradient-to-b from-[#111111] via-[#181818] to-[#222222]">
         <div className="absolute inset-0 opacity-20">
@@ -564,5 +494,6 @@ export default function CommonMistakesPage() {
         </div>
       </section>
     </main>
+    </>
   );
 }

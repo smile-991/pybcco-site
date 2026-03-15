@@ -1,4 +1,5 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
+import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -120,51 +121,7 @@ export default function ConstructionAndFinishingStagesPage() {
     []
   );
 
-  useEffect(() => {
-    document.title = pageTitle;
-
-    const setMeta = (
-      attr: "name" | "property",
-      key: string,
-      content: string
-    ) => {
-      let element = document.querySelector(`meta[${attr}="${key}"]`);
-      if (!element) {
-        element = document.createElement("meta");
-        element.setAttribute(attr, key);
-        document.head.appendChild(element);
-      }
-      element.setAttribute("content", content);
-    };
-
-    const setLink = (rel: string, href: string) => {
-      let element = document.querySelector(`link[rel="${rel}"]`);
-      if (!element) {
-        element = document.createElement("link");
-        element.setAttribute("rel", rel);
-        document.head.appendChild(element);
-      }
-      element.setAttribute("href", href);
-    };
-
-    setMeta("name", "description", pageDescription);
-    setMeta("name", "robots", "index, follow, max-image-preview:large");
-    setMeta("property", "og:type", "website");
-    setMeta("property", "og:title", pageTitle);
-    setMeta("property", "og:description", pageDescription);
-    setMeta("property", "og:url", canonical);
-    setMeta("property", "og:site_name", "بنيان الهرم للمقاولات");
-    setMeta("name", "twitter:card", "summary_large_image");
-    setMeta("name", "twitter:title", pageTitle);
-    setMeta("name", "twitter:description", pageDescription);
-
-    setLink("canonical", canonical);
-
-    const oldSchemas = document.querySelectorAll(
-      'script[data-seo="construction-finishing-stages"]'
-    );
-    oldSchemas.forEach((node) => node.remove());
-
+  const jsonLd = useMemo(() => {
     const breadcrumbSchema = {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
@@ -225,25 +182,19 @@ export default function ConstructionAndFinishingStagesPage() {
       })),
     };
 
-    [breadcrumbSchema, collectionPageSchema, itemListSchema].forEach(
-      (schema) => {
-        const script = document.createElement("script");
-        script.type = "application/ld+json";
-        script.setAttribute("data-seo", "construction-finishing-stages");
-        script.text = JSON.stringify(schema);
-        document.head.appendChild(script);
-      }
-    );
-
-    return () => {
-      const schemas = document.querySelectorAll(
-        'script[data-seo="construction-finishing-stages"]'
-      );
-      schemas.forEach((node) => node.remove());
-    };
-  }, [articles, canonical, pageDescription, pageTitle]);
+    return [breadcrumbSchema, collectionPageSchema, itemListSchema];
+  }, [articles, canonical, pageDescription]);
 
   return (
+    <>
+      <SeoHead
+        title={pageTitle}
+        description={pageDescription}
+        canonical={canonical}
+        robots="index,follow,max-image-preview:large"
+        ogType="website"
+        jsonLd={jsonLd}
+      />
     <main className="bg-white text-zinc-900">
       <section className="relative overflow-hidden border-b border-zinc-100 bg-gradient-to-b from-[#fff8e7] via-white to-white">
         <div className="mx-auto max-w-7xl px-4 py-10 md:px-6 md:py-14">
@@ -566,5 +517,6 @@ export default function ConstructionAndFinishingStagesPage() {
         </div>
       </section>
     </main>
+    </>
   );
 }

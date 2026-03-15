@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useMemo } from "react";
+import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
 
 type ArticleCard = {
@@ -102,133 +103,76 @@ const publishedArticles: ArticleCard[] = [
 
 const upcomingArticles: ArticleCard[] = [];
 
+const PAGE_TITLE =
+  "كيف تختار شركة مقاولات؟ 10 مقالات أساسية قبل التعاقد | بنيان الهرم للمقاولات";
+const PAGE_DESCRIPTION =
+  "صفحة تجمع أهم المقالات التي تساعدك على اختيار شركة مقاولات في الرياض بشكل واعٍ، من تقييم الجودة وقراءة العرض إلى مقارنة الشركات قبل التعاقد.";
+const CANONICAL =
+  "https://pybcco.com/engineering-insights/choose-contractor";
+
 export default function EngineeringInsightsChooseContractorPage() {
-  useEffect(() => {
-    const title =
-      "اختيار شركة مقاولات | مقالات هندسية تساعدك قبل التعاقد | بنيان الهرم للمقاولات";
-    const description =
-      "تصنيف مقالات متخصص يساعدك على اختيار شركة مقاولات في الرياض بشكل أوضح، وفهم معايير الجودة، وقراءة عرض السعر، ومقارنة الشركات قبل التعاقد.";
-    const canonical =
-      "https://pybcco.com/engineering-insights/choose-contractor";
-
-    document.title = title;
-
-    function setMeta(
-      name: string,
-      content: string,
-      attr: "name" | "property" = "name"
-    ) {
-      let tag = document.head.querySelector(
-        `meta[${attr}="${name}"]`
-      ) as HTMLMetaElement | null;
-
-      if (!tag) {
-        tag = document.createElement("meta");
-        tag.setAttribute(attr, name);
-        document.head.appendChild(tag);
-      }
-
-      tag.setAttribute("content", content);
-    }
-
-    function setLink(rel: string, href: string) {
-      let tag = document.head.querySelector(
-        `link[rel="${rel}"]`
-      ) as HTMLLinkElement | null;
-
-      if (!tag) {
-        tag = document.createElement("link");
-        tag.setAttribute("rel", rel);
-        document.head.appendChild(tag);
-      }
-
-      tag.setAttribute("href", href);
-    }
-
-    setMeta("description", description);
-    setMeta("robots", "index, follow");
-    setMeta("og:title", title, "property");
-    setMeta("og:description", description, "property");
-    setMeta("og:type", "website", "property");
-    setMeta("og:url", canonical, "property");
-    setMeta("twitter:card", "summary_large_image");
-    setMeta("twitter:title", title);
-    setMeta("twitter:description", description);
-
-    setLink("canonical", canonical);
-
-    const jsonLd = {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "CollectionPage",
-          "@id": canonical,
-          url: canonical,
-          name: "اختيار شركة مقاولات",
-          description,
-          inLanguage: "ar",
-          isPartOf: {
-            "@type": "WebSite",
-            name: "بنيان الهرم للمقاولات",
-            url: "https://pybcco.com",
+  const jsonLd = useMemo(() => ({
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": CANONICAL,
+        url: CANONICAL,
+        name: "اختيار شركة مقاولات",
+        description: PAGE_DESCRIPTION,
+        inLanguage: "ar",
+        isPartOf: {
+          "@type": "WebSite",
+          name: "بنيان الهرم للمقاولات",
+          url: "https://pybcco.com",
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "الرئيسية",
+            item: "https://pybcco.com/",
           },
-        },
-        {
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            {
-              "@type": "ListItem",
-              position: 1,
-              name: "الرئيسية",
-              item: "https://pybcco.com/",
-            },
-            {
-              "@type": "ListItem",
-              position: 2,
-              name: "رؤى هندسية",
-              item: "https://pybcco.com/engineering-insights",
-            },
-            {
-              "@type": "ListItem",
-              position: 3,
-              name: "اختيار شركة مقاولات",
-              item: canonical,
-            },
-          ],
-        },
-        {
-          "@type": "ItemList",
-          name: "مقالات اختيار شركة مقاولات",
-          itemListElement: [
-            ...publishedArticles.map((article, index) => ({
-              "@type": "ListItem",
-              position: index + 1,
-              name: article.title,
-              url: `https://pybcco.com${article.href}`,
-            })),
-          ],
-        },
-      ],
-    };
-
-    const scriptId = "choose-contractor-jsonld";
-    let script = document.getElementById(scriptId) as HTMLScriptElement | null;
-
-    if (!script) {
-      script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.id = scriptId;
-      document.head.appendChild(script);
-    }
-
-    script.textContent = JSON.stringify(jsonLd);
-
-    return () => {
-      // نترك البيانات موجودة لأن الصفحة جزء من التنقل داخل التطبيق
-    };
-  }, []);
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "رؤى هندسية",
+            item: "https://pybcco.com/engineering-insights",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: "اختيار شركة مقاولات",
+            item: CANONICAL,
+          },
+        ],
+      },
+      {
+        "@type": "ItemList",
+        name: "مقالات اختيار شركة مقاولات",
+        itemListElement: publishedArticles.map((article, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: article.title,
+          url: `https://pybcco.com${article.href}`,
+        })),
+      },
+    ],
+  }), []);
 
   return (
+    <>
+      <SeoHead
+        title={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        canonical={CANONICAL}
+        robots="index,follow,max-image-preview:large"
+        ogType="website"
+        jsonLd={jsonLd}
+      />
     <main className="bg-white text-neutral-900">
       <section className="border-b border-neutral-200 bg-gradient-to-b from-neutral-50 to-white">
         <div className="mx-auto max-w-7xl px-4 py-14 md:px-6 md:py-20">
@@ -573,5 +517,6 @@ export default function EngineeringInsightsChooseContractorPage() {
         </div>
       </section>
     </main>
+    </>
   );
 }
