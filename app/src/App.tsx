@@ -27,6 +27,7 @@ import VillaBoneConstructionRiyadh from "./sections/VillaBoneConstructionRiyadh"
 import ApartmentFinishingRiyadh from "./sections/ApartmentFinishingRiyadh";
 import HomeRenovationCompanyRiyadh from "./sections/HomeRenovationCompanyRiyadh";
 import ContractorAlMalqaRiyadh from "./sections/ContractorAlMalqaRiyadh";
+import VideosLibraryPage from "./sections/VideosLibraryPage";
 
 import CaseStudyVillaRiyadh from "@/sections/CaseStudyVillaRiyadh";
 import ProfilePage from "@/sections/ProfilePage";
@@ -126,6 +127,7 @@ export default function App() {
           <Route path="/villa-renovation-riyadh" element={<VillaRenovationRiyadh />} />
           <Route path="/construction-company-riyadh" element={<ConstructionCompanyRiyadh />} />
           <Route path="/villa-finishing-price-riyadh" element={<VillaFinishingPriceRiyadh />} />
+          <Route path="/videos" element={<VideosLibraryPage />} />
           <Route
   path="/villa-construction-cost-calculator-riyadh"
   element={<VillaConstructionCostCalculatorRiyadh />}
