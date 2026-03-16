@@ -148,32 +148,39 @@ function GalleryTabs() {
   return (
     <div className="mt-6">
       <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-        {[
-          { key: "concrete", label: "عظم" },
-          { key: "finishing", label: "تشطيب" },
-          { key: "entertainment", label: "ترفيه" },
-        ].map((t) => {
-          const active = cat === t.key;
-          return (
-            <button
-              key={t.key}
-              type="button"
-              onClick={() => {
-                setCat(t.key as GalleryCat);
-                setSelectedIndex(null);
-              }}
-              className={[
-                "px-4 py-2 rounded-full text-sm font-bold transition whitespace-nowrap",
-                active
-                  ? "bg-gold text-black"
-                  : "bg-black/5 text-gray-900 hover:bg-black/10",
-              ].join(" ")}
-            >
-              {t.label}
-            </button>
-          );
-        })}
-      </div>
+  {[
+    { key: "concrete", label: "عظم" },
+    { key: "finishing", label: "تشطيب" },
+    { key: "entertainment", label: "ترفيه" },
+  ].map((t) => {
+    const active = cat === t.key;
+    return (
+      <button
+        key={t.key}
+        type="button"
+        onClick={() => {
+          setCat(t.key as GalleryCat);
+          setSelectedIndex(null);
+        }}
+        className={[
+          "px-4 py-2 rounded-full text-sm font-bold transition whitespace-nowrap",
+          active
+            ? "bg-gold text-black"
+            : "bg-black/5 text-gray-900 hover:bg-black/10",
+        ].join(" ")}
+      >
+        {t.label}
+      </button>
+    );
+  })}
+
+  <Link
+    to="/videos"
+    className="px-4 py-2 rounded-full text-sm font-bold transition whitespace-nowrap bg-black/5 text-gray-900 hover:bg-black/10"
+  >
+    فيديو
+  </Link>
+</div>
 
       <div className="mt-3 text-sm text-gray-600 text-center sm:text-right">
         {GALLERY[cat].title}
