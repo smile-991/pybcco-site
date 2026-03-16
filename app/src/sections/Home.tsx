@@ -293,8 +293,8 @@ export default function Home() {
         ogImage="https://pybcco.com/images/og-home.jpg"
         jsonLd={[
           {
-            "@context": "https://schema.org",
-            "@type": ["LocalBusiness", "ConstructionCompany"],
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
             name: "بنيان الهرم للمقاولات",
             alternateName: "PYBCCO",
             url: "https://pybcco.com/",

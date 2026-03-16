@@ -71,7 +71,7 @@ export default function ConstructionCompanyRiyadh() {
         name: "Riyadh",
       },
       provider: {
-        "@type": ["LocalBusiness", "ConstructionCompany"],
+        "@type": "Organization",
         name: "PYBCCO – بنيان الهرم للمقاولات",
         url: SITE,
         image: ogImage,
@@ -121,7 +121,7 @@ export default function ConstructionCompanyRiyadh() {
         name: "PYBCCO – بنيان الهرم للمقاولات",
         logo: {
           "@type": "ImageObject",
-          url: `${SITE}/logo.png`,
+          url: `${SITE}/logo.webp`,
         },
       },
     };
@@ -239,7 +239,8 @@ export default function ConstructionCompanyRiyadh() {
               className="bg-white/10 border border-white/15 text-white font-bold px-8 py-6 text-lg hover:bg-white/15"
               onClick={() => {
                 track("open_calculator_from_construction_hero");
-                window.location.href = "/villa-construction-cost-calculator-riyadh";
+                window.location.href =
+                  "/villa-construction-cost-calculator-riyadh";
               }}
             >
               أنشئ عرض سعرك بنفسك
@@ -575,7 +576,8 @@ export default function ConstructionCompanyRiyadh() {
               className="bg-white/10 border border-white/15 text-white font-bold px-8 py-6 text-lg hover:bg-white/15"
               onClick={() => {
                 track("open_calculator_from_construction_bottom");
-                window.location.href = "/villa-construction-cost-calculator-riyadh";
+                window.location.href =
+                  "/villa-construction-cost-calculator-riyadh";
               }}
             >
               أنشئ عرض سعرك بنفسك

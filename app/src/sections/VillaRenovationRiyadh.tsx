@@ -57,7 +57,7 @@ export default function VillaRenovationRiyadh() {
       url: canonical,
       areaServed: { "@type": "City", name: "Riyadh" },
       provider: {
-        "@type": ["LocalBusiness", "ConstructionCompany"],
+        "@type": "Organization",
         name: "PYBCCO – بنيان الهرم للمقاولات",
         url: SITE,
         telephone: "+966550604837",
@@ -124,8 +124,7 @@ export default function VillaRenovationRiyadh() {
           </h1>
 
           <p className="mt-6 text-lg text-gray-300 leading-relaxed text-center max-w-3xl mx-auto">
-            نقدم خدمات{" "}
-            <span className="text-gold font-bold">ترميم الفلل بالرياض</span>{" "}
+            نقدم خدمات <span className="text-gold font-bold">ترميم الفلل بالرياض</span>{" "}
             وتجديدها بالكامل حسب حالة المبنى والمعاينة الميدانية، مع{" "}
             <span className="text-gold font-bold">إشراف هندسي</span> وخطة واضحة
             والتزام بالوقت وجودة التنفيذ. نخدم جميع أحياء الرياض وننفذ أعمال
@@ -198,62 +197,62 @@ export default function VillaRenovationRiyadh() {
         </div>
       </section>
 
-      {/* ✅ CASE STUDY (Internal Link قوي + ثقة) */}
-<section className="container mx-auto px-4 py-14">
-  <div className="max-w-5xl mx-auto rounded-3xl overflow-hidden border border-gold/20 bg-white/5 backdrop-blur-sm shadow-sm">
-    <div className="grid lg:grid-cols-2">
-      <div className="relative">
-        <div className="aspect-[16/10] lg:h-full lg:aspect-auto overflow-hidden">
-          <img
-            src="/casestudy/main.webp"
-            alt="دراسة حالة ترميم وتجديد فيلا بالرياض قبل وبعد"
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
+      {/* CASE STUDY */}
+      <section className="container mx-auto px-4 py-14">
+        <div className="max-w-5xl mx-auto rounded-3xl overflow-hidden border border-gold/20 bg-white/5 backdrop-blur-sm shadow-sm">
+          <div className="grid lg:grid-cols-2">
+            <div className="relative">
+              <div className="aspect-[16/10] lg:h-full lg:aspect-auto overflow-hidden">
+                <img
+                  src="/casestudy/main.webp"
+                  alt="دراسة حالة ترميم وتجديد فيلا بالرياض قبل وبعد"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+
+              <div className="absolute top-4 right-4 flex flex-wrap gap-2">
+                <span className="bg-black/70 text-white text-xs font-bold px-3 py-1 rounded-full">
+                  قبل/بعد
+                </span>
+                <span className="bg-gold text-black text-xs font-bold px-3 py-1 rounded-full">
+                  دراسة حالة
+                </span>
+              </div>
+            </div>
+
+            <div className="p-6 sm:p-8 flex flex-col justify-center text-right">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+                شاهد دراسة حالة حقيقية لترميم وتجديد فيلا بالرياض (قبل/بعد)
+              </h2>
+
+              <p className="mt-3 text-white/75 leading-relaxed">
+                إذا بدك تشوف مستوى التنفيذ قبل ما تطلب معاينة: هذه دراسة حالة
+                موثّقة بالصور لمراحل العمل من البداية حتى النتيجة النهائية
+                (تجهيزات، معالجة، تشطيبات داخلية وخارجية).
+              </p>
+
+              <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                <Button
+                  asChild
+                  className="bg-gold text-black font-bold px-6 hover:bg-gold/90"
+                  onClick={() => track("open_case_study_from_renovation")}
+                >
+                  <Link to={CASE_STUDY_URL}>عرض دراسة الحالة</Link>
+                </Button>
+
+                <Button
+                  asChild
+                  variant="outline"
+                  className="text-gold bg-transparent hover:bg-white/10 px-6"
+                >
+                  <Link to="/projects">مشاريع أخرى</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div className="absolute top-4 right-4 flex flex-wrap gap-2">
-          <span className="bg-black/70 text-white text-xs font-bold px-3 py-1 rounded-full">
-            قبل/بعد
-          </span>
-          <span className="bg-gold text-black text-xs font-bold px-3 py-1 rounded-full">
-            دراسة حالة
-          </span>
-        </div>
-      </div>
-
-      <div className="p-6 sm:p-8 flex flex-col justify-center text-right">
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-          شاهد دراسة حالة حقيقية لترميم وتجديد فيلا بالرياض (قبل/بعد)
-        </h2>
-
-        <p className="mt-3 text-white/75 leading-relaxed">
-          إذا بدك تشوف مستوى التنفيذ قبل ما تطلب معاينة: هذه دراسة حالة موثّقة
-          بالصور لمراحل العمل من البداية حتى النتيجة النهائية (تجهيزات، معالجة،
-          تشطيبات داخلية وخارجية).
-        </p>
-
-        <div className="mt-6 flex flex-col sm:flex-row gap-3">
-          <Button
-            asChild
-            className="bg-gold text-black font-bold px-6 hover:bg-gold/90"
-            onClick={() => track("open_case_study_from_renovation")}
-          >
-            <Link to={CASE_STUDY_URL}>عرض دراسة الحالة</Link>
-          </Button>
-
-          <Button
-            asChild
-            variant="outline"
-            className="text-gold bg-transparent hover:bg-white/10 px-6"
-          >
-            <Link to="/projects">مشاريع أخرى</Link>
-          </Button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
       {/* LONG SEO CONTENT */}
       <section className="container mx-auto px-4 py-14">
@@ -278,36 +277,38 @@ export default function VillaRenovationRiyadh() {
           </p>
 
           <p>
-  إذا كان مشروعك يحتاج تشطيب كامل بدل ترميم جزئي، يمكنك زيارة{" "}
-  <a
-    href="/villa-finishing-riyadh"
-    className="text-gold font-bold hover:underline"
-  >
-    تشطيب فلل بالرياض
-  </a>{" "}
-  أو استخدام{" "}
-  <a
-    href="/villa-finishing-price-riyadh"
-    className="text-gold font-bold hover:underline"
-  >
-    حاسبة الأسعار
-  </a>{" "}
-  لأخذ تصور مبدئي قبل المعاينة. كما نوفر لعملائنا{" "}
-  <Link
-    to="/project-tracking-system-riyadh"
-    className="text-gold font-bold hover:underline"
-  >
-    نظام متابعة رقمي متكامل
-  </Link>{" "}
-  يتيح الاطلاع على نسبة الإنجاز، الدفعات، الوثائق، والتحديثات بالصور ضمن حساب العميل — لضمان الشفافية وحفظ الحقوق. ويمكنك أيضًا الاطلاع على{" "}
-  <a
-    href="/case-study-villa-renovation-riyadh"
-    className="text-gold font-bold hover:underline"
-  >
-    دراسة حالة ترميم فيلا بالرياض قبل وبعد
-  </a>{" "}
-  لرؤية مراحل التنفيذ الفعلية خطوة بخطوة.
-</p>
+            إذا كان مشروعك يحتاج تشطيب كامل بدل ترميم جزئي، يمكنك زيارة{" "}
+            <a
+              href="/villa-finishing-riyadh"
+              className="text-gold font-bold hover:underline"
+            >
+              تشطيب فلل بالرياض
+            </a>{" "}
+            أو استخدام{" "}
+            <a
+              href="/villa-finishing-price-riyadh"
+              className="text-gold font-bold hover:underline"
+            >
+              حاسبة الأسعار
+            </a>{" "}
+            لأخذ تصور مبدئي قبل المعاينة. كما نوفر لعملائنا{" "}
+            <Link
+              to="/project-tracking-system-riyadh"
+              className="text-gold font-bold hover:underline"
+            >
+              نظام متابعة رقمي متكامل
+            </Link>{" "}
+            يتيح الاطلاع على نسبة الإنجاز، الدفعات، الوثائق، والتحديثات بالصور
+            ضمن حساب العميل — لضمان الشفافية وحفظ الحقوق. ويمكنك أيضًا الاطلاع
+            على{" "}
+            <a
+              href="/case-study-villa-renovation-riyadh"
+              className="text-gold font-bold hover:underline"
+            >
+              دراسة حالة ترميم فيلا بالرياض قبل وبعد
+            </a>{" "}
+            لرؤية مراحل التنفيذ الفعلية خطوة بخطوة.
+          </p>
         </div>
       </section>
 
@@ -341,7 +342,8 @@ export default function VillaRenovationRiyadh() {
       {/* FAQ (VISIBLE + MATCHES SCHEMA) */}
       <section className="container mx-auto px-4 pb-14 text-right max-w-5xl">
         <h2 className="text-2xl sm:text-3xl font-bold text-center">
-          الأسئلة الشائعة حول <span className="text-gold">ترميم الفلل بالرياض</span>
+          الأسئلة الشائعة حول{" "}
+          <span className="text-gold">ترميم الفلل بالرياض</span>
         </h2>
 
         <div className="mt-10 space-y-6">
@@ -364,7 +366,8 @@ export default function VillaRenovationRiyadh() {
         </h2>
 
         <p className="mt-4 text-white/70 text-center max-w-3xl mx-auto">
-          إذا مشروعك يحتاج تشطيب أو بناء عظم أو مقارنة أسعار، تفضل الصفحات التالية:
+          إذا مشروعك يحتاج تشطيب أو بناء عظم أو مقارنة أسعار، تفضل الصفحات
+          التالية:
         </p>
 
         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -393,7 +396,8 @@ export default function VillaRenovationRiyadh() {
         <div className="bg-gradient-to-b from-white/10 to-white/5 border border-white/10 rounded-2xl p-8 text-center">
           <h3 className="text-2xl font-bold">جاهز ترمم فيلتك؟</h3>
           <p className="mt-3 text-white/70">
-            أرسل تفاصيل بسيطة عن الحالة (رطوبة/تشققات/تجديد كامل) ونرتّب معاينة ونقدّم عرض سعر واضح.
+            أرسل تفاصيل بسيطة عن الحالة (رطوبة/تشققات/تجديد كامل) ونرتّب معاينة
+            ونقدّم عرض سعر واضح.
           </p>
 
           <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
@@ -424,4 +428,3 @@ export default function VillaRenovationRiyadh() {
     </div>
   );
 }
-

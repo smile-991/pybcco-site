@@ -56,7 +56,7 @@ export default function ApartmentFinishingRiyadh() {
       url: canonical,
       areaServed: { "@type": "City", name: "Riyadh" },
       provider: {
-        "@type": ["LocalBusiness", "ConstructionCompany"],
+        "@type": "Organization",
         name: "PYBCCO – بنيان الهرم للمقاولات",
         url: SITE,
         telephone: "+966550604837",
@@ -122,9 +122,8 @@ export default function ApartmentFinishingRiyadh() {
           </h1>
 
           <p className="mt-6 text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            نقدم خدمات{" "}
-            <span className="text-gold font-bold">تشطيب شقق بالرياض</span> بجودة
-            عالية — من الدهانات والأرضيات إلى الأسقف الجبسية والإضاءة — مع{" "}
+            نقدم خدمات <span className="text-gold font-bold">تشطيب شقق بالرياض</span>{" "}
+            بجودة عالية — من الدهانات والأرضيات إلى الأسقف الجبسية والإضاءة — مع{" "}
             <span className="text-gold font-bold">إشراف هندسي</span> وتنفيذ منظم
             يضمن تسليم الشقة جاهزة للسكن.
           </p>
@@ -213,25 +212,25 @@ export default function ApartmentFinishingRiyadh() {
           <p>
             إذا كانت شقتك تحتاج تجديد بعد سكن أو تعديل كامل، قد يناسبك أيضاً صفحة{" "}
             <a
-  href="/home-renovation-company-riyadh"
-  className="text-gold font-bold hover:underline"
->
-  الترميم والتجديد
-</a>{" "}
+              href="/home-renovation-company-riyadh"
+              className="text-gold font-bold hover:underline"
+            >
+              الترميم والتجديد
+            </a>{" "}
             (نفس المنهجية لكن نطاق مختلف).
           </p>
 
-<p>
-  ولتعزيز الشفافية وحفظ الحقوق أثناء التنفيذ، نعتمد{" "}
-  <Link
-    to="/project-tracking-system-riyadh"
-    className="text-gold font-bold hover:underline"
-  >
-    نظام متابعة رقمي احترافي
-  </Link>{" "}
-  يمكّن العميل من متابعة نسبة الإنجاز، مراجعة الدفعات، تحميل الملفات، والاطلاع
-  على تحديثات العمل بالصور ضمن حساب خاص.
-</p>
+          <p>
+            ولتعزيز الشفافية وحفظ الحقوق أثناء التنفيذ، نعتمد{" "}
+            <Link
+              to="/project-tracking-system-riyadh"
+              className="text-gold font-bold hover:underline"
+            >
+              نظام متابعة رقمي احترافي
+            </Link>{" "}
+            يمكّن العميل من متابعة نسبة الإنجاز، مراجعة الدفعات، تحميل الملفات،
+            والاطلاع على تحديثات العمل بالصور ضمن حساب خاص.
+          </p>
 
           <p>
             ولأخذ تصور مبدئي لتكلفة مشروعك، يمكنك استخدام{" "}
@@ -329,7 +328,8 @@ export default function ApartmentFinishingRiyadh() {
         <div className="bg-gradient-to-b from-white/10 to-white/5 border border-white/10 rounded-2xl p-8 text-center">
           <h3 className="text-2xl font-bold">جاهز تبدأ تشطيب شقتك؟</h3>
           <p className="mt-3 text-white/70">
-            أرسل مساحة الشقة ونوع المطلوب (تشطيب كامل/جزئي) ونرتّب خطة واضحة ونقدّم عرض سعر.
+            أرسل مساحة الشقة ونوع المطلوب (تشطيب كامل/جزئي) ونرتّب خطة واضحة
+            ونقدّم عرض سعر.
           </p>
 
           <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
@@ -360,4 +360,3 @@ export default function ApartmentFinishingRiyadh() {
     </div>
   );
 }
-
