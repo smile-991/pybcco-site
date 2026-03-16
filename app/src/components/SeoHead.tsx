@@ -93,7 +93,7 @@ const ENTITY = {
   companyNameEn: "PYBCCO – Bunyan Al Haram Contracting Company",
   phone: "+966550604837",
   email: "info@pybcco.com",
-  logo: "https://pybcco.com/assets/logo.webp",
+  logo: "https://pybcco.com/logo.webp",
   address: {
     streetAddress: "Al Washm St, Al Murabba",
     addressLocality: "Riyadh",
