@@ -232,8 +232,12 @@ export default function CaseStudyVillaRiyadh() {
               </Button>
 
               <Button asChild variant="outline">
-                <a href="/projects">عرض مشاريعنا</a>
-              </Button>
+  <a href="/projects">عرض مشاريعنا</a>
+</Button>
+
+<Button asChild variant="outline">
+  <a href="/videos">فيديوهات المشاريع</a>
+</Button>
             </div>
           </div>
 
@@ -354,6 +358,9 @@ export default function CaseStudyVillaRiyadh() {
               <Button asChild variant="outline">
                 <a href="/villa-finishing-price-riyadh">حاسبة التكلفة</a>
               </Button>
+              <Button asChild variant="outline">
+  <a href="/videos">شاهد فيديوهات المشاريع</a>
+</Button>
             </div>
           </div>
         </div>
