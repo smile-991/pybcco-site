@@ -243,7 +243,7 @@ export default function VideosLibraryPage() {
 
       <main className="bg-black text-white">
         <section className="relative overflow-hidden border-b border-white/10 bg-gradient-to-b from-black via-[#111111] to-black">
-          <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(circle_at_top,rgba(255,215,0,0.18),transparent_35%)]" />
+          <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:radial-gradient(circle_at_top,rgba(255,215,0,0.18),transparent_35%)]" />
 
           <div className="container mx-auto px-4 py-14 md:py-20">
             <div className="mx-auto max-w-5xl text-center">
