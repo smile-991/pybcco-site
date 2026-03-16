@@ -293,25 +293,6 @@ export default function Home() {
         ogImage="https://pybcco.com/images/og-home.jpg"
         jsonLd={[
           {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-            name: "بنيان الهرم للمقاولات",
-            alternateName: "PYBCCO",
-            url: "https://pybcco.com/",
-            telephone: "+966550604837",
-            areaServed: { "@type": "City", name: "Riyadh" },
-            address: {
-              "@type": "PostalAddress",
-              addressLocality: "Riyadh",
-              addressCountry: "SA",
-            },
-            sameAs: [
-              "https://www.linkedin.com/company/pybcco",
-              "https://x.com/pybcco",
-              "https://sites.google.com/view/bunian-alharam-riyadh/home",
-            ],
-          },
-          {
             "@context": "https://schema.org",
             "@type": "FAQPage",
             mainEntity: FAQ_ITEMS.map((x) => ({
