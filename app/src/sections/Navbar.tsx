@@ -18,7 +18,6 @@ const PORTAL_LANDING_URL = "/project-tracking-system-riyadh"; // ✅ مفهرس 
 const navLinks = [
   { name: "الرئيسية", href: "#hero", type: "scroll" as const },
   { name: "خدماتنا", href: "#services", type: "scroll" as const },
-  { name: "معرض الأعمال", href: "#projects", type: "scroll" as const },
   { name: "فريق العمل", href: "#team", type: "scroll" as const },
   { name: "تواصل معنا", href: "#contact", type: "scroll" as const },
   { name: "جميع المشاريع", href: "/projects", type: "route" as const },
@@ -66,11 +65,10 @@ export default function Navbar() {
   const desktopAllLinks = navLinks;
 
   const desktopPrimaryLinks = [
-    navLinks[0], // الرئيسية
-    navLinks[1], // خدماتنا
-    navLinks[2], // معرض الأعمال
-    navLinks[4], // تواصل معنا
-  ].filter(Boolean);
+  navLinks[0], // الرئيسية
+  navLinks[1], // خدماتنا
+  navLinks[3], // تواصل معنا
+].filter(Boolean);
 
   const desktopMoreLinks = navLinks.filter(
     (l) =>
@@ -177,6 +175,38 @@ export default function Navbar() {
 
               {/* Dropdowns ثابتين */}
               <div className="flex items-center gap-2 shrink-0">
+                {/* معرض الأعمال Dropdown */}
+<div className="relative group shrink-0">
+  <button type="button" className={dropdownBtnClass}>
+    معرض الأعمال <span className="text-xs">▾</span>
+  </button>
+
+  <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden z-50">
+
+    <a
+      href="#projects"
+      onClick={(e) => {
+        e.preventDefault();
+        goTo("#projects");
+      }}
+      className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 transition whitespace-nowrap"
+    >
+      صور المشاريع
+    </a>
+
+    <a
+      href="/videos"
+      onClick={(e) => {
+        e.preventDefault();
+        goTo("/videos");
+      }}
+      className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 transition whitespace-nowrap"
+    >
+      فيديو المشاريع
+    </a>
+
+  </div>
+</div>
                 {/* المتجر Dropdown */}
                 <div className="relative group shrink-0">
                   <button type="button" className={dropdownBtnClass}>
@@ -240,6 +270,37 @@ export default function Navbar() {
                   </a>
                 ))}
               </div>
+
+              {/* معرض الأعمال Dropdown */}
+<div className="relative group shrink-0">
+  <button type="button" className={dropdownBtnClass}>
+    معرض الأعمال <span className="text-xs">▾</span>
+  </button>
+
+  <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden z-50">
+    <a
+      href="#projects"
+      onClick={(e) => {
+        e.preventDefault();
+        goTo("#projects");
+      }}
+      className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 transition whitespace-nowrap"
+    >
+      صور المشاريع
+    </a>
+
+    <a
+      href="/videos"
+      onClick={(e) => {
+        e.preventDefault();
+        goTo("/videos");
+      }}
+      className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 transition whitespace-nowrap"
+    >
+      فيديو المشاريع
+    </a>
+  </div>
+</div>
 
               {/* المزيد Dropdown */}
               <div className="relative group shrink-0">
@@ -510,6 +571,36 @@ export default function Navbar() {
                       🔐 دخول العملاء
                     </a>
                   </Button>
+
+                  <div className="mt-1 mb-2">
+  <div className="px-4 py-2 text-xs font-bold text-white/50">
+    معرض الأعمال
+  </div>
+
+  <a
+    href="#projects"
+    onClick={(e) => {
+      e.preventDefault();
+      goTo("#projects");
+    }}
+    className="block px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition"
+  >
+    صور المشاريع
+  </a>
+
+  <a
+    href="/videos"
+    onClick={(e) => {
+      e.preventDefault();
+      setIsOpen(false);
+      goTo("/videos");
+    }}
+    className="block px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition"
+  >
+    فيديو المشاريع
+  </a>
+</div>
+
 
                   {/* ✅ زر المتجر */}
                   <Button
