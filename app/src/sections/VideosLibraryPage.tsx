@@ -35,6 +35,8 @@ const PAGE_TITLE =
 const PAGE_DESCRIPTION =
   "شاهد فيديوهات مشاريع البناء والتشطيب والترميم في الرياض، وتعرّف على مستوى التنفيذ وجودة التفاصيل في نماذج مختارة تساعدك على تقييم الأعمال واختيار الخدمة المناسبة لمشروعك.";
 
+const PAGE_OG_IMAGE = `${SITE_URL}/assets/logo.webp`;
+
 const VIDEOS: VideoItem[] = [
   {
     id: "luxury-bathroom-finishing-riyadh",
@@ -191,10 +193,15 @@ function buildPageSchema(): JsonLd[] {
     uploadDate: video.uploadDate,
     duration: video.duration,
     embedUrl: video.embedUrl,
-    url: video.watchUrl,
+    contentUrl: video.watchUrl,
+    url: `${CANONICAL}#${video.id}`,
     inLanguage: "ar",
     isFamilyFriendly: true,
     keywords: video.keywords.join(", "),
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": CANONICAL,
+    },
     publisher: {
       "@type": "Organization",
       name: "بنيان الهرم للمقاولات",
@@ -204,13 +211,9 @@ function buildPageSchema(): JsonLd[] {
         url: `${SITE_URL}/assets/logo.webp`,
       },
     },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": CANONICAL,
-    },
     potentialAction: {
       "@type": "WatchAction",
-      target: [video.watchUrl],
+      target: [video.watchUrl, video.embedUrl],
     },
   }));
 
@@ -221,12 +224,12 @@ export default function VideosLibraryPage() {
   const schemas = useMemo(() => buildPageSchema(), []);
 
   const categoryCounts = useMemo(() => {
-    const counts = {
+    const counts: Record<VideoItem["category"], number> = {
       تشطيب: 0,
       ترميم: 0,
       عظم: 0,
       نصائح: 0,
-    } as Record<VideoItem["category"], number>;
+    };
 
     VIDEOS.forEach((video) => {
       counts[video.category] += 1;
@@ -242,7 +245,7 @@ export default function VideosLibraryPage() {
         description={PAGE_DESCRIPTION}
         canonical={CANONICAL}
         robots="index,follow"
-        ogImage={`${SITE_URL}/assets/logo.webp`}
+        ogImage={VIDEOS[0]?.thumbnailUrl || PAGE_OG_IMAGE}
         ogType="website"
         jsonLd={schemas}
       />
@@ -400,9 +403,16 @@ export default function VideosLibraryPage() {
                 id={video.id}
                 className="overflow-hidden rounded-[28px] border border-white/10 bg-white/5 shadow-[0_10px_60px_rgba(0,0,0,0.35)]"
               >
-                <div className="aspect-video bg-black">
+                <div className="relative aspect-video bg-black">
+                  <img
+                    src={video.thumbnailUrl}
+                    alt={video.title}
+                    className="absolute inset-0 h-full w-full object-cover"
+                    loading={index === 0 ? "eager" : "lazy"}
+                    decoding="async"
+                  />
                   <iframe
-                    className="h-full w-full"
+                    className="relative z-10 h-full w-full"
                     src={video.embedUrl}
                     title={video.title}
                     loading={index === 0 ? "eager" : "lazy"}
