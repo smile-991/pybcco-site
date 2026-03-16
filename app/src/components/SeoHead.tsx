@@ -152,6 +152,7 @@ function buildLocalBusinessJsonLd(): JsonLd {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
+    additionalType: "https://schema.org/ConstructionCompany",
     "@id": `${ENTITY.siteUrl}/#localbusiness`,
     name: ENTITY.companyNameAr,
     alternateName: ENTITY.companyNameEn,
