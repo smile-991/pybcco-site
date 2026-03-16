@@ -32,73 +32,81 @@ const SITE_URL = "https://pybcco.com";
 const CANONICAL = `${SITE_URL}/videos`;
 const PAGE_TITLE = "فيديوهات مشاريع البناء والتشطيب في الرياض | مكتبة الفيديو | بنيان الهرم للمقاولات";
 const PAGE_DESCRIPTION =
-  "شاهد مكتبة فيديوهات بنيان الهرم للمقاولات: أعمال تشطيب، ترميم، تنفيذ، ومقاطع قصيرة من المشاريع في الرياض، مع روابط مباشرة للخدمات والحاسبات والمقالات ذات الصلة.";
+  "شاهد مكتبة فيديوهات بنيان الهرم للمقاولات في الرياض: تشطيب حمامات فاخرة، ترميم فلل سكنية، وتحويلات قبل وبعد في التشطيب، مع صفحة مهيأة لجوجل عبر VideoObject و CollectionPage وروابط داخلية تخدم السيو والتحويل.";
 
-/**
- * مهم:
- * استبدل الروابط التالية بروابط الفيديوهات الفعلية من يوتيوب.
- * embedUrl = رابط التضمين
- * watchUrl = رابط المشاهدة
- * thumbnailUrl = صورة الغلاف
- */
 const VIDEOS: VideoItem[] = [
   {
-    id: "video-1",
-    title: "تشطيب فاخر في الرياض | تنفيذ احترافي وتفاصيل نهائية عالية الجودة",
+    id: "luxury-bathroom-finishing-riyadh",
+    title: "تشطيب حمامات فاخرة في الرياض | تصميم ملهم وتنفيذ راقٍ في معرض الصقور والأسلحة",
     description:
-      "فيديو قصير يعرض جانبًا من أعمال التشطيب الفاخر في الرياض مع إبراز جودة التنفيذ واللمسات النهائية داخل المشروع.",
-    embedUrl: "https://www.youtube.com/embed/REPLACE_VIDEO_ID_1",
-    watchUrl: "https://www.youtube.com/watch?v=REPLACE_VIDEO_ID_1",
-    thumbnailUrl: "https://img.youtube.com/vi/REPLACE_VIDEO_ID_1/hqdefault.jpg",
-    uploadDate: "2026-03-13",
-    duration: "PT29S",
-    keywords: ["تشطيب فلل", "مقاولات الرياض", "تشطيب فاخر", "مشاريع تشطيب"],
+      "فيديو قصير يعرض نموذجًا ملهمًا لتشطيب حمام فاخر في الرياض، مع إبراز جودة التفاصيل النهائية والهوية التنفيذية الراقية المناسبة للمشاريع السكنية والمجالس والمعارض الفاخرة.",
+    embedUrl: "https://www.youtube.com/embed/RXlu9puTA-o",
+    watchUrl: "https://youtube.com/shorts/RXlu9puTA-o?si=onQayNi8gpfN6Kf7",
+    thumbnailUrl: `${SITE_URL}/vedio cover/laxury-bathroom.webp`,
+    uploadDate: "2026-03-16",
+    duration: "PT30S",
+    keywords: [
+      "تشطيب حمامات فاخرة بالرياض",
+      "مقاول تشطيب حمامات",
+      "تشطيبات داخلية فاخرة",
+      "شركة مقاولات بالرياض",
+    ],
     category: "تشطيب",
   },
   {
-    id: "video-2",
-    title: "مراحل تنفيذ مشروع تشطيب بالرياض | لقطة سريعة من أرض الواقع",
+    id: "villa-renovation-yasmin-riyadh",
+    title: "ترميم فيلا سكنية في حي الياسمين بالرياض | تجديد عملي وتحسين جودة المساحات",
     description:
-      "مقطع يوثق جزءًا من مراحل التنفيذ في مشروع تشطيب داخل الرياض، مناسب لبناء الثقة وإظهار مستوى المتابعة الميدانية.",
-    embedUrl: "https://www.youtube.com/embed/REPLACE_VIDEO_ID_2",
-    watchUrl: "https://www.youtube.com/watch?v=REPLACE_VIDEO_ID_2",
-    thumbnailUrl: "https://img.youtube.com/vi/REPLACE_VIDEO_ID_2/hqdefault.jpg",
-    uploadDate: "2026-03-14",
-    duration: "PT25S",
-    keywords: ["تشطيب بالرياض", "تنفيذ مشاريع", "شركة مقاولات", "مراحل التشطيب"],
+      "مقطع يوضح جانبًا من أعمال ترميم فيلا سكنية في حي الياسمين بالرياض، ويعكس مستوى التنفيذ والاهتمام بإعادة التأهيل وتحسين الحالة الوظيفية والجمالية للمسكن قبل التسليم.",
+    embedUrl: "https://www.youtube.com/embed/qaKZukA1534",
+    watchUrl: "https://youtube.com/shorts/qaKZukA1534?si=DUDzbA2_8TsSVQ8a",
+    thumbnailUrl: `${SITE_URL}/vedio cover/villa-renuvation.webp`,
+    uploadDate: "2026-03-16",
+    duration: "PT30S",
+    keywords: [
+      "ترميم فيلا بالرياض",
+      "ترميم حي الياسمين",
+      "تجديد فلل سكنية",
+      "مقاولات ترميم الرياض",
+    ],
     category: "ترميم",
   },
   {
-    id: "video-3",
-    title: "أعمال بناء وتشطيب في الرياض | محتوى مرئي من مشاريع PYBCCO",
+    id: "before-after-roof-finishing-riyadh",
+    title: "قبل وبعد تشطيب سطح شقة سكنية فاخرة | تحويل بصري عملي في الرياض",
     description:
-      "فيديو قصير يعرض جانبًا من أعمال البناء أو التشطيب الميدانية، ويدعم حضور الشركة بصريًا أمام العملاء ومحركات البحث.",
-    embedUrl: "https://www.youtube.com/embed/REPLACE_VIDEO_ID_3",
-    watchUrl: "https://www.youtube.com/watch?v=REPLACE_VIDEO_ID_3",
-    thumbnailUrl: "https://img.youtube.com/vi/REPLACE_VIDEO_ID_3/hqdefault.jpg",
-    uploadDate: "2026-03-15",
+      "فيديو قبل وبعد يبرز التحول الواضح في تشطيب سطح شقة سكنية فاخرة بالرياض، ويُظهر كيف تؤثر المعالجة الصحيحة للتشطيب على الشكل النهائي والاستفادة من المساحة وجودة الاستخدام.",
+    embedUrl: "https://www.youtube.com/embed/re44BUTtHUk",
+    watchUrl: "https://youtube.com/shorts/re44BUTtHUk?si=Wn-LTsc1_zHgsdro",
+    thumbnailUrl: `${SITE_URL}/vedio cover/befor-after.webp`,
+    uploadDate: "2026-03-16",
     duration: "PT30S",
-    keywords: ["بناء فيلا", "تشطيب منزل", "مقاول بالرياض", "أعمال ميدانية"],
-    category: "عظم",
+    keywords: [
+      "قبل وبعد تشطيب سطح",
+      "تشطيب سطح شقة بالرياض",
+      "تشطيب فاخر",
+      "مقاول تشطيب أسطح",
+    ],
+    category: "تشطيب",
   },
 ];
 
 const FAQS = [
   {
-    q: "هل هذه الفيديوهات لمشاريع حقيقية؟",
-    a: "نعم، الصفحة مخصصة لعرض فيديوهات مرتبطة بأعمال ومشاريع ونماذج تنفيذ ومحتوى بصري مرتبط بخدمات الشركة في الرياض.",
+    q: "هل هذه الفيديوهات مرتبطة بمشاريع حقيقية في الرياض؟",
+    a: "نعم، الصفحة مخصصة لعرض فيديوهات مرتبطة بأعمال ومشاريع ونماذج تنفيذ ومحتوى بصري يخدم خدمات الشركة داخل الرياض وما حولها.",
   },
   {
     q: "هل أستطيع طلب عرض سعر بعد مشاهدة الفيديوهات؟",
-    a: "نعم، يمكنك الانتقال مباشرة إلى حاسبة التكلفة أو طلب تنفيذ مشروع أو التواصل معنا عبر واتساب بعد مشاهدة المقاطع.",
+    a: "نعم، يمكنك الانتقال مباشرة إلى حاسبة التكلفة أو صفحة طلب مشروع أو التواصل معنا بعد مشاهدة المقاطع المناسبة لنوع مشروعك.",
   },
   {
-    q: "هل الصفحة مفيدة لجوجل والسيو؟",
-    a: "نعم، تم تصميم الصفحة بحيث تكون صفحة مكتبة فيديو فعلية تحتوي على محتوى نصي، ربط داخلي، وسكيما منظمة لشرح الفيديوهات ومكتبة المحتوى المرتبط بها.",
+    q: "هل صفحة الفيديو مفيدة لجوجل والسيو؟",
+    a: "نعم، تم بناء الصفحة كمكتبة فيديو فعلية تتضمن VideoObject وCollectionPage وItemList وFAQ وروابط داخلية وسياقًا نصيًا واضحًا يساعد جوجل على فهم المحتوى بشكل أفضل.",
   },
   {
-    q: "هل الفيديوهات مرتبطة بالخدمات داخل الموقع؟",
-    a: "نعم، الصفحة تربط بين الفيديوهات وصفحات الخدمات، الحاسبات، والمقالات الهندسية لتقوية المسار الداخلي وتحسين تجربة الزائر.",
+    q: "هل الفيديوهات مرتبطة بخدمات الموقع؟",
+    a: "نعم، كل الصفحة مصممة لربط المحتوى المرئي بالخدمات والحاسبات والمقالات الهندسية لتقوية الربط الداخلي وتحسين رحلة الزائر داخل الموقع.",
   },
 ];
 
@@ -131,6 +139,8 @@ function buildPageSchema(): JsonLd[] {
     "@context": "https://schema.org",
     "@type": "ItemList",
     "@id": `${CANONICAL}#itemlist`,
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    numberOfItems: VIDEOS.length,
     itemListElement: itemListElements,
   };
 
@@ -179,8 +189,10 @@ function buildPageSchema(): JsonLd[] {
     duration: video.duration,
     embedUrl: video.embedUrl,
     contentUrl: video.watchUrl,
+    url: `${CANONICAL}#${video.id}`,
     inLanguage: "ar",
     isFamilyFriendly: true,
+    keywords: video.keywords.join(", "),
     publisher: {
       "@type": "Organization",
       name: "بنيان الهرم للمقاولات",
@@ -190,7 +202,10 @@ function buildPageSchema(): JsonLd[] {
         url: `${SITE_URL}/assets/logo.webp`,
       },
     },
-    keywords: video.keywords.join(", "),
+    potentialAction: {
+      "@type": "WatchAction",
+      target: [video.watchUrl],
+    },
   }));
 
   return [collectionPage, itemList, breadcrumb, faqSchema, ...videoSchemas];
@@ -217,14 +232,14 @@ export default function VideosLibraryPage() {
   return (
     <>
       <SeoHead
-  title={PAGE_TITLE}
-  description={PAGE_DESCRIPTION}
-  canonical={CANONICAL}
-  robots="index,follow"
-  ogImage={`${SITE_URL}/assets/logo.webp`}
-  ogType="website"
-  jsonLd={schemas}
-/>
+        title={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        canonical={CANONICAL}
+        robots="index,follow"
+        ogImage={`${SITE_URL}/assets/logo.webp`}
+        ogType="website"
+        jsonLd={schemas}
+      />
 
       <main className="bg-black text-white">
         <section className="relative overflow-hidden border-b border-white/10 bg-gradient-to-b from-black via-[#111111] to-black">
@@ -242,9 +257,9 @@ export default function VideosLibraryPage() {
               </h1>
 
               <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-white/75 md:text-lg">
-                صفحة فيديو احترافية تجمع المقاطع المرئية الخاصة بالمشاريع، التنفيذ، والتشطيب،
-                وتحوّل الفيديو من مجرد رابط خارجي إلى أصل محتوى فعلي داخل الموقع يخدم السيو،
-                الثقة، والربط الداخلي.
+                شاهد نماذج مرئية من أعمال التشطيب والترميم والتحولات قبل وبعد داخل الرياض، ضمن
+                صفحة فيديو احترافية تخدم جوجل، تدعم الثقة، وتربط المحتوى المرئي مباشرة بصفحات
+                الخدمات والحاسبات وطلب المشروع.
               </p>
 
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -271,12 +286,12 @@ export default function VideosLibraryPage() {
                   <div className="mt-1 text-sm text-white/70">مقاطع التشطيب</div>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <div className="text-2xl font-extrabold text-[#D4AF37]">{categoryCounts["عظم"]}</div>
-                  <div className="mt-1 text-sm text-white/70">مقاطع العظم</div>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                   <div className="text-2xl font-extrabold text-[#D4AF37]">{categoryCounts["ترميم"]}</div>
                   <div className="mt-1 text-sm text-white/70">مقاطع الترميم</div>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <div className="text-2xl font-extrabold text-[#D4AF37]">3</div>
+                  <div className="mt-1 text-sm text-white/70">نماذج مرئية أولية</div>
                 </div>
               </div>
             </div>
@@ -290,10 +305,10 @@ export default function VideosLibraryPage() {
                 <div className="mb-3 inline-flex rounded-xl bg-[#D4AF37]/10 p-2 text-[#D4AF37]">
                   <Clapperboard className="h-5 w-5" />
                 </div>
-                <h2 className="text-lg font-bold">أصل محتوى فعلي داخل الموقع</h2>
+                <h2 className="text-lg font-bold">مكتبة فيديو فعلية قابلة للفهرسة</h2>
                 <p className="mt-2 text-sm leading-7 text-white/70">
-                  بدل أن تبقى الفيديوهات موزعة أو مخفية داخل المقالات فقط، أصبحت في مكتبة مستقلة
-                  قابلة للفهرسة والربط الداخلي.
+                  بدل أن تبقى الفيديوهات مخفية داخل المقالات فقط، أصبحت في صفحة مستقلة قابلة
+                  للاكتشاف من جوجل والزائر مع سياق واضح حول كل فيديو.
                 </p>
               </div>
 
@@ -301,10 +316,10 @@ export default function VideosLibraryPage() {
                 <div className="mb-3 inline-flex rounded-xl bg-[#D4AF37]/10 p-2 text-[#D4AF37]">
                   <Sparkles className="h-5 w-5" />
                 </div>
-                <h2 className="text-lg font-bold">تهيئة قوية للسيو</h2>
+                <h2 className="text-lg font-bold">تهيئة قوية لـ Google Video</h2>
                 <p className="mt-2 text-sm leading-7 text-white/70">
-                  الصفحة تتضمن CollectionPage و ItemList و VideoObject و FAQ و Breadcrumbs،
-                  مع محتوى نصي وروابط داخلية تخدم Google بوضوح.
+                  الصفحة تتضمن VideoObject وCollectionPage وItemList وFAQ وBreadcrumbs، مع صور
+                  مصغرة ثابتة وروابط مشاهدة واضحة ونصوص داعمة حول كل فيديو.
                 </p>
               </div>
 
@@ -312,10 +327,10 @@ export default function VideosLibraryPage() {
                 <div className="mb-3 inline-flex rounded-xl bg-[#D4AF37]/10 p-2 text-[#D4AF37]">
                   <Building2 className="h-5 w-5" />
                 </div>
-                <h2 className="text-lg font-bold">بناء ثقة أسرع</h2>
+                <h2 className="text-lg font-bold">تحويل أسرع من المشاهدة إلى التواصل</h2>
                 <p className="mt-2 text-sm leading-7 text-white/70">
-                  الصفحة مناسبة لعرض أعمال الشركة بصريًا قبل طلب العرض السعري أو التواصل، وتختصر
-                  كثيرًا من التردد عند العميل السكني.
+                  كل فيديو يقود الزائر نحو الخدمة المناسبة أو طلب المشروع أو الحاسبة، مما يجعل
+                  الصفحة أداة سيو وتحويل في نفس الوقت.
                 </p>
               </div>
             </div>
@@ -329,7 +344,7 @@ export default function VideosLibraryPage() {
               <h2 className="mt-2 text-2xl font-extrabold md:text-3xl">أحدث الفيديوهات</h2>
             </div>
             <a
-              href="https://www.youtube.com/"
+              href="https://www.youtube.com/@pybcco"
               target="_blank"
               rel="noopener noreferrer"
               className="hidden items-center gap-2 text-sm text-white/70 transition hover:text-white md:inline-flex"
@@ -346,6 +361,21 @@ export default function VideosLibraryPage() {
                 id={video.id}
                 className="overflow-hidden rounded-[28px] border border-white/10 bg-white/5 shadow-[0_10px_60px_rgba(0,0,0,0.35)]"
               >
+                <a
+                  href={video.watchUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block overflow-hidden bg-black"
+                  aria-label={video.title}
+                >
+                  <img
+                    src={video.thumbnailUrl}
+                    alt={video.title}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    className="aspect-video w-full object-cover transition duration-500 hover:scale-[1.02]"
+                  />
+                </a>
+
                 <div className="aspect-video bg-black">
                   <iframe
                     className="h-full w-full"
@@ -408,10 +438,9 @@ export default function VideosLibraryPage() {
                 لماذا مكتبة الفيديو صفحة قوية جدًا لجوجل؟
               </h2>
               <p className="mt-5 text-base leading-8 text-white/75">
-                لأن الصفحة لا تعتمد فقط على التضمين المرئي، بل تقدم سياقًا واضحًا حول طبيعة
-                الأعمال، أنواع المشاريع، والروابط ذات الصلة. هذا يجعلها صفحة محتوى حقيقية وليست
-                مجرد تجميع فيديوهات بدون معنى. كما أنها تربط بين الحضور المرئي للشركة وصفحات
-                الخدمة والحاسبات والمقالات، فتقوي الرحلة الكاملة من الاكتشاف إلى التحويل.
+                لأن الصفحة لا تعتمد على التضمين فقط، بل تقدم سياقًا واضحًا حول نوع المشروع،
+                طبيعة التنفيذ، والوصول إلى الخدمة المناسبة بعد المشاهدة. هذا يجعل صفحة الفيديو
+                أصل محتوى حقيقي داخل الموقع، وليس مجرد روابط خارجية مبعثرة.
               </p>
             </div>
 
@@ -420,9 +449,9 @@ export default function VideosLibraryPage() {
                 "تقوية السيو الداخلي عبر ربط الفيديوهات بصفحات الخدمات والمقالات والحاسبات.",
                 "زيادة الوقت الذي يقضيه الزائر داخل الموقع عند مشاهدة المقاطع من نفس الصفحة.",
                 "تحويل الفيديو من أصل خارجي فقط إلى محتوى منظم داخل بنية الموقع.",
-                "دعم إشارات الكيان الرقمي عبر الربط مع يوتيوب وبقية حضور الشركة الخارجي.",
-                "إتاحة مساحة مستقبلية لتوسيع المحتوى المرئي: Shorts، شروحات، ومقاطع مشاريع.",
-                "تجهيز الصفحة لتكون وجهة مرجعية لأي فيديو جديد بدل بعثرته في صفحات متفرقة.",
+                "دعم إشارات الكيان الرقمي عبر الربط مع يوتيوب وحضور الشركة الخارجي.",
+                "إتاحة مساحة مستقبلية لإضافة Shorts ومقاطع مشاريع ومقاطع قبل وبعد بسهولة.",
+                "تجهيز الصفحة لتكون مرجعًا بصريًا أساسيًا لأي زائر يريد تقييم مستوى التنفيذ بسرعة.",
               ].map((point) => (
                 <div key={point} className="rounded-2xl border border-white/10 bg-white/5 p-5">
                   <div className="flex items-start gap-3">
@@ -439,7 +468,7 @@ export default function VideosLibraryPage() {
           <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
             <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 md:p-8">
               <p className="text-sm text-[#D4AF37]">روابط مفيدة</p>
-              <h2 className="mt-2 text-2xl font-extrabold md:text-3xl">تابع من الفيديو إلى القرار</h2>
+              <h2 className="mt-2 text-2xl font-extrabold md:text-3xl">من الفيديو إلى القرار</h2>
               <p className="mt-4 text-sm leading-8 text-white/70">
                 هذه الصفحة يجب أن تكون جزءًا من مسار التحويل الكامل: فيديو ← خدمة أو حاسبة ← طلب
                 مشروع أو تواصل. لذلك أضفنا روابط داخلية مباشرة إلى أهم الصفحات التي تخدم الزائر
@@ -457,6 +486,10 @@ export default function VideosLibraryPage() {
                     label: "تشطيب فلل بالرياض",
                   },
                   {
+                    to: "/villa-renovation-riyadh",
+                    label: "ترميم فلل بالرياض",
+                  },
+                  {
                     to: "/villa-finishing-price-riyadh",
                     label: "حاسبة تكلفة التشطيب",
                   },
@@ -471,6 +504,10 @@ export default function VideosLibraryPage() {
                   {
                     to: "/request-project",
                     label: "طلب تنفيذ مشروع",
+                  },
+                  {
+                    to: "/",
+                    label: "العودة إلى الرئيسية",
                   },
                 ].map((item) => (
                   <Link
