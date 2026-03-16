@@ -96,6 +96,9 @@ function ImageGrid({
               alt={img.alt}
               loading={img.src === "/casestudy/main.webp" ? "eager" : "lazy"}
               fetchPriority={img.src === "/casestudy/main.webp" ? "high" : "auto"}
+              width="1200"
+              height="900"
+              decoding="async"
               className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
             />
             <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
@@ -142,9 +145,10 @@ export default function CaseStudyVillaRiyadh() {
       },
       {
         "@context": "https://schema.org",
-        "@type": "Article",
+        "@type": ["Article", "CreativeWork"],
         mainEntityOfPage: { "@type": "WebPage", "@id": CANONICAL },
         headline: "دراسة حالة: تشطيب وتجديد فيلا سكنية – الرياض (قبل/بعد)",
+        name: "مشروع تشطيب وتجديد فيلا سكنية – الرياض",
         description:
           "دراسة حالة حقيقية لمشروع تشطيب وتجديد فيلا بالرياض: هدم وإعادة تشكيل، تشطيبات داخلية وخارجية، تفاصيل تنفيذ، والنتيجة النهائية بالصور.",
         inLanguage: "ar",
@@ -164,7 +168,6 @@ export default function CaseStudyVillaRiyadh() {
             url: `${SITE_URL}/logo.webp`,
           },
         },
-        // (حسب طلبك) لا تغيير هنا: نبقي نفس منطق الصور كما هو
         image: allImages.slice(0, 8),
         about: [
           "تشطيب فلل الرياض",
@@ -173,9 +176,16 @@ export default function CaseStudyVillaRiyadh() {
           "تشطيبات داخلية وخارجية",
           "مقاولات الرياض",
         ],
+        keywords: [
+          "تشطيب فلل الرياض",
+          "ترميم فيلا الرياض",
+          "تجديد فيلا قبل وبعد",
+          "تشطيبات فلل حديثة",
+          "مقاول تشطيب الرياض",
+        ],
       },
     ];
-  }, [CANONICAL]);
+  }, []);
 
   return (
     <main dir="rtl" className="min-h-screen bg-white">
@@ -183,7 +193,7 @@ export default function CaseStudyVillaRiyadh() {
         title="دراسة حالة: تشطيب وتجديد فيلا سكنية – الرياض (قبل/بعد) | بنيان الهرم للمقاولات"
         description="دراسة حالة حقيقية لمشروع تشطيب وتجديد فيلا بالرياض: هدم وإعادة تشكيل، تشطيبات داخلية وخارجية، تفاصيل تنفيذ، والنتيجة النهائية بالصور."
         canonical={CANONICAL}
-        jsonLd={jsonLd as any}
+        jsonLd={jsonLd}
       />
 
       {/* HERO */}
@@ -195,7 +205,9 @@ export default function CaseStudyVillaRiyadh() {
             </h1>
 
             <p className="mt-4 text-gray-600 leading-relaxed">
-              هذه دراسة حالة حقيقية توضح كيف تم تحويل فيلا بحالة تقليدية إلى مظهر عصري بتفاصيل تنفيذ دقيقة. ركّزنا على: ضبط الهوية المعمارية، تحسين الواجهات، وتطوير الداخل مع حلول عملية ترفع قيمة العقار.{" "}
+              هذه دراسة حالة حقيقية توضح كيف تم تحويل فيلا بحالة تقليدية إلى مظهر عصري
+              بتفاصيل تنفيذ دقيقة. ركّزنا على: ضبط الهوية المعمارية، تحسين الواجهات،
+              وتطوير الداخل مع حلول عملية ترفع قيمة العقار.{" "}
               <a
                 href="/villa-renovation-riyadh"
                 className="font-semibold underline decoration-yellow-400 underline-offset-4 hover:opacity-80"
@@ -232,12 +244,12 @@ export default function CaseStudyVillaRiyadh() {
               </Button>
 
               <Button asChild variant="outline">
-  <a href="/projects">عرض مشاريعنا</a>
-</Button>
+                <a href="/projects">عرض مشاريعنا</a>
+              </Button>
 
-<Button asChild variant="outline">
-  <a href="/videos">فيديوهات المشاريع</a>
-</Button>
+              <Button asChild variant="outline">
+                <a href="/videos">فيديوهات المشاريع</a>
+              </Button>
             </div>
           </div>
 
@@ -344,7 +356,8 @@ export default function CaseStudyVillaRiyadh() {
               هل تريد تحويل فيلتك لنفس المستوى؟
             </h3>
             <p className="mt-2 text-sm md:text-base text-gray-600 leading-relaxed">
-              نرتّب لك معاينة سريعة داخل الرياض ونقدم تصور واضح للتكلفة وخطة تنفيذ منظمة بدون فوضى.
+              نرتّب لك معاينة سريعة داخل الرياض ونقدم تصور واضح للتكلفة وخطة تنفيذ
+              منظمة بدون فوضى.
             </p>
             <div className="mt-5 flex flex-wrap justify-center gap-3">
               <Button asChild className="bg-yellow-500 text-black hover:bg-yellow-400">
@@ -359,8 +372,8 @@ export default function CaseStudyVillaRiyadh() {
                 <a href="/villa-finishing-price-riyadh">حاسبة التكلفة</a>
               </Button>
               <Button asChild variant="outline">
-  <a href="/videos">شاهد فيديوهات المشاريع</a>
-</Button>
+                <a href="/videos">شاهد فيديوهات المشاريع</a>
+              </Button>
             </div>
           </div>
         </div>
@@ -370,12 +383,21 @@ export default function CaseStudyVillaRiyadh() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-4xl">
           <DialogHeader>
-            <DialogTitle className="text-right">{active?.alt ?? "عرض الصورة"}</DialogTitle>
+            <DialogTitle className="text-right">
+              {active?.alt ?? "عرض الصورة"}
+            </DialogTitle>
           </DialogHeader>
 
           <div className="mt-2 overflow-hidden rounded-2xl border bg-black">
             {active ? (
-              <img src={active.src} alt={active.alt} className="w-full h-auto object-contain" />
+              <img
+                src={active.src}
+                alt={active.alt}
+                width="1600"
+                height="1200"
+                decoding="async"
+                className="w-full h-auto object-contain"
+              />
             ) : null}
           </div>
         </DialogContent>
