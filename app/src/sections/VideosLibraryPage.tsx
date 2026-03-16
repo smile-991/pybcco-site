@@ -30,14 +30,16 @@ type VideoItem = {
 
 const SITE_URL = "https://pybcco.com";
 const CANONICAL = `${SITE_URL}/videos`;
-const PAGE_TITLE = "فيديوهات مشاريع البناء والتشطيب في الرياض | مكتبة الفيديو | بنيان الهرم للمقاولات";
+const PAGE_TITLE =
+  "فيديوهات مشاريع البناء والتشطيب في الرياض | مكتبة الفيديو | بنيان الهرم للمقاولات";
 const PAGE_DESCRIPTION =
-  "شاهد مكتبة فيديوهات بنيان الهرم للمقاولات في الرياض: تشطيب حمامات فاخرة، ترميم فلل سكنية، وتحويلات قبل وبعد في التشطيب، مع صفحة مهيأة لجوجل عبر VideoObject و CollectionPage وروابط داخلية تخدم السيو والتحويل.";
+  "شاهد فيديوهات مشاريع البناء والتشطيب والترميم في الرياض، وتعرّف على مستوى التنفيذ وجودة التفاصيل في نماذج مختارة تساعدك على تقييم الأعمال واختيار الخدمة المناسبة لمشروعك.";
 
 const VIDEOS: VideoItem[] = [
   {
     id: "luxury-bathroom-finishing-riyadh",
-    title: "تشطيب حمامات فاخرة في الرياض | تصميم ملهم وتنفيذ راقٍ في معرض الصقور والأسلحة",
+    title:
+      "تشطيب حمامات فاخرة في الرياض | تصميم ملهم وتنفيذ راقٍ في معرض الصقور والأسلحة",
     description:
       "فيديو قصير يعرض نموذجًا ملهمًا لتشطيب حمام فاخر في الرياض، مع إبراز جودة التفاصيل النهائية والهوية التنفيذية الراقية المناسبة للمشاريع السكنية والمجالس والمعارض الفاخرة.",
     embedUrl: "https://www.youtube.com/embed/RXlu9puTA-o",
@@ -55,7 +57,8 @@ const VIDEOS: VideoItem[] = [
   },
   {
     id: "villa-renovation-yasmin-riyadh",
-    title: "ترميم فيلا سكنية في حي الياسمين بالرياض | تجديد عملي وتحسين جودة المساحات",
+    title:
+      "ترميم فيلا سكنية في حي الياسمين بالرياض | تجديد عملي وتحسين جودة المساحات",
     description:
       "مقطع يوضح جانبًا من أعمال ترميم فيلا سكنية في حي الياسمين بالرياض، ويعكس مستوى التنفيذ والاهتمام بإعادة التأهيل وتحسين الحالة الوظيفية والجمالية للمسكن قبل التسليم.",
     embedUrl: "https://www.youtube.com/embed/qaKZukA1534",
@@ -93,20 +96,20 @@ const VIDEOS: VideoItem[] = [
 
 const FAQS = [
   {
-    q: "هل هذه الفيديوهات مرتبطة بمشاريع حقيقية في الرياض؟",
-    a: "نعم، الصفحة مخصصة لعرض فيديوهات مرتبطة بأعمال ومشاريع ونماذج تنفيذ ومحتوى بصري يخدم خدمات الشركة داخل الرياض وما حولها.",
+    q: "هل هذه الفيديوهات مرتبطة بأعمال حقيقية؟",
+    a: "نعم، تعرض الصفحة مقاطع مرتبطة بأعمال تنفيذ ونماذج مشاريع ومحتوى بصري يعكس نوع الخدمات التي نقدمها داخل الرياض.",
   },
   {
-    q: "هل أستطيع طلب عرض سعر بعد مشاهدة الفيديوهات؟",
-    a: "نعم، يمكنك الانتقال مباشرة إلى حاسبة التكلفة أو صفحة طلب مشروع أو التواصل معنا بعد مشاهدة المقاطع المناسبة لنوع مشروعك.",
+    q: "هل يمكنني طلب تنفيذ مشروع مشابه لما شاهدته؟",
+    a: "نعم، يمكنك التواصل معنا مباشرة أو إرسال طلب مشروع مشابه، وسنراجع نطاق العمل ونقترح عليك المسار المناسب للتنفيذ.",
   },
   {
-    q: "هل صفحة الفيديو مفيدة لجوجل والسيو؟",
-    a: "نعم، تم بناء الصفحة كمكتبة فيديو فعلية تتضمن VideoObject وCollectionPage وItemList وFAQ وروابط داخلية وسياقًا نصيًا واضحًا يساعد جوجل على فهم المحتوى بشكل أفضل.",
+    q: "هل يمكنني استخدام الحاسبة بعد مشاهدة الفيديوهات؟",
+    a: "نعم، يمكنك الانتقال إلى حاسبة تكلفة التشطيب أو حاسبة تكلفة البناء للحصول على تقدير أولي يساعدك على فهم الميزانية المتوقعة.",
   },
   {
-    q: "هل الفيديوهات مرتبطة بخدمات الموقع؟",
-    a: "نعم، كل الصفحة مصممة لربط المحتوى المرئي بالخدمات والحاسبات والمقالات الهندسية لتقوية الربط الداخلي وتحسين رحلة الزائر داخل الموقع.",
+    q: "هل تقدمون خدمات التشطيب والترميم داخل الرياض؟",
+    a: "نعم، نقدم خدمات التشطيب والترميم وأعمال المقاولات داخل الرياض، مع إمكانية مراجعة نوع المشروع وتحديد الخدمة المناسبة حسب الاحتياج.",
   },
 ];
 
@@ -188,8 +191,7 @@ function buildPageSchema(): JsonLd[] {
     uploadDate: video.uploadDate,
     duration: video.duration,
     embedUrl: video.embedUrl,
-    contentUrl: video.watchUrl,
-    url: `${CANONICAL}#${video.id}`,
+    url: video.watchUrl,
     inLanguage: "ar",
     isFamilyFriendly: true,
     keywords: video.keywords.join(", "),
@@ -201,6 +203,10 @@ function buildPageSchema(): JsonLd[] {
         "@type": "ImageObject",
         url: `${SITE_URL}/assets/logo.webp`,
       },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": CANONICAL,
     },
     potentialAction: {
       "@type": "WatchAction",
@@ -216,10 +222,10 @@ export default function VideosLibraryPage() {
 
   const categoryCounts = useMemo(() => {
     const counts = {
-      "تشطيب": 0,
-      "ترميم": 0,
-      "عظم": 0,
-      "نصائح": 0,
+      تشطيب: 0,
+      ترميم: 0,
+      عظم: 0,
+      نصائح: 0,
     } as Record<VideoItem["category"], number>;
 
     VIDEOS.forEach((video) => {
@@ -257,41 +263,71 @@ export default function VideosLibraryPage() {
               </h1>
 
               <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-white/75 md:text-lg">
-                شاهد نماذج مرئية من أعمال التشطيب والترميم والتحولات قبل وبعد داخل الرياض، ضمن
-                صفحة فيديو احترافية تخدم جوجل، تدعم الثقة، وتربط المحتوى المرئي مباشرة بصفحات
-                الخدمات والحاسبات وطلب المشروع.
+                شاهد نماذج مرئية من أعمال التشطيب والترميم والتحولات قبل وبعد في
+                الرياض، وتعرّف على مستوى التنفيذ وجودة التفاصيل في مشاريع مختارة.
+                يمكنك بعد المشاهدة الانتقال مباشرة إلى الخدمة المناسبة أو طلب
+                مشروع مشابه.
               </p>
 
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-                <Button asChild className="bg-[#D4AF37] text-black hover:bg-[#e5c158]">
+                <Button
+                  asChild
+                  className="bg-[#D4AF37] text-black hover:bg-[#e5c158]"
+                >
                   <a href="#videos">شاهد الفيديوهات الآن</a>
                 </Button>
 
-                <Button asChild variant="outline" className="border-white/20 bg-transparent text-white hover:bg-white/5">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="border-white/20 bg-transparent text-white hover:bg-white/5"
+                >
                   <Link to="/villa-finishing-price-riyadh">حاسبة التشطيب</Link>
                 </Button>
 
-                <Button asChild variant="outline" className="border-white/20 bg-transparent text-white hover:bg-white/5">
-                  <Link to="/villa-construction-cost-calculator-riyadh">حاسبة البناء</Link>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="border-white/20 bg-transparent text-white hover:bg-white/5"
+                >
+                  <Link to="/villa-construction-cost-calculator-riyadh">
+                    حاسبة البناء
+                  </Link>
                 </Button>
               </div>
 
               <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <div className="text-2xl font-extrabold text-[#D4AF37]">{VIDEOS.length}</div>
-                  <div className="mt-1 text-sm text-white/70">إجمالي الفيديوهات</div>
+                  <div className="text-2xl font-extrabold text-[#D4AF37]">
+                    {VIDEOS.length}
+                  </div>
+                  <div className="mt-1 text-sm text-white/70">
+                    إجمالي الفيديوهات
+                  </div>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <div className="text-2xl font-extrabold text-[#D4AF37]">{categoryCounts["تشطيب"]}</div>
-                  <div className="mt-1 text-sm text-white/70">مقاطع التشطيب</div>
+                  <div className="text-2xl font-extrabold text-[#D4AF37]">
+                    {categoryCounts["تشطيب"]}
+                  </div>
+                  <div className="mt-1 text-sm text-white/70">
+                    مقاطع التشطيب
+                  </div>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <div className="text-2xl font-extrabold text-[#D4AF37]">{categoryCounts["ترميم"]}</div>
-                  <div className="mt-1 text-sm text-white/70">مقاطع الترميم</div>
+                  <div className="text-2xl font-extrabold text-[#D4AF37]">
+                    {categoryCounts["ترميم"]}
+                  </div>
+                  <div className="mt-1 text-sm text-white/70">
+                    مقاطع الترميم
+                  </div>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <div className="text-2xl font-extrabold text-[#D4AF37]">3</div>
-                  <div className="mt-1 text-sm text-white/70">نماذج مرئية أولية</div>
+                  <div className="text-2xl font-extrabold text-[#D4AF37]">
+                    {VIDEOS.length}
+                  </div>
+                  <div className="mt-1 text-sm text-white/70">
+                    نماذج مرئية أولية
+                  </div>
                 </div>
               </div>
             </div>
@@ -305,10 +341,10 @@ export default function VideosLibraryPage() {
                 <div className="mb-3 inline-flex rounded-xl bg-[#D4AF37]/10 p-2 text-[#D4AF37]">
                   <Clapperboard className="h-5 w-5" />
                 </div>
-                <h2 className="text-lg font-bold">مكتبة فيديو فعلية قابلة للفهرسة</h2>
+                <h2 className="text-lg font-bold">شاهد نماذج تنفيذ حقيقية</h2>
                 <p className="mt-2 text-sm leading-7 text-white/70">
-                  بدل أن تبقى الفيديوهات مخفية داخل المقالات فقط، أصبحت في صفحة مستقلة قابلة
-                  للاكتشاف من جوجل والزائر مع سياق واضح حول كل فيديو.
+                  استعرض مقاطع مختارة من أعمال التشطيب والترميم والتحولات قبل
+                  وبعد، لتأخذ فكرة أوضح عن أسلوب التنفيذ وجودة التفاصيل النهائية.
                 </p>
               </div>
 
@@ -316,10 +352,11 @@ export default function VideosLibraryPage() {
                 <div className="mb-3 inline-flex rounded-xl bg-[#D4AF37]/10 p-2 text-[#D4AF37]">
                   <Sparkles className="h-5 w-5" />
                 </div>
-                <h2 className="text-lg font-bold">تهيئة قوية لـ Google Video</h2>
+                <h2 className="text-lg font-bold">فيديوهات مختصرة وواضحة</h2>
                 <p className="mt-2 text-sm leading-7 text-white/70">
-                  الصفحة تتضمن VideoObject وCollectionPage وItemList وFAQ وBreadcrumbs، مع صور
-                  مصغرة ثابتة وروابط مشاهدة واضحة ونصوص داعمة حول كل فيديو.
+                  تعرض المقاطع لقطات سريعة ومباشرة تساعدك على تقييم النتيجة
+                  البصرية، وفهم نوع الأعمال المناسبة لمشروعك قبل طلب المعاينة أو
+                  عرض السعر.
                 </p>
               </div>
 
@@ -327,10 +364,10 @@ export default function VideosLibraryPage() {
                 <div className="mb-3 inline-flex rounded-xl bg-[#D4AF37]/10 p-2 text-[#D4AF37]">
                   <Building2 className="h-5 w-5" />
                 </div>
-                <h2 className="text-lg font-bold">تحويل أسرع من المشاهدة إلى التواصل</h2>
+                <h2 className="text-lg font-bold">اختر الخدمة المناسبة بسهولة</h2>
                 <p className="mt-2 text-sm leading-7 text-white/70">
-                  كل فيديو يقود الزائر نحو الخدمة المناسبة أو طلب المشروع أو الحاسبة، مما يجعل
-                  الصفحة أداة سيو وتحويل في نفس الوقت.
+                  بعد مشاهدة الفيديوهات يمكنك الانتقال مباشرة إلى خدمة التشطيب أو
+                  الترميم أو الحاسبة المناسبة، ثم طلب مشروع مشابه حسب احتياجك.
                 </p>
               </div>
             </div>
@@ -341,7 +378,9 @@ export default function VideosLibraryPage() {
           <div className="mb-8 flex items-end justify-between gap-4">
             <div>
               <p className="text-sm text-[#D4AF37]">مكتبة الفيديو</p>
-              <h2 className="mt-2 text-2xl font-extrabold md:text-3xl">أحدث الفيديوهات</h2>
+              <h2 className="mt-2 text-2xl font-extrabold md:text-3xl">
+                أحدث الفيديوهات
+              </h2>
             </div>
             <a
               href="https://www.youtube.com/@pybcco"
@@ -357,65 +396,76 @@ export default function VideosLibraryPage() {
           <div className="grid gap-8 lg:grid-cols-3">
             {VIDEOS.map((video, index) => (
               <article
-  key={video.id}
-  id={video.id}
-  className="overflow-hidden rounded-[28px] border border-white/10 bg-white/5 shadow-[0_10px_60px_rgba(0,0,0,0.35)]"
->
-  <div className="aspect-video bg-black">
-    <iframe
-      className="h-full w-full"
-      src={video.embedUrl}
-      title={video.title}
-      loading={index === 0 ? "eager" : "lazy"}
-      referrerPolicy="strict-origin-when-cross-origin"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      allowFullScreen
-    />
-  </div>
+                key={video.id}
+                id={video.id}
+                className="overflow-hidden rounded-[28px] border border-white/10 bg-white/5 shadow-[0_10px_60px_rgba(0,0,0,0.35)]"
+              >
+                <div className="aspect-video bg-black">
+                  <iframe
+                    className="h-full w-full"
+                    src={video.embedUrl}
+                    title={video.title}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
 
-  <div className="p-5">
-    <div className="mb-3 flex flex-wrap items-center gap-2 text-xs">
-      <span className="rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 px-3 py-1 text-[#f5deb3]">
-        {video.category}
-      </span>
-      <span className="inline-flex items-center gap-1 rounded-full border border-white/10 px-3 py-1 text-white/60">
-        <Clock3 className="h-3.5 w-3.5" />
-        فيديو قصير
-      </span>
-    </div>
+                <div className="p-5">
+                  <div className="mb-3 flex flex-wrap items-center gap-2 text-xs">
+                    <span className="rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 px-3 py-1 text-[#f5deb3]">
+                      {video.category}
+                    </span>
+                    <span className="inline-flex items-center gap-1 rounded-full border border-white/10 px-3 py-1 text-white/60">
+                      <Clock3 className="h-3.5 w-3.5" />
+                      فيديو قصير
+                    </span>
+                  </div>
 
-    <h3 className="text-lg font-bold leading-8 text-white">{video.title}</h3>
-    <p className="mt-3 text-sm leading-7 text-white/70">{video.description}</p>
+                  <h3 className="text-lg font-bold leading-8 text-white">
+                    {video.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-white/70">
+                    {video.description}
+                  </p>
 
-    <div className="mt-4 flex flex-wrap gap-2">
-      {video.keywords.map((keyword) => (
-        <span
-          key={keyword}
-          className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60"
-        >
-          {keyword}
-        </span>
-      ))}
-    </div>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {video.keywords.map((keyword) => (
+                      <span
+                        key={keyword}
+                        className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60"
+                      >
+                        {keyword}
+                      </span>
+                    ))}
+                  </div>
 
-    <div className="mt-5 flex flex-wrap gap-3">
-      <Button asChild className="bg-[#D4AF37] text-black hover:bg-[#e5c158]">
-        <a href={video.watchUrl} target="_blank" rel="noopener noreferrer">
-          <PlayCircle className="me-2 h-4 w-4" />
-          مشاهدة على يوتيوب
-        </a>
-      </Button>
+                  <div className="mt-5 flex flex-wrap gap-3">
+                    <Button
+                      asChild
+                      className="bg-[#D4AF37] text-black hover:bg-[#e5c158]"
+                    >
+                      <a
+                        href={video.watchUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <PlayCircle className="me-2 h-4 w-4" />
+                        مشاهدة على يوتيوب
+                      </a>
+                    </Button>
 
-      <Button
-        asChild
-        variant="outline"
-        className="border-white/15 bg-transparent text-white hover:bg-white/5"
-      >
-        <Link to="/request-project">اطلب مشروع مشابه</Link>
-      </Button>
-    </div>
-  </div>
-</article>
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="border-white/15 bg-transparent text-white hover:bg-white/5"
+                    >
+                      <Link to="/request-project">اطلب مشروع مشابه</Link>
+                    </Button>
+                  </div>
+                </div>
+              </article>
             ))}
           </div>
         </section>
@@ -423,27 +473,31 @@ export default function VideosLibraryPage() {
         <section className="border-y border-white/10 bg-[#0d0d0d]">
           <div className="container mx-auto px-4 py-14 md:py-16">
             <div className="mx-auto max-w-4xl text-center">
-              <p className="text-sm text-[#D4AF37]">لماذا هذه الصفحة مهمة؟</p>
+              <p className="text-sm text-[#D4AF37]">لماذا تشاهد هذه الفيديوهات؟</p>
               <h2 className="mt-2 text-2xl font-extrabold md:text-3xl">
-                لماذا مكتبة الفيديو صفحة قوية جدًا لجوجل؟
+                شاهد مستوى التنفيذ قبل اتخاذ قرارك
               </h2>
               <p className="mt-5 text-base leading-8 text-white/75">
-                لأن الصفحة لا تعتمد على التضمين فقط، بل تقدم سياقًا واضحًا حول نوع المشروع،
-                طبيعة التنفيذ، والوصول إلى الخدمة المناسبة بعد المشاهدة. هذا يجعل صفحة الفيديو
-                أصل محتوى حقيقي داخل الموقع، وليس مجرد روابط خارجية مبعثرة.
+                تساعدك هذه الفيديوهات على تكوين تصور أسرع عن جودة التنفيذ، ونوع
+                التشطيبات، وطريقة عرض النتيجة النهائية في المشاريع السكنية
+                والتجارية. بدل الاكتفاء بالصور فقط، يمكنك مشاهدة نماذج مرئية
+                تعطيك انطباعًا أوضح قبل طلب المعاينة أو عرض السعر.
               </p>
             </div>
 
             <div className="mx-auto mt-10 grid max-w-5xl gap-4 md:grid-cols-2">
               {[
-                "تقوية السيو الداخلي عبر ربط الفيديوهات بصفحات الخدمات والمقالات والحاسبات.",
-                "زيادة الوقت الذي يقضيه الزائر داخل الموقع عند مشاهدة المقاطع من نفس الصفحة.",
-                "تحويل الفيديو من أصل خارجي فقط إلى محتوى منظم داخل بنية الموقع.",
-                "دعم إشارات الكيان الرقمي عبر الربط مع يوتيوب وحضور الشركة الخارجي.",
-                "إتاحة مساحة مستقبلية لإضافة Shorts ومقاطع مشاريع ومقاطع قبل وبعد بسهولة.",
-                "تجهيز الصفحة لتكون مرجعًا بصريًا أساسيًا لأي زائر يريد تقييم مستوى التنفيذ بسرعة.",
+                "مشاهدة تفاصيل التنفيذ بشكل أوضح من الصور الثابتة.",
+                "تكوين تصور عملي عن مستوى التشطيب قبل بدء المشروع.",
+                "مقارنة أنواع الأعمال بين الترميم والتشطيب والتحولات قبل وبعد.",
+                "فهم النتيجة النهائية المتوقعة للمساحات المشابهة لمشروعك.",
+                "الوصول السريع إلى الخدمة أو الحاسبة المناسبة بعد المشاهدة.",
+                "اتخاذ قرار أولي بثقة أكبر قبل طلب المعاينة أو عرض السعر.",
               ].map((point) => (
-                <div key={point} className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <div
+                  key={point}
+                  className="rounded-2xl border border-white/10 bg-white/5 p-5"
+                >
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-[#D4AF37]" />
                     <p className="text-sm leading-7 text-white/75">{point}</p>
@@ -458,11 +512,13 @@ export default function VideosLibraryPage() {
           <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
             <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 md:p-8">
               <p className="text-sm text-[#D4AF37]">روابط مفيدة</p>
-              <h2 className="mt-2 text-2xl font-extrabold md:text-3xl">من الفيديو إلى القرار</h2>
+              <h2 className="mt-2 text-2xl font-extrabold md:text-3xl">
+                الخطوة التالية بعد مشاهدة الفيديو
+              </h2>
               <p className="mt-4 text-sm leading-8 text-white/70">
-                هذه الصفحة يجب أن تكون جزءًا من مسار التحويل الكامل: فيديو ← خدمة أو حاسبة ← طلب
-                مشروع أو تواصل. لذلك أضفنا روابط داخلية مباشرة إلى أهم الصفحات التي تخدم الزائر
-                بعد المشاهدة.
+                إذا شاهدت مقطعًا قريبًا من نوع مشروعك، يمكنك الانتقال إلى الخدمة
+                المناسبة أو استخدام الحاسبة التقديرية أو إرسال طلب مشروع لنراجع
+                احتياجك بشكل أدق.
               </p>
 
               <div className="mt-6 grid gap-3 md:grid-cols-2">
@@ -517,9 +573,16 @@ export default function VideosLibraryPage() {
 
               <div className="mt-6 space-y-4">
                 {FAQS.map((faq) => (
-                  <div key={faq.q} className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                    <h3 className="text-sm font-bold leading-7 text-white">{faq.q}</h3>
-                    <p className="mt-2 text-sm leading-7 text-white/70">{faq.a}</p>
+                  <div
+                    key={faq.q}
+                    className="rounded-2xl border border-white/10 bg-white/5 p-4"
+                  >
+                    <h3 className="text-sm font-bold leading-7 text-white">
+                      {faq.q}
+                    </h3>
+                    <p className="mt-2 text-sm leading-7 text-white/70">
+                      {faq.a}
+                    </p>
                   </div>
                 ))}
               </div>
