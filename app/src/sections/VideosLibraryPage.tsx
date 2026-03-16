@@ -357,75 +357,65 @@ export default function VideosLibraryPage() {
           <div className="grid gap-8 lg:grid-cols-3">
             {VIDEOS.map((video, index) => (
               <article
-                key={video.id}
-                id={video.id}
-                className="overflow-hidden rounded-[28px] border border-white/10 bg-white/5 shadow-[0_10px_60px_rgba(0,0,0,0.35)]"
-              >
-                <a
-                  href={video.watchUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block overflow-hidden bg-black"
-                  aria-label={video.title}
-                >
-                  <img
-                    src={video.thumbnailUrl}
-                    alt={video.title}
-                    loading={index === 0 ? "eager" : "lazy"}
-                    className="aspect-video w-full object-cover transition duration-500 hover:scale-[1.02]"
-                  />
-                </a>
+  key={video.id}
+  id={video.id}
+  className="overflow-hidden rounded-[28px] border border-white/10 bg-white/5 shadow-[0_10px_60px_rgba(0,0,0,0.35)]"
+>
+  <div className="aspect-video bg-black">
+    <iframe
+      className="h-full w-full"
+      src={video.embedUrl}
+      title={video.title}
+      loading={index === 0 ? "eager" : "lazy"}
+      referrerPolicy="strict-origin-when-cross-origin"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowFullScreen
+    />
+  </div>
 
-                <div className="aspect-video bg-black">
-                  <iframe
-                    className="h-full w-full"
-                    src={video.embedUrl}
-                    title={video.title}
-                    loading={index === 0 ? "eager" : "lazy"}
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  />
-                </div>
+  <div className="p-5">
+    <div className="mb-3 flex flex-wrap items-center gap-2 text-xs">
+      <span className="rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 px-3 py-1 text-[#f5deb3]">
+        {video.category}
+      </span>
+      <span className="inline-flex items-center gap-1 rounded-full border border-white/10 px-3 py-1 text-white/60">
+        <Clock3 className="h-3.5 w-3.5" />
+        فيديو قصير
+      </span>
+    </div>
 
-                <div className="p-5">
-                  <div className="mb-3 flex flex-wrap items-center gap-2 text-xs">
-                    <span className="rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 px-3 py-1 text-[#f5deb3]">
-                      {video.category}
-                    </span>
-                    <span className="inline-flex items-center gap-1 rounded-full border border-white/10 px-3 py-1 text-white/60">
-                      <Clock3 className="h-3.5 w-3.5" />
-                      فيديو قصير
-                    </span>
-                  </div>
+    <h3 className="text-lg font-bold leading-8 text-white">{video.title}</h3>
+    <p className="mt-3 text-sm leading-7 text-white/70">{video.description}</p>
 
-                  <h3 className="text-lg font-bold leading-8 text-white">{video.title}</h3>
-                  <p className="mt-3 text-sm leading-7 text-white/70">{video.description}</p>
+    <div className="mt-4 flex flex-wrap gap-2">
+      {video.keywords.map((keyword) => (
+        <span
+          key={keyword}
+          className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60"
+        >
+          {keyword}
+        </span>
+      ))}
+    </div>
 
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {video.keywords.map((keyword) => (
-                      <span
-                        key={keyword}
-                        className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60"
-                      >
-                        {keyword}
-                      </span>
-                    ))}
-                  </div>
+    <div className="mt-5 flex flex-wrap gap-3">
+      <Button asChild className="bg-[#D4AF37] text-black hover:bg-[#e5c158]">
+        <a href={video.watchUrl} target="_blank" rel="noopener noreferrer">
+          <PlayCircle className="me-2 h-4 w-4" />
+          مشاهدة على يوتيوب
+        </a>
+      </Button>
 
-                  <div className="mt-5 flex flex-wrap gap-3">
-                    <Button asChild className="bg-[#D4AF37] text-black hover:bg-[#e5c158]">
-                      <a href={video.watchUrl} target="_blank" rel="noopener noreferrer">
-                        <PlayCircle className="me-2 h-4 w-4" />
-                        مشاهدة على يوتيوب
-                      </a>
-                    </Button>
-                    <Button asChild variant="outline" className="border-white/15 bg-transparent text-white hover:bg-white/5">
-                      <Link to="/request-project">اطلب مشروع مشابه</Link>
-                    </Button>
-                  </div>
-                </div>
-              </article>
+      <Button
+        asChild
+        variant="outline"
+        className="border-white/15 bg-transparent text-white hover:bg-white/5"
+      >
+        <Link to="/request-project">اطلب مشروع مشابه</Link>
+      </Button>
+    </div>
+  </div>
+</article>
             ))}
           </div>
         </section>
