@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { GALLERY, type GalleryCat } from "../data/gallery";
 import SeoHead from "@/components/SeoHead";
@@ -16,27 +16,37 @@ function toAbsoluteUrl(src: string) {
   return `https://pybcco.com${src.startsWith("/") ? src : `/${src}`}`;
 }
 
-function buildProjectsGalleryJsonLd(cat: Cat) {
-  const current = GALLERY[cat];
+function buildProjectsGalleryJsonLd() {
+  const allItems = CATS.flatMap((cat) =>
+    GALLERY[cat.key].items.map((img, index) => ({
+      catKey: cat.key,
+      catLabel: cat.label,
+      img,
+      index,
+    }))
+  );
 
   return {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: `معرض مشاريع بنيان الهرم - ${current.title}`,
+    "@id": "https://pybcco.com/projects#collection",
+    name: "معرض مشاريع بنيان الهرم للمقاولات | تشطيب وعظم وترفيه بالرياض",
     url: "https://pybcco.com/projects",
     description:
-      "معرض مشاريع بنيان الهرم للمقاولات بالرياض ويشمل صور تشطيب وعظم وترفيه من أعمال منفذة.",
+      "معرض مشاريع بنيان الهرم للمقاولات بالرياض ويشمل صور تشطيب وعظم وترفيه من أعمال منفذة بشكل فعلي.",
     mainEntity: {
       "@type": "ItemList",
-      itemListElement: current.items.map((img, index) => ({
+      itemListOrder: "https://schema.org/ItemListOrderAscending",
+      numberOfItems: allItems.length,
+      itemListElement: allItems.map((entry, index) => ({
         "@type": "ListItem",
         position: index + 1,
         item: {
           "@type": "ImageObject",
-          contentUrl: toAbsoluteUrl(img.src),
-          url: toAbsoluteUrl(img.src),
-          name: img.alt,
-          description: img.alt,
+          contentUrl: toAbsoluteUrl(entry.img.src),
+          url: toAbsoluteUrl(entry.img.src),
+          name: entry.img.alt,
+          description: `${entry.img.alt} - ${entry.catLabel}`,
           representativeOfPage: index === 0,
           creator: {
             "@type": "Organization",
@@ -59,9 +69,12 @@ function SmartImage({
   className?: string;
 }) {
   const [currentSrc, setCurrentSrc] = useState(src);
-  const [tried, setTried] = useState<{ webp?: boolean; jpg?: boolean; jpeg?: boolean }>({});
+  const [tried, setTried] = useState<{
+    webp?: boolean;
+    jpg?: boolean;
+    jpeg?: boolean;
+  }>({});
 
-  // 🔹 هذا هو الإصلاح
   useEffect(() => {
     setCurrentSrc(src);
     setTried({});
@@ -85,7 +98,6 @@ function SmartImage({
     if (!tried.jpeg && !currentSrc.toLowerCase().endsWith(".jpeg")) {
       setTried((p) => ({ ...p, jpeg: true }));
       setCurrentSrc(toJpeg(currentSrc));
-      return;
     }
   };
 
@@ -102,32 +114,51 @@ function SmartImage({
 }
 
 export default function ProjectsGallery() {
-  const [cat, setCat] = useState<Cat>("finishing");
-  const gallerySchema = buildProjectsGalleryJsonLd(cat);
+  const gallerySchema = useMemo(() => buildProjectsGalleryJsonLd(), []);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
-  const title = GALLERY[cat].title;
-  const items = GALLERY[cat].items;
+  const sections = useMemo(
+    () =>
+      CATS.map((cat) => ({
+        key: cat.key,
+        label: cat.label,
+        title: GALLERY[cat.key].title,
+        items: GALLERY[cat.key].items,
+      })),
+    []
+  );
 
-  const pageTitle = "معرض مشاريع بنيان الهرم | تشطيب وعظم وترميم بالرياض";
+  const allItems = useMemo(
+    () =>
+      sections.flatMap((section) =>
+        section.items.map((img) => ({
+          ...img,
+          categoryLabel: section.label,
+          categoryTitle: section.title,
+        }))
+      ),
+    [sections]
+  );
+
+  const pageTitle = "معرض مشاريع بنيان الهرم | تشطيب وعظم وترفيه بالرياض";
   const pageDescription =
-    "شاهد معرض مشاريع بنيان الهرم للمقاولات بالرياض: تشطيب فلل وشقق، بناء عظم، وأعمال ترفيه.";
+    "شاهد معرض مشاريع بنيان الهرم للمقاولات بالرياض: تشطيب فلل وشقق، بناء عظم، وأعمال ترفيه من مشاريع منفذة فعليًا.";
   const canonical = "https://pybcco.com/projects";
   const ogImage = "https://pybcco.com/og.jpg";
 
-  const selectedImage = selectedIndex !== null ? items[selectedIndex] : null;
+  const selectedImage = selectedIndex !== null ? allItems[selectedIndex] : null;
 
   const closeLightbox = () => setSelectedIndex(null);
 
   const showPrev = () => {
     if (selectedIndex === null) return;
-    setSelectedIndex((selectedIndex - 1 + items.length) % items.length);
+    setSelectedIndex((selectedIndex - 1 + allItems.length) % allItems.length);
   };
 
   const showNext = () => {
     if (selectedIndex === null) return;
-    setSelectedIndex((selectedIndex + 1) % items.length);
+    setSelectedIndex((selectedIndex + 1) % allItems.length);
   };
 
   useEffect(() => {
@@ -146,23 +177,19 @@ export default function ProjectsGallery() {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [selectedIndex]);
-
-  useEffect(() => {
-    setSelectedIndex(null);
-  }, [cat]);
+  }, [selectedIndex, allItems.length]);
 
   return (
     <main dir="rtl" className="bg-white">
       <SeoHead
-  title={pageTitle}
-  description={pageDescription}
-  canonical={canonical}
-  ogImage={ogImage}
-  jsonLd={gallerySchema}
-/>
+        title={pageTitle}
+        description={pageDescription}
+        canonical={canonical}
+        ogImage={ogImage}
+        jsonLd={gallerySchema}
+      />
 
-      <section className="pt-28 pb-10">
+      <section className="pt-28 pb-12">
         <div className="container-custom px-4">
           <div className="text-center">
             <span className="inline-block bg-gold/10 text-gold-dark px-4 py-2 rounded-full text-sm font-semibold mb-4">
@@ -170,61 +197,61 @@ export default function ProjectsGallery() {
             </span>
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900">
-              عظم / تشطيب / <span className="text-gold">ترفيه</span>
+              معرض مشاريع <span className="text-gold">بنيان الهرم</span>
             </h1>
 
-            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-              اختر القسم وشاهد نماذج حقيقية من أعمال بنيان الهرم.
+            <p className="mt-3 text-gray-600 max-w-3xl mx-auto">
+              شاهد جميع نماذج الأعمال المنفذة فعليًا ضمن أقسام التشطيب والعظم
+              والترفيه داخل صفحة واحدة واضحة وسهلة التصفح.
             </p>
           </div>
 
-          {/* Tabs */}
-          <div className="mt-8 sticky top-[90px] z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 py-3">
-            <div className="flex flex-wrap gap-2 justify-center">
-              {CATS.map((t) => {
-                const active = cat === t.key;
-                return (
-                  <button
-                    key={t.key}
-                    type="button"
-                    onClick={() => setCat(t.key)}
-                    className={[
-                      "px-4 py-2 rounded-xl text-sm font-bold transition border",
-                      active
-                        ? "bg-gold text-black border-gold"
-                        : "bg-white text-gray-900 border-gray-200 hover:bg-gold/10 hover:border-gold/40",
-                    ].join(" ")}
-                  >
-                    {t.label}
-                  </button>
-                );
-              })}
-            </div>
+          <div className="mt-10 space-y-12">
+            {sections.map((section) => {
+              const sectionStartIndex = allItems.findIndex(
+                (item) =>
+                  item.categoryLabel === section.label &&
+                  item.categoryTitle === section.title
+              );
 
-            <div className="text-center mt-2 text-sm text-gray-600">{title}</div>
-          </div>
+              return (
+                <section key={section.key} aria-labelledby={`gallery-${section.key}`}>
+                  <div className="mb-5 text-center">
+                    <h2
+                      id={`gallery-${section.key}`}
+                      className="text-2xl sm:text-3xl font-extrabold text-gray-900"
+                    >
+                      {section.label}
+                    </h2>
+                    <p className="mt-2 text-sm sm:text-base text-gray-600">
+                      {section.title}
+                    </p>
+                  </div>
 
-          {/* Grid */}
-          <div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-            {items.map((img, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => setSelectedIndex(i)}
-                className="group rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 shadow-sm text-right"
-              >
-                <SmartImage
-                  src={img.src}
-                  alt={img.alt}
-                  className="w-full h-44 md:h-52 lg:h-56 object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-                />
-              </button>
-            ))}
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                    {section.items.map((img, i) => (
+                      <button
+                        key={`${section.key}-${i}`}
+                        type="button"
+                        onClick={() => setSelectedIndex(sectionStartIndex + i)}
+                        className="group rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 shadow-sm text-right"
+                        aria-label={`فتح الصورة: ${img.alt}`}
+                      >
+                        <SmartImage
+                          src={img.src}
+                          alt={img.alt}
+                          className="w-full h-44 md:h-52 lg:h-56 object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Lightbox */}
       {selectedImage && (
         <div
           className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4"
@@ -247,21 +274,24 @@ export default function ProjectsGallery() {
           >
             <button
               onClick={closeLightbox}
-              className="absolute top-3 left-3 text-white"
+              className="absolute top-3 left-3 text-white z-10"
+              aria-label="إغلاق"
             >
               <X />
             </button>
 
             <button
               onClick={showPrev}
-              className="absolute right-3 top-1/2 text-white"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-white z-10"
+              aria-label="الصورة السابقة"
             >
               <ChevronRight />
             </button>
 
             <button
               onClick={showNext}
-              className="absolute left-3 top-1/2 text-white"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-white z-10"
+              aria-label="الصورة التالية"
             >
               <ChevronLeft />
             </button>
@@ -272,8 +302,14 @@ export default function ProjectsGallery() {
               className="w-full max-h-[82vh] object-contain"
             />
 
-            <div className="text-center text-white mt-3">
-              {selectedIndex! + 1} / {items.length}
+            <div className="text-center text-white mt-3 space-y-1">
+              <div className="text-sm text-white/80">
+                {selectedImage.categoryLabel}
+              </div>
+              <div className="font-medium">{selectedImage.alt}</div>
+              <div className="text-sm">
+                {selectedIndex! + 1} / {allItems.length}
+              </div>
             </div>
           </div>
         </div>
