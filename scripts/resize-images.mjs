@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import sharp from "sharp";
 
-const ROOT = path.resolve("app/public");
+path.join(process.cwd(), "public")
 
 // قواعد ريسايز حسب المجلد
 function getMaxWidth(filePath) {

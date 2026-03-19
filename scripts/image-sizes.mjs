@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 import { imageSize } from "image-size";
 
 const exts = new Set([".webp", ".png", ".jpg", ".jpeg", ".avif"]);
-const root = path.resolve("app/public");
+path.join(process.cwd(), "public")
 
 const results = [];
 
