@@ -13,53 +13,22 @@ if (!fs.existsSync(sourceIndex)) {
 
 const html = fs.readFileSync(sourceIndex, "utf-8");
 
-const publicProjectsDir = path.resolve("public", "projects");
-
-const CATEGORIES = [
-  { key: "finishing", label: "مشاريع التشطيب" },
-  { key: "concrete", label: "مشاريع العظم" },
-  { key: "entertainment", label: "مشاريع الترفيه" },
-];
-
-function isImageFile(fileName) {
-  return /\.(webp|jpg|jpeg|png)$/i.test(fileName);
-}
-
-function buildAlt(categoryLabel, fileName) {
-  const cleanName = fileName
-    .replace(/\.(webp|jpg|jpeg|png)$/i, "")
-    .replace(/[-_]+/g, " ")
-    .trim();
-
-  return cleanName
-    ? `${categoryLabel} - ${cleanName} - بنيان الهرم للمقاولات`
-    : `${categoryLabel} في الرياض - بنيان الهرم للمقاولات`;
-}
+// ✅ قراءة JSON
+const galleryPath = path.resolve("app/src/data/gallery.json");
+const gallery = JSON.parse(fs.readFileSync(galleryPath, "utf-8"));
 
 function buildCategoryImages(category) {
-  const dir = path.join(publicProjectsDir, category.key);
+  if (!category?.items?.length) return "";
 
-  if (!fs.existsSync(dir)) return "";
-
-  const files = fs
-    .readdirSync(dir)
-    .filter(isImageFile)
-    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
-
-  if (!files.length) return "";
-
-  const imagesHtml = files
-    .map((fileName) => {
-      const src = `/projects/${category.key}/${fileName}`;
-      const alt = buildAlt(category.label, fileName);
-
-      return `<img src="${src}" alt="${alt}" loading="lazy" decoding="async" class="w-full h-44 md:h-52 lg:h-56 object-cover rounded-2xl border border-gray-100 shadow-sm" />`;
+  const imagesHtml = category.items
+    .map((item) => {
+      return `<img src="${item.src}" alt="${item.alt}" loading="lazy" decoding="async" class="w-full h-44 md:h-52 lg:h-56 object-cover rounded-2xl border border-gray-100 shadow-sm" />`;
     })
     .join("\n");
 
   return `
     <div class="mt-10">
-      <div class="text-center text-sm text-gray-600 mb-4">${category.label}</div>
+      <div class="text-center text-sm text-gray-600 mb-4">${category.title}</div>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
         ${imagesHtml}
       </div>
@@ -67,7 +36,10 @@ function buildCategoryImages(category) {
   `;
 }
 
-const categoriesHtml = CATEGORIES.map(buildCategoryImages).join("\n");
+// ✅ بناء كل الأقسام من JSON
+const categoriesHtml = Object.values(gallery)
+  .map(buildCategoryImages)
+  .join("\n");
 
 const staticProjectsHtml = `
 <main dir="rtl" class="bg-white">
@@ -101,4 +73,4 @@ const updatedHtml = html.replace(
 fs.mkdirSync(projectsDir, { recursive: true });
 fs.writeFileSync(projectsIndex, updatedHtml, "utf-8");
 
-console.log("Pre-rendered /projects -> dist/projects/index.html");
+console.log("✅ Pre-rendered /projects from gallery.json");
