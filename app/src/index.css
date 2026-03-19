@@ -120,32 +120,7 @@ a[href^="tel:"] {
   unicode-bidi: plaintext;
 }
 
-/* ================= HEADER LOGO FIX ================= */
-
-header a[href="#hero"],
-header a[href$="#hero"] {
-  font-size: 0 !important;
-  line-height: 0 !important;
-  color: transparent !important;
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-}
-
-header a[href="#hero"] *,
-header a[href$="#hero"] * {
-  display: none !important;
-}
-
-header a[href="#hero"]::before,
-header a[href$="#hero"]::before {
-  content: "";
-  width: 42px;
-  height: 42px;
-  display: inline-block;
-  background: url("/assets/logo.webp") no-repeat center;
-  background-size: contain;
-}
+/* HEADER LOGO FIX REMOVED: using the real logo from Navbar only */
 
 /* ================= BADGES FIX ================= */
 
