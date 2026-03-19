@@ -7,7 +7,7 @@ const SITE_URL = "https://pybcco.com";
 const OUTPUT = path.resolve("app/public/image-sitemap.xml");
 
 // ✅ قراءة البيانات من المصدر الموحد
-const galleryPath = path.resolve("app/src/data/gallery.json");
+const galleryPath = path.join(process.cwd(), "src/data/gallery.json");
 const gallery = JSON.parse(fs.readFileSync(galleryPath, "utf-8"));
 
 // 🧠 توزيع الصفحات (مهم جدًا للسيو)
