@@ -360,7 +360,7 @@ export default function Home() {
               <Button
                 onClick={() => window.open(WA_LINK, "_blank")}
                 size="lg"
-                className="text-gold bg-transparent hover:bg-white/10 px-8 py-6 text-lg w-full sm:w-auto"
+                className="text-gold border border-gold/50 bg-transparent hover:bg-gold/10 hover:border-gold transition-all duration-300 px-8 py-6 text-lg w-full sm:w-auto"
               >
                 <Phone className="w-5 h-5 ml-2" />
                 اطلب معاينة
