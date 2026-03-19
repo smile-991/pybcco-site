@@ -14,7 +14,7 @@ if (!fs.existsSync(sourceIndex)) {
 const html = fs.readFileSync(sourceIndex, "utf-8");
 
 // ✅ قراءة JSON
-const galleryPath = path.resolve("app/src/data/gallery.json");
+const galleryPath = path.resolve("src/data/gallery.json");
 const gallery = JSON.parse(fs.readFileSync(galleryPath, "utf-8"));
 
 function buildCategoryImages(category) {
