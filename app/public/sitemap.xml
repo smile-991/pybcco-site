@@ -55,15 +55,6 @@ xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   </url>
 
   <url>
-  <loc>https://pybcco.com/engineering-insights/case-study-villa-renovation-riyadh</loc>
-  <video:video>
-    <video:title>تشطيب فيلا فاخر في الرياض</video:title>
-    <video:description>مشروع تشطيب فاخر في الرياض - شركة بنيان الهرم للمقاولات</video:description>
-    <video:content_loc>https://www.youtube.com/shorts/VIDEO_ID</video:content_loc>
-  </video:video>
-</url>
-
-  <url>
     <loc>https://pybcco.com/projects</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
