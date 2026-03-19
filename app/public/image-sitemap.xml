@@ -1,68 +1,294 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
->
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://pybcco.com/construction-company-riyadh</loc>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-1.webp</image:loc>
+      <image:title>تنفيذ مرحلة العظم لفيلا في الرياض يشمل اللبشة الخرسانية وأعمال تأسيس السباكة والكهرباء في موقع المشروع</image:title>
+      <image:caption>تنفيذ مرحلة العظم لفيلا في الرياض يشمل اللبشة الخرسانية وأعمال تأسيس السباكة والكهرباء في موقع المشروع</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-2.webp</image:loc>
+      <image:title>تنفيذ مرحلة العظم لفيلا في الرياض يشمل اللبشة الخرسانية وأعمال تأسيس السباكة والكهرباء في موقع المشروع</image:title>
+      <image:caption>تنفيذ مرحلة العظم لفيلا في الرياض يشمل اللبشة الخرسانية وأعمال تأسيس السباكة والكهرباء في موقع المشروع</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-3.webp</image:loc>
+      <image:title>تنفيذ مرحلة العظم لفيلا في الرياض يشمل اللبشة الخرسانية وأعمال تأسيس السباكة والكهرباء في موقع المشروع</image:title>
+      <image:caption>تنفيذ مرحلة العظم لفيلا في الرياض يشمل اللبشة الخرسانية وأعمال تأسيس السباكة والكهرباء في موقع المشروع</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-4.webp</image:loc>
+      <image:title>تنفيذ أعمال حديد التسليح لفيلا في الرياض قبل صب الخرسانة يشمل تجهيز اللبشة والبلاطة وفق المخططات الإنشائية</image:title>
+      <image:caption>تنفيذ أعمال حديد التسليح لفيلا في الرياض قبل صب الخرسانة يشمل تجهيز اللبشة والبلاطة وفق المخططات الإنشائية</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-5.webp</image:loc>
+      <image:title>تنفيذ أعمال حديد التسليح لفيلا في الرياض قبل صب الخرسانة يشمل تجهيز اللبشة والبلاطة وفق المخططات الإنشائية</image:title>
+      <image:caption>تنفيذ أعمال حديد التسليح لفيلا في الرياض قبل صب الخرسانة يشمل تجهيز اللبشة والبلاطة وفق المخططات الإنشائية</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-6.webp</image:loc>
+      <image:title>تسوية موقع بناء فيلا في الرياض مع تحديد حدود المشروع بشريط تحذيري قبل تنفيذ الحفر والإنشاء</image:title>
+      <image:caption>تسوية موقع بناء فيلا في الرياض مع تحديد حدود المشروع بشريط تحذيري قبل تنفيذ الحفر والإنشاء</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-7.webp</image:loc>
+      <image:title>تنفيذ مرحلة العظم لفيلا في الرياض يشمل اللبشة الخرسانية وأعمال تأسيس السباكة والكهرباء في موقع المشروع</image:title>
+      <image:caption>تنفيذ مرحلة العظم لفيلا في الرياض يشمل اللبشة الخرسانية وأعمال تأسيس السباكة والكهرباء في موقع المشروع</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-8.webp</image:loc>
+      <image:title>شبكة حديد تسليح لخزان مياه خرساني في الرياض قبل صب الخرسانة تشمل القاعدة والجدران وفق المخططات الإنشائية</image:title>
+      <image:caption>شبكة حديد تسليح لخزان مياه خرساني في الرياض قبل صب الخرسانة تشمل القاعدة والجدران وفق المخططات الإنشائية</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-9.webp</image:loc>
+      <image:title>شبكة حديد تسليح لخزان مياه خرساني في الرياض قبل صب الخرسانة تشمل القاعدة والجدران وفق المخططات الإنشائية</image:title>
+      <image:caption>شبكة حديد تسليح لخزان مياه خرساني في الرياض قبل صب الخرسانة تشمل القاعدة والجدران وفق المخططات الإنشائية</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-10.webp</image:loc>
+      <image:title>شبكة حديد تسليح لخزان مياه خرساني في الرياض قبل صب الخرسانة تشمل القاعدة والجدران وفق المخططات الإنشائية</image:title>
+      <image:caption>شبكة حديد تسليح لخزان مياه خرساني في الرياض قبل صب الخرسانة تشمل القاعدة والجدران وفق المخططات الإنشائية</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-11.webp</image:loc>
+      <image:title>تنفيذ أعمال تسليح بيسمنت فيلا في الرياض مع تجهيز القاعدة والجدران وفتحات الخدمات استعدادًا لصب الخرسانة</image:title>
+      <image:caption>تنفيذ أعمال تسليح بيسمنت فيلا في الرياض مع تجهيز القاعدة والجدران وفتحات الخدمات استعدادًا لصب الخرسانة</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-12.webp</image:loc>
+      <image:title>تنفيذ هيكل خرساني لفيلا في الرياض مع اكتمال مرحلة العظم والبلكونات قبل بدء أعمال اللياسة والتشطيب</image:title>
+      <image:caption>تنفيذ هيكل خرساني لفيلا في الرياض مع اكتمال مرحلة العظم والبلكونات قبل بدء أعمال اللياسة والتشطيب</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-13.webp</image:loc>
+      <image:title>تنفيذ مشروع فلل سكنية في الرياض يشمل عدة فيلات دوبلكس مع أعمال الأساسات والقواعد ضمن مراحل البناء الإنشائية</image:title>
+      <image:caption>تنفيذ مشروع فلل سكنية في الرياض يشمل عدة فيلات دوبلكس مع أعمال الأساسات والقواعد ضمن مراحل البناء الإنشائية</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-14.webp</image:loc>
+      <image:title>خطوات بناء فيلا في الرياض من الأساسات إلى الهيكل الخرساني الكامل ضمن مراحل تنفيذ العظم</image:title>
+      <image:caption>خطوات بناء فيلا في الرياض من الأساسات إلى الهيكل الخرساني الكامل ضمن مراحل تنفيذ العظم</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-15.webp</image:loc>
+      <image:title>تنفيذ أعمال الهيكل الخرساني لمبنى تجاري في الرياض يشمل الأعمدة والأسقف ضمن مرحلة العظم</image:title>
+      <image:caption>تنفيذ أعمال الهيكل الخرساني لمبنى تجاري في الرياض يشمل الأعمدة والأسقف ضمن مرحلة العظم</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://pybcco.com/villa-finishing-riyadh</loc>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-01.webp</image:loc>
+      <image:title>تشطيب داخلي في الرياض – أعمال معجون وتهيئة دهان الجدران حول النوافذ داخل مشروع تجاري مرتفع</image:title>
+      <image:caption>تشطيب داخلي في الرياض – أعمال معجون وتهيئة دهان الجدران حول النوافذ داخل مشروع تجاري مرتفع</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-02.webp</image:loc>
+      <image:title>تشطيب مطعم في الرياض بتصميم داخلي عصري يشمل ديكورات صفراء مميزة وإضاءة احترافية وأعمال تنفيذ متكاملة</image:title>
+      <image:caption>تشطيب مطعم في الرياض بتصميم داخلي عصري يشمل ديكورات صفراء مميزة وإضاءة احترافية وأعمال تنفيذ متكاملة</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-03.webp</image:loc>
+      <image:title>تشطيب مطعم في الرياض بتصميم داخلي عصري يشمل ديكورات صفراء مميزة وإضاءة احترافية وأعمال تنفيذ متكاملة</image:title>
+      <image:caption>تشطيب مطعم في الرياض بتصميم داخلي عصري يشمل ديكورات صفراء مميزة وإضاءة احترافية وأعمال تنفيذ متكاملة</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-04.webp</image:loc>
+      <image:title>تشطيب مطعم في الرياض بتصميم داخلي عصري يشمل ديكورات صفراء مميزة وإضاءة احترافية وأعمال تنفيذ متكاملة</image:title>
+      <image:caption>تشطيب مطعم في الرياض بتصميم داخلي عصري يشمل ديكورات صفراء مميزة وإضاءة احترافية وأعمال تنفيذ متكاملة</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-05.webp</image:loc>
+      <image:title>تشطيب مطعم في الرياض بتصميم داخلي عصري يشمل ديكورات صفراء مميزة وإضاءة احترافية وأعمال تنفيذ متكاملة</image:title>
+      <image:caption>تشطيب مطعم في الرياض بتصميم داخلي عصري يشمل ديكورات صفراء مميزة وإضاءة احترافية وأعمال تنفيذ متكاملة</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-06.webp</image:loc>
+      <image:title>تشطيب مجلس مودرن في الرياض بتصميم داخلي أنيق يشمل إضاءة مخفية وديكور خشبي وإطلالة على السطح</image:title>
+      <image:caption>تشطيب مجلس مودرن في الرياض بتصميم داخلي أنيق يشمل إضاءة مخفية وديكور خشبي وإطلالة على السطح</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-07.webp</image:loc>
+      <image:title>مقارنة مراحل بناء قبل و بعد فيلا بالرياض تشمل العظم والتشطيب والتصميم ثلاثي الأبعاد والتنفيذ النهائي</image:title>
+      <image:caption>مقارنة مراحل بناء قبل و بعد فيلا بالرياض تشمل العظم والتشطيب والتصميم ثلاثي الأبعاد والتنفيذ النهائي</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-08.webp</image:loc>
+      <image:title>تنفيذ سيراميك حمام فيلا بالرياض باستخدام بلاط كبير ونظام تثبيت احترافي خلال مرحلة التشطيب الداخلي</image:title>
+      <image:caption>تنفيذ سيراميك حمام فيلا بالرياض باستخدام بلاط كبير ونظام تثبيت احترافي خلال مرحلة التشطيب الداخلي</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-09.webp</image:loc>
+      <image:title>تشطيب مجلس مقلط في الرياض بتصميم داخلي أنيق يشمل إضاءة مخفية وديكور خشبي وإطلالة على السطح</image:title>
+      <image:caption>تشطيب مجلس مقلط في الرياض بتصميم داخلي أنيق يشمل إضاءة مخفية وديكور خشبي وإطلالة على السطح</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-10.webp</image:loc>
+      <image:title>تصميم حمام مودرن فاخر في الرياض مع شاور زجاجي وإضاءة مخفية وبلاط تيرازو وتشطيب عالي الجودة</image:title>
+      <image:caption>تصميم حمام مودرن فاخر في الرياض مع شاور زجاجي وإضاءة مخفية وبلاط تيرازو وتشطيب عالي الجودة</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-11.webp</image:loc>
+      <image:title>تجهيز جلسة سطح فيلا في الرياض يشمل بناء قواعد خرسانية وتركيب مظلة خارجية خلال مرحلة التشطيب</image:title>
+      <image:caption>تجهيز جلسة سطح فيلا في الرياض يشمل بناء قواعد خرسانية وتركيب مظلة خارجية خلال مرحلة التشطيب</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-12.webp</image:loc>
+      <image:title>تصميم حمام مودرن فاخر في الرياض مع شاور زجاجي وإضاءة مخفية وبلاط تيرازو وتشطيب عالي الجودة</image:title>
+      <image:caption>تصميم حمام مودرن فاخر في الرياض مع شاور زجاجي وإضاءة مخفية وبلاط تيرازو وتشطيب عالي الجودة</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-13.webp</image:loc>
+      <image:title>تجهيز جلسة سطح فيلا في الرياض يشمل بناء قواعد خرسانية وتركيب مظلة حديد خارجية خلال مرحلة التشطيب</image:title>
+      <image:caption>تجهيز جلسة سطح فيلا في الرياض يشمل بناء قواعد خرسانية وتركيب مظلة حديد خارجية خلال مرحلة التشطيب</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-14.webp</image:loc>
+      <image:title>تشطيب مجلس مقلط في الرياض بتصميم داخلي أنيق يشمل إضاءة مخفية وديكور خشبي وإطلالة على السطح</image:title>
+      <image:caption>تشطيب مجلس مقلط في الرياض بتصميم داخلي أنيق يشمل إضاءة مخفية وديكور خشبي وإطلالة على السطح</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-15.webp</image:loc>
+      <image:title>تنفيذ مشروع تشطيب فلل إسكان في الرياض بعدد 600 فيلا يتضمن أعمال البلاط والدهان بإدارة فريق عمل كبير</image:title>
+      <image:caption>تنفيذ مشروع تشطيب فلل إسكان في الرياض بعدد 600 فيلا يتضمن أعمال البلاط والدهان بإدارة فريق عمل كبير</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-16.webp</image:loc>
+      <image:title>تنفيذ سقف جبس بورد في مشروع بالرياض مع أعمال دهان وتمديدات كهرباء وإدارة فريق العمل في الموقع</image:title>
+      <image:caption>تنفيذ سقف جبس بورد في مشروع بالرياض مع أعمال دهان وتمديدات كهرباء وإدارة فريق العمل في الموقع</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-17.webp</image:loc>
+      <image:title>تشطيب كامل محل عطور درعة في الرياض يشمل أسقف جبس بورد مع إضاءة سبوت لايت ونظام تكييف مخفي بتصميم تجاري حديث</image:title>
+      <image:caption>تشطيب كامل محل عطور درعة في الرياض يشمل أسقف جبس بورد مع إضاءة سبوت لايت ونظام تكييف مخفي بتصميم تجاري حديث</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-18.webp</image:loc>
+      <image:title>تشطيب كامل محل عطور درعة في الرياض يشمل أسقف جبس بورد مع إضاءة سبوت لايت ونظام تكييف مخفي بتصميم تجاري حديث</image:title>
+      <image:caption>تشطيب كامل محل عطور درعة في الرياض يشمل أسقف جبس بورد مع إضاءة سبوت لايت ونظام تكييف مخفي بتصميم تجاري حديث</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-19.webp</image:loc>
+      <image:title>تشطيب كامل محل عطور درعة في الرياض يشمل أسقف جبس بورد مع إضاءة سبوت لايت ونظام تكييف مخفي بتصميم تجاري حديث</image:title>
+      <image:caption>تشطيب كامل محل عطور درعة في الرياض يشمل أسقف جبس بورد مع إضاءة سبوت لايت ونظام تكييف مخفي بتصميم تجاري حديث</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-20.webp</image:loc>
+      <image:title>تنفيذ أرضيات مكاتب في الرياض يشمل موكيت مربعات ونظام Raised Floor ضمن أعمال التشطيب الداخلي للمساحات الإدارية</image:title>
+      <image:caption>تنفيذ أرضيات مكاتب في الرياض يشمل موكيت مربعات ونظام Raised Floor ضمن أعمال التشطيب الداخلي للمساحات الإدارية</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-21.webp</image:loc>
+      <image:title>تنفيذ أرضيات مكاتب في الرياض يشمل موكيت مربعات ونظام Raised Floor ضمن أعمال التشطيب الداخلي للمساحات الإدارية</image:title>
+      <image:caption>تنفيذ أرضيات مكاتب في الرياض يشمل موكيت مربعات ونظام Raised Floor ضمن أعمال التشطيب الداخلي للمساحات الإدارية</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-22.webp</image:loc>
+      <image:title>تشطيب كامل محل تجاري عطور درعة في الرياض يشمل أسقف جبس بورد مع إضاءة سبوت لايت ونظام تكييف مخفي بتصميم تجاري حديث</image:title>
+      <image:caption>تشطيب كامل محل تجاري عطور درعة في الرياض يشمل أسقف جبس بورد مع إضاءة سبوت لايت ونظام تكييف مخفي بتصميم تجاري حديث</image:caption>
+    </image:image>
+  </url>
   <url>
     <loc>https://pybcco.com/projects</loc>
-
-    <image:image><image:loc>https://pybcco.com/projects/concrete/concrete-1.webp</image:loc><image:title>مشروع عظم فيلا سكنية في الرياض — صورة 1</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/concrete/concrete-2.webp</image:loc><image:title>مشروع عظم فيلا سكنية في الرياض — صورة 2</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/concrete/concrete-3.webp</image:loc><image:title>مشروع عظم فيلا سكنية في الرياض — صورة 3</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/concrete/concrete-4.webp</image:loc><image:title>مشروع عظم فيلا سكنية في الرياض — صورة 4</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/concrete/concrete-5.webp</image:loc><image:title>مشروع عظم فيلا سكنية في الرياض — صورة 5</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/concrete/concrete-6.webp</image:loc><image:title>مشروع عظم فيلا سكنية في الرياض — صورة 6</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/concrete/concrete-7.webp</image:loc><image:title>مشروع عظم فيلا سكنية في الرياض — صورة 7</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/concrete/concrete-8.webp</image:loc><image:title>مشروع عظم فيلا سكنية في الرياض — صورة 8</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/concrete/concrete-9.webp</image:loc><image:title>مشروع عظم فيلا سكنية في الرياض — صورة 9</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/concrete/concrete-10.webp</image:loc><image:title>مشروع عظم فيلا سكنية في الرياض — صورة 10</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/concrete/concrete-11.webp</image:loc><image:title>مشروع عظم فيلا سكنية في الرياض — صورة 11</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/concrete/concrete-12.webp</image:loc><image:title>مشروع عظم فيلا سكنية في الرياض — صورة 12</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/concrete/concrete-13.webp</image:loc><image:title>مشروع عظم فيلا سكنية في الرياض — صورة 13</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/concrete/concrete-14.webp</image:loc><image:title>مشروع عظم فيلا سكنية في الرياض — صورة 14</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/concrete/concrete-15.webp</image:loc><image:title>مشروع عظم فيلا سكنية في الرياض — صورة 15</image:title></image:image>
-
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-01.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 1</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-02.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 2</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-03.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 3</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-04.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 4</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-05.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 5</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-06.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 6</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-07.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 7</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-08.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 8</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-09.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 9</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-10.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 10</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-11.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 11</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-12.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 12</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-13.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 13</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-14.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 14</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-15.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 15</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-16.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 16</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-17.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 17</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-18.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 18</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-19.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 19</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-20.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 20</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-21.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 21</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/finishing/finishing-22.webp</image:loc><image:title>مشروع تشطيب فيلا سكنية في الرياض — صورة 22</image:title></image:image>
-
-    <image:image><image:loc>https://pybcco.com/projects/entertainment/entertainment-01.webp</image:loc><image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 1</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/entertainment/entertainment-02.webp</image:loc><image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 2</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/entertainment/entertainment-03.webp</image:loc><image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 3</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/entertainment/entertainment-04.webp</image:loc><image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 4</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/entertainment/entertainment-05.webp</image:loc><image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 5</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/entertainment/entertainment-06.webp</image:loc><image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 6</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/entertainment/entertainment-07.webp</image:loc><image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 7</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/entertainment/entertainment-08.webp</image:loc><image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 8</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/entertainment/entertainment-09.webp</image:loc><image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 9</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/entertainment/entertainment-10.webp</image:loc><image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 10</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/entertainment/entertainment-11.webp</image:loc><image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 11</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/entertainment/entertainment-12.webp</image:loc><image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 12</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/entertainment/entertainment-13.webp</image:loc><image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 13</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/entertainment/entertainment-14.webp</image:loc><image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 14</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/entertainment/entertainment-15.webp</image:loc><image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 15</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/entertainment/entertainment-16.webp</image:loc><image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 16</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/entertainment/entertainment-17.webp</image:loc><image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 17</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/entertainment/entertainment-18.webp</image:loc><image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 18</image:title></image:image>
-    <image:image><image:loc>https://pybcco.com/projects/entertainment/entertainment-19.webp</image:loc><image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 19</image:title></image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/entertainment/entertainment-01.webp</image:loc>
+      <image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 1</image:title>
+      <image:caption>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 1</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/entertainment/entertainment-02.webp</image:loc>
+      <image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 2</image:title>
+      <image:caption>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 2</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/entertainment/entertainment-03.webp</image:loc>
+      <image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 3</image:title>
+      <image:caption>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 3</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/entertainment/entertainment-04.webp</image:loc>
+      <image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 4</image:title>
+      <image:caption>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 4</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/entertainment/entertainment-05.webp</image:loc>
+      <image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 5</image:title>
+      <image:caption>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 5</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/entertainment/entertainment-06.webp</image:loc>
+      <image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 6</image:title>
+      <image:caption>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 6</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/entertainment/entertainment-07.webp</image:loc>
+      <image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 7</image:title>
+      <image:caption>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 7</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/entertainment/entertainment-08.webp</image:loc>
+      <image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 8</image:title>
+      <image:caption>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 8</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/entertainment/entertainment-09.webp</image:loc>
+      <image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 9</image:title>
+      <image:caption>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 9</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/entertainment/entertainment-10.webp</image:loc>
+      <image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 10</image:title>
+      <image:caption>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 10</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/entertainment/entertainment-11.webp</image:loc>
+      <image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 11</image:title>
+      <image:caption>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 11</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/entertainment/entertainment-12.webp</image:loc>
+      <image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 12</image:title>
+      <image:caption>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 12</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/entertainment/entertainment-13.webp</image:loc>
+      <image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 13</image:title>
+      <image:caption>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 13</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/entertainment/entertainment-14.webp</image:loc>
+      <image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 14</image:title>
+      <image:caption>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 14</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/entertainment/entertainment-15.webp</image:loc>
+      <image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 15</image:title>
+      <image:caption>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 15</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/entertainment/entertainment-16.webp</image:loc>
+      <image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 16</image:title>
+      <image:caption>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 16</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/entertainment/entertainment-17.webp</image:loc>
+      <image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 17</image:title>
+      <image:caption>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 17</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/entertainment/entertainment-18.webp</image:loc>
+      <image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 18</image:title>
+      <image:caption>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 18</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/entertainment/entertainment-19.webp</image:loc>
+      <image:title>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 19</image:title>
+      <image:caption>مشروع ترفيهي (تنفيذ وتجهيز) في الرياض — صورة 19</image:caption>
+    </image:image>
   </url>
 </urlset>
