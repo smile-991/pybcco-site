@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Calculator,
@@ -17,10 +17,10 @@ import { Button } from "@/components/ui/button";
 
 import SeoHead from "@/components/SeoHead";
 
-import Contact from "./Contact";
-import Team from "./Team";
-import Certificates from "./Certificates";
-import Partners from "./Partners";
+const Contact = lazy(() => import("./Contact"));
+const Team = lazy(() => import("./Team"));
+const Certificates = lazy(() => import("./Certificates"));
+const Partners = lazy(() => import("./Partners"));
 
 import { GALLERY, type GalleryCat } from "../data/gallery";
 
@@ -307,20 +307,25 @@ export default function Home() {
       {/* HERO */}
       <section
         id="hero"
-        className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
+        className="relative min-h-[85svh] sm:min-h-[100svh] flex items-center justify-center overflow-hidden"
       >
         <div className="absolute inset-0">
           <img
-            src={heroImage}
-            alt="شركة مقاولات بالرياض"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+  src={heroImage}
+  alt="شركة مقاولات بالرياض"
+  width={1600}
+  height={900}
+  className="absolute inset-0 w-full h-full object-cover"
+  loading="eager"
+  fetchPriority="high"
+  decoding="async"
+/>
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/85" />
         </div>
 
         <div className="relative z-10 container-custom pt-24 pb-14 px-4">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-gold/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+            <div className="inline-flex items-center gap-2 bg-gold/20 rounded-full px-4 py-2 mb-6 sm:backdrop-blur-sm">
               <span className="w-2 h-2 bg-gold rounded-full" />
               <span className="text-gold text-sm font-medium">
                 شركة مقاولات بالرياض
@@ -338,18 +343,18 @@ export default function Home() {
               زمني منضبط وجودة تسليم.
             </p>
 
-            <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
-              <Link
-                to={CASE_STUDY_URL}
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-bold text-white hover:bg-white/15 transition"
-              >
-                شاهد دراسة حالة حقيقية (قبل/بعد)
-                <span className="text-gold">←</span>
-              </Link>
-              <span className="text-white/55 text-xs">
-                صور مراحل التنفيذ + النتيجة النهائية
-              </span>
-            </div>
+            <div className="mt-5 hidden sm:flex flex-wrap items-center justify-center gap-3">
+  <Link
+    to={CASE_STUDY_URL}
+    className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-bold text-white hover:bg-white/15 transition"
+  >
+    شاهد دراسة حالة حقيقية (قبل/بعد)
+    <span className="text-gold">←</span>
+  </Link>
+  <span className="text-white/55 text-xs">
+    صور مراحل التنفيذ + النتيجة النهائية
+  </span>
+</div>
 
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
@@ -383,11 +388,11 @@ export default function Home() {
               </Button>
             </div>
 
-            <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 max-w-3xl mx-auto">
+            <div className="hidden mt-12 max-w-3xl mx-auto grid-cols-2 gap-3 sm:grid sm:grid-cols-4 sm:gap-6">
               {STATS.map((s, i) => (
                 <div
                   key={i}
-                  className="bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-5"
+                  className="bg-white/10 rounded-2xl p-4 sm:p-5 sm:backdrop-blur-md"
                 >
                   <div className="text-2xl sm:text-3xl font-extrabold text-white">
                     {s.value}
@@ -623,18 +628,24 @@ export default function Home() {
 
       {/* فريق العمل */}
       <section id="team">
-        <Team />
-      </section>
+  <Suspense fallback={null}>
+    <Team />
+  </Suspense>
+</section>
 
       {/* الشهادات */}
       <section id="certificates">
-        <Certificates />
-      </section>
+  <Suspense fallback={null}>
+    <Certificates />
+  </Suspense>
+</section>
 
       {/* الشركاء */}
       <section id="partners">
-        <Partners />
-      </section>
+  <Suspense fallback={null}>
+    <Partners />
+  </Suspense>
+</section>
 
       {/* FAQ (ظاهر) — مربوط بالـ Schema */}
       <section id="faq" className="section-padding bg-white">
@@ -701,8 +712,10 @@ export default function Home() {
 
       {/* Contact */}
       <section id="contact">
-        <Contact />
-      </section>
+  <Suspense fallback={null}>
+    <Contact />
+  </Suspense>
+</section>
 
       {/* SEO نص بسيط */}
       <section id="seo" className="section-padding bg-white">

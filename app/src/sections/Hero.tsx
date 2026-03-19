@@ -64,7 +64,7 @@ export default function Hero() {
             /images/hero-mobile.webp 800w,
             /images/hero-webp.webp 1600w
           "
-          sizes="(max-width: 768px) 100vw, 1600px"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1600px"
           alt=""
           aria-hidden="true"
           fetchPriority="high"
