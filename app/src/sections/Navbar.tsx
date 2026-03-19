@@ -122,7 +122,7 @@ export default function Navbar() {
                 e.preventDefault();
                 goTo("#hero");
               }}
-              className="flex items-center gap-2"
+              className="flex items-center"
               aria-label="بنيان الهرم للمقاولات - PYBCCO"
             >
               <span className="sr-only">بنيان الهرم للمقاولات - PYBCCO</span>
@@ -137,18 +137,6 @@ export default function Navbar() {
                 decoding="async"
               />
 
-              <div
-                className={`hidden sm:block ${
-                  isScrolled ? "text-black" : "text-white"
-                }`}
-              >
-                <div className="font-bold text-[15px] leading-tight whitespace-nowrap">
-                  بنيان الهرم
-                </div>
-                <p className="text-[11px] opacity-80 whitespace-nowrap">
-                  للمقاولات
-                </p>
-              </div>
             </a>
           </div>
 
