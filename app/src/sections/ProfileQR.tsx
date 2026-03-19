@@ -10,8 +10,14 @@ export default function ProfileQR() {
       <div className="container-custom max-w-2xl">
         <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-6 md:p-8">
           <div className="text-center">
-            <div className="mx-auto h-14 w-14 rounded-2xl bg-gray-900/5 flex items-center justify-center">
-              <span className="text-xl font-black text-gray-900">PY</span>
+            <div className="mx-auto h-14 w-14 rounded-2xl bg-gray-900/5 flex items-center justify-center overflow-hidden">
+              <img
+                src="/assets/logo.webp"
+                alt="شعار بنيان الهرم للمقاولات"
+                className="h-full w-full object-contain"
+                loading="eager"
+                decoding="async"
+              />
             </div>
 
             <h1 className="mt-4 text-2xl md:text-3xl font-extrabold text-gray-900">
