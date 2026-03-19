@@ -360,7 +360,7 @@ export default function Home() {
               <Button
                 onClick={() => window.open(WA_LINK, "_blank")}
                 size="lg"
-                className="bg-gold hover:bg-gold/90 text-black font-bold px-8 py-6 text-lg w-full sm:w-auto"
+                className="text-gold bg-transparent hover:bg-white/10 px-8 py-6 text-lg w-full sm:w-auto"
               >
                 <Phone className="w-5 h-5 ml-2" />
                 اطلب معاينة
@@ -370,7 +370,7 @@ export default function Home() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="text-gold bg-transparent hover:bg-white/10 px-8 py-6 text-lg w-full sm:w-auto"
+                className="bg-gold hover:bg-gold/90 text-black font-bold px-8 py-6 text-lg w-full sm:w-auto"
               >
                 <Link to="/villa-finishing-price-riyadh">
                   <Calculator className="w-5 h-5 ml-2" />
