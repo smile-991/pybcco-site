@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import sharp from "sharp";
 
-path.join(process.cwd(), "public")
+const ROOT = path.join(process.cwd(), "public");
 
 // قواعد ريسايز حسب المجلد
 function getMaxWidth(filePath) {
@@ -11,16 +11,16 @@ function getMaxWidth(filePath) {
   // Hero / صور كبيرة
   if (p.includes("/public/images/")) return 1600;
 
-  // مشاريع (غالباً عرض كبير بس مو 3K)
+  // مشاريع
   if (p.includes("/public/projects/")) return 1600;
 
   // Case Study
   if (p.includes("/public/casestudy/")) return 1600;
 
-  // Certificates (عادة نصوص، نخليها أكبر شوي)
+  // Certificates
   if (p.includes("/public/certificates/")) return 2000;
 
-  // متجر ديكور (صور منتجات)
+  // متجر ديكور
   if (p.includes("/public/decor/")) return 1200;
 
   // افتراضي
@@ -54,13 +54,10 @@ async function walk(dir) {
       const img = sharp(fullPath);
       const meta = await img.metadata();
 
-      // إذا ما في width أو ملف غريب تجاهله
       if (!meta.width) continue;
 
-      // ما نكبّر صور صغيرة
       const targetW = Math.min(meta.width, maxW);
 
-      // إعدادات ضغط حسب النوع
       const isPng = ext === ".png";
       const isJpg = ext === ".jpg" || ext === ".jpeg";
       const isWebp = ext === ".webp";
@@ -71,7 +68,6 @@ async function walk(dir) {
         withoutEnlargement: true,
       });
 
-      // نثبت الفورمات الحالي (بدون تغيير امتداد)
       if (isWebp) pipeline = pipeline.webp({ quality: 78 });
       else if (isAvif) pipeline = pipeline.avif({ quality: 55 });
       else if (isJpg) pipeline = pipeline.jpeg({ quality: 78, mozjpeg: true });
@@ -81,7 +77,7 @@ async function walk(dir) {
       const buf = await pipeline.toBuffer();
       const after = buf.length;
 
-      // إذا صار أكبر (نادر) لا تستبدل
+      // لا تستبدل إذا الملف الناتج أكبر
       if (after >= before) continue;
 
       fs.writeFileSync(fullPath, buf);
@@ -99,6 +95,11 @@ async function walk(dir) {
   }
 }
 
+if (!fs.existsSync(ROOT)) {
+  console.error("❌ public folder not found:", ROOT);
+  process.exit(1);
+}
+
 await walk(ROOT);
 
-console.log(`\nDone. Scanned: ${scanned}, Optimized: ${changed}`);
+console.log(`\n✅ Done. Scanned: ${scanned}, Optimized: ${changed}`);

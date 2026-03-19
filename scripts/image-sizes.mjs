@@ -1,10 +1,9 @@
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
 import { imageSize } from "image-size";
 
+const root = path.join(process.cwd(), "public");
 const exts = new Set([".webp", ".png", ".jpg", ".jpeg", ".avif"]);
-path.join(process.cwd(), "public")
 
 const results = [];
 
@@ -31,9 +30,9 @@ function walk(dir) {
         file: fullPath
           .replace(process.cwd() + path.sep, "")
           .replace(/\\/g, "/"),
-        type,
-        width,
-        height,
+        type: type || "",
+        width: width || "",
+        height: height || "",
         sizeKB,
       });
     } catch (err) {
@@ -42,9 +41,14 @@ function walk(dir) {
   }
 }
 
+if (!fs.existsSync(root)) {
+  console.error("❌ public folder not found:", root);
+  process.exit(1);
+}
+
 walk(root);
 
-// ترتيب حسب الحجم (الأكبر أولاً) لتعرف المشكلة فورًا
+// ترتيب حسب الحجم الأكبر أولاً
 results.sort((a, b) => Number(b.sizeKB) - Number(a.sizeKB));
 
 const csv =
