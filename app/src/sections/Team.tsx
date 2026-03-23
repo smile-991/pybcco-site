@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Phone, Mail, Linkedin, User } from 'lucide-react';
+import { User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -17,8 +17,6 @@ const teamMembers = [
     position: 'المدير العام',
     positionEn: 'General Manager',
     image: null,
-    phone: '+966550604837',
-    email: 'info@pybcco.com',
     bio: 'يمتلك أكثر من 15 عاماً من الخبرة في مجال المقاولات وإدارة المشاريع الكبرى. قاد الشركة منذ تأسيسها وحقق نمواً مستمراً في حجم الأعمال والمشاريع.',
     achievements: [
       'قيادة أكثر من 90 مشروعاً ناجحاً',
@@ -33,8 +31,6 @@ const teamMembers = [
     position: 'مدير المشاريع',
     positionEn: 'Projects Manager',
     image: null,
-    phone: '+966550604837',
-    email: 'm.h.jabasini@pybcco.com',
     bio: 'مهندس معماري متخصص في إدارة المشاريع الإنشائية. يمتلك خبرة واسعة في الإشراف على المشاريع الكبرى وضمان جودة التنفيذ.',
     achievements: [
       'إدارة مشاريع بقيمة تتجاوز 50 مليون ريال',
@@ -49,8 +45,6 @@ const teamMembers = [
     position: 'منسقة المشاريع',
     positionEn: 'Project Coordinator',
     image: null,
-    phone: '+966550604837',
-    email: 'info@pybcco.com',
     bio: 'متخصصة في تنسيق العمل بين الفرق المختلفة ومتابعة سير المشاريع. تضمن التواصل الفعال بين العملاء والفريق التنفيذي.',
     achievements: [
       'تنسيق أكثر من 30 مشروعاً',
@@ -65,8 +59,6 @@ const teamMembers = [
     position: 'مهندسة معمارية',
     positionEn: 'Senior Architect',
     image: null,
-    phone: '+966550604837',
-    email: 'info@pybcco.com',
     bio: 'مهندسة معمارية متخصصة في التصميم الداخلي والخارجي. تقدم حلولاً إبداعية تجمع بين الجمال والوظيفة.',
     achievements: [
       'تصميم أكثر من 50 مشروعاً',
@@ -81,8 +73,6 @@ const teamMembers = [
     position: 'العلاقات العامة',
     positionEn: 'Public Relations',
     image: null,
-    phone: '+966550604837',
-    email: 'info@pybcco.com',
     bio: 'مسؤول عن إدارة العلاقات العامة والتواصل مع العملاء والشركاء. يعمل على تعزيز صورة الشركة وبناء علاقات طويلة الأمد.',
     achievements: [
       'بناء شبكة علاقات واسعة',
@@ -97,8 +87,6 @@ const teamMembers = [
     position: 'مهندس أول',
     positionEn: 'Senior Engineer',
     image: null,
-    phone: '+966550604837',
-    email: 'info@pybcco.com',
     bio: 'مهندس إنشائي متخصص في أعمال الخرسانة والهياكل المعدنية. يمتلك خبرة عميقة في التنفيذ الإنشائي للمشاريع الكبرى.',
     achievements: [
       'إشراف على مشاريع ضخمة',
@@ -194,40 +182,9 @@ export default function Team() {
                 <p className="text-gray-500 text-xs mb-1">{member.nameEn}</p>
                 <p className="text-gold font-semibold text-sm mb-3">{member.position}</p>
 
-                {/* Contact Buttons */}
-                <div className="flex justify-center gap-2">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="w-9 h-9 rounded-full hover:bg-gold/10 hover:text-gold hover:border-gold"
-                    onClick={() => window.open(`tel:${member.phone}`)}
-                    aria-label={`اتصال ${member.name}`}
-                  >
-                    <Phone className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="w-9 h-9 rounded-full hover:bg-gold/10 hover:text-gold hover:border-gold"
-                    onClick={() => window.open(`mailto:${member.email}`)}
-                    aria-label={`إرسال بريد إلى ${member.name}`}
-                  >
-                    <Mail className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="w-9 h-9 rounded-full hover:bg-gold/10 hover:text-gold hover:border-gold"
-                    aria-label={`LinkedIn ${member.name}`}
-                    onClick={() => setSelectedMember(member)}
-                  >
-                    <Linkedin className="w-4 h-4" />
-                  </Button>
-                </div>
-
                 <Button
                   variant="ghost"
-                  className="mt-3 text-gold hover:text-gold-dark hover:bg-gold/10 h-9 px-3"
+                  className="mt-2 text-gold hover:text-gold-dark hover:bg-gold/10 h-9 px-3"
                   onClick={() => setSelectedMember(member)}
                 >
                   المزيد
@@ -303,25 +260,6 @@ export default function Team() {
                       </li>
                     ))}
                   </ul>
-                </div>
-
-                <div className="flex gap-3 pt-3">
-                  <Button
-                    variant="outline"
-                    className="flex-1"
-                    onClick={() => window.open(`tel:${selectedMember.phone}`)}
-                  >
-                    <Phone className="w-4 h-4 mr-2" />
-                    اتصال
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="flex-1"
-                    onClick={() => window.open(`mailto:${selectedMember.email}`)}
-                  >
-                    <Mail className="w-4 h-4 mr-2" />
-                    بريد
-                  </Button>
                 </div>
               </div>
             </>
