@@ -7,7 +7,7 @@
 <description>Construction, villa finishing, and project insights in Riyadh</description>
 
 <language>ar-sa</language>
-<lastBuildDate>Mon, 18 Mar 2026 12:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 26 Apr 2026 12:00:00 GMT</lastBuildDate>
 
 <!-- 🔥 Calculator -->
 <item>
@@ -55,6 +55,18 @@
 </description>
 <pubDate>Sat, 08 Mar 2026 12:00:00 GMT</pubDate>
 <enclosure url="https://pybcco.com/og-image.jpg" type="image/jpeg"/>
+</item>
+
+<!-- 🏗 Restaurant Outdoor Case Study -->
+<item>
+<title>تشطيب جلسات خارجية لمطعم في الرياض خلال 12 يوم | دراسة حالة</title>
+<link>https://pybcco.com/case-study-restaurant-outdoor-riyadh</link>
+<guid>https://pybcco.com/case-study-restaurant-outdoor-riyadh</guid>
+<description>
+دراسة حالة لمشروع تشطيب جلسات خارجية لمطعم في الرياض خلال 12 يوم فقط، شمل أرضية خرسانة مطبوعة وديكور يوناني شعبي وفرش كامل للجلسات الخارجية.
+</description>
+<pubDate>Sun, 26 Apr 2026 12:00:00 GMT</pubDate>
+<enclosure url="https://pybcco.com/projects/restaurant-outdoor/10-restaurant-outdoor-seating-after-riyadh.webp" type="image/webp"/>
 </item>
 
 </channel>
