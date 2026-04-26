@@ -106,6 +106,13 @@ xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   </url>
 
   <url>
+  <loc>https://pybcco.com/case-study-restaurant-outdoor-riyadh</loc>
+  <lastmod>2026-04-26</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+  <url>
     <loc>https://pybcco.com/privacy-policy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
