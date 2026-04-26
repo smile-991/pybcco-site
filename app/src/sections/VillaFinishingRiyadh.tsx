@@ -85,13 +85,18 @@ export default function VillaFinishingRiyadh() {
             تشطيب فلل بالرياض باحترافية عالية وتسليم مفتاح
           </h1>
 
-          <p className="mt-6 text-lg text-gray-300 leading-relaxed text-center max-w-3xl mx-auto">
-            نقدم خدمات تشطيب فلل بالرياض بأعلى معايير الجودة والاحتراف، مع إشراف
-            هندسي كامل وطاقم مراقبين متخصصين. ننفذ أعمال التشطيب الداخلي والخارجي
-            وتسليم مفتاح بأسعار تبدأ من
-            <span className="text-gold font-bold"> 450 ريال للمتر</span>
-            حسب نوع المواد ومتطلبات العميل.
-          </p>
+<p className="leading-8 text-gray-700">
+  نقدم خدمات تشطيب متكاملة تشمل المساحات الداخلية والخارجية للمشاريع السكنية والتجارية في الرياض.
+
+  {" "}ومن ضمن أعمالنا، يمكنك{" "}
+  <Link
+    to="/case-study-restaurant-outdoor-riyadh"
+    className="text-amber-600 font-bold hover:underline"
+  >
+    مشاهدة مشروع تشطيب جلسات خارجية لمطعم في الرياض (قبل وبعد)
+  </Link>
+  {" "}للاطلاع على جودة التنفيذ الفعلية.
+</p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <Button

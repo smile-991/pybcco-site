@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { GALLERY, type GalleryCat } from "../data/gallery";
 import SeoHead from "@/components/SeoHead";
@@ -206,7 +207,42 @@ export default function ProjectsGallery() {
             </p>
           </div>
 
-          <div className="mt-10 space-y-12">
+          <div className="mt-10">
+            <Link
+              to="/case-study-restaurant-outdoor-riyadh"
+              className="group grid overflow-hidden rounded-3xl border border-amber-100 bg-gradient-to-br from-stone-950 to-stone-800 shadow-lg md:grid-cols-2"
+            >
+              <div className="relative min-h-[280px] overflow-hidden">
+                <SmartImage
+                  src="/projects/restaurant-outdoor/10-restaurant-outdoor-seating-after-riyadh.webp"
+                  alt="تشطيب جلسات خارجية لمطعم في الرياض بعد التنفيذ"
+                  className="h-full min-h-[280px] w-full object-cover transition duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/20" />
+              </div>
+
+              <div className="flex flex-col justify-center p-6 text-white md:p-10">
+                <span className="mb-3 w-fit rounded-full bg-amber-500/15 px-4 py-2 text-sm font-bold text-amber-300">
+                  دراسة حالة جديدة
+                </span>
+
+                <h2 className="text-2xl font-extrabold leading-tight md:text-4xl">
+                  تشطيب جلسات خارجية لمطعم في الرياض
+                </h2>
+
+                <p className="mt-4 leading-8 text-stone-200">
+                  شاهد مراحل تحويل مساحة خارجية لمطعم إلى جلسات جاهزة للاستخدام
+                  التجاري من خلال صور قبل وبعد التنفيذ.
+                </p>
+
+                <span className="mt-6 w-fit rounded-xl bg-amber-500 px-5 py-3 font-bold text-stone-950 transition group-hover:bg-amber-400">
+                  شاهد دراسة الحالة
+                </span>
+              </div>
+            </Link>
+          </div>
+
+          <div className="mt-12 space-y-12">
             {sections.map((section) => {
               const sectionStartIndex = allItems.findIndex(
                 (item) =>

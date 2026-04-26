@@ -35,6 +35,7 @@ import PrivacyPolicy from "@/sections/PrivacyPolicy";
 import TermsAndConditions from "@/sections/TermsAndConditions";
 import AccountHome from "@/sections/AccountHome";
 import ProjectDetailsPage from "@/sections/ProjectDetailsPage";
+import CaseStudyRestaurantOutdoorRiyadh from "./sections/CaseStudyRestaurantOutdoorRiyadh";
 
 import EngineeringInsightsSection from "@/sections/engineering-insights";
 import EngineeringInsightsCostPage from "@/engineering-insights/EngineeringInsightsCostPage";
@@ -136,6 +137,10 @@ export default function App() {
           <Route path="/apartment-finishing-riyadh" element={<ApartmentFinishingRiyadh />} />
           <Route path="/home-renovation-company-riyadh" element={<HomeRenovationCompanyRiyadh />} />
           <Route path="/contractor-almalqa-riyadh" element={<ContractorAlMalqaRiyadh />} />
+          <Route
+  path="/case-study-restaurant-outdoor-riyadh"
+  element={<CaseStudyRestaurantOutdoorRiyadh />}
+/>
 
           <Route path="/account" element={<AccountHome />} />
           <Route path="/portal" element={<PortalPage />} />

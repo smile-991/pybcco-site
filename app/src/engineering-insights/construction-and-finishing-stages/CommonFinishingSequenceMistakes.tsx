@@ -425,6 +425,15 @@ export default function CommonFinishingSequenceMistakes() {
                   أكثر وضوحًا عبر الحاسبة.
                 </p>
 
+                <div className="mt-4">
+  <Link
+    to="/case-study-restaurant-outdoor-riyadh"
+    className="text-amber-600 font-bold hover:underline"
+  >
+    شاهد مثال عملي: تشطيب جلسات خارجية لمطعم في الرياض (قبل وبعد)
+  </Link>
+</div>
+
                 <div className="mt-5 flex flex-wrap gap-3">
                   <Link
                     to={CALCULATOR_PATH}
