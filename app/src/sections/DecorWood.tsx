@@ -17,7 +17,7 @@ type Product = {
   code: string;
   mainCandidates: string[];
   extraCandidates?: string[];
-};
+};   
 
 const SITE_URL = "https://pybcco.com";
 
