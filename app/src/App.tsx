@@ -104,6 +104,7 @@ import MarbleVsQuartzVsPorcelainCountertops from "./engineering-insights/compari
 import AluminumVsUpvcWindowsRiyadh from "./engineering-insights/comparisons-and-options/AluminumVsUpvcWindowsRiyadh";
 import TurnkeyVsSeparateContractorsRiyadh from "./engineering-insights/comparisons-and-options/TurnkeyVsSeparateContractorsRiyadh";
 import OpenVsClosedKitchenSaudiHome from "./engineering-insights/comparisons-and-options/OpenVsClosedKitchenSaudiHome";
+import AnnexConstructionCostRiyadh from "@/sections/AnnexConstructionCostRiyadh";
 
 
 
@@ -228,6 +229,10 @@ export default function App() {
           <Route
   path="/engineering-insights/cost/bathroom-renovation-cost-riyadh"
   element={<BathroomRenovationCostRiyadh />}
+/>
+<Route
+  path="/engineering-insights/cost/annex-construction-cost-riyadh"
+  element={<AnnexConstructionCostRiyadh />}
 />
 
           <Route
