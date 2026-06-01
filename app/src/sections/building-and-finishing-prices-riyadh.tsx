@@ -2,42 +2,48 @@ import { Link } from "react-router-dom";
 import SeoHead from "@/components/SeoHead";
 
 const priceCards = [
-  {
-    title: "تكلفة ترميم حمام كامل",
-    price: "من 6,000 إلى 11,000 ريال",
-    desc: "يشمل التكسير، السباكة، العزل، البلاط، الأدوات الصحية حسب المواصفات.",
-    href: "/engineering-insights/cost/bathroom-renovation-cost-riyadh",
-  },
-  {
-    title: "سعر متر العظم مع المواد",
-    price: "حسب المساحة والمخططات",
-    desc: "تكلفة الهيكل الإنشائي مع المواد والتنفيذ، وتختلف حسب التصميم والتربة.",
-    href: "/engineering-insights/cost/gray-structure-cost-riyadh",
-  },
-  {
-    title: "تكلفة بناء ملحق",
-    price: "من 10,800 إلى 16,000 ريال",
-    desc: "ملحق قياسي بمساحة تقريبية 15–20 م",
-    href: "/engineering-insights/cost/annex-construction-cost-riyadh",
-  },
-  {
-    title: "سعر متر الجبس بورد",
-    price: "من 90 إلى 110 ريال / م²",
-    desc: "أسقف مستوية أو ديكورية حسب السماكة، التصميم، والإنارة المخفية.",
-    href: "/engineering-insights/cost/gypsum-board-price-riyadh",
-  },
-  {
-    title: "سعر متر الدهان",
-    price: "من 18 إلى 45 ريال / م²",
-    desc: "حسب نوع المعجون، عدد الأوجه، جودة الدهان، وحالة الجدران.",
-    href: "/engineering-insights/cost/painting-price-per-square-meter-riyadh",
-  },
-  {
-    title: "سعر متر البورسلان والسيراميك",
-    price: "من 70 إلى 180 ريال / م²",
-    desc: "يشمل التركيب وقد يختلف حسب المقاس، القص، الوزرات، ونوع المادة.",
-    href: "/engineering-insights/cost/porcelain-installation-price-riyadh",
-  },
+{
+  title: "تكلفة ترميم حمام كامل",
+  price: "من 6,000 إلى 11,000 ريال",
+  desc: "يشمل التكسير، السباكة، العزل، البلاط، الأدوات الصحية حسب المواصفات.",
+  href: "/engineering-insights/cost/bathroom-renovation-cost-riyadh",
+  image: "/images/bathroom.webp",
+},
+{
+  title: "سعر متر العظم مع المواد",
+  price: "حسب المساحة والمخططات",
+  desc: "تكلفة الهيكل الإنشائي مع المواد والتنفيذ، وتختلف حسب التصميم والتربة.",
+  href: "/engineering-insights/cost/gray-structure-cost-riyadh",
+  image: "/projects/concrete/concrete-11.webp",
+},
+{
+  title: "تكلفة بناء ملحق",
+  price: "من 10,800 إلى 16,000 ريال",
+  desc: "ملحق قياسي بمساحة تقريبية 15–20 م",
+  href: "/engineering-insights/cost/annex-construction-cost-riyadh",
+  image: "/projects/concrete/concrete-12.webp",
+},
+{
+  title: "سعر متر الجبس بورد",
+  price: "من 90 إلى 110 ريال / م²",
+  desc: "أسقف مستوية أو ديكورية حسب السماكة، التصميم، والإنارة المخفية.",
+  href: "/engineering-insights/cost/gypsum-board-price-riyadh",
+  image: "/projects/finishing/finishing-16.webp",
+},
+{
+  title: "سعر متر الدهان",
+  price: "من 18 إلى 45 ريال / م²",
+  desc: "حسب نوع المعجون، عدد الأوجه، جودة الدهان، وحالة الجدران.",
+  href: "/engineering-insights/cost/painting-price-per-square-meter-riyadh",
+  image: "/images/hero-mobile.webp",
+},
+{
+  title: "سعر متر البورسلان والسيراميك",
+  price: "من 70 إلى 180 ريال / م²",
+  desc: "يشمل التركيب وقد يختلف حسب المقاس، القص، الوزرات، ونوع المادة.",
+  href: "/engineering-insights/cost/porcelain-installation-price-riyadh",
+  image: "/projects/finishing/finishing-08.webp",
+},
 
 ];
 
@@ -140,29 +146,46 @@ export default function BuildingAndFinishingPricesRiyadh() {
 
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {priceCards.map((card) => (
-              <Link
-                key={card.title}
-                to={card.href}
-                className="group rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-yellow-400 hover:shadow-xl"
-              >
-                <div className="mb-4 inline-flex rounded-full bg-yellow-100 px-3 py-1 text-xs font-extrabold text-yellow-700">
-                  سعر تقديري
-                </div>
+<Link
+  key={card.title}
+  to={card.href}
+  className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-yellow-400 hover:shadow-xl"
+>
+  <div className="relative h-56 overflow-hidden">
+    <img
+      src={card.image}
+      alt={card.title}
+      loading="lazy"
+      className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+    />
 
-                <h3 className="text-xl font-black text-slate-950 group-hover:text-yellow-600">
-                  {card.title}
-                </h3>
+    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-                <p className="mt-3 text-2xl font-black text-slate-900">
-                  {card.price}
-                </p>
+    <div className="absolute bottom-4 right-4 left-4">
+      <div className="mb-2 inline-flex rounded-full bg-yellow-400 px-3 py-1 text-xs font-extrabold text-black">
+        سعر تقديري
+      </div>
 
-                <p className="mt-4 leading-7 text-slate-600">{card.desc}</p>
+      <h3 className="text-xl font-black text-white">
+        {card.title}
+      </h3>
+    </div>
+  </div>
 
-                <span className="mt-6 inline-flex text-sm font-extrabold text-yellow-600">
-                  عرض التفاصيل ←
-                </span>
-              </Link>
+  <div className="p-6">
+    <p className="text-2xl font-black text-slate-900">
+      {card.price}
+    </p>
+
+    <p className="mt-4 leading-7 text-slate-600">
+      {card.desc}
+    </p>
+
+    <span className="mt-6 inline-flex text-sm font-extrabold text-yellow-600">
+      عرض التفاصيل ←
+    </span>
+  </div>
+</Link>
             ))}
           </div>
         </section>
