@@ -110,6 +110,7 @@ import GypsumBoardPriceRiyadh from "@/sections/GypsumBoardPriceRiyadh";
 
 
 import { Toaster } from "@/components/ui/sonner";
+import PaintingPricePerSquareMeterRiyadh from "./sections/PaintingPricePerSquareMeterRiyadh";
 
 export default function App() {
   return (
@@ -148,6 +149,10 @@ export default function App() {
 <Route
   path="/engineering-insights/cost/gypsum-board-price-riyadh"
   element={<GypsumBoardPriceRiyadh />}
+/>
+<Route
+  path="/engineering-insights/cost/painting-price-per-square-meter-riyadh"
+  element={<PaintingPricePerSquareMeterRiyadh />}
 />
 
           <Route path="/account" element={<AccountHome />} />
