@@ -93,6 +93,7 @@ import PlumbingAndElectricalCostFinishing from "@/engineering-insights/cost/plum
 import HowToEstimateProjectCostInitially from "@/engineering-insights/cost/how-to-estimate-project-cost-initially";
 import MisleadingQuotationMistakes from "@/engineering-insights/cost/misleading-quotation-mistakes";
 import HowToCompareFinishingQuotations from "@/engineering-insights/cost/how-to-compare-finishing-quotations";
+import BathroomRenovationCostRiyadh from "@/sections/costbathroom-renovation-cost-riyadh";
 
 import ComparisonsAndOptions from "./engineering-insights/comparisons-and-options";
 import EconomicVsLuxuryFinishingRiyadh from "./engineering-insights/comparisons-and-options/EconomicVsLuxuryFinishingRiyadh";
@@ -224,6 +225,10 @@ export default function App() {
           <Route path="/engineering-insights/cost/how-to-estimate-project-cost-initially" element={<HowToEstimateProjectCostInitially />} />
           <Route path="/engineering-insights/cost/misleading-quotation-mistakes" element={<MisleadingQuotationMistakes />} />
           <Route path="/engineering-insights/cost/how-to-compare-finishing-quotations" element={<HowToCompareFinishingQuotations />} />
+          <Route
+  path="/engineering-insights/cost/bathroom-renovation-cost-riyadh"
+  element={<BathroomRenovationCostRiyadh />}
+/>
 
           <Route
   path="/engineering-insights/comparisons-options"
