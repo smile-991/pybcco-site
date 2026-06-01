@@ -105,6 +105,7 @@ import AluminumVsUpvcWindowsRiyadh from "./engineering-insights/comparisons-and-
 import TurnkeyVsSeparateContractorsRiyadh from "./engineering-insights/comparisons-and-options/TurnkeyVsSeparateContractorsRiyadh";
 import OpenVsClosedKitchenSaudiHome from "./engineering-insights/comparisons-and-options/OpenVsClosedKitchenSaudiHome";
 import AnnexConstructionCostRiyadh from "@/sections/AnnexConstructionCostRiyadh";
+import GypsumBoardPriceRiyadh from "@/sections/GypsumBoardPriceRiyadh";
 
 
 
@@ -143,6 +144,10 @@ export default function App() {
           <Route
   path="/case-study-restaurant-outdoor-riyadh"
   element={<CaseStudyRestaurantOutdoorRiyadh />}
+/>
+<Route
+  path="/engineering-insights/cost/gypsum-board-price-riyadh"
+  element={<GypsumBoardPriceRiyadh />}
 />
 
           <Route path="/account" element={<AccountHome />} />
