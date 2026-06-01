@@ -16,7 +16,7 @@ const priceCards = [
   },
   {
     title: "تكلفة بناء ملحق",
-    price: "من 10,800 إلى 16,000 ريال / م²",
+    price: "من 10,800 إلى 16,000 ريال",
     desc: "حسب نوع البناء، السقف، العزل، التشطيب، الكهرباء والسباكة.",
     href: "/engineering-insights/cost/annex-construction-cost-riyadh",
   },
