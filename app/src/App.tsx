@@ -111,6 +111,7 @@ import GypsumBoardPriceRiyadh from "@/sections/GypsumBoardPriceRiyadh";
 
 import { Toaster } from "@/components/ui/sonner";
 import PaintingPricePerSquareMeterRiyadh from "./sections/PaintingPricePerSquareMeterRiyadh";
+import PorcelainInstallationPriceRiyadh from "./sections/PorcelainInstallationPriceRiyadh";
 
 export default function App() {
   return (
@@ -281,7 +282,10 @@ export default function App() {
   path="/engineering-insights/comparisons-options/open-vs-closed-kitchen-saudi-home"
   element={<OpenVsClosedKitchenSaudiHome />}
 />
-
+<Route
+  path="/engineering-insights/cost/porcelain-installation-price-riyadh"
+  element={<PorcelainInstallationPriceRiyadh />}
+/>
 
           <Route path="/case-study-villa-renovation-riyadh" element={<CaseStudyVillaRiyadh />} />
 
