@@ -1,3 +1,4 @@
+```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
 <channel>
@@ -7,7 +8,7 @@
 <description>Construction, villa finishing, and project insights in Riyadh</description>
 
 <language>ar-sa</language>
-<lastBuildDate>Sun, 26 Apr 2026 12:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 01 Jun 2026 12:00:00 GMT</lastBuildDate>
 
 <!-- 🔥 Calculator -->
 <item>
@@ -69,5 +70,18 @@
 <enclosure url="https://pybcco.com/projects/restaurant-outdoor/10-restaurant-outdoor-seating-after-riyadh.webp" type="image/webp"/>
 </item>
 
+<!-- 💰 Prices Guide -->
+<item>
+<title>دليل أسعار البناء والتشطيب في الرياض 2026</title>
+<link>https://pybcco.com/building-and-finishing-prices-riyadh</link>
+<guid>https://pybcco.com/building-and-finishing-prices-riyadh</guid>
+<description>
+دليل شامل لأسعار البناء والتشطيب والترميم في الرياض، يشمل تكلفة ترميم الحمامات، بناء الملاحق، الجبس بورد، الدهان، والبورسلان مع روابط تفصيلية لكل بند.
+</description>
+<pubDate>Mon, 01 Jun 2026 12:00:00 GMT</pubDate>
+<enclosure url="https://pybcco.com/og-image.jpg" type="image/jpeg"/>
+</item>
+
 </channel>
 </rss>
+```

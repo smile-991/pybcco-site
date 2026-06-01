@@ -475,4 +475,40 @@ xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <priority>0.7</priority>
 </url>
 
+<url>
+  <loc>https://pybcco.com/building-and-finishing-prices-riyadh</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.90</priority>
+</url>
+
+<url>
+  <loc>https://pybcco.com/engineering-insights/cost/bathroom-renovation-cost-riyadh</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.80</priority>
+</url>
+
+<url>
+  <loc>https://pybcco.com/engineering-insights/cost/annex-construction-cost-riyadh</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.80</priority>
+</url>
+
+<url>
+  <loc>https://pybcco.com/engineering-insights/cost/gypsum-board-price-riyadh</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.80</priority>
+</url>
+
+<url>
+  <loc>https://pybcco.com/engineering-insights/cost/painting-price-per-square-meter-riyadh</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.80</priority>
+</url>
+
+<url>
+  <loc>https://pybcco.com/engineering-insights/cost/porcelain-installation-price-riyadh</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.80</priority>
+</url>
+
 </urlset>

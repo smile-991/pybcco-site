@@ -689,24 +689,37 @@ export default function Home() {
               جاهز تبدأ <span className="text-gold">مشروعك؟</span>
             </h2>
 
-            <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center">
-              <Button
-                asChild
-                size="lg"
-                className="bg-gold hover:bg-gold/90 text-black font-bold w-full sm:w-auto"
-              >
-                <Link to="/villa-finishing-price-riyadh">احسب التكلفة</Link>
-              </Button>
+<div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center">
+  <Button
+    asChild
+    size="lg"
+    className="bg-gold hover:bg-gold/90 text-black font-bold w-full sm:w-auto"
+  >
+    <Link to="/villa-finishing-price-riyadh">
+      احسب التكلفة
+    </Link>
+  </Button>
 
-              <Button
-                onClick={() => window.open(WA_LINK, "_blank")}
-                size="lg"
-                variant="outline"
-                className="text-white bg-transparent hover:bg-white/10 w-full sm:w-auto"
-              >
-                اطلب معاينة
-              </Button>
-            </div>
+  <Button
+    asChild
+    size="lg"
+    variant="outline"
+    className="text-white bg-transparent hover:bg-white/10 w-full sm:w-auto"
+  >
+    <Link to="/building-and-finishing-prices-riyadh">
+      دليل الأسعار
+    </Link>
+  </Button>
+
+  <Button
+    onClick={() => window.open(WA_LINK, "_blank")}
+    size="lg"
+    variant="outline"
+    className="text-white bg-transparent hover:bg-white/10 w-full sm:w-auto"
+  >
+    اطلب معاينة
+  </Button>
+</div>
           </div>
         </div>
       </section>

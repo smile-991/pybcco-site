@@ -85,7 +85,7 @@ export default function BuildingAndFinishingPricesRiyadh() {
     <>
       <SeoHead
         title="دليل أسعار البناء والتشطيب في الرياض 2026 | بنيان الهرم"
-        description="تعرف على متوسط أسعار البناء والتشطيب والترميم في الرياض، مثل تكلفة ترميم الحمام، سعر العظم، الجبس، الدهان، البلاط، الملاحق، والإنترلوك."
+        description="تعرف على متوسط أسعار البناء والتشطيب والترميم في الرياض، مثل تكلفة ترميم الحمام، سعر العظم، الجبس، الدهان، البلاط، الملاحق."
         canonical={canonical}
         robots="index,follow"
         jsonLd={jsonLd}
@@ -107,6 +107,10 @@ export default function BuildingAndFinishingPricesRiyadh() {
               الرياض، مع توضيح أن الأسعار تقديرية وتختلف حسب المساحة، جودة
               المواد، حالة الموقع، والمواصفات المطلوبة.
             </p>
+
+            <p className="mt-3 text-sm text-slate-400">
+آخر تحديث للأسعار: يونيو 2026
+</p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Link
