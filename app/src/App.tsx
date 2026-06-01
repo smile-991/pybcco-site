@@ -12,6 +12,7 @@ import ProjectTrackingSystemRiyadh from "./sections/ProjectTrackingSystemRiyadh"
 import CreateAccountPage from "./sections/create-account";
 import ActivateAccountPage from "./sections/activate-account";
 import RequestProjectPage from "@/sections/RequestProjectPage";
+import BuildingAndFinishingPricesRiyadh from "./sections/building-and-finishing-prices-riyadh";
 
 import Decor from "@/sections/Decor";
 import DecorWood from "@/sections/DecorWood";
@@ -152,6 +153,10 @@ export default function App() {
 
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route
+  path="/building-and-finishing-prices-riyadh"
+  element={<BuildingAndFinishingPricesRiyadh />}
+/>
 
           <Route path="/project-tracking-system-riyadh" element={<ProjectTrackingSystemRiyadh />} />
 
