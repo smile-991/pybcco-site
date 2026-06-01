@@ -38,18 +38,7 @@ const priceCards = [
     desc: "يشمل التركيب وقد يختلف حسب المقاس، القص، الوزرات، ونوع المادة.",
     href: "/engineering-insights/cost/porcelain-installation-price-riyadh",
   },
-  {
-    title: "سعر متر اللياسة",
-    price: "من 22 إلى 40 ريال / م²",
-    desc: "لياسة داخلية أو خارجية حسب السماكة، المواد، واستواء الجدران.",
-    href: "/engineering-insights/cost/plastering-price-per-square-meter-riyadh",
-  },
-  {
-    title: "سعر متر الإنترلوك",
-    price: "من 75 إلى 140 ريال / م²",
-    desc: "حسب سماكة البلاط، تجهيز الأرضية، الدفان، والبردورات.",
-    href: "/engineering-insights/cost/interlock-price-per-square-meter-riyadh",
-  },
+
 ];
 
 export default function BuildingAndFinishingPricesRiyadh() {
