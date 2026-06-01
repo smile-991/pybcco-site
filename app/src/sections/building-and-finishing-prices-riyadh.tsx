@@ -4,7 +4,7 @@ import SeoHead from "@/components/SeoHead";
 const priceCards = [
   {
     title: "تكلفة ترميم حمام كامل",
-    price: "من 6,000 إلى 18,000 ريال",
+    price: "من 6,000 إلى 11,000 ريال",
     desc: "يشمل التكسير، السباكة، العزل، البلاط، الأدوات الصحية حسب المواصفات.",
     href: "/engineering-insights/cost/bathroom-renovation-cost-riyadh",
   },
@@ -16,13 +16,13 @@ const priceCards = [
   },
   {
     title: "تكلفة بناء ملحق",
-    price: "من 1,800 إلى 3,000 ريال / م²",
+    price: "من 10,800 إلى 16,000 ريال / م²",
     desc: "حسب نوع البناء، السقف، العزل، التشطيب، الكهرباء والسباكة.",
     href: "/engineering-insights/cost/annex-construction-cost-riyadh",
   },
   {
     title: "سعر متر الجبس بورد",
-    price: "من 90 إلى 180 ريال / م²",
+    price: "من 90 إلى 110 ريال / م²",
     desc: "أسقف مستوية أو ديكورية حسب السماكة، التصميم، والإنارة المخفية.",
     href: "/engineering-insights/cost/gypsum-board-price-riyadh",
   },
