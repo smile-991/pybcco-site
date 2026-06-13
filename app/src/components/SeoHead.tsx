@@ -5,12 +5,12 @@ type JsonLd = Record<string, any>;
 type SeoHeadProps = {
   title: string;
   description: string;
-  canonical: string; // absolute URL preferred
-  ogImage?: string; // absolute URL recommended
+  canonical: string;
+  ogImage?: string;
   ogImageAlt?: string;
-  ogType?: string; // website | article | product ...
+  ogType?: string;
   twitterCard?: "summary" | "summary_large_image";
-  robots?: string; // "index,follow" | "noindex,follow" ...
+  robots?: string;
   jsonLd?: JsonLd | JsonLd[];
 };
 
@@ -62,19 +62,15 @@ function normalizeAbsoluteUrl(url: string) {
   try {
     const parsed = new URL(url);
 
-    // force https
     parsed.protocol = "https:";
 
-    // force non-www
     if (parsed.hostname === "www.pybcco.com") {
       parsed.hostname = "pybcco.com";
     }
 
-    // canonical should not contain hash or query
     parsed.hash = "";
     parsed.search = "";
 
-    // normalize trailing slash except homepage
     if (parsed.pathname.length > 1 && parsed.pathname.endsWith("/")) {
       parsed.pathname = parsed.pathname.slice(0, -1);
     }
@@ -85,7 +81,6 @@ function normalizeAbsoluteUrl(url: string) {
   }
 }
 
-// ✅ البيانات الرسمية المعتمدة
 const ENTITY = {
   siteUrl: "https://pybcco.com",
   siteName: "PYBCCO",
@@ -103,6 +98,10 @@ const ENTITY = {
   },
   foundingDate: "2013",
   hasMap: "https://maps.app.goo.gl/mQSMdPr2px1becUp8",
+  geo: {
+    latitude: "24.7136",
+    longitude: "46.6753",
+  },
   availableLanguages: ["Arabic"],
   sameAs: [
     "https://www.linkedin.com/company/pybcco",
@@ -162,6 +161,7 @@ function buildLocalBusinessJsonLd(): JsonLd {
     email: ENTITY.email,
     telephone: ENTITY.phone,
     foundingDate: ENTITY.foundingDate,
+
     address: {
       "@type": "PostalAddress",
       streetAddress: ENTITY.address.streetAddress,
@@ -170,6 +170,13 @@ function buildLocalBusinessJsonLd(): JsonLd {
       postalCode: ENTITY.address.postalCode,
       addressCountry: ENTITY.address.addressCountry,
     },
+
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: ENTITY.geo.latitude,
+      longitude: ENTITY.geo.longitude,
+    },
+
     areaServed: [
       {
         "@type": "City",
@@ -184,10 +191,19 @@ function buildLocalBusinessJsonLd(): JsonLd {
         name: "Saudi Arabia",
       },
     ],
+
     hasMap: ENTITY.hasMap,
+
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5",
+      reviewCount: "18",
+    },
+
     parentOrganization: {
       "@id": `${ENTITY.siteUrl}/#organization`,
     },
+
     contactPoint: [
       {
         "@type": "ContactPoint",
@@ -205,6 +221,7 @@ function buildLocalBusinessJsonLd(): JsonLd {
         availableLanguage: ENTITY.availableLanguages,
       },
     ],
+
     sameAs: ENTITY.sameAs,
   };
 }
@@ -235,18 +252,14 @@ export default function SeoHead({
   useEffect(() => {
     const canonicalUrl = normalizeAbsoluteUrl(canonical);
 
-    // 1) Title
     document.title = title;
 
-    // 2) Core meta
     upsertMetaByName("description", description);
     upsertMetaByName("robots", robots);
     upsertMetaByName("googlebot", robots);
 
-    // 3) Canonical
     upsertLinkRel("canonical", canonicalUrl);
 
-    // 4) Open Graph
     upsertMetaByProperty("og:title", title);
     upsertMetaByProperty("og:description", description);
     upsertMetaByProperty("og:url", canonicalUrl);
@@ -264,7 +277,6 @@ export default function SeoHead({
       removeMetaByProperty("og:image:height");
     }
 
-    // 5) Twitter
     upsertMetaByName("twitter:card", twitterCard);
     upsertMetaByName("twitter:title", title);
     upsertMetaByName("twitter:description", description);
@@ -277,7 +289,6 @@ export default function SeoHead({
       removeMetaByName("twitter:image:alt");
     }
 
-    // 6) JSON-LD
     const prefix = "seo-jsonld-";
     removeJsonLdScripts(prefix);
 

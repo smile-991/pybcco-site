@@ -1,14 +1,37 @@
-```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
 <channel>
 
 <title>PYBCCO Construction Insights</title>
 <link>https://pybcco.com</link>
-<description>Construction, villa finishing, and project insights in Riyadh</description>
+<description>Construction, villa finishing, project case studies, and cost guides in Riyadh</description>
 
 <language>ar-sa</language>
-<lastBuildDate>Mon, 01 Jun 2026 12:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 13 Jun 2026 12:00:00 GMT</lastBuildDate>
+
+<!-- 🏠 Homepage -->
+<item>
+<title>شركة مقاولات بالرياض | بنيان الهرم للمقاولات</title>
+<link>https://pybcco.com</link>
+<guid>https://pybcco.com</guid>
+<description>
+شركة مقاولات بالرياض متخصصة في بناء العظم، التشطيب، الترميم، والتسليم المفتاح بإشراف هندسي كامل.
+</description>
+<pubDate>Sat, 13 Jun 2026 12:00:00 GMT</pubDate>
+<enclosure url="https://pybcco.com/og-image.jpg" type="image/jpeg"/>
+</item>
+
+<!-- 👤 Company Profile -->
+<item>
+<title>بروفايل شركة بنيان الهرم للمقاولات | PYBCCO</title>
+<link>https://pybcco.com/profile</link>
+<guid>https://pybcco.com/profile</guid>
+<description>
+تعرف على ملف شركة بنيان الهرم للمقاولات، خدماتنا، مشاريعنا، وسجلنا التنفيذي في الرياض.
+</description>
+<pubDate>Sat, 13 Jun 2026 12:00:00 GMT</pubDate>
+<enclosure url="https://pybcco.com/logo.webp" type="image/webp"/>
+</item>
 
 <!-- 🔥 Calculator -->
 <item>
@@ -34,7 +57,7 @@
 <enclosure url="https://pybcco.com/og-image.jpg" type="image/jpeg"/>
 </item>
 
-<!-- 🏗 Case Study -->
+<!-- 🏗 Villa Case Study -->
 <item>
 <title>تشطيب فيلا فاخر في الرياض | دراسة حالة</title>
 <link>https://pybcco.com/case-study-villa-renovation-riyadh</link>
@@ -43,18 +66,6 @@
 تفاصيل تنفيذ مشروع تشطيب فاخر في الرياض مع جودة عالية وإدارة احترافية.
 </description>
 <pubDate>Sun, 16 Mar 2026 12:00:00 GMT</pubDate>
-<enclosure url="https://pybcco.com/og-image.jpg" type="image/jpeg"/>
-</item>
-
-<!-- 📊 Cost Article -->
-<item>
-<title>كم تكلفة بناء فيلا في الرياض؟</title>
-<link>https://pybcco.com/engineering-insights/cost/villa-construction-cost-riyadh</link>
-<guid>https://pybcco.com/engineering-insights/cost/villa-construction-cost-riyadh</guid>
-<description>
-دليل شامل لفهم تكلفة بناء الفلل في الرياض والعوامل المؤثرة على السعر.
-</description>
-<pubDate>Sat, 08 Mar 2026 12:00:00 GMT</pubDate>
 <enclosure url="https://pybcco.com/og-image.jpg" type="image/jpeg"/>
 </item>
 
@@ -68,6 +79,18 @@
 </description>
 <pubDate>Sun, 26 Apr 2026 12:00:00 GMT</pubDate>
 <enclosure url="https://pybcco.com/projects/restaurant-outdoor/10-restaurant-outdoor-seating-after-riyadh.webp" type="image/webp"/>
+</item>
+
+<!-- 📊 Cost Article -->
+<item>
+<title>كم تكلفة بناء فيلا في الرياض؟</title>
+<link>https://pybcco.com/engineering-insights/cost/villa-construction-cost-riyadh</link>
+<guid>https://pybcco.com/engineering-insights/cost/villa-construction-cost-riyadh</guid>
+<description>
+دليل شامل لفهم تكلفة بناء الفلل في الرياض والعوامل المؤثرة على السعر.
+</description>
+<pubDate>Sat, 08 Mar 2026 12:00:00 GMT</pubDate>
+<enclosure url="https://pybcco.com/og-image.jpg" type="image/jpeg"/>
 </item>
 
 <!-- 💰 Prices Guide -->
@@ -84,4 +107,3 @@
 
 </channel>
 </rss>
-```
