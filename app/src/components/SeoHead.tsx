@@ -103,14 +103,15 @@ const ENTITY = {
     longitude: "46.6753",
   },
   availableLanguages: ["Arabic"],
-  sameAs: [
-    "https://www.linkedin.com/company/pybcco",
-    "https://x.com/pybcco",
-    "https://instagram.com/pybcco.decor",
-    "https://www.facebook.com/pybcco",
-    "https://www.youtube.com/@pybcco",
-    "https://www.tiktok.com/@pybcco",
-  ],
+sameAs: [
+  "https://www.linkedin.com/company/pybcco",
+  "https://github.com/pybcco",
+  "https://x.com/pybcco",
+  "https://instagram.com/pybcco.decor",
+  "https://www.facebook.com/pybcco",
+  "https://www.youtube.com/@pybcco",
+  "https://www.tiktok.com/@pybcco",
+],
 };
 
 function buildOrganizationJsonLd(): JsonLd {
