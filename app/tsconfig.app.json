@@ -9,11 +9,10 @@
     "skipLibCheck": true,
 
     "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
 
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     },
 
     "moduleResolution": "bundler",
@@ -30,5 +29,6 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
+
   "include": ["src"]
 }
