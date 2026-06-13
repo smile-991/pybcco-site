@@ -19,6 +19,7 @@ type VideoItem = {
   id: string;
   title: string;
   description: string;
+  transcript: string[];
   embedUrl: string;
   watchUrl: string;
   thumbnailUrl: string;
@@ -44,6 +45,11 @@ const VIDEOS: VideoItem[] = [
       "تشطيب حمامات فاخرة في الرياض | تصميم ملهم وتنفيذ راقٍ في معرض الصقور والأسلحة",
     description:
       "فيديو قصير يعرض نموذجًا ملهمًا لتشطيب حمام فاخر في الرياض، مع إبراز جودة التفاصيل النهائية والهوية التنفيذية الراقية المناسبة للمشاريع السكنية والمجالس والمعارض الفاخرة.",
+    transcript: [
+      "استعراض تشطيب حمام فاخر في الرياض",
+      "إظهار جودة التنفيذ والتفاصيل النهائية",
+      "مثال عملي على مستوى التشطيبات الراقية",
+    ],
     embedUrl: "https://www.youtube.com/embed/RXlu9puTA-o",
     watchUrl: "https://youtube.com/shorts/RXlu9puTA-o?si=onQayNi8gpfN6Kf7",
     thumbnailUrl: `${SITE_URL}/vedio cover/laxury-bathroom.webp`,
@@ -63,6 +69,11 @@ const VIDEOS: VideoItem[] = [
       "ترميم فيلا سكنية في حي الياسمين بالرياض | تجديد عملي وتحسين جودة المساحات",
     description:
       "مقطع يوضح جانبًا من أعمال ترميم فيلا سكنية في حي الياسمين بالرياض، ويعكس مستوى التنفيذ والاهتمام بإعادة التأهيل وتحسين الحالة الوظيفية والجمالية للمسكن قبل التسليم.",
+    transcript: [
+      "ترميم فيلا سكنية في حي الياسمين",
+      "إعادة تأهيل وتحسين المساحات",
+      "رفع الجودة الوظيفية والجمالية قبل التسليم",
+    ],
     embedUrl: "https://www.youtube.com/embed/qaKZukA1534",
     watchUrl: "https://youtube.com/shorts/qaKZukA1534?si=DUDzbA2_8TsSVQ8a",
     thumbnailUrl: `${SITE_URL}/vedio cover/villa-renuvation.webp`,
@@ -81,6 +92,11 @@ const VIDEOS: VideoItem[] = [
     title: "قبل وبعد تشطيب سطح شقة سكنية فاخرة | تحويل بصري عملي في الرياض",
     description:
       "فيديو قبل وبعد يبرز التحول الواضح في تشطيب سطح شقة سكنية فاخرة بالرياض، ويُظهر كيف تؤثر المعالجة الصحيحة للتشطيب على الشكل النهائي والاستفادة من المساحة وجودة الاستخدام.",
+    transcript: [
+      "بداية أعمال تشطيب السطح",
+      "عرض مراحل التنفيذ",
+      "إظهار الفرق قبل وبعد",
+    ],
     embedUrl: "https://www.youtube.com/embed/re44BUTtHUk",
     watchUrl: "https://youtube.com/shorts/re44BUTtHUk?si=Wn-LTsc1_zHgsdro",
     thumbnailUrl: `${SITE_URL}/vedio cover/befor-after.webp`,
@@ -464,6 +480,23 @@ export default function VideosLibraryPage() {
                         <PlayCircle className="me-2 h-4 w-4" />
                         مشاهدة على يوتيوب
                       </a>
+
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    <Link to="/projects" className="text-xs text-[#D4AF37] underline">
+                      معرض مشاريع مشابهة
+                    </Link>
+
+                    <Link to="/villa-finishing-price-riyadh" className="text-xs text-[#D4AF37] underline">
+                      احسب تكلفة مشروع مشابه
+                    </Link>
+
+                    <Link
+                      to="/engineering-insights/cost/how-to-compare-finishing-quotations"
+                      className="text-xs text-[#D4AF37] underline"
+                    >
+                      كيف تقارن عروض الأسعار؟
+                    </Link>
+                  </div>
                     </Button>
 
                     <Button
