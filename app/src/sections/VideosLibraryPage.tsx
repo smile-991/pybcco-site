@@ -480,23 +480,6 @@ export default function VideosLibraryPage() {
                         <PlayCircle className="me-2 h-4 w-4" />
                         مشاهدة على يوتيوب
                       </a>
-
-                  <div className="mt-4 flex flex-wrap gap-3">
-                    <Link to="/projects" className="text-xs text-[#D4AF37] underline">
-                      معرض مشاريع مشابهة
-                    </Link>
-
-                    <Link to="/villa-finishing-price-riyadh" className="text-xs text-[#D4AF37] underline">
-                      احسب تكلفة مشروع مشابه
-                    </Link>
-
-                    <Link
-                      to="/engineering-insights/cost/how-to-compare-finishing-quotations"
-                      className="text-xs text-[#D4AF37] underline"
-                    >
-                      كيف تقارن عروض الأسعار؟
-                    </Link>
-                  </div>
                     </Button>
 
                     <Button
@@ -507,12 +490,34 @@ export default function VideosLibraryPage() {
                       <Link to="/request-project">اطلب مشروع مشابه</Link>
                     </Button>
                   </div>
+
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    <Link
+                      to="/projects"
+                      className="text-xs text-[#D4AF37] underline"
+                    >
+                      معرض مشاريع مشابهة
+                    </Link>
+
+                    <Link
+                      to="/villa-finishing-price-riyadh"
+                      className="text-xs text-[#D4AF37] underline"
+                    >
+                      احسب تكلفة مشروع مشابه
+                    </Link>
+
+                    <Link
+                      to="/engineering-insights/cost/how-to-compare-finishing-quotations"
+                      className="text-xs text-[#D4AF37] underline"
+                    >
+                      كيف تقارن عروض الأسعار؟
+                    </Link>
+                  </div>
                 </div>
               </article>
             ))}
           </div>
         </section>
-
         <section className="border-y border-white/10 bg-[#0d0d0d]">
           <div className="container mx-auto px-4 py-14 md:py-16">
             <div className="mx-auto max-w-4xl text-center">
