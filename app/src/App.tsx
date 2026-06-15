@@ -13,6 +13,7 @@ import CreateAccountPage from "./sections/create-account";
 import ActivateAccountPage from "./sections/activate-account";
 import RequestProjectPage from "@/sections/RequestProjectPage";
 import BuildingAndFinishingPricesRiyadh from "./sections/building-and-finishing-prices-riyadh";
+import RiyadhProjectsMapPage from "./sections/RiyadhProjectsMapPage";
 
 import Decor from "@/sections/Decor";
 import DecorWood from "@/sections/DecorWood";
@@ -139,6 +140,7 @@ export default function App() {
   path="/villa-construction-cost-calculator-riyadh"
   element={<VillaConstructionCostCalculatorRiyadh />}
 />
+<Route path="/projects-in-riyadh" element={<RiyadhProjectsMapPage />} />
           <Route path="/villa-bone-construction-riyadh" element={<VillaBoneConstructionRiyadh />} />
           <Route path="/apartment-finishing-riyadh" element={<ApartmentFinishingRiyadh />} />
           <Route path="/home-renovation-company-riyadh" element={<HomeRenovationCompanyRiyadh />} />
