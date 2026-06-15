@@ -114,6 +114,20 @@ const DISTRICTS: DistrictPin[] = [
         description:
           "نموذج تشطيب داخلي فاخر يبرز جودة التفاصيل النهائية وتناسق المواد والتنفيذ.",
       },
+      {
+        id: "olaya-modern-renovation",
+        title: "تجديد داخلي حديث في العليا",
+        district: "العليا",
+        type: "ترميم",
+        status: "مكتمل",
+        area: "مساحات داخلية مختارة",
+        duration: "حسب نطاق التجديد",
+        image: "/projects/finishing/finishing-02.webp",
+        hasVideo: false,
+        href: "/projects",
+        description:
+          "نموذج تجديد داخلي حديث داخل حي العليا لاختبار عرض أكثر من مشروع ضمن نفس الحي.",
+      },
     ],
   },
   {
