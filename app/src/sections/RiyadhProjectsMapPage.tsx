@@ -21,6 +21,43 @@ import {
 
 type JsonLd = Record<string, any>;
 
+type AnalyticsWindow = Window & {
+  dataLayer?: Array<Record<string, unknown>>;
+  gtag?: (
+    command: string,
+    eventName: string,
+    params?: Record<string, unknown>
+  ) => void;
+};
+
+type MapEventParams = Record<
+  string,
+  string | number | boolean | null | undefined
+>;
+
+function trackMapEvent(action: string, params: MapEventParams = {}) {
+  if (typeof window === "undefined") return;
+
+  const payload = {
+    event: "riyadh_projects_map_interaction",
+    map_action: action,
+    page_path: "/projects-in-riyadh",
+    ...params,
+  };
+
+  const analyticsWindow = window as AnalyticsWindow;
+
+  analyticsWindow.dataLayer = analyticsWindow.dataLayer || [];
+  analyticsWindow.dataLayer.push(payload);
+
+  if (typeof analyticsWindow.gtag === "function") {
+    analyticsWindow.gtag("event", action, {
+      event_category: "riyadh_projects_map",
+      ...params,
+    });
+  }
+}
+
 type ProjectType = "الكل" | "تشطيب" | "ترميم" | "عظم" | "تجاري" | "واجهات";
 type ProjectStatus = "الكل" | "مكتمل" | "جاري التنفيذ";
 
@@ -218,6 +255,16 @@ function buildPageSchema(): JsonLd[] {
       description: PAGE_DESCRIPTION,
       url: CANONICAL,
       inLanguage: "ar",
+      about: [
+        "مشاريع مقاولات في الرياض",
+        "تشطيب فلل في الرياض",
+        "ترميم فلل في الرياض",
+        "بناء عظم في الرياض",
+      ],
+      spatialCoverage: {
+        "@type": "Place",
+        name: "الرياض، المملكة العربية السعودية",
+      },
       isPartOf: {
         "@type": "WebSite",
         "@id": `${SITE_URL}/#website`,
@@ -231,8 +278,16 @@ function buildPageSchema(): JsonLd[] {
       itemListElement: allProjects.map((project, index) => ({
         "@type": "ListItem",
         position: index + 1,
-        name: project.title,
-        url: `${SITE_URL}${project.href}`,
+        item: {
+          "@type": "CreativeWork",
+          name: project.title,
+          url: `${SITE_URL}${project.href}`,
+          about: project.type,
+          contentLocation: {
+            "@type": "Place",
+            name: `حي ${project.district}، الرياض`,
+          },
+        },
       })),
     },
     {
@@ -325,11 +380,49 @@ export default function RiyadhProjectsMapPage() {
     ? `تم العثور على ${totalProjects} مشروع مطابق للبحث`
     : `${totalProjects} نتيجة`;
 
+  function selectDistrict(district: DistrictPin, source: string) {
+    setSelectedDistrict(district);
+    trackMapEvent("select_district", {
+      district: district.name,
+      source,
+      projects_count: district.projects.length,
+    });
+  }
+
+  function closeDistrictPanel(source: string) {
+    if (selectedDistrict) {
+      trackMapEvent("close_district_panel", {
+        district: selectedDistrict.name,
+        source,
+      });
+    }
+
+    setSelectedDistrict(null);
+  }
+
   function resetFilters() {
+    trackMapEvent("reset_filters", {
+      selected_type: selectedType,
+      selected_status: selectedStatus,
+      search_query: searchQuery.trim() || undefined,
+    });
+
     setSelectedType("الكل");
     setSelectedStatus("الكل");
     setSearchQuery("");
     setSelectedDistrict(DISTRICTS[0]);
+  }
+
+  function trackSearchUsage(source: string) {
+    const query = searchQuery.trim();
+
+    if (!query) return;
+
+    trackMapEvent("search_projects", {
+      search_query: query,
+      source,
+      results_count: totalProjects,
+    });
   }
 
   return (
@@ -456,6 +549,12 @@ export default function RiyadhProjectsMapPage() {
                   type="search"
                   value={searchQuery}
                   onChange={(event) => setSearchQuery(event.target.value)}
+                  onBlur={() => trackSearchUsage("search_input_blur")}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      trackSearchUsage("search_input_enter");
+                    }
+                  }}
                   placeholder="ابحث: العليا، الملقا، تشطيب..."
                   className="h-12 w-full rounded-2xl border border-white/10 bg-white/5 pr-11 pl-4 text-sm text-white outline-none transition placeholder:text-white/35 focus:border-[#D4AF37]/60 focus:bg-white/10"
                 />
@@ -470,7 +569,10 @@ export default function RiyadhProjectsMapPage() {
                     <button
                       key={type}
                       type="button"
-                      onClick={() => setSelectedType(type)}
+                      onClick={() => {
+                        setSelectedType(type);
+                        trackMapEvent("filter_type", { selected_type: type });
+                      }}
                       className={`rounded-full border px-3 py-2 text-xs transition duration-300 ${
                         selectedType === type
                           ? "border-[#D4AF37] bg-[#D4AF37] text-black"
@@ -492,7 +594,10 @@ export default function RiyadhProjectsMapPage() {
                     <button
                       key={status}
                       type="button"
-                      onClick={() => setSelectedStatus(status)}
+                      onClick={() => {
+                        setSelectedStatus(status);
+                        trackMapEvent("filter_status", { selected_status: status });
+                      }}
                       className={`rounded-full border px-3 py-2 text-xs transition duration-300 ${
                         selectedStatus === status
                           ? "border-[#D4AF37] bg-[#D4AF37] text-black"
@@ -529,7 +634,7 @@ export default function RiyadhProjectsMapPage() {
                       <button
                         key={district.id}
                         type="button"
-                        onClick={() => setSelectedDistrict(district)}
+                        onClick={() => selectDistrict(district, "filter_panel")}
                         className={`rounded-full border px-3 py-2 text-xs transition duration-300 ${
                           selectedVisibleDistrict?.id === district.id
                             ? "border-[#D4AF37] bg-[#D4AF37]/20 text-[#D4AF37]"
@@ -557,7 +662,7 @@ export default function RiyadhProjectsMapPage() {
               <button
                 key={district.id}
                 type="button"
-                onClick={() => setSelectedDistrict(district)}
+                onClick={() => selectDistrict(district, "map_pin")}
                 className="group absolute z-20 -translate-x-1/2 -translate-y-1/2 outline-none"
                 style={{
                   top: district.top,
@@ -641,7 +746,9 @@ export default function RiyadhProjectsMapPage() {
           </div>
 
           {(selectedVisibleDistrict || filteredDistricts.length === 0) && (
-            <aside className="absolute bottom-0 right-0 z-40 w-full max-h-[72vh] animate-[mapFadeUp_.5s_cubic-bezier(.22,1,.36,1)_both] overflow-hidden rounded-t-[2rem] border border-white/10 bg-black/72 p-4 shadow-2xl shadow-black/45 backdrop-blur-2xl md:bottom-20 md:right-8 md:w-[calc(100%-2rem)] md:max-h-none md:max-w-[520px] md:origin-bottom-right md:scale-[0.48] md:rounded-[2rem] md:p-5 lg:right-12 xl:max-w-[560px] xl:scale-[0.51]">
+            <aside className="absolute bottom-0 right-0 z-40 w-full max-h-[72vh] animate-[mapFadeUp_.5s_cubic-bezier(.22,1,.36,1)_both] overflow-hidden rounded-t-[2rem] border border-white/10 bg-black/72 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-2xl shadow-black/45 backdrop-blur-2xl md:bottom-20 md:right-8 md:w-[calc(100%-2rem)] md:max-h-none md:max-w-[520px] md:origin-bottom-right md:scale-[0.48] md:rounded-[2rem] md:p-5 lg:right-12 xl:max-w-[560px] xl:scale-[0.51]">
+              <div className="mx-auto mb-3 h-1.5 w-12 rounded-full bg-white/20 md:hidden" />
+
               {selectedVisibleDistrict ? (
               <>
                 <div className="mb-4 flex items-start justify-between gap-4">
@@ -658,11 +765,25 @@ export default function RiyadhProjectsMapPage() {
                     <p className="mt-1 text-sm leading-7 text-white/60">
                       المشاريع الظاهرة حسب الفلتر الحالي داخل هذا الحي.
                     </p>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        trackMapEvent("view_all_districts", {
+                          source: "district_panel",
+                          district: selectedVisibleDistrict.name,
+                        });
+                        closeDistrictPanel("view_all_districts_button");
+                      }}
+                      className="mt-2 inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/65 transition hover:border-[#D4AF37]/50 hover:text-[#D4AF37]"
+                    >
+                      عرض كل الأحياء
+                    </button>
                   </div>
 
                   <button
                     type="button"
-                    onClick={() => setSelectedDistrict(null)}
+                    onClick={() => closeDistrictPanel("x_button")}
                     className="rounded-full border border-white/10 bg-white/5 p-2 text-white/60 transition hover:border-[#D4AF37]/50 hover:text-white"
                     aria-label="إغلاق تفاصيل الحي المختار"
                   >
@@ -733,7 +854,16 @@ export default function RiyadhProjectsMapPage() {
                               size="sm"
                               className="bg-[#D4AF37] text-black hover:bg-[#e5c158]"
                             >
-                              <Link to={project.href}>
+                              <Link
+                                to={project.href}
+                                onClick={() =>
+                                  trackMapEvent("click_project_details", {
+                                    project_id: project.id,
+                                    project_title: project.title,
+                                    district: project.district,
+                                  })
+                                }
+                              >
                                 عرض المشروع
                                 <ArrowLeft className="mr-2 h-4 w-4" />
                               </Link>
@@ -745,7 +875,16 @@ export default function RiyadhProjectsMapPage() {
                               variant="outline"
                               className="border-white/15 bg-white/5 text-white hover:bg-white/10"
                             >
-                              <Link to="/villa-finishing-price-riyadh">
+                              <Link
+                                to="/villa-finishing-price-riyadh"
+                                onClick={() =>
+                                  trackMapEvent("click_similar_cost_calculator", {
+                                    source: "project_card",
+                                    project_id: project.id,
+                                    district: project.district,
+                                  })
+                                }
+                              >
                                 احسب تكلفة مشابهة
                               </Link>
                             </Button>
@@ -782,7 +921,14 @@ export default function RiyadhProjectsMapPage() {
               asChild
               className="rounded-full bg-[#D4AF37] px-5 text-black shadow-2xl shadow-[#D4AF37]/20 hover:bg-[#e5c158]"
             >
-              <Link to="/villa-finishing-price-riyadh">
+              <Link
+                to="/villa-finishing-price-riyadh"
+                onClick={() =>
+                  trackMapEvent("click_cost_calculator_cta", {
+                    source: "sticky_cta",
+                  })
+                }
+              >
                 احسب تكلفة مشروعك
               </Link>
             </Button>
@@ -792,7 +938,14 @@ export default function RiyadhProjectsMapPage() {
               variant="outline"
               className="rounded-full border-white/15 bg-black/65 px-5 text-white backdrop-blur-xl hover:bg-white/10"
             >
-              <Link to="/#contact">طلب زيارة مجانية</Link>
+              <Link
+                to="/#contact"
+                onClick={() =>
+                  trackMapEvent("click_free_visit_cta", { source: "sticky_cta" })
+                }
+              >
+                طلب زيارة مجانية
+              </Link>
             </Button>
           </div>
         </section>
@@ -819,7 +972,14 @@ export default function RiyadhProjectsMapPage() {
                 asChild
                 className="bg-[#D4AF37] text-black hover:bg-[#e5c158]"
               >
-                <Link to="/projects">
+                <Link
+                  to="/projects"
+                  onClick={() =>
+                    trackMapEvent("click_projects_gallery", {
+                      source: "middle_cta",
+                    })
+                  }
+                >
                   مشاهدة معرض المشاريع
                   <ArrowLeft className="mr-2 h-4 w-4" />
                 </Link>
@@ -830,7 +990,16 @@ export default function RiyadhProjectsMapPage() {
                 variant="outline"
                 className="border-white/15 bg-white/5 text-white hover:bg-white/10"
               >
-                <Link to="/videos">مشاهدة فيديوهات التنفيذ</Link>
+                <Link
+                  to="/videos"
+                  onClick={() =>
+                    trackMapEvent("click_execution_videos", {
+                      source: "middle_cta",
+                    })
+                  }
+                >
+                  مشاهدة فيديوهات التنفيذ
+                </Link>
               </Button>
             </div>
           </div>
@@ -877,7 +1046,7 @@ export default function RiyadhProjectsMapPage() {
                       key={district.id}
                       type="button"
                       onClick={() => {
-                        setSelectedDistrict(district);
+                        selectDistrict(district, "seo_section");
                         window.scrollTo({ top: 0, behavior: "smooth" });
                       }}
                       className="rounded-full border border-white/10 bg-black/30 px-4 py-2 text-sm text-white/70 transition hover:border-[#D4AF37]/60 hover:text-[#D4AF37]"
@@ -890,24 +1059,48 @@ export default function RiyadhProjectsMapPage() {
                 <div className="mt-6 grid gap-3 sm:grid-cols-2">
                   <Link
                     to="/villa-finishing-riyadh"
+                    onClick={() =>
+                      trackMapEvent("click_service_link", {
+                        source: "seo_section",
+                        service: "villa_finishing",
+                      })
+                    }
                     className="rounded-2xl border border-white/10 bg-black/30 p-4 text-sm font-bold text-white transition hover:border-[#D4AF37]/50 hover:text-[#D4AF37]"
                   >
                     تشطيب فلل بالرياض
                   </Link>
                   <Link
                     to="/villa-renovation-riyadh"
+                    onClick={() =>
+                      trackMapEvent("click_service_link", {
+                        source: "seo_section",
+                        service: "villa_renovation",
+                      })
+                    }
                     className="rounded-2xl border border-white/10 bg-black/30 p-4 text-sm font-bold text-white transition hover:border-[#D4AF37]/50 hover:text-[#D4AF37]"
                   >
                     ترميم فلل بالرياض
                   </Link>
                   <Link
                     to="/villa-bone-construction-riyadh"
+                    onClick={() =>
+                      trackMapEvent("click_service_link", {
+                        source: "seo_section",
+                        service: "villa_bone_construction",
+                      })
+                    }
                     className="rounded-2xl border border-white/10 bg-black/30 p-4 text-sm font-bold text-white transition hover:border-[#D4AF37]/50 hover:text-[#D4AF37]"
                   >
                     بناء عظم بالرياض
                   </Link>
                   <Link
                     to="/construction-company-riyadh"
+                    onClick={() =>
+                      trackMapEvent("click_service_link", {
+                        source: "seo_section",
+                        service: "construction_company",
+                      })
+                    }
                     className="rounded-2xl border border-white/10 bg-black/30 p-4 text-sm font-bold text-white transition hover:border-[#D4AF37]/50 hover:text-[#D4AF37]"
                   >
                     شركة مقاولات بالرياض
