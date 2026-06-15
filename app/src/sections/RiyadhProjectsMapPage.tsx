@@ -393,14 +393,14 @@ export default function RiyadhProjectsMapPage() {
             ))}
           </svg>
 
-          <div className="absolute right-4 top-24 z-20 max-w-[460px] md:right-8 lg:right-12 xl:max-w-[500px]">
-            <div className="animate-[mapFadeUp_.55s_cubic-bezier(.22,1,.36,1)_both] rounded-[2rem] border border-white/10 bg-black/52 p-5 shadow-2xl shadow-black/35 backdrop-blur-xl md:p-6 xl:p-7">
+          <div className="absolute right-4 top-24 z-20 max-w-[460px] origin-top-right scale-[0.78] md:right-8 lg:right-12 xl:max-w-[500px] xl:scale-[0.82]">
+            <div className="animate-[mapFadeUp_.55s_cubic-bezier(.22,1,.36,1)_both] rounded-[2rem] border border-white/10 bg-black/52 p-5 shadow-2xl shadow-black/35 backdrop-blur-xl md:p-5 xl:p-6">
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 px-4 py-2 text-sm text-[#f5deb3]">
                 <MapPin className="h-4 w-4" />
                 خريطة مشاريع PYBCCO داخل الرياض
               </div>
 
-              <h1 className="text-3xl font-extrabold leading-tight md:text-4xl xl:text-5xl">
+              <h1 className="text-3xl font-extrabold leading-tight md:text-4xl xl:text-[2.75rem]">
                 مشاريعنا المنفذة في{" "}
                 <span className="text-[#D4AF37]">أحياء الرياض</span>
               </h1>
@@ -410,20 +410,20 @@ export default function RiyadhProjectsMapPage() {
                 ظاهر على الخريطة لعرض تفاصيل المشاريع والصور والروابط المرتبطة.
               </p>
 
-              <div className="mt-6 grid grid-cols-3 gap-3">
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div className="mt-5 grid grid-cols-3 gap-3">
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
                   <div className="text-2xl font-extrabold text-[#D4AF37]">
                     {totalProjects}
                   </div>
                   <div className="mt-1 text-xs text-white/65">مشاريع ظاهرة</div>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
                   <div className="text-2xl font-extrabold text-[#D4AF37]">
                     {totalDistricts}
                   </div>
                   <div className="mt-1 text-xs text-white/65">أحياء</div>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
                   <div className="text-2xl font-extrabold text-[#D4AF37]">
                     {videosCount}
                   </div>
@@ -433,7 +433,7 @@ export default function RiyadhProjectsMapPage() {
             </div>
           </div>
 
-          <div className="absolute left-4 top-24 z-30 w-[calc(100%-2rem)] max-w-[360px] animate-[mapFadeLeft_.6s_cubic-bezier(.22,1,.36,1)_both] rounded-[2rem] border border-white/10 bg-black/60 p-5 shadow-2xl shadow-black/40 backdrop-blur-xl md:left-8 lg:left-12">
+          <div className="absolute left-4 top-24 z-30 w-[calc(100%-2rem)] max-w-[360px] origin-top-left scale-[0.78] animate-[mapFadeLeft_.6s_cubic-bezier(.22,1,.36,1)_both] rounded-[2rem] border border-white/10 bg-black/60 p-5 shadow-2xl shadow-black/40 backdrop-blur-xl md:left-8 lg:left-12 xl:scale-[0.82]">
             <div className="mb-5 flex items-center justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2 text-sm font-bold text-white">
@@ -621,7 +621,7 @@ export default function RiyadhProjectsMapPage() {
             );
           })}
 
-          <div className="absolute bottom-6 left-4 right-4 z-30 hidden md:block md:left-8 md:right-8 lg:left-12 lg:right-12">
+          <div className="absolute bottom-6 left-4 right-4 z-30 hidden origin-bottom scale-[0.88] md:block md:left-8 md:right-8 lg:left-12 lg:right-12 xl:scale-[0.92]">
             <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 rounded-[1.5rem] border border-white/10 bg-black/60 px-5 py-3 shadow-2xl shadow-black/30 backdrop-blur-xl">
               <div className="flex items-center gap-3 text-xs text-white/70 md:text-sm">
                 <Sparkles className="h-4 w-4 text-[#D4AF37]" />
@@ -641,7 +641,7 @@ export default function RiyadhProjectsMapPage() {
             </div>
           </div>
 
-          <aside className="absolute bottom-0 right-0 z-40 w-full max-h-[72vh] animate-[mapFadeUp_.5s_cubic-bezier(.22,1,.36,1)_both] overflow-hidden rounded-t-[2rem] border border-white/10 bg-black/72 p-4 shadow-2xl shadow-black/45 backdrop-blur-2xl md:bottom-24 md:right-8 md:w-[calc(100%-2rem)] md:max-h-none md:max-w-[520px] md:rounded-[2rem] md:p-5 lg:right-12 xl:max-w-[560px]">
+          <aside className="absolute bottom-0 right-0 z-40 w-full max-h-[72vh] animate-[mapFadeUp_.5s_cubic-bezier(.22,1,.36,1)_both] overflow-hidden rounded-t-[2rem] border border-white/10 bg-black/72 p-4 shadow-2xl shadow-black/45 backdrop-blur-2xl md:bottom-20 md:right-8 md:w-[calc(100%-2rem)] md:max-h-none md:max-w-[520px] md:origin-bottom-right md:scale-[0.78] md:rounded-[2rem] md:p-5 lg:right-12 xl:max-w-[560px] xl:scale-[0.82]">
             {selectedVisibleDistrict ? (
               <>
                 <div className="mb-4 flex items-start justify-between gap-4">
@@ -776,7 +776,7 @@ export default function RiyadhProjectsMapPage() {
             )}
           </aside>
 
-          <div className="fixed bottom-6 left-4 z-50 hidden flex-col gap-2 md:flex">
+          <div className="fixed bottom-6 left-4 z-50 hidden origin-bottom-left scale-[0.82] flex-col gap-2 md:flex xl:scale-[0.88]">
             <Button
               asChild
               className="rounded-full bg-[#D4AF37] px-5 text-black shadow-2xl shadow-[#D4AF37]/20 hover:bg-[#e5c158]"
