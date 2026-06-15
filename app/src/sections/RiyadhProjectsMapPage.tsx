@@ -661,7 +661,7 @@ export default function RiyadhProjectsMapPage() {
                         onClick={() => selectDistrict(district, "filter_panel")}
                         className={`rounded-full border px-3 py-2 text-xs transition duration-300 ${
                           selectedVisibleDistrict?.id === district.id
-                            ? "border-[#D4AF37] bg-[#D4AF37]/20 text-[#D4AF37]"
+                            ? "border-[#D4AF37] bg-[#D4AF37]/25 text-[#D4AF37] shadow-[0_0_18px_rgba(212,175,55,0.12)]"
                             : "border-white/10 bg-black/20 text-white/65 hover:scale-105 hover:border-[#D4AF37]/60 hover:text-white"
                         }`}
                       >
@@ -770,7 +770,7 @@ export default function RiyadhProjectsMapPage() {
           </div>
 
           {(selectedVisibleDistrict || filteredDistricts.length === 0) && (
-            <aside className="absolute bottom-0 right-0 z-40 w-full max-h-[72vh] animate-[mapFadeUp_.5s_cubic-bezier(.22,1,.36,1)_both] overflow-hidden rounded-t-[2rem] border border-white/10 bg-black/72 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-2xl shadow-black/45 backdrop-blur-2xl md:bottom-20 md:right-8 md:w-[calc(100%-2rem)] md:max-h-none md:max-w-[520px] md:origin-bottom-right md:scale-[0.48] md:rounded-[2rem] md:p-5 lg:right-12 xl:max-w-[560px] xl:scale-[0.51]">
+            <aside className="absolute bottom-0 right-0 z-40 w-full max-h-[72vh] animate-[mapFadeUp_.5s_cubic-bezier(.22,1,.36,1)_both] overflow-hidden rounded-t-[2rem] border border-white/[0.12] bg-black/[0.78] p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-2xl shadow-black/50 backdrop-blur-2xl md:bottom-20 md:right-8 md:w-[calc(100%-2rem)] md:max-h-none md:max-w-[520px] md:origin-bottom-right md:scale-[0.48] md:rounded-[2rem] md:bg-black/[0.74] md:p-5 lg:right-12 xl:max-w-[560px] xl:scale-[0.51]">
               <div className="mx-auto mb-3 h-1.5 w-12 rounded-full bg-white/20 md:hidden" />
 
               {selectedVisibleDistrict ? (
@@ -799,7 +799,7 @@ export default function RiyadhProjectsMapPage() {
                         });
                         closeDistrictPanel("view_all_districts_button");
                       }}
-                      className="mt-2 inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/65 transition hover:border-[#D4AF37]/50 hover:text-[#D4AF37]"
+                      className="mt-2 inline-flex items-center gap-1 rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 px-3 py-1.5 text-xs font-bold text-[#D4AF37] transition duration-300 hover:scale-105 hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-black"
                     >
                       عرض كل الأحياء
                     </button>
@@ -808,7 +808,7 @@ export default function RiyadhProjectsMapPage() {
                   <button
                     type="button"
                     onClick={() => closeDistrictPanel("x_button")}
-                    className="rounded-full border border-white/10 bg-white/5 p-2 text-white/60 transition hover:border-[#D4AF37]/50 hover:text-white"
+                    className="rounded-full border border-white/15 bg-white/10 p-2 text-white/75 shadow-lg shadow-black/20 transition duration-300 hover:scale-105 hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-black"
                     aria-label="إغلاق تفاصيل الحي المختار"
                   >
                     <X className="h-4 w-4" />
@@ -819,7 +819,7 @@ export default function RiyadhProjectsMapPage() {
                   {selectedVisibleDistrict.projects.map((project) => (
                     <article
                       key={project.id}
-                      className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] transition duration-300 hover:border-[#D4AF37]/40 hover:bg-white/[0.07]"
+                      className="group overflow-hidden rounded-2xl border border-white/[0.12] bg-black/30 transition duration-300 hover:border-[#D4AF37]/45 hover:bg-white/[0.06]"
                     >
                       <div className="grid gap-4 p-3 md:grid-cols-[145px_1fr] md:p-3">
                         <div className="relative h-32 overflow-hidden rounded-xl bg-white/5 md:h-full md:min-h-[128px]">
@@ -852,11 +852,11 @@ export default function RiyadhProjectsMapPage() {
                             {project.title}
                           </h3>
 
-                          <p className="mt-2 line-clamp-2 text-xs leading-6 text-white/60 md:text-sm md:leading-7">
+                          <p className="mt-2 line-clamp-2 text-xs leading-6 text-white/68 md:text-sm md:leading-7">
                             {project.description}
                           </p>
 
-                          <div className="mt-3 flex flex-wrap items-center gap-3 text-[11px] text-white/55">
+                          <div className="mt-3 flex flex-wrap items-center gap-3 text-[11px] text-white/62">
                             {project.area && (
                               <span className="inline-flex items-center gap-1">
                                 <Home className="h-3.5 w-3.5 text-[#D4AF37]" />
