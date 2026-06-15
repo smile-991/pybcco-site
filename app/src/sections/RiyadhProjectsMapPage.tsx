@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import SeoHead from "@/components/SeoHead";
 import { Button } from "@/components/ui/button";
@@ -376,6 +376,27 @@ export default function RiyadhProjectsMapPage() {
     selectedStatus !== "الكل" ||
     searchQuery.trim().length > 0;
 
+  useEffect(() => {
+    trackMapEvent("view_projects_map_page", {
+      visible_projects: totalProjects,
+      visible_districts: totalDistricts,
+    });
+  }, []);
+
+  useEffect(() => {
+    function handleEscapeKey(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        closeDistrictPanel("escape_key");
+      }
+    }
+
+    window.addEventListener("keydown", handleEscapeKey);
+
+    return () => {
+      window.removeEventListener("keydown", handleEscapeKey);
+    };
+  }, [selectedDistrict]);
+
   const resultsLabel = searchQuery.trim()
     ? `تم العثور على ${totalProjects} مشروع مطابق للبحث`
     : `${totalProjects} نتيجة`;
@@ -537,7 +558,10 @@ export default function RiyadhProjectsMapPage() {
                 </p>
               </div>
 
-              <div className="rounded-full border border-[#D4AF37]/30 px-3 py-1 text-xs text-[#D4AF37]">
+              <div
+                className="rounded-full border border-[#D4AF37]/30 px-3 py-1 text-xs text-[#D4AF37]"
+                aria-live="polite"
+              >
                 {resultsLabel}
               </div>
             </div>
