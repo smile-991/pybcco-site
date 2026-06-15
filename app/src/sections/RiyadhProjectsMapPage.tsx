@@ -829,7 +829,7 @@ export default function RiyadhProjectsMapPage() {
                   </button>
                 </div>
 
-                <div className="max-h-[46vh] space-y-3 overflow-y-auto pr-1 md:max-h-[330px]">
+                <div className="projects-district-scroll max-h-[46vh] space-y-3 overflow-y-auto pl-2 pr-1 md:max-h-[330px]">
                   {selectedVisibleDistrict.projects.map((project) => (
                     <article
                       key={project.id}
@@ -1181,6 +1181,30 @@ export default function RiyadhProjectsMapPage() {
               opacity: 1;
               transform: translateX(0);
             }
+          }
+
+          .projects-district-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(212, 175, 55, 0.72) rgba(255, 255, 255, 0.06);
+          }
+
+          .projects-district-scroll::-webkit-scrollbar {
+            width: 6px;
+          }
+
+          .projects-district-scroll::-webkit-scrollbar-track {
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.06);
+          }
+
+          .projects-district-scroll::-webkit-scrollbar-thumb {
+            border: 1px solid rgba(0, 0, 0, 0.72);
+            border-radius: 999px;
+            background: linear-gradient(180deg, rgba(229, 193, 88, 0.92), rgba(145, 116, 22, 0.88));
+          }
+
+          .projects-district-scroll::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, rgba(255, 216, 99, 1), rgba(212, 175, 55, 0.95));
           }
         `}</style>
       </main>
