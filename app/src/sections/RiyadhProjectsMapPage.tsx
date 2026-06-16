@@ -97,8 +97,8 @@ const DISTRICTS: DistrictPin[] = [
   {
     id: "olaya",
     name: "العليا",
-    top: "48%",
-    left: "47%",
+    top: "54%",
+    left: "38%",
     projects: [
       {
         id: "olaya-luxury-finishing",
@@ -133,8 +133,8 @@ const DISTRICTS: DistrictPin[] = [
   {
     id: "yasmin",
     name: "الياسمين",
-    top: "31%",
-    left: "47%",
+    top: "38%",
+    left: "42%",
     projects: [
       {
         id: "yasmin-villa-renovation",
@@ -155,8 +155,8 @@ const DISTRICTS: DistrictPin[] = [
   {
     id: "malqa",
     name: "الملقا",
-    top: "30%",
-    left: "40%",
+    top: "32%",
+    left: "32%",
     projects: [
       {
         id: "malqa-finishing",
@@ -177,8 +177,8 @@ const DISTRICTS: DistrictPin[] = [
   {
     id: "qirawan",
     name: "القيروان",
-    top: "25%",
-    left: "35%",
+    top: "24%",
+    left: "32%",
     projects: [
       {
         id: "qirawan-shell",
@@ -199,8 +199,8 @@ const DISTRICTS: DistrictPin[] = [
   {
     id: "murabba",
     name: "المربع",
-    top: "55%",
-    left: "49%",
+    top: "78%",
+    left: "48%",
     projects: [
       {
         id: "murabba-bathroom-finishing",
@@ -221,8 +221,8 @@ const DISTRICTS: DistrictPin[] = [
   {
     id: "narjis",
     name: "النرجس",
-    top: "22%",
-    left: "50%",
+    top: "23%",
+    left: "45%",
     projects: [
       {
         id: "narjis-facade",
@@ -333,8 +333,9 @@ export default function RiyadhProjectsMapPage() {
   const [selectedStatus, setSelectedStatus] = useState<ProjectStatus>("الكل");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState<DistrictPin | null>(
-    DISTRICTS[0]
+    null
   );
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const filteredDistricts = useMemo(() => {
     const normalizedQuery = normalizeSearchValue(searchQuery);
@@ -417,6 +418,11 @@ export default function RiyadhProjectsMapPage() {
 
   function selectDistrict(district: DistrictPin, source: string) {
     setSelectedDistrict(district);
+
+    if (source === "mobile_filter_drawer") {
+      setIsFilterOpen(false);
+    }
+
     trackMapEvent("select_district", {
       district: district.name,
       source,
@@ -435,6 +441,19 @@ export default function RiyadhProjectsMapPage() {
     setSelectedDistrict(null);
   }
 
+  function openMobileFilters() {
+    setIsFilterOpen(true);
+    trackMapEvent("open_mobile_filters", {
+      visible_projects: totalProjects,
+      visible_districts: totalDistricts,
+    });
+  }
+
+  function closeMobileFilters(source: string) {
+    setIsFilterOpen(false);
+    trackMapEvent("close_mobile_filters", { source });
+  }
+
   function resetFilters() {
     trackMapEvent("reset_filters", {
       selected_type: selectedType,
@@ -445,7 +464,7 @@ export default function RiyadhProjectsMapPage() {
     setSelectedType("الكل");
     setSelectedStatus("الكل");
     setSearchQuery("");
-    setSelectedDistrict(DISTRICTS[0]);
+    setSelectedDistrict(null);
   }
 
   function trackSearchUsage(source: string) {
@@ -473,11 +492,11 @@ export default function RiyadhProjectsMapPage() {
       />
 
       <main dir="rtl" className="min-h-screen bg-black text-white">
-        <section className="relative h-screen min-h-[820px] w-full overflow-hidden bg-black">
+        <section className="relative h-[100dvh] min-h-[680px] w-full overflow-hidden bg-black md:h-screen md:min-h-[820px]">
           <img
             src={MAP_IMAGE}
             alt="خريطة مشاريع بنيان الهرم للمقاولات داخل أحياء الرياض"
-            className="absolute inset-0 h-full w-full select-none object-cover opacity-95 [backface-visibility:hidden] [image-rendering:auto] [transform:translateZ(0)_scale(1.1)]"
+            className="absolute inset-0 h-full w-full select-none object-cover object-[48%_50%] opacity-95 [backface-visibility:hidden] [image-rendering:auto] [transform:translateZ(0)_scale(1.08)] md:object-center md:[transform:translateZ(0)_scale(1.1)]"
             loading="eager"
           />
 
@@ -520,7 +539,25 @@ export default function RiyadhProjectsMapPage() {
             ))}
           </svg>
 
-          <div className="absolute right-4 top-24 z-20 max-w-[460px] origin-top-right scale-[0.48] md:right-8 lg:right-12 xl:max-w-[500px] xl:scale-[0.51]">
+          <div className="absolute left-4 right-4 top-20 z-40 flex items-center justify-between gap-3 md:hidden">
+            <button
+              type="button"
+              onClick={openMobileFilters}
+              className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/35 bg-black/72 px-4 py-2.5 text-sm font-bold text-white shadow-xl shadow-black/30 backdrop-blur-xl transition active:scale-95"
+            >
+              <Filter className="h-4 w-4 text-[#D4AF37]" />
+              تصفية
+              <span className="rounded-full bg-[#D4AF37] px-2 py-0.5 text-xs text-black">
+                {totalProjects}
+              </span>
+            </button>
+
+            <div className="rounded-full border border-white/10 bg-black/55 px-4 py-2 text-xs font-bold text-white/75 shadow-xl shadow-black/25 backdrop-blur-xl">
+              اضغط على الدبوس لعرض المشاريع
+            </div>
+          </div>
+
+          <div className="absolute right-4 top-24 z-20 hidden max-w-[460px] origin-top-right scale-[0.48] md:block md:right-8 lg:right-12 xl:max-w-[500px] xl:scale-[0.51]">
             <div className="animate-[mapFadeUp_.55s_cubic-bezier(.22,1,.36,1)_both] rounded-[2rem] border border-white/10 bg-black/52 p-5 shadow-2xl shadow-black/35 backdrop-blur-xl md:p-5 xl:p-6">
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 px-4 py-2 text-sm text-[#f5deb3]">
                 <MapPin className="h-4 w-4" />
@@ -560,7 +597,169 @@ export default function RiyadhProjectsMapPage() {
             </div>
           </div>
 
-          <div className="absolute left-4 top-24 z-30 w-[calc(100%-2rem)] max-w-[360px] origin-top-left scale-[0.48] animate-[mapFadeLeft_.6s_cubic-bezier(.22,1,.36,1)_both] rounded-[2rem] border border-white/10 bg-black/60 p-5 shadow-2xl shadow-black/40 backdrop-blur-xl md:left-8 lg:left-12 xl:scale-[0.51]">
+          {isFilterOpen && (
+            <div className="fixed inset-0 z-[90] md:hidden">
+              <button
+                type="button"
+                aria-label="إغلاق فلتر المشاريع"
+                onClick={() => closeMobileFilters("backdrop")}
+                className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+              />
+
+              <aside className="projects-district-scroll absolute bottom-0 left-0 right-0 max-h-[82dvh] overflow-y-auto rounded-t-[2rem] border border-white/10 bg-black/90 p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] shadow-2xl shadow-black/60">
+                <div className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-white/20" />
+
+                <div className="mb-5 flex items-center justify-between gap-4">
+                  <div>
+                    <div className="flex items-center gap-2 text-lg font-extrabold text-white">
+                      <Filter className="h-5 w-5 text-[#D4AF37]" />
+                      تصفية المشاريع
+                    </div>
+                    <p className="mt-1 text-sm text-white/55">
+                      ابحث باسم الحي أو المشروع
+                    </p>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => closeMobileFilters("x_button")}
+                    className="rounded-full border border-white/15 bg-white/10 p-2 text-white/75 transition hover:border-[#D4AF37] hover:bg-[#D4AF37] hover:text-black"
+                    aria-label="إغلاق الفلتر"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
+
+                <div
+                  className="mb-4 inline-flex rounded-full border border-[#D4AF37]/30 px-3 py-1 text-xs text-[#D4AF37]"
+                  aria-live="polite"
+                >
+                  {resultsLabel}
+                </div>
+
+                <div className="space-y-5">
+                  <div className="relative">
+                    <Search className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#D4AF37]" />
+                    <input
+                      type="search"
+                      value={searchQuery}
+                      onChange={(event) => setSearchQuery(event.target.value)}
+                      onBlur={() => trackSearchUsage("mobile_search_blur")}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter") {
+                          trackSearchUsage("mobile_search_enter");
+                        }
+                      }}
+                      placeholder="ابحث: العليا، الملقا، تشطيب..."
+                      className="h-14 w-full rounded-2xl border border-white/10 bg-white/5 pr-12 pl-4 text-base text-white outline-none transition placeholder:text-white/35 focus:border-[#D4AF37]/60 focus:bg-white/10"
+                    />
+                  </div>
+
+                  <div>
+                    <div className="mb-3 text-sm font-bold text-white/75">
+                      نوع المشروع
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {TYPE_FILTERS.map((type) => (
+                        <button
+                          key={type}
+                          type="button"
+                          onClick={() => {
+                            setSelectedType(type);
+                            trackMapEvent("filter_type", {
+                              selected_type: type,
+                              source: "mobile_filter_drawer",
+                            });
+                          }}
+                          className={`rounded-full border px-4 py-2.5 text-sm transition duration-300 ${
+                            selectedType === type
+                              ? "border-[#D4AF37] bg-[#D4AF37] text-black"
+                              : "border-white/10 bg-white/5 text-white/70 active:scale-95"
+                          }`}
+                        >
+                          {type}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="mb-3 text-sm font-bold text-white/75">
+                      حالة المشروع
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {STATUS_FILTERS.map((status) => (
+                        <button
+                          key={status}
+                          type="button"
+                          onClick={() => {
+                            setSelectedStatus(status);
+                            trackMapEvent("filter_status", {
+                              selected_status: status,
+                              source: "mobile_filter_drawer",
+                            });
+                          }}
+                          className={`rounded-full border px-4 py-2.5 text-sm transition duration-300 ${
+                            selectedStatus === status
+                              ? "border-[#D4AF37] bg-[#D4AF37] text-black"
+                              : "border-white/10 bg-white/5 text-white/70 active:scale-95"
+                          }`}
+                        >
+                          {status}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <div className="mb-3 flex items-center justify-between gap-3">
+                      <div className="text-sm font-bold text-white/75">
+                        الأحياء الظاهرة
+                      </div>
+
+                      {hasActiveFilters && (
+                        <button
+                          type="button"
+                          onClick={resetFilters}
+                          className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-xs text-white/70 transition active:scale-95"
+                        >
+                          <RotateCcw className="h-3.5 w-3.5" />
+                          إعادة ضبط
+                        </button>
+                      )}
+                    </div>
+
+                    {filteredDistricts.length > 0 ? (
+                      <div className="flex flex-wrap gap-2">
+                        {filteredDistricts.map((district) => (
+                          <button
+                            key={district.id}
+                            type="button"
+                            onClick={() =>
+                              selectDistrict(district, "mobile_filter_drawer")
+                            }
+                            className={`rounded-full border px-4 py-2.5 text-sm transition duration-300 ${
+                              selectedVisibleDistrict?.id === district.id
+                                ? "border-[#D4AF37] bg-[#D4AF37]/25 text-[#D4AF37]"
+                                : "border-white/10 bg-black/20 text-white/70 active:scale-95"
+                            }`}
+                          >
+                            {district.name}
+                          </button>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="rounded-2xl border border-white/10 bg-black/25 p-4 text-sm leading-7 text-white/55">
+                        لا توجد مشاريع مطابقة للبحث الحالي. جرّب إزالة بعض الفلاتر.
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </aside>
+            </div>
+          )}
+
+          <div className="absolute left-4 top-24 z-30 hidden w-[calc(100%-2rem)] max-w-[360px] origin-top-left scale-[0.48] animate-[mapFadeLeft_.6s_cubic-bezier(.22,1,.36,1)_both] rounded-[2rem] border border-white/10 bg-black/60 p-5 shadow-2xl shadow-black/40 backdrop-blur-xl md:block md:left-8 lg:left-12 xl:scale-[0.51]">
             <div className="mb-5 flex items-center justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2 text-sm font-bold text-white">
@@ -734,7 +933,7 @@ export default function RiyadhProjectsMapPage() {
                   <MapPin className={isSelected ? "h-6 w-6" : "h-5 w-5"} />
                 </span>
 
-                <span className="absolute right-8 top-1/2 min-w-max -translate-y-1/2 rounded-full border border-white/10 bg-black/80 px-3.5 py-1.5 text-xs font-bold text-white shadow-xl backdrop-blur-md transition duration-300 group-hover:scale-105 group-hover:border-[#D4AF37]/60 group-hover:text-[#D4AF37]">
+                <span className="absolute right-8 top-1/2 hidden min-w-max -translate-y-1/2 rounded-full border border-white/10 bg-black/80 px-3.5 py-1.5 text-xs font-bold text-white shadow-xl backdrop-blur-md transition duration-300 group-hover:scale-105 group-hover:border-[#D4AF37]/60 group-hover:text-[#D4AF37] md:block">
                   {district.name}
                   <span className="mr-2 text-[#D4AF37]">
                     {district.projects.length}
@@ -784,7 +983,7 @@ export default function RiyadhProjectsMapPage() {
           </div>
 
           {(selectedVisibleDistrict || filteredDistricts.length === 0) && (
-            <aside className="absolute bottom-0 right-0 z-40 w-full max-h-[72vh] animate-[mapFadeUp_.5s_cubic-bezier(.22,1,.36,1)_both] overflow-hidden rounded-t-[2rem] border border-white/[0.12] bg-black/[0.78] p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-2xl shadow-black/50 backdrop-blur-2xl md:bottom-20 md:right-8 md:w-[calc(100%-2rem)] md:max-h-none md:max-w-[520px] md:origin-bottom-right md:scale-[0.48] md:rounded-[2rem] md:bg-black/[0.74] md:p-5 lg:right-12 xl:max-w-[560px] xl:scale-[0.51]">
+            <aside className="absolute bottom-0 right-0 z-40 w-full max-h-[56dvh] animate-[mapFadeUp_.5s_cubic-bezier(.22,1,.36,1)_both] overflow-hidden rounded-t-[2rem] border border-white/[0.12] bg-black/[0.86] p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-2xl shadow-black/50 backdrop-blur-2xl md:bottom-20 md:right-8 md:w-[calc(100%-2rem)] md:max-h-none md:max-w-[520px] md:origin-bottom-right md:scale-[0.48] md:rounded-[2rem] md:bg-black/[0.74] md:p-5 lg:right-12 xl:max-w-[560px] xl:scale-[0.51]">
               <div className="mx-auto mb-3 h-1.5 w-12 rounded-full bg-white/20 md:hidden" />
 
               {selectedVisibleDistrict ? (
@@ -829,14 +1028,14 @@ export default function RiyadhProjectsMapPage() {
                   </button>
                 </div>
 
-                <div className="projects-district-scroll max-h-[46vh] space-y-3 overflow-y-auto pl-2 pr-1 md:max-h-[330px]">
+                <div className="projects-district-scroll flex snap-x gap-3 overflow-x-auto overflow-y-hidden pb-2 pl-2 pr-1 md:block md:max-h-[330px] md:space-y-3 md:overflow-y-auto md:pb-0">
                   {selectedVisibleDistrict.projects.map((project) => (
                     <article
                       key={project.id}
-                      className="group overflow-hidden rounded-2xl border border-white/[0.12] bg-black/30 transition duration-300 hover:border-[#D4AF37]/45 hover:bg-white/[0.06]"
+                      className="group min-w-[82vw] snap-start overflow-hidden rounded-2xl border border-white/[0.12] bg-black/30 transition duration-300 hover:border-[#D4AF37]/45 hover:bg-white/[0.06] md:min-w-0"
                     >
-                      <div className="grid gap-4 p-3 md:grid-cols-[145px_1fr] md:p-3">
-                        <div className="relative h-32 overflow-hidden rounded-xl bg-white/5 md:h-full md:min-h-[128px]">
+                      <div className="grid gap-3 p-3 md:grid-cols-[145px_1fr] md:gap-4 md:p-3">
+                        <div className="relative h-28 overflow-hidden rounded-xl bg-white/5 md:h-full md:min-h-[128px]">
                           <img
                             src={project.image}
                             alt={project.title}
@@ -1205,6 +1404,13 @@ export default function RiyadhProjectsMapPage() {
 
           .projects-district-scroll::-webkit-scrollbar-thumb:hover {
             background: linear-gradient(180deg, rgba(255, 216, 99, 1), rgba(212, 175, 55, 0.95));
+          }
+
+          @media (max-width: 767px) {
+            .projects-district-scroll::-webkit-scrollbar {
+              height: 5px;
+              width: 5px;
+            }
           }
         `}</style>
       </main>
