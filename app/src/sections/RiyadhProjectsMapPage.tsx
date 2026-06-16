@@ -95,10 +95,230 @@ const PAGE_DESCRIPTION =
 
 const DISTRICTS: DistrictPin[] = [
   {
+    id: "qirawan",
+    name: "القيروان",
+    top: "24%",
+    left: "30%",
+    projects: [
+      {
+        id: "qirawan-shell",
+        title: "أعمال بناء عظم في القيروان",
+        district: "القيروان",
+        type: "عظم",
+        status: "جاري التنفيذ",
+        area: "فيلا سكنية",
+        duration: "مرحلة تنفيذ",
+        image: "/projects/concrete/concrete-01.webp",
+        hasVideo: false,
+        href: "/projects",
+        description:
+          "أعمال بناء عظم تشمل مراحل التنفيذ الإنشائي الأساسية وفق متطلبات المشروع.",
+      },
+    ],
+  },
+  {
+    id: "arid",
+    name: "العارض",
+    top: "22%",
+    left: "35%",
+    projects: [
+      {
+        id: "arid-villa-shell",
+        title: "تنفيذ عظم في حي العارض",
+        district: "العارض",
+        type: "عظم",
+        status: "جاري التنفيذ",
+        area: "فيلا سكنية",
+        duration: "حسب مراحل التنفيذ",
+        image: "/projects/concrete/concrete-01.webp",
+        hasVideo: false,
+        href: "/projects",
+        description:
+          "نموذج أعمال عظم في شمال الرياض ضمن مرحلة تنفيذ الهيكل الإنشائي.",
+      },
+    ],
+  },
+  {
+    id: "narjis",
+    name: "النرجس",
+    top: "21%",
+    left: "50%",
+    projects: [
+      {
+        id: "narjis-facade",
+        title: "أعمال واجهات في حي النرجس",
+        district: "النرجس",
+        type: "واجهات",
+        status: "مكتمل",
+        area: "واجهة سكنية",
+        duration: "حسب الأعمال",
+        image: "/projects/finishing/finishing-05.webp",
+        hasVideo: false,
+        href: "/projects",
+        description:
+          "أعمال تحسين واجهات ومعالجات خارجية لرفع جودة المظهر النهائي للمبنى.",
+      },
+    ],
+  },
+  {
+    id: "airport",
+    name: "المطار",
+    top: "21%",
+    left: "60%",
+    projects: [
+      {
+        id: "airport-commercial-fitout",
+        title: "أعمال تشطيب تجاري قرب المطار",
+        district: "المطار",
+        type: "تجاري",
+        status: "مكتمل",
+        area: "مساحات تجارية",
+        duration: "حسب نطاق العمل",
+        image: "/projects/finishing/finishing-03.webp",
+        hasVideo: false,
+        href: "/projects",
+        description:
+          "أعمال تشطيب تجاري وتجهيز داخلي ضمن نطاق شمال شرق الرياض.",
+      },
+    ],
+  },
+  {
+    id: "malqa",
+    name: "الملقا",
+    top: "36%",
+    left: "30%",
+    projects: [
+      {
+        id: "malqa-finishing",
+        title: "مشروع تشطيب في حي الملقا",
+        district: "الملقا",
+        type: "تشطيب",
+        status: "مكتمل",
+        area: "مشروع سكني",
+        duration: "حسب نطاق البنود",
+        image: "/projects/finishing/finishing-03.webp",
+        hasVideo: false,
+        href: "/contractor-almalqa-riyadh",
+        description:
+          "تنفيذ أعمال تشطيب سكنية ضمن حي الملقا مع التركيز على جودة التفاصيل والتسليم المنظم.",
+      },
+    ],
+  },
+  {
+    id: "kafd",
+    name: "مدينة الملك عبدالله المالية",
+    top: "43%",
+    left: "31%",
+    projects: [
+      {
+        id: "kafd-interior-works",
+        title: "أعمال داخلية قرب مدينة الملك عبدالله المالية",
+        district: "مدينة الملك عبدالله المالية",
+        type: "تجاري",
+        status: "مكتمل",
+        area: "مساحات داخلية مختارة",
+        duration: "حسب نطاق الأعمال",
+        image: "/projects/finishing/finishing-04.webp",
+        hasVideo: false,
+        href: "/projects",
+        description:
+          "أعمال داخلية وتجهيزات تشطيب ضمن نطاق مشاريع شمال الرياض التجارية.",
+      },
+    ],
+  },
+  {
+    id: "yasmin",
+    name: "الياسمين",
+    top: "39%",
+    left: "40%",
+    projects: [
+      {
+        id: "yasmin-villa-renovation",
+        title: "ترميم فيلا سكنية في حي الياسمين",
+        district: "الياسمين",
+        type: "ترميم",
+        status: "مكتمل",
+        area: "فيلا سكنية",
+        duration: "حسب مراحل الترميم",
+        image: "/projects/finishing/finishing-02.webp",
+        hasVideo: true,
+        href: "/case-study-villa-renovation-riyadh",
+        description:
+          "أعمال ترميم وتحسين للمساحات الداخلية والخارجية مع رفع جودة الاستخدام قبل التسليم.",
+      },
+    ],
+  },
+  {
+    id: "nakheel",
+    name: "النخيل",
+    top: "43%",
+    left: "62%",
+    projects: [
+      {
+        id: "nakheel-finishing",
+        title: "تشطيب داخلي في حي النخيل",
+        district: "النخيل",
+        type: "تشطيب",
+        status: "مكتمل",
+        area: "مساحات داخلية",
+        duration: "حسب نطاق العمل",
+        image: "/projects/finishing/finishing-01.webp",
+        hasVideo: false,
+        href: "/projects",
+        description:
+          "أعمال تشطيب داخلي بتفاصيل نهائية مناسبة للمساحات السكنية في الرياض.",
+      },
+    ],
+  },
+  {
+    id: "hamra",
+    name: "الحمراء",
+    top: "49%",
+    left: "56%",
+    projects: [
+      {
+        id: "hamra-renovation",
+        title: "تجديد داخلي في حي الحمراء",
+        district: "الحمراء",
+        type: "ترميم",
+        status: "مكتمل",
+        area: "مساحات داخلية",
+        duration: "حسب نطاق التجديد",
+        image: "/projects/finishing/finishing-02.webp",
+        hasVideo: false,
+        href: "/projects",
+        description:
+          "نموذج ترميم وتجديد داخلي لتحسين الاستخدام ورفع جودة التشطيب النهائي.",
+      },
+    ],
+  },
+  {
+    id: "wurood",
+    name: "الورود",
+    top: "57%",
+    left: "39%",
+    projects: [
+      {
+        id: "wurood-finishing",
+        title: "تشطيب سكني في حي الورود",
+        district: "الورود",
+        type: "تشطيب",
+        status: "مكتمل",
+        area: "مشروع سكني",
+        duration: "حسب البنود",
+        image: "/projects/finishing/finishing-05.webp",
+        hasVideo: false,
+        href: "/projects",
+        description:
+          "أعمال تشطيب سكنية مع عناية بالتفاصيل النهائية وتناسق المواد.",
+      },
+    ],
+  },
+  {
     id: "olaya",
     name: "العليا",
-    top: "54%",
-    left: "38%",
+    top: "62%",
+    left: "39%",
     projects: [
       {
         id: "olaya-luxury-finishing",
@@ -131,75 +351,9 @@ const DISTRICTS: DistrictPin[] = [
     ],
   },
   {
-    id: "yasmin",
-    name: "الياسمين",
-    top: "38%",
-    left: "42%",
-    projects: [
-      {
-        id: "yasmin-villa-renovation",
-        title: "ترميم فيلا سكنية في حي الياسمين",
-        district: "الياسمين",
-        type: "ترميم",
-        status: "مكتمل",
-        area: "فيلا سكنية",
-        duration: "حسب مراحل الترميم",
-        image: "/projects/finishing/finishing-02.webp",
-        hasVideo: true,
-        href: "/case-study-villa-renovation-riyadh",
-        description:
-          "أعمال ترميم وتحسين للمساحات الداخلية والخارجية مع رفع جودة الاستخدام قبل التسليم.",
-      },
-    ],
-  },
-  {
-    id: "malqa",
-    name: "الملقا",
-    top: "32%",
-    left: "32%",
-    projects: [
-      {
-        id: "malqa-finishing",
-        title: "مشروع تشطيب في حي الملقا",
-        district: "الملقا",
-        type: "تشطيب",
-        status: "مكتمل",
-        area: "مشروع سكني",
-        duration: "حسب نطاق البنود",
-        image: "/projects/finishing/finishing-03.webp",
-        hasVideo: false,
-        href: "/contractor-almalqa-riyadh",
-        description:
-          "تنفيذ أعمال تشطيب سكنية ضمن حي الملقا مع التركيز على جودة التفاصيل والتسليم المنظم.",
-      },
-    ],
-  },
-  {
-    id: "qirawan",
-    name: "القيروان",
-    top: "24%",
-    left: "32%",
-    projects: [
-      {
-        id: "qirawan-shell",
-        title: "أعمال بناء عظم في القيروان",
-        district: "القيروان",
-        type: "عظم",
-        status: "جاري التنفيذ",
-        area: "فيلا سكنية",
-        duration: "مرحلة تنفيذ",
-        image: "/projects/concrete/concrete-01.webp",
-        hasVideo: false,
-        href: "/projects",
-        description:
-          "أعمال بناء عظم تشمل مراحل التنفيذ الإنشائي الأساسية وفق متطلبات المشروع.",
-      },
-    ],
-  },
-  {
     id: "murabba",
     name: "المربع",
-    top: "78%",
+    top: "82%",
     left: "48%",
     projects: [
       {
@@ -219,29 +373,94 @@ const DISTRICTS: DistrictPin[] = [
     ],
   },
   {
-    id: "narjis",
-    name: "النرجس",
-    top: "23%",
-    left: "45%",
+    id: "tuwaiq",
+    name: "طويق",
+    top: "86%",
+    left: "36%",
     projects: [
       {
-        id: "narjis-facade",
-        title: "أعمال واجهات في حي النرجس",
-        district: "النرجس",
+        id: "tuwaiq-renovation",
+        title: "أعمال ترميم في حي طويق",
+        district: "طويق",
+        type: "ترميم",
+        status: "جاري التنفيذ",
+        area: "منزل سكني",
+        duration: "حسب نطاق الترميم",
+        image: "/projects/finishing/finishing-03.webp",
+        hasVideo: false,
+        href: "/projects",
+        description:
+          "أعمال ترميم ومعالجة داخلية وخارجية ضمن نطاق غرب الرياض.",
+      },
+    ],
+  },
+  {
+    id: "farooq",
+    name: "الفاروق",
+    top: "74%",
+    left: "63%",
+    projects: [
+      {
+        id: "farooq-facade",
+        title: "أعمال واجهات في حي الفاروق",
+        district: "الفاروق",
         type: "واجهات",
         status: "مكتمل",
-        area: "واجهة سكنية",
+        area: "واجهة خارجية",
         duration: "حسب الأعمال",
         image: "/projects/finishing/finishing-05.webp",
         hasVideo: false,
         href: "/projects",
         description:
-          "أعمال تحسين واجهات ومعالجات خارجية لرفع جودة المظهر النهائي للمبنى.",
+          "أعمال واجهات ومعالجات خارجية لتحسين المظهر النهائي ورفع جودة التشطيب.",
+      },
+    ],
+  },
+  {
+    id: "sulay",
+    name: "السلي",
+    top: "82%",
+    left: "70%",
+    projects: [
+      {
+        id: "sulay-commercial",
+        title: "تشطيب تجاري في حي السلي",
+        district: "السلي",
+        type: "تجاري",
+        status: "مكتمل",
+        area: "مساحة تجارية",
+        duration: "حسب نطاق العمل",
+        image: "/projects/finishing/finishing-04.webp",
+        hasVideo: false,
+        href: "/projects",
+        description:
+          "نموذج تشطيب تجاري وتجهيز داخلي ضمن نطاق شرق الرياض.",
+      },
+    ],
+  },
+  {
+    id: "khashm-alaan",
+    name: "خشم العان",
+    top: "79%",
+    left: "80%",
+    projects: [
+      {
+        id: "khashm-alaan-shell",
+        title: "أعمال عظم في خشم العان",
+        district: "خشم العان",
+        type: "عظم",
+        status: "جاري التنفيذ",
+        area: "مشروع سكني",
+        duration: "مرحلة تنفيذ",
+        image: "/projects/concrete/concrete-01.webp",
+        hasVideo: false,
+        href: "/projects",
+        description:
+          "أعمال تنفيذ عظم ضمن نطاق شرق الرياض مع مراحل إنشائية أساسية.",
       },
     ],
   },
 ];
-
 const TYPE_FILTERS: ProjectType[] = [
   "الكل",
   "تشطيب",
@@ -1260,7 +1479,7 @@ export default function RiyadhProjectsMapPage() {
                   الرياض، وتشمل أعمال التشطيب الداخلي، ترميم الفلل، بناء العظم،
                   تحسين الواجهات، وتنفيذ الأعمال السكنية والتجارية. يساعد عرض
                   المشاريع على الخريطة أصحاب الفلل والمباني على فهم نطاق عملنا
-                  داخل أحياء مثل العليا، الياسمين، الملقا، النرجس، القيروان،
+                  داخل أحياء مثل العليا، الياسمين، الملقا، النرجس، القيروان، العارض، النخيل، الحمراء،
                   والمربع.
                 </p>
 
