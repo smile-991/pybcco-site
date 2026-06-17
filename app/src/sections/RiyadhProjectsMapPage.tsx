@@ -71,6 +71,9 @@ type MapProject = {
   duration?: string;
   image: string;
   hasVideo?: boolean;
+  videoUrl?: string;
+  videoEmbedUrl?: string;
+  videoCover?: string;
   href: string;
   description: string;
   images?: string[];
@@ -105,14 +108,61 @@ const DISTRICTS: DistrictPin[] = [
     name: "القيروان",
     top: "24%",
     left: "30%",
-    projects: [],
+    projects: [
+      {
+        id: "residential-villas-structure-al-qirawan-riyadh",
+        title: "مشروع بناء عظم فلل سكنية في حي القيروان – الرياض",
+        district: "القيروان",
+        type: "عظم",
+        status: "مكتمل",
+        area: "فلل سكنية",
+        duration: "تنفيذ عظم فلل سكنية",
+        image: "/projects/concrete/concrete-15.webp",
+        images: [
+          "/projects/concrete/concrete-15.webp",
+          "/projects/concrete/concrete-13.webp",
+        ],
+        category: "بناء عظم فلل",
+        scope: "تنفيذ عظم فلل سكنية",
+        highlights: ["عظم فلل", "أعمال خرسانية", "فلل سكنية", "القيروان"],
+        hasVideo: false,
+        href: "/projects",
+        description:
+          "تنفيذ أعمال العظم لفلل سكنية في حي القيروان بالرياض، ضمن نطاق أعمال إنشائية شملت الهيكل الخرساني وتجهيز المشروع لمراحل التشطيب اللاحقة.",
+      },
+    ],
   },
   {
     id: "arid",
     name: "العارض",
     top: "22%",
     left: "35%",
-    projects: [],
+    projects: [
+      {
+        id: "residential-villas-structure-al-arid-riyadh",
+        title: "مشروع بناء عظم فلل سكنية في حي العارض – الرياض",
+        district: "العارض",
+        type: "عظم",
+        status: "مكتمل",
+        area: "فلل سكنية",
+        duration: "تنفيذ عظم فلل سكنية",
+        image: "/projects/concrete/concrete-14.webp",
+        images: [
+          "/projects/concrete/concrete-14.webp",
+          "/projects/concrete/concrete-1.webp",
+          "/projects/concrete/concrete-2.webp",
+          "/projects/concrete/concrete-3.webp",
+          "/projects/concrete/concrete-4.webp",
+        ],
+        category: "بناء عظم فلل",
+        scope: "تنفيذ عظم فلل سكنية",
+        highlights: ["عظم فلل", "أعمال خرسانية", "فلل سكنية", "العارض"],
+        hasVideo: false,
+        href: "/projects",
+        description:
+          "تنفيذ أعمال العظم لفلل سكنية في حي العارض بالرياض، ضمن نطاق أعمال إنشائية شملت الهيكل الخرساني وتجهيز المشروع للانتقال إلى مراحل التشطيب.",
+      },
+    ],
   },
   {
     id: "narjis",
@@ -124,7 +174,7 @@ const DISTRICTS: DistrictPin[] = [
   {
     id: "airport",
     name: "المطار",
-    top: "21%",
+    top: "15%",
     left: "60%",
     projects: [
       {
@@ -238,21 +288,106 @@ const DISTRICTS: DistrictPin[] = [
     name: "الياسمين",
     top: "39%",
     left: "40%",
-    projects: [],
+    projects: [
+      {
+        id: "apartment-finishing-rooftop-annex-al-yasmin-riyadh",
+        title: "مشروع تشطيب شقة وإضافة ملحق علوي في حي الياسمين – الرياض",
+        district: "الياسمين",
+        type: "تشطيب",
+        status: "مكتمل",
+        area: "شقة وملحق علوي",
+        duration: "تشطيب شقة وإضافة ملحق علوي",
+        image: "/projects/finishing/finishing-11.webp",
+        images: [
+          "/projects/finishing/finishing-11.webp",
+          "/projects/finishing/finishing-13.webp",
+          "/projects/finishing/finishing-14.webp",
+          "/projects/finishing/finishing-06.webp",
+          "/projects/finishing/finishing-09.webp",
+          "/projects/finishing/finishing-10.webp",
+        ],
+        category: "تشطيب شقق وملحق علوي",
+        scope: "تشطيب شقة وإضافة ملحق علوي",
+        highlights: ["تشطيب شقة", "إضافة ملحق علوي", "فيديو قبل وبعد", "الياسمين"],
+        hasVideo: true,
+        videoUrl: "https://youtube.com/shorts/re44BUTtHUk?feature=share",
+        videoEmbedUrl: "https://www.youtube.com/embed/re44BUTtHUk",
+        videoCover: "/vedio cover/befor-after.webp",
+        href: "/projects",
+        description:
+          "تنفيذ أعمال تشطيب شقة سكنية مع إضافة ملحق علوي في حي الياسمين بالرياض، ضمن نطاق شمل تحسين المساحات الداخلية وتجهيز الملحق العلوي بما يناسب الاستخدام السكني.",
+      },
+    ],
   },
   {
-    id: "nakheel",
-    name: "النخيل",
+    id: "rawdah",
+    name: "الروضة",
     top: "43%",
     left: "62%",
-    projects: [],
+    projects: [
+      {
+        id: "daraah-perfumes-showroom-fitout-al-rawdah-riyadh",
+        title: "مشروع تشطيب معرض درعه للعطور في حي الروضة – الرياض",
+        district: "الروضة",
+        type: "تشطيب",
+        status: "مكتمل",
+        area: "معرض عطور",
+        duration: "تشطيب معرض ضمن مشروع 23 فرع",
+        image: "/projects/finishing/finishing-19.webp",
+        images: [
+          "/projects/finishing/finishing-19.webp",
+          "/projects/finishing/finishing-22.webp",
+          "/projects/finishing/finishing-17.webp",
+          "/projects/finishing/finishing-18.webp",
+        ],
+        category: "تشطيب معارض تجارية",
+        scope: "تشطيب معرض عطور ضمن مشروع تشطيب 23 فرع",
+        highlights: ["تشطيب معارض", "معرض عطور", "23 فرع", "الروضة", "درعه للعطور"],
+        hasVideo: false,
+        href: "/projects",
+        description:
+          "تنفيذ أعمال تشطيب معرض درعه للعطور في حي الروضة بالرياض، ضمن مشروع تشطيب متعدد الفروع شمل 23 فرعًا، مع تجهيز المساحة التجارية بما يناسب عرض المنتجات وتجربة العملاء.",
+      },
+    ],
   },
   {
     id: "hamra",
     name: "الحمراء",
-    top: "49%",
-    left: "56%",
-    projects: [],
+    top: "29%",
+    left: "59%",
+    projects: [
+      {
+        id: "villa-renovation-al-hamra-riyadh",
+        title: "مشروع ترميم فيلا داخلي وخارجي في حي الحمراء – الرياض",
+        district: "الحمراء",
+        type: "ترميم",
+        status: "مكتمل",
+        area: "فيلا سكنية",
+        duration: "ترميم داخلي وخارجي",
+        image: "/projects/alhamra/villa-renovation-al-hamra-riyadh-01.webp",
+        images: [
+          "/projects/alhamra/villa-renovation-al-hamra-riyadh-01.webp",
+          "/projects/alhamra/villa-renovation-al-hamra-riyadh-02.webp",
+          "/projects/alhamra/villa-renovation-al-hamra-riyadh-03.webp",
+          "/projects/alhamra/villa-renovation-al-hamra-riyadh-04.webp",
+          "/projects/alhamra/villa-renovation-al-hamra-riyadh-05.webp",
+          "/projects/alhamra/villa-renovation-al-hamra-riyadh-06.webp",
+          "/projects/alhamra/villa-renovation-al-hamra-riyadh-07.webp",
+          "/projects/alhamra/villa-renovation-al-hamra-riyadh-08.webp",
+          "/projects/alhamra/villa-renovation-al-hamra-riyadh-09.webp",
+          "/projects/alhamra/villa-renovation-al-hamra-riyadh-10.webp",
+          "/projects/alhamra/villa-renovation-al-hamra-riyadh-11.webp",
+          "/projects/alhamra/villa-renovation-al-hamra-riyadh-12.webp",
+        ],
+        category: "ترميم فلل",
+        scope: "ترميم داخلي وخارجي لفيلا سكنية",
+        highlights: ["ترميم فيلا", "ترميم داخلي", "ترميم خارجي", "أعمال سكنية", "الحمراء"],
+        hasVideo: false,
+        href: "/projects",
+        description:
+          "تنفيذ أعمال ترميم داخلي وخارجي لفيلا سكنية في حي الحمراء بالرياض، ضمن نطاق شمل تحسين المساحات الداخلية ومعالجة وتجديد العناصر الخارجية للوصول إلى مظهر نهائي أفضل وجودة تنفيذ أعلى.",
+      },
+    ],
   },
   {
     id: "wurood",
@@ -273,14 +408,79 @@ const DISTRICTS: DistrictPin[] = [
     name: "المربع",
     top: "82%",
     left: "48%",
-    projects: [],
+    projects: [
+      {
+        id: "restaurant-outdoor-seating-al-murabba-riyadh",
+        title: "مشروع تشطيب جلسات خارجية لمطعم سمك في حي المربع – الرياض",
+        district: "المربع",
+        type: "تشطيب",
+        status: "مكتمل",
+        area: "جلسات خارجية لمطعم",
+        duration: "تشطيب وتجهيز جلسات خارجية",
+        image: "/projects/restaurant-outdoor/13-restaurant-outdoor-area-after-construction-riyadh.webp",
+        images: [
+          "/projects/restaurant-outdoor/13-restaurant-outdoor-area-after-construction-riyadh.webp",
+          "/projects/restaurant-outdoor/14-restaurant-yard-finishing-after-riyadh.webp",
+          "/projects/restaurant-outdoor/15-restaurant-exterior-seating-after-renovation-riyadh.webp",
+          "/projects/restaurant-outdoor/16-outdoor-dining-area-after-finishing-riyadh.webp",
+          "/projects/restaurant-outdoor/17-restaurant-courtyard-after-work-riyadh.webp",
+          "/projects/restaurant-outdoor/18-restaurant-outdoor-space-after-finishing-riyadh.webp",
+          "/projects/restaurant-outdoor/10-restaurant-outdoor-seating-after-riyadh.webp",
+          "/projects/restaurant-outdoor/11-restaurant-courtyard-design-after-riyadh.webp",
+          "/projects/restaurant-outdoor/12-modern-restaurant-outdoor-finishing-riyadh.webp",
+          "/projects/restaurant-outdoor/01-restaurant-outdoor-seating-before-riyadh.webp",
+          "/projects/restaurant-outdoor/02-restaurant-courtyard-finishing-before-riyadh.webp",
+          "/projects/restaurant-outdoor/03-outdoor-restaurant-renovation-before-riyadh.webp",
+          "/projects/restaurant-outdoor/04-restaurant-outdoor-area-before-construction-riyadh.webp",
+          "/projects/restaurant-outdoor/05-restaurant-yard-finishing-before-riyadh.webp",
+          "/projects/restaurant-outdoor/06-restaurant-exterior-seating-before-renovation-riyadh.webp",
+          "/projects/restaurant-outdoor/07-outdoor-dining-area-before-finishing-riyadh.webp",
+          "/projects/restaurant-outdoor/08-restaurant-courtyard-before-work-riyadh.webp",
+          "/projects/restaurant-outdoor/09-restaurant-outdoor-space-before-finishing-riyadh.webp",
+        ],
+        category: "تشطيب مطاعم وجلسات خارجية",
+        scope: "تشطيب وتجهيز جلسات خارجية لمطعم",
+        highlights: ["جلسات خارجية", "مطعم سمك", "تشطيب مطاعم", "قبل وبعد", "المربع"],
+        hasVideo: false,
+        href: "/projects",
+        description:
+          "تنفيذ أعمال تشطيب وتجهيز الجلسات الخارجية لمطعم سمك في حي المربع بالرياض، ضمن نطاق شمل تحسين المساحة الخارجية وتجهيز منطقة الجلوس والطعام بشكل مناسب للاستخدام التجاري وتجربة العملاء.",
+      },
+    ],
   },
   {
     id: "tuwaiq",
     name: "طويق",
     top: "86%",
     left: "36%",
-    projects: [],
+    projects: [
+      {
+        id: "bathroom-renovation-tuwaiq-riyadh",
+        title: "مشروع ترميم حمامات في حي طويق – الرياض",
+        district: "طويق",
+        type: "ترميم",
+        status: "مكتمل",
+        area: "حمامات",
+        duration: "ترميم وتجديد حمامات",
+        image: "/projects/toaiq/toaiq-bathroom-renovation-01.webp",
+        images: [
+          "/projects/toaiq/toaiq-bathroom-renovation-01.webp",
+          "/projects/toaiq/toaiq-bathroom-renovation-02.webp",
+          "/projects/toaiq/toaiq-bathroom-renovation-03.webp",
+          "/projects/toaiq/toaiq-bathroom-renovation-04.webp",
+          "/projects/toaiq/toaiq-bathroom-renovation-05.webp",
+          "/projects/toaiq/toaiq-bathroom-renovation-06.webp",
+          "/projects/toaiq/toaiq-bathroom-renovation-07.webp",
+        ],
+        category: "ترميم حمامات",
+        scope: "ترميم وتجديد حمامات",
+        highlights: ["ترميم حمامات", "تجديد داخلي", "أعمال سباكة وتشطيب", "طويق"],
+        hasVideo: false,
+        href: "/projects",
+        description:
+          "تنفيذ أعمال ترميم وتجديد حمامات في حي طويق بالرياض، ضمن نطاق شمل تحسين التشطيبات الداخلية وتجهيز الحمامات بشكل عملي ومناسب للاستخدام اليومي.",
+      },
+    ],
   },
   {
     id: "farooq",
@@ -476,7 +676,7 @@ export default function RiyadhProjectsMapPage() {
     const normalizedQuery = normalizeSearchValue(searchQuery);
     const hasQuery = normalizedQuery.length > 0;
 
-    return DISTRICTS.map((district) => {
+    return DISTRICTS.filter((district) => district.projects.length > 0).map((district) => {
       const districtMatch = normalizeSearchValue(district.name).includes(
         normalizedQuery
       );
@@ -735,13 +935,12 @@ export default function RiyadhProjectsMapPage() {
               </div>
 
               <h1 className="text-3xl font-extrabold leading-tight md:text-4xl xl:text-[2.75rem]">
-                مشاريعنا المنفذة في{" "}
-                <span className="text-[#D4AF37]">أحياء الرياض</span>
+                نماذج من مشاريعنا المنفذة {" "}
+                <span className="text-[#D4AF37]">داخل الرياض</span>
               </h1>
 
               <p className="mt-4 max-w-lg text-sm leading-7 text-white/75">
-                استكشف مواقع المشاريع حسب الحي ونوع التنفيذ. اضغط على أي حي
-                ظاهر على الخريطة لعرض تفاصيل المشاريع والصور والروابط المرتبطة.
+                استكشف مواقع ونماذج من أعمالنا في التشطيب والترميم والمكاتب التجارية داخل أحياء الرياض، مع تحديث الخريطة دوريًا بإضافة مشاريع جديدة.
               </p>
 
               <div className="mt-5 grid grid-cols-3 gap-3">
@@ -1464,6 +1663,41 @@ export default function RiyadhProjectsMapPage() {
                       </div>
                     )}
 
+                    {selectedProject.videoUrl && (
+                      <div className="mt-5 overflow-hidden rounded-2xl border border-[#D4AF37]/25 bg-[#D4AF37]/10">
+                        {selectedProject.videoCover && (
+                          <img
+                            src={selectedProject.videoCover}
+                            alt={`غلاف فيديو ${selectedProject.title}`}
+                            className="h-32 w-full object-cover"
+                            loading="lazy"
+                          />
+                        )}
+                        <div className="p-4">
+                          <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-black/35 px-3 py-1 text-xs font-bold text-[#D4AF37]">
+                            <PlayCircle className="h-3.5 w-3.5" />
+                            فيديو قبل / بعد
+                          </div>
+                          <a
+                            href={selectedProject.videoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() =>
+                              trackMapEvent("click_project_video", {
+                                source: "project_modal",
+                                project_id: selectedProject.id,
+                                district: selectedProject.district,
+                              })
+                            }
+                            className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#D4AF37] px-4 py-2.5 text-sm font-bold text-black transition hover:bg-[#e5c158]"
+                          >
+                            مشاهدة الفيديو
+                            <PlayCircle className="h-4 w-4" />
+                          </a>
+                        </div>
+                      </div>
+                    )}
+
                     <div className="mt-6 flex flex-wrap gap-2">
                       <Button
                         asChild
@@ -1615,8 +1849,8 @@ export default function RiyadhProjectsMapPage() {
                   الرياض، وتشمل أعمال التشطيب الداخلي، ترميم الفلل، بناء العظم،
                   تحسين الواجهات، وتنفيذ الأعمال السكنية والتجارية. يساعد عرض
                   المشاريع على الخريطة أصحاب الفلل والمباني على فهم نطاق عملنا
-                  داخل أحياء مثل العليا، الياسمين، الملقا، النرجس، القيروان، العارض، النخيل، الحمراء،
-                  والمربع.
+                  داخل أحياء مثل الياسمين، الملقا، القيروان، العارض، الروضة، الحمراء،
+                  المربع، طويق، السلي، خشم العان، ومدينة الملك عبدالله المالية.
                 </p>
 
                 <p className="mt-4 text-sm leading-8 text-white/65 md:text-base">
@@ -1633,7 +1867,7 @@ export default function RiyadhProjectsMapPage() {
                 </h3>
 
                 <div className="mt-5 flex flex-wrap gap-2">
-                  {DISTRICTS.map((district) => (
+                  {DISTRICTS.filter((district) => district.projects.length > 0).map((district) => (
                     <button
                       key={district.id}
                       type="button"
