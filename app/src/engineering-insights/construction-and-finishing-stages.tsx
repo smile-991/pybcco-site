@@ -57,7 +57,7 @@ export default function ConstructionAndFinishingStagesPage() {
         title: "كم تستغرق مدة بناء فيلا في الرياض؟",
         description:
           "نظرة واقعية على المدة المتوقعة لكل مرحلة من مراحل البناء والتشطيب والعوامل التي قد تؤخر المشروع.",
-        href: "/engineering-insights/construction-and-finishing-stages/how-long-does-it-take-to-build-a-villa-in-riyadh",
+        href: "/engineering-insights/construction-and-finishing-stages/how-long-does-it-take-to-build-villa-riyadh",
         tags: ["مدة البناء", "جدول زمني", "بناء فيلا بالرياض"],
         readTime: "6 دقائق",
       },
