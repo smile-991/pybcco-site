@@ -53,7 +53,7 @@ const VIDEOS: VideoItem[] = [
     embedUrl: "https://www.youtube.com/embed/RXlu9puTA-o",
     watchUrl: "https://youtube.com/shorts/RXlu9puTA-o?si=onQayNi8gpfN6Kf7",
     thumbnailUrl: `${SITE_URL}/vedio cover/laxury-bathroom.webp`,
-    uploadDate: "2026-03-16",
+    uploadDate: "2026-03-14T12:00:00+03:00",
     duration: "PT30S",
     keywords: [
       "تشطيب حمامات فاخرة بالرياض",
@@ -77,7 +77,7 @@ const VIDEOS: VideoItem[] = [
     embedUrl: "https://www.youtube.com/embed/qaKZukA1534",
     watchUrl: "https://youtube.com/shorts/qaKZukA1534?si=DUDzbA2_8TsSVQ8a",
     thumbnailUrl: `${SITE_URL}/vedio cover/villa-renuvation.webp`,
-    uploadDate: "2026-03-16",
+    uploadDate: "2026-03-14T12:00:00+03:00",
     duration: "PT30S",
     keywords: [
       "ترميم فيلا بالرياض",
@@ -100,7 +100,7 @@ const VIDEOS: VideoItem[] = [
     embedUrl: "https://www.youtube.com/embed/re44BUTtHUk",
     watchUrl: "https://youtube.com/shorts/re44BUTtHUk?si=Wn-LTsc1_zHgsdro",
     thumbnailUrl: `${SITE_URL}/vedio cover/befor-after.webp`,
-    uploadDate: "2026-03-16",
+    uploadDate: "2026-03-14T12:00:00+03:00",
     duration: "PT30S",
     keywords: [
       "قبل وبعد تشطيب سطح",
