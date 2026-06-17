@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+
+  <url>
+    <loc>https://pybcco.com/videos</loc>
+
+    <video:video>
+      <video:thumbnail_loc>https://pybcco.com/vedio%20cover/laxury-bathroom.webp</video:thumbnail_loc>
+      <video:title>تشطيب حمامات فاخرة في الرياض | تصميم ملهم وتنفيذ راقٍ في معرض الصقور والأسلحة</video:title>
+      <video:description>فيديو قصير يعرض نموذجًا ملهمًا لتشطيب حمام فاخر في الرياض، مع إبراز جودة التفاصيل النهائية والهوية التنفيذية الراقية المناسبة للمشاريع السكنية والمجالس والمعارض الفاخرة.</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube.com/embed/RXlu9puTA-o</video:player_loc>
+      <video:duration>30</video:duration>
+      <video:publication_date>2026-03-14T12:00:00+03:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:tag>تشطيب حمامات فاخرة بالرياض</video:tag>
+      <video:tag>مقاول تشطيب حمامات</video:tag>
+      <video:tag>تشطيبات داخلية فاخرة</video:tag>
+      <video:tag>شركة مقاولات بالرياض</video:tag>
+    </video:video>
+
+    <video:video>
+      <video:thumbnail_loc>https://pybcco.com/vedio%20cover/villa-renuvation.webp</video:thumbnail_loc>
+      <video:title>ترميم فيلا سكنية في حي الياسمين بالرياض | تجديد عملي وتحسين جودة المساحات</video:title>
+      <video:description>مقطع يوضح جانبًا من أعمال ترميم فيلا سكنية في حي الياسمين بالرياض، ويعكس مستوى التنفيذ والاهتمام بإعادة التأهيل وتحسين الحالة الوظيفية والجمالية للمسكن قبل التسليم.</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube.com/embed/qaKZukA1534</video:player_loc>
+      <video:duration>30</video:duration>
+      <video:publication_date>2026-03-14T12:00:00+03:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:tag>ترميم فيلا بالرياض</video:tag>
+      <video:tag>ترميم حي الياسمين</video:tag>
+      <video:tag>تجديد فلل سكنية</video:tag>
+      <video:tag>مقاولات ترميم الرياض</video:tag>
+    </video:video>
+
+    <video:video>
+      <video:thumbnail_loc>https://pybcco.com/vedio%20cover/befor-after.webp</video:thumbnail_loc>
+      <video:title>قبل وبعد تشطيب سطح شقة سكنية فاخرة | تحويل بصري عملي في الرياض</video:title>
+      <video:description>فيديو قبل وبعد يبرز التحول الواضح في تشطيب سطح شقة سكنية فاخرة بالرياض، ويُظهر كيف تؤثر المعالجة الصحيحة للتشطيب على الشكل النهائي والاستفادة من المساحة وجودة الاستخدام.</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube.com/embed/re44BUTtHUk</video:player_loc>
+      <video:duration>30</video:duration>
+      <video:publication_date>2026-03-14T12:00:00+03:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:tag>قبل وبعد تشطيب سطح</video:tag>
+      <video:tag>تشطيب سطح شقة بالرياض</video:tag>
+      <video:tag>تشطيب فاخر</video:tag>
+      <video:tag>مقاول تشطيب أسطح</video:tag>
+    </video:video>
+
+  </url>
+</urlset>
