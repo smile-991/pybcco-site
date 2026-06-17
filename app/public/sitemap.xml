@@ -5,7 +5,7 @@
 
   <url>
     <loc>https://pybcco.com/</loc>
-    <lastmod>2026-06-13</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -246,7 +246,7 @@
   <!-- Construction & Finishing Stages Hub -->
   <url>
     <loc>https://pybcco.com/engineering-insights/construction-and-finishing-stages</loc>
-    <lastmod>2026-03-06</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -267,7 +267,7 @@
 
   <url>
     <loc>https://pybcco.com/engineering-insights/construction-and-finishing-stages/how-long-does-it-take-to-build-villa-riyadh</loc>
-    <lastmod>2026-03-06</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -437,7 +437,7 @@
 
   <url>
     <loc>https://pybcco.com/engineering-insights/cost/villa-300m-construction-cost-riyadh</loc>
-    <lastmod>2026-03-06</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -613,17 +613,17 @@
   </url>
 
   <url>
-  <loc>https://pybcco.com/videos</loc>
-  <lastmod>2026-06-14</lastmod>
-  <changefreq>weekly</changefreq>
-  <priority>0.85</priority>
-</url>
+    <loc>https://pybcco.com/videos</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
 
-<url>
-  <loc>https://pybcco.com/projects-in-riyadh</loc>
-  <lastmod>2026-06-17</lastmod>
-  <changefreq>weekly</changefreq>
-  <priority>0.9</priority>
-</url>
+  <url>
+    <loc>https://pybcco.com/projects-in-riyadh</loc>
+    <lastmod>2026-06-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
 
 </urlset>
