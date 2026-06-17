@@ -54,6 +54,12 @@ export default function ProfileQR() {
               </Button>
             </a>
 
+            <a href="https://pybcco.com/projects-in-riyadh" target="_blank" rel="noreferrer">
+              <Button variant="outline" className="w-full h-12 text-base font-bold">
+                خريطة مشاريعنا في الرياض
+              </Button>
+            </a>
+
             <a href="https://pybcco.com" target="_blank" rel="noreferrer">
               <Button variant="ghost" className="w-full h-12 text-base font-bold">
                 زيارة الموقع الكامل

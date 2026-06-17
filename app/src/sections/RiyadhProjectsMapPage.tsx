@@ -592,48 +592,64 @@ function normalizeSearchValue(value: string) {
 }
 
 function buildPageSchema(): JsonLd[] {
-  const allProjects = DISTRICTS.flatMap((district) => district.projects);
+  const allProjects = DISTRICTS.flatMap((district) =>
+    district.projects.map((project) => ({
+      districtName: district.name,
+      project,
+    }))
+  );
 
   return [
     {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      "@id": CANONICAL,
-      name: PAGE_TITLE,
-      description: PAGE_DESCRIPTION,
+      "@id": `${CANONICAL}#webpage`,
+      name: "خريطة مشاريع بنيان الهرم المنفذة داخل الرياض",
+      description:
+        "خريطة تفاعلية تعرض نماذج من مشاريع بنيان الهرم للمقاولات المنفذة داخل أحياء الرياض، وتشمل مشاريع العظم والتشطيب والترميم والمكاتب والجلسات الخارجية.",
       url: CANONICAL,
-      inLanguage: "ar",
-      about: [
-        "مشاريع مقاولات في الرياض",
-        "تشطيب فلل في الرياض",
-        "ترميم فلل في الرياض",
-        "بناء عظم في الرياض",
-      ],
+      inLanguage: "ar-SA",
+      isPartOf: {
+        "@id": `${SITE_URL}/#website`,
+      },
+      about: {
+        "@id": `${SITE_URL}/#localbusiness`,
+      },
       spatialCoverage: {
         "@type": "Place",
         name: "الرياض، المملكة العربية السعودية",
       },
-      isPartOf: {
-        "@type": "WebSite",
-        "@id": `${SITE_URL}/#website`,
+      mainEntity: {
+        "@id": `${CANONICAL}#projects-list`,
       },
     },
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      "@id": `${CANONICAL}#projects`,
+      "@id": `${CANONICAL}#projects-list`,
+      name: "نماذج مشاريع منفذة داخل الرياض",
+      description:
+        "قائمة من مشاريع البناء والتشطيب والترميم المنفذة داخل أحياء الرياض.",
       numberOfItems: allProjects.length,
-      itemListElement: allProjects.map((project, index) => ({
+      itemListElement: allProjects.map((entry, index) => ({
         "@type": "ListItem",
         position: index + 1,
+        name: entry.project.title,
         item: {
           "@type": "CreativeWork",
-          name: project.title,
-          url: `${CANONICAL}#${project.id}`,
-          about: project.type,
+          "@id": `${CANONICAL}#${entry.project.id}`,
+          name: entry.project.title,
+          description: entry.project.description,
+          url: `${CANONICAL}#${entry.project.id}`,
+          image: entry.project.image?.startsWith("http")
+            ? entry.project.image
+            : `${SITE_URL}${entry.project.image}`,
+          about: [entry.project.type, entry.project.category, entry.project.scope]
+            .filter(Boolean)
+            .join("، "),
           contentLocation: {
             "@type": "Place",
-            name: `حي ${project.district}، الرياض`,
+            name: `حي ${entry.districtName}، الرياض، السعودية`,
           },
         },
       })),
@@ -652,7 +668,7 @@ function buildPageSchema(): JsonLd[] {
         {
           "@type": "ListItem",
           position: 2,
-          name: "خريطة مشاريع الرياض",
+          name: "خريطة المشاريع",
           item: CANONICAL,
         },
       ],
@@ -909,6 +925,48 @@ export default function RiyadhProjectsMapPage() {
             ))}
           </svg>
 
+          <svg
+            className="pointer-events-none absolute inset-0 z-[11] hidden h-full w-full opacity-80 md:block"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <defs>
+              <marker
+                id="airport-direction-arrow"
+                markerWidth="6"
+                markerHeight="6"
+                refX="5"
+                refY="3"
+                orient="auto"
+                markerUnits="strokeWidth"
+              >
+                <path d="M0,0 L6,3 L0,6 Z" fill="rgba(212,175,55,0.9)" />
+              </marker>
+            </defs>
+
+            <path
+              d="M 59.5 2.8 C 59.2 6.2, 59.4 9.2, 60 12.5"
+              fill="none"
+              stroke="rgba(212,175,55,0.72)"
+              strokeWidth="0.22"
+              strokeLinecap="round"
+              strokeDasharray="1.2 0.9"
+              markerEnd="url(#airport-direction-arrow)"
+            />
+            <circle cx="59.5" cy="2.8" r="0.55" fill="rgba(212,175,55,0.92)" />
+            <text
+              x="58.8"
+              y="2.3"
+              fill="rgba(212,175,55,0.9)"
+              fontSize="1.35"
+              fontWeight="700"
+              textAnchor="end"
+            >
+              المطار شمالًا
+            </text>
+          </svg>
+
           <div className="absolute left-4 right-4 top-20 z-40 flex items-center justify-between gap-3 md:hidden">
             <button
               type="button"
@@ -978,7 +1036,7 @@ export default function RiyadhProjectsMapPage() {
               <aside className="projects-district-scroll absolute bottom-0 left-0 right-0 max-h-[82dvh] overflow-y-auto rounded-t-[2rem] border border-white/10 bg-black/90 p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] shadow-2xl shadow-black/60">
                 <div className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-white/20" />
 
-                <div className="mb-5 flex items-center justify-between gap-4">
+                <div className="mb-4 flex items-start justify-between gap-3">
                   <div>
                     <div className="flex items-center gap-2 text-lg font-extrabold text-white">
                       <Filter className="h-5 w-5 text-[#D4AF37]" />
@@ -1006,7 +1064,7 @@ export default function RiyadhProjectsMapPage() {
                   {resultsLabel}
                 </div>
 
-                <div className="space-y-5">
+                <div className="space-y-4">
                   <div className="relative">
                     <Search className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#D4AF37]" />
                     <input
@@ -1080,8 +1138,8 @@ export default function RiyadhProjectsMapPage() {
                     </div>
                   </div>
 
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                    <div className="mb-3 flex items-center justify-between gap-3">
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5">
+                    <div className="mb-3 flex items-center justify-between gap-2">
                       <div className="text-sm font-bold text-white/75">
                         الأحياء الظاهرة
                       </div>
@@ -1128,27 +1186,27 @@ export default function RiyadhProjectsMapPage() {
             </div>
           )}
 
-          <div className="absolute left-4 top-24 z-30 hidden w-[calc(100%-2rem)] max-w-[360px] origin-top-left scale-[0.48] animate-[mapFadeLeft_.6s_cubic-bezier(.22,1,.36,1)_both] rounded-[2rem] border border-white/10 bg-black/60 p-5 shadow-2xl shadow-black/40 backdrop-blur-xl md:block md:left-8 lg:left-12 xl:scale-[0.51]">
-            <div className="mb-5 flex items-center justify-between gap-4">
+          <div className="absolute left-4 top-24 z-30 hidden w-[calc(100%-2rem)] max-w-[250px] origin-top-left scale-[0.54] animate-[mapFadeLeft_.6s_cubic-bezier(.22,1,.36,1)_both] rounded-[1.75rem] border border-white/10 bg-black/62 p-4 shadow-2xl shadow-black/40 backdrop-blur-xl md:block md:left-8 lg:left-12 xl:scale-[0.56]">
+            <div className="mb-4 flex items-start justify-between gap-3">
               <div>
-                <div className="flex items-center gap-2 text-sm font-bold text-white">
+                <div className="flex items-center gap-2 text-[13px] font-bold text-white">
                   <Filter className="h-4 w-4 text-[#D4AF37]" />
                   تصفية المشاريع
                 </div>
-                <p className="mt-1 text-xs text-white/55">
+                <p className="mt-1 text-[11px] text-white/55">
                   ابحث باسم الحي أو المشروع
                 </p>
               </div>
 
               <div
-                className="rounded-full border border-[#D4AF37]/30 px-3 py-1 text-xs text-[#D4AF37]"
+                className="shrink-0 rounded-full border border-[#D4AF37]/30 px-2.5 py-1 text-[11px] text-[#D4AF37]"
                 aria-live="polite"
               >
                 {resultsLabel}
               </div>
             </div>
 
-            <div className="space-y-5">
+            <div className="space-y-4">
               <div className="relative">
                 <Search className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#D4AF37]" />
                 <input
@@ -1161,8 +1219,8 @@ export default function RiyadhProjectsMapPage() {
                       trackSearchUsage("search_input_enter");
                     }
                   }}
-                  placeholder="ابحث: العليا، الملقا، تشطيب..."
-                  className="h-12 w-full rounded-2xl border border-white/10 bg-white/5 pr-11 pl-4 text-sm text-white outline-none transition placeholder:text-white/35 focus:border-[#D4AF37]/60 focus:bg-white/10"
+                  placeholder="ابحث عن حي أو مشروع..."
+                  className="h-11 w-full rounded-2xl border border-white/10 bg-white/5 pr-10 pl-3 text-xs text-white outline-none transition placeholder:text-white/35 focus:border-[#D4AF37]/60 focus:bg-white/10"
                 />
               </div>
 
@@ -1170,7 +1228,7 @@ export default function RiyadhProjectsMapPage() {
                 <div className="mb-2 text-xs font-bold text-white/70">
                   نوع المشروع
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5">
                   {TYPE_FILTERS.map((type) => (
                     <button
                       key={type}
@@ -1179,7 +1237,7 @@ export default function RiyadhProjectsMapPage() {
                         setSelectedType(type);
                         trackMapEvent("filter_type", { selected_type: type });
                       }}
-                      className={`rounded-full border px-3 py-2 text-xs transition duration-300 ${
+                      className={`rounded-full border px-2.5 py-1.5 text-[11px] transition duration-300 ${
                         selectedType === type
                           ? "border-[#D4AF37] bg-[#D4AF37] text-black"
                           : "border-white/10 bg-white/5 text-white/70 hover:scale-105 hover:border-[#D4AF37]/60 hover:text-white"
@@ -1195,7 +1253,7 @@ export default function RiyadhProjectsMapPage() {
                 <div className="mb-2 text-xs font-bold text-white/70">
                   حالة المشروع
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5">
                   {STATUS_FILTERS.map((status) => (
                     <button
                       key={status}
@@ -1204,7 +1262,7 @@ export default function RiyadhProjectsMapPage() {
                         setSelectedStatus(status);
                         trackMapEvent("filter_status", { selected_status: status });
                       }}
-                      className={`rounded-full border px-3 py-2 text-xs transition duration-300 ${
+                      className={`rounded-full border px-2.5 py-1.5 text-[11px] transition duration-300 ${
                         selectedStatus === status
                           ? "border-[#D4AF37] bg-[#D4AF37] text-black"
                           : "border-white/10 bg-white/5 text-white/70 hover:scale-105 hover:border-[#D4AF37]/60 hover:text-white"
@@ -1216,8 +1274,8 @@ export default function RiyadhProjectsMapPage() {
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <div className="mb-3 flex items-center justify-between gap-3">
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-3.5">
+                <div className="mb-3 flex items-center justify-between gap-2">
                   <div className="text-xs font-bold text-white/70">
                     الأحياء الظاهرة
                   </div>
@@ -1226,7 +1284,7 @@ export default function RiyadhProjectsMapPage() {
                     <button
                       type="button"
                       onClick={resetFilters}
-                      className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-black/30 px-2.5 py-1 text-[11px] text-white/60 transition hover:border-[#D4AF37]/50 hover:text-[#D4AF37]"
+                      className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-black/30 px-2 py-1 text-[10px] text-white/60 transition hover:border-[#D4AF37]/50 hover:text-[#D4AF37]"
                     >
                       <RotateCcw className="h-3 w-3" />
                       إعادة ضبط
@@ -1235,13 +1293,13 @@ export default function RiyadhProjectsMapPage() {
                 </div>
 
                 {filteredDistricts.length > 0 ? (
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1.5">
                     {filteredDistricts.map((district) => (
                       <button
                         key={district.id}
                         type="button"
                         onClick={() => selectDistrict(district, "filter_panel")}
-                        className={`rounded-full border px-3 py-2 text-xs transition duration-300 ${
+                        className={`rounded-full border px-2.5 py-1.5 text-[11px] transition duration-300 ${
                           selectedVisibleDistrict?.id === district.id
                             ? "border-[#D4AF37] bg-[#D4AF37]/25 text-[#D4AF37] shadow-[0_0_18px_rgba(212,175,55,0.12)]"
                             : "border-white/10 bg-black/20 text-white/65 hover:scale-105 hover:border-[#D4AF37]/60 hover:text-white"

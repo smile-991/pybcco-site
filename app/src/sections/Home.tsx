@@ -510,12 +510,22 @@ export default function Home() {
               </p>
             </div>
 
-            <Button
-              asChild
-              className="bg-gold hover:bg-gold/90 text-black font-bold hidden sm:inline-flex"
-            >
-              <Link to="/projects">عرض جميع الصور</Link>
-            </Button>
+<div className="hidden sm:flex items-center gap-3">
+  <Button
+    asChild
+    className="bg-gold hover:bg-gold/90 text-black font-bold"
+  >
+    <Link to="/projects">عرض جميع الصور</Link>
+  </Button>
+
+  <Button
+    asChild
+    variant="outline"
+    className="border-black/10 bg-white text-gray-900 font-bold hover:bg-black hover:text-white"
+  >
+    <Link to="/projects-in-riyadh">خريطة المشاريع</Link>
+  </Button>
+</div>
           </div>
 
           <div className="mt-8">
@@ -563,14 +573,22 @@ export default function Home() {
 
           <GalleryTabs />
 
-          <div className="mt-6 sm:hidden">
-            <Button
-              asChild
-              className="bg-gold hover:bg-gold/90 text-black font-bold w-full"
-            >
-              <Link to="/projects">عرض جميع الصور</Link>
-            </Button>
-          </div>
+<div className="mt-6 sm:hidden grid gap-3">
+  <Button
+    asChild
+    className="bg-gold hover:bg-gold/90 text-black font-bold w-full"
+  >
+    <Link to="/projects">عرض جميع الصور</Link>
+  </Button>
+
+  <Button
+    asChild
+    variant="outline"
+    className="border-black/10 bg-white text-gray-900 font-bold w-full hover:bg-black hover:text-white"
+  >
+    <Link to="/projects-in-riyadh">خريطة المشاريع</Link>
+  </Button>
+</div>
         </div>
       </section>
 

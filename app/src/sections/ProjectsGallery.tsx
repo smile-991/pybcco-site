@@ -205,6 +205,16 @@ export default function ProjectsGallery() {
               شاهد جميع نماذج الأعمال المنفذة فعليًا ضمن أقسام التشطيب والعظم
               والترفيه داخل صفحة واحدة واضحة وسهلة التصفح.
             </p>
+
+            <div className="mt-6 flex justify-center">
+  <Link
+    to="/projects-in-riyadh"
+    className="inline-flex items-center justify-center rounded-xl bg-gray-900 px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-gold hover:text-black"
+  >
+    استعرض خريطة المشاريع في الرياض
+  </Link>
+</div>
+
           </div>
 
           <div className="mt-10">

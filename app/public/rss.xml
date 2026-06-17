@@ -7,7 +7,7 @@
 <description>Construction, villa finishing, project case studies, and cost guides in Riyadh</description>
 
 <language>ar-sa</language>
-<lastBuildDate>Sun, 14 Jun 2026 12:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 17 Jun 2026 12:00:00 GMT</lastBuildDate>
 
 <!-- 🏠 Homepage -->
 <item>
@@ -102,6 +102,18 @@
 دليل شامل لأسعار البناء والتشطيب والترميم في الرياض، يشمل تكلفة ترميم الحمامات، بناء الملاحق، الجبس بورد، الدهان، والبورسلان مع روابط تفصيلية لكل بند.
 </description>
 <pubDate>Mon, 01 Jun 2026 12:00:00 GMT</pubDate>
+<enclosure url="https://pybcco.com/og-image.jpg" type="image/jpeg"/>
+</item>
+
+<!-- 🗺 Riyadh Projects Map -->
+<item>
+<title>خريطة مشاريعنا المنفذة داخل الرياض</title>
+<link>https://pybcco.com/projects-in-riyadh</link>
+<guid>https://pybcco.com/projects-in-riyadh</guid>
+<description>
+استعرض نماذج حقيقية من مشاريع بنيان الهرم المنفذة داخل أحياء الرياض عبر خريطة تفاعلية تشمل مشاريع العظم، التشطيب، الترميم، والجلسات الخارجية.
+</description>
+<pubDate>Tue, 17 Jun 2026 12:00:00 GMT</pubDate>
 <enclosure url="https://pybcco.com/og-image.jpg" type="image/jpeg"/>
 </item>
 

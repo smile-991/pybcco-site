@@ -292,12 +292,446 @@
     </image:image>
   </url>
   <url>
-  <loc>https://pybcco.com/engineering-insights/cost/bathroom-renovation-cost-riyadh</loc>
-
-  <image:image>
-    <image:loc>https://pybcco.com/images/bathroom.webp</image:loc>
-    <image:title>ترميم حمام كامل في الرياض يشمل التكسير والسباكة والعزل وتركيب البلاط والأدوات الصحية</image:title>
-    <image:caption>ترميم حمام كامل في الرياض يشمل التكسير والسباكة والعزل وتركيب البلاط والأدوات الصحية</image:caption>
-  </image:image>
-</url>
+    <loc>https://pybcco.com/projects-in-riyadh</loc>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/riyadh-project-ceramic/painting-and-finishing-labor.webp</image:loc>
+      <image:title>مشروع تشطيب 136 فيلا في خشم العان بالرياض - صورة 1</image:title>
+      <image:caption>مشروع تشطيب 136 فيلا في خشم العان بالرياض - صورة 1</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/riyadh-project-ceramic/ceramic-tiles-lebors.webp</image:loc>
+      <image:title>مشروع تشطيب 136 فيلا في خشم العان بالرياض - صورة 2</image:title>
+      <image:caption>مشروع تشطيب 136 فيلا في خشم العان بالرياض - صورة 2</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/riyadh-project-ceramic/ceramic-tiles.webp</image:loc>
+      <image:title>مشروع تشطيب 136 فيلا في خشم العان بالرياض - صورة 3</image:title>
+      <image:caption>مشروع تشطيب 136 فيلا في خشم العان بالرياض - صورة 3</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/riyadh-project-ceramic/khashm-alaan-project.webp</image:loc>
+      <image:title>مشروع تشطيب 136 فيلا في خشم العان بالرياض - صورة 4</image:title>
+      <image:caption>مشروع تشطيب 136 فيلا في خشم العان بالرياض - صورة 4</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/riyadh-project-ceramic/finishing-contract_.webp</image:loc>
+      <image:title>مشروع تشطيب 136 فيلا في خشم العان بالرياض - صورة 5</image:title>
+      <image:caption>مشروع تشطيب 136 فيلا في خشم العان بالرياض - صورة 5</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/al-sulay/office-fitout-al-sulay-riyadh-01.webp</image:loc>
+      <image:title>تشطيب مكاتب إدارية في حي السلي بالرياض - صورة 1</image:title>
+      <image:caption>تشطيب مكاتب إدارية في حي السلي بالرياض - صورة 1</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/al-sulay/office-fitout-al-sulay-riyadh-02.webp</image:loc>
+      <image:title>تشطيب مكاتب إدارية في حي السلي بالرياض - صورة 2</image:title>
+      <image:caption>تشطيب مكاتب إدارية في حي السلي بالرياض - صورة 2</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/al-farouq/restaurant-fitout-al-farouq-riyadh-01.webp</image:loc>
+      <image:title>تشطيب مطعم في حي الفاروق بالرياض - صورة 1</image:title>
+      <image:caption>تشطيب مطعم في حي الفاروق بالرياض - صورة 1</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/al-farouq/restaurant-fitout-al-farouq-riyadh-02.webp</image:loc>
+      <image:title>تشطيب مطعم في حي الفاروق بالرياض - صورة 2</image:title>
+      <image:caption>تشطيب مطعم في حي الفاروق بالرياض - صورة 2</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/al-farouq/restaurant-fitout-al-farouq-riyadh-03.webp</image:loc>
+      <image:title>تشطيب مطعم في حي الفاروق بالرياض - صورة 3</image:title>
+      <image:caption>تشطيب مطعم في حي الفاروق بالرياض - صورة 3</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/al-farouq/restaurant-fitout-al-farouq-riyadh-04.webp</image:loc>
+      <image:title>تشطيب مطعم في حي الفاروق بالرياض - صورة 4</image:title>
+      <image:caption>تشطيب مطعم في حي الفاروق بالرياض - صورة 4</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/al-malqa/villa-renovation-design-al-malqa-riyadh-01.webp</image:loc>
+      <image:title>ترميم وتصميم فيلا في حي الملقا بالرياض - صورة 1</image:title>
+      <image:caption>ترميم وتصميم فيلا في حي الملقا بالرياض - صورة 1</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/airport-admin-offices/airport-admin-offices-renovation-riyadh-11.webp</image:loc>
+      <image:title>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 1</image:title>
+      <image:caption>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 1</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/airport-admin-offices/airport-admin-offices-renovation-riyadh-01.webp</image:loc>
+      <image:title>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 2</image:title>
+      <image:caption>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 2</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/airport-admin-offices/airport-admin-offices-renovation-riyadh-02.webp</image:loc>
+      <image:title>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 3</image:title>
+      <image:caption>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 3</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/airport-admin-offices/airport-admin-offices-renovation-riyadh-03.webp</image:loc>
+      <image:title>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 4</image:title>
+      <image:caption>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 4</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/airport-admin-offices/airport-admin-offices-renovation-riyadh-04.webp</image:loc>
+      <image:title>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 5</image:title>
+      <image:caption>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 5</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/airport-admin-offices/airport-admin-offices-renovation-riyadh-05.webp</image:loc>
+      <image:title>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 6</image:title>
+      <image:caption>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 6</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/airport-admin-offices/airport-admin-offices-renovation-riyadh-06.webp</image:loc>
+      <image:title>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 7</image:title>
+      <image:caption>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 7</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/airport-admin-offices/airport-admin-offices-renovation-riyadh-07.webp</image:loc>
+      <image:title>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 8</image:title>
+      <image:caption>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 8</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/airport-admin-offices/airport-admin-offices-renovation-riyadh-08.webp</image:loc>
+      <image:title>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 9</image:title>
+      <image:caption>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 9</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/airport-admin-offices/airport-admin-offices-renovation-riyadh-09.webp</image:loc>
+      <image:title>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 10</image:title>
+      <image:caption>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 10</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/airport-admin-offices/airport-admin-offices-renovation-riyadh-10.webp</image:loc>
+      <image:title>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 11</image:title>
+      <image:caption>تنفيذ مكاتب إدارية وترميم حمامات في منطقة المطار بالرياض - صورة 11</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/kafd-tower-303/commercial-offices-fitout-kafd-tower-303-riyadh-01.webp</image:loc>
+      <image:title>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 1</image:title>
+      <image:caption>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 1</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/kafd-tower-303/commercial-offices-fitout-kafd-tower-303-riyadh-02.webp</image:loc>
+      <image:title>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 2</image:title>
+      <image:caption>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 2</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/kafd-tower-303/commercial-offices-fitout-kafd-tower-303-riyadh-03.webp</image:loc>
+      <image:title>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 3</image:title>
+      <image:caption>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 3</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/kafd-tower-303/commercial-offices-fitout-kafd-tower-303-riyadh-04.webp</image:loc>
+      <image:title>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 4</image:title>
+      <image:caption>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 4</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/kafd-tower-303/commercial-offices-fitout-kafd-tower-303-riyadh-05.webp</image:loc>
+      <image:title>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 5</image:title>
+      <image:caption>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 5</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/kafd-tower-303/commercial-offices-fitout-kafd-tower-303-riyadh-06.webp</image:loc>
+      <image:title>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 6</image:title>
+      <image:caption>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 6</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/kafd-tower-303/commercial-offices-fitout-kafd-tower-303-riyadh-07.webp</image:loc>
+      <image:title>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 7</image:title>
+      <image:caption>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 7</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/kafd-tower-303/commercial-offices-fitout-kafd-tower-303-riyadh-08.webp</image:loc>
+      <image:title>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 8</image:title>
+      <image:caption>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 8</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/kafd-tower-303/commercial-offices-fitout-kafd-tower-303-riyadh-09.webp</image:loc>
+      <image:title>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 9</image:title>
+      <image:caption>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 9</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/kafd-tower-303/commercial-offices-fitout-kafd-tower-303-riyadh-10.webp</image:loc>
+      <image:title>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 10</image:title>
+      <image:caption>تشطيب مكاتب تجارية في برج 303 بمدينة الملك عبدالله المالية بالرياض - صورة 10</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/alhamra/villa-renovation-al-hamra-riyadh-01.webp</image:loc>
+      <image:title>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 1</image:title>
+      <image:caption>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 1</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/alhamra/villa-renovation-al-hamra-riyadh-02.webp</image:loc>
+      <image:title>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 2</image:title>
+      <image:caption>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 2</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/alhamra/villa-renovation-al-hamra-riyadh-03.webp</image:loc>
+      <image:title>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 3</image:title>
+      <image:caption>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 3</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/alhamra/villa-renovation-al-hamra-riyadh-04.webp</image:loc>
+      <image:title>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 4</image:title>
+      <image:caption>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 4</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/alhamra/villa-renovation-al-hamra-riyadh-05.webp</image:loc>
+      <image:title>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 5</image:title>
+      <image:caption>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 5</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/alhamra/villa-renovation-al-hamra-riyadh-06.webp</image:loc>
+      <image:title>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 6</image:title>
+      <image:caption>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 6</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/alhamra/villa-renovation-al-hamra-riyadh-07.webp</image:loc>
+      <image:title>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 7</image:title>
+      <image:caption>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 7</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/alhamra/villa-renovation-al-hamra-riyadh-08.webp</image:loc>
+      <image:title>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 8</image:title>
+      <image:caption>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 8</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/alhamra/villa-renovation-al-hamra-riyadh-09.webp</image:loc>
+      <image:title>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 9</image:title>
+      <image:caption>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 9</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/alhamra/villa-renovation-al-hamra-riyadh-10.webp</image:loc>
+      <image:title>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 10</image:title>
+      <image:caption>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 10</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/alhamra/villa-renovation-al-hamra-riyadh-11.webp</image:loc>
+      <image:title>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 11</image:title>
+      <image:caption>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 11</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/alhamra/villa-renovation-al-hamra-riyadh-12.webp</image:loc>
+      <image:title>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 12</image:title>
+      <image:caption>ترميم فيلا داخلي وخارجي في حي الحمراء بالرياض - صورة 12</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/restaurant-outdoor/13-restaurant-outdoor-area-after-construction-riyadh.webp</image:loc>
+      <image:title>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 1</image:title>
+      <image:caption>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 1</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/restaurant-outdoor/14-restaurant-yard-finishing-after-riyadh.webp</image:loc>
+      <image:title>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 2</image:title>
+      <image:caption>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 2</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/restaurant-outdoor/15-restaurant-exterior-seating-after-renovation-riyadh.webp</image:loc>
+      <image:title>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 3</image:title>
+      <image:caption>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 3</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/restaurant-outdoor/16-outdoor-dining-area-after-finishing-riyadh.webp</image:loc>
+      <image:title>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 4</image:title>
+      <image:caption>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 4</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/restaurant-outdoor/17-restaurant-courtyard-after-work-riyadh.webp</image:loc>
+      <image:title>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 5</image:title>
+      <image:caption>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 5</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/restaurant-outdoor/18-restaurant-outdoor-space-after-finishing-riyadh.webp</image:loc>
+      <image:title>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 6</image:title>
+      <image:caption>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 6</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/restaurant-outdoor/10-restaurant-outdoor-seating-after-riyadh.webp</image:loc>
+      <image:title>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 7</image:title>
+      <image:caption>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 7</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/restaurant-outdoor/11-restaurant-courtyard-design-after-riyadh.webp</image:loc>
+      <image:title>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 8</image:title>
+      <image:caption>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 8</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/restaurant-outdoor/12-modern-restaurant-outdoor-finishing-riyadh.webp</image:loc>
+      <image:title>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 9</image:title>
+      <image:caption>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 9</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/restaurant-outdoor/01-restaurant-outdoor-seating-before-riyadh.webp</image:loc>
+      <image:title>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 10</image:title>
+      <image:caption>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 10</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/restaurant-outdoor/02-restaurant-courtyard-finishing-before-riyadh.webp</image:loc>
+      <image:title>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 11</image:title>
+      <image:caption>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 11</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/restaurant-outdoor/03-outdoor-restaurant-renovation-before-riyadh.webp</image:loc>
+      <image:title>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 12</image:title>
+      <image:caption>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 12</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/restaurant-outdoor/04-restaurant-outdoor-area-before-construction-riyadh.webp</image:loc>
+      <image:title>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 13</image:title>
+      <image:caption>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 13</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/restaurant-outdoor/05-restaurant-yard-finishing-before-riyadh.webp</image:loc>
+      <image:title>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 14</image:title>
+      <image:caption>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 14</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/restaurant-outdoor/06-restaurant-exterior-seating-before-renovation-riyadh.webp</image:loc>
+      <image:title>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 15</image:title>
+      <image:caption>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 15</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/restaurant-outdoor/07-outdoor-dining-area-before-finishing-riyadh.webp</image:loc>
+      <image:title>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 16</image:title>
+      <image:caption>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 16</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/restaurant-outdoor/08-restaurant-courtyard-before-work-riyadh.webp</image:loc>
+      <image:title>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 17</image:title>
+      <image:caption>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 17</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/restaurant-outdoor/09-restaurant-outdoor-space-before-finishing-riyadh.webp</image:loc>
+      <image:title>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 18</image:title>
+      <image:caption>تشطيب جلسات خارجية لمطعم في حي المربع بالرياض - صورة 18</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-19.webp</image:loc>
+      <image:title>تشطيب معرض درعه للعطور في حي الروضة بالرياض - صورة 1</image:title>
+      <image:caption>تشطيب معرض درعه للعطور في حي الروضة بالرياض - صورة 1</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-22.webp</image:loc>
+      <image:title>تشطيب معرض درعه للعطور في حي الروضة بالرياض - صورة 2</image:title>
+      <image:caption>تشطيب معرض درعه للعطور في حي الروضة بالرياض - صورة 2</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-17.webp</image:loc>
+      <image:title>تشطيب معرض درعه للعطور في حي الروضة بالرياض - صورة 3</image:title>
+      <image:caption>تشطيب معرض درعه للعطور في حي الروضة بالرياض - صورة 3</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-18.webp</image:loc>
+      <image:title>تشطيب معرض درعه للعطور في حي الروضة بالرياض - صورة 4</image:title>
+      <image:caption>تشطيب معرض درعه للعطور في حي الروضة بالرياض - صورة 4</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-11.webp</image:loc>
+      <image:title>تشطيب شقة وإضافة ملحق علوي في حي الياسمين بالرياض - صورة 1</image:title>
+      <image:caption>تشطيب شقة وإضافة ملحق علوي في حي الياسمين بالرياض - صورة 1</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-13.webp</image:loc>
+      <image:title>تشطيب شقة وإضافة ملحق علوي في حي الياسمين بالرياض - صورة 2</image:title>
+      <image:caption>تشطيب شقة وإضافة ملحق علوي في حي الياسمين بالرياض - صورة 2</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-14.webp</image:loc>
+      <image:title>تشطيب شقة وإضافة ملحق علوي في حي الياسمين بالرياض - صورة 3</image:title>
+      <image:caption>تشطيب شقة وإضافة ملحق علوي في حي الياسمين بالرياض - صورة 3</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-06.webp</image:loc>
+      <image:title>تشطيب شقة وإضافة ملحق علوي في حي الياسمين بالرياض - صورة 4</image:title>
+      <image:caption>تشطيب شقة وإضافة ملحق علوي في حي الياسمين بالرياض - صورة 4</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-09.webp</image:loc>
+      <image:title>تشطيب شقة وإضافة ملحق علوي في حي الياسمين بالرياض - صورة 5</image:title>
+      <image:caption>تشطيب شقة وإضافة ملحق علوي في حي الياسمين بالرياض - صورة 5</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/finishing/finishing-10.webp</image:loc>
+      <image:title>تشطيب شقة وإضافة ملحق علوي في حي الياسمين بالرياض - صورة 6</image:title>
+      <image:caption>تشطيب شقة وإضافة ملحق علوي في حي الياسمين بالرياض - صورة 6</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/vedio%20cover/befor-after.webp</image:loc>
+      <image:title>تشطيب شقة وإضافة ملحق علوي في حي الياسمين بالرياض - صورة 7</image:title>
+      <image:caption>تشطيب شقة وإضافة ملحق علوي في حي الياسمين بالرياض - صورة 7</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-14.webp</image:loc>
+      <image:title>بناء عظم فلل سكنية في حي العارض بالرياض - صورة 1</image:title>
+      <image:caption>بناء عظم فلل سكنية في حي العارض بالرياض - صورة 1</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-1.webp</image:loc>
+      <image:title>بناء عظم فلل سكنية في حي العارض بالرياض - صورة 2</image:title>
+      <image:caption>بناء عظم فلل سكنية في حي العارض بالرياض - صورة 2</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-2.webp</image:loc>
+      <image:title>بناء عظم فلل سكنية في حي العارض بالرياض - صورة 3</image:title>
+      <image:caption>بناء عظم فلل سكنية في حي العارض بالرياض - صورة 3</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-3.webp</image:loc>
+      <image:title>بناء عظم فلل سكنية في حي العارض بالرياض - صورة 4</image:title>
+      <image:caption>بناء عظم فلل سكنية في حي العارض بالرياض - صورة 4</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-4.webp</image:loc>
+      <image:title>بناء عظم فلل سكنية في حي العارض بالرياض - صورة 5</image:title>
+      <image:caption>بناء عظم فلل سكنية في حي العارض بالرياض - صورة 5</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-15.webp</image:loc>
+      <image:title>بناء عظم فلل سكنية في حي القيروان بالرياض - صورة 1</image:title>
+      <image:caption>بناء عظم فلل سكنية في حي القيروان بالرياض - صورة 1</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/concrete/concrete-13.webp</image:loc>
+      <image:title>بناء عظم فلل سكنية في حي القيروان بالرياض - صورة 2</image:title>
+      <image:caption>بناء عظم فلل سكنية في حي القيروان بالرياض - صورة 2</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/toaiq/toaiq-bathroom-renovation-01.webp</image:loc>
+      <image:title>ترميم حمامات في حي طويق بالرياض - صورة 1</image:title>
+      <image:caption>ترميم حمامات في حي طويق بالرياض - صورة 1</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/toaiq/toaiq-bathroom-renovation-02.webp</image:loc>
+      <image:title>ترميم حمامات في حي طويق بالرياض - صورة 2</image:title>
+      <image:caption>ترميم حمامات في حي طويق بالرياض - صورة 2</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/toaiq/toaiq-bathroom-renovation-03.webp</image:loc>
+      <image:title>ترميم حمامات في حي طويق بالرياض - صورة 3</image:title>
+      <image:caption>ترميم حمامات في حي طويق بالرياض - صورة 3</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/toaiq/toaiq-bathroom-renovation-04.webp</image:loc>
+      <image:title>ترميم حمامات في حي طويق بالرياض - صورة 4</image:title>
+      <image:caption>ترميم حمامات في حي طويق بالرياض - صورة 4</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/toaiq/toaiq-bathroom-renovation-05.webp</image:loc>
+      <image:title>ترميم حمامات في حي طويق بالرياض - صورة 5</image:title>
+      <image:caption>ترميم حمامات في حي طويق بالرياض - صورة 5</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/toaiq/toaiq-bathroom-renovation-06.webp</image:loc>
+      <image:title>ترميم حمامات في حي طويق بالرياض - صورة 6</image:title>
+      <image:caption>ترميم حمامات في حي طويق بالرياض - صورة 6</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://pybcco.com/projects/toaiq/toaiq-bathroom-renovation-07.webp</image:loc>
+      <image:title>ترميم حمامات في حي طويق بالرياض - صورة 7</image:title>
+      <image:caption>ترميم حمامات في حي طويق بالرياض - صورة 7</image:caption>
+    </image:image>
+  </url>
 </urlset>

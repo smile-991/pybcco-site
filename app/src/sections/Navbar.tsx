@@ -20,7 +20,7 @@ const navLinks = [
   { name: "خدماتنا", href: "#services", type: "scroll" as const },
   { name: "فريق العمل", href: "#team", type: "scroll" as const },
   { name: "تواصل معنا", href: "#contact", type: "scroll" as const },
-  { name: "جميع المشاريع", href: "/projects", type: "route" as const },
+  { name: "معرض الأعمال", href: "/projects", type: "route" as const },
 ];
 
 // ✅ روابط المتجر
@@ -218,25 +218,16 @@ export default function Navbar() {
                   </div>
                 </div>
 
-                {/* مناطق عملنا Dropdown */}
-                <div className="relative group shrink-0">
-                  <button type="button" className={dropdownBtnClass}>
-                    مناطق عملنا <span className="text-xs">▾</span>
-                  </button>
-
-                  <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                    <a
-                      href="/contractor-almalqa-riyadh"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        goTo("/contractor-almalqa-riyadh");
-                      }}
-                      className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 rounded-xl transition whitespace-nowrap"
-                    >
-                      حي الملقا
-                    </a>
-                  </div>
-                </div>
+<a
+  href="/projects-in-riyadh"
+  onClick={(e) => {
+    e.preventDefault();
+    goTo("/projects-in-riyadh");
+  }}
+  className={dropdownBtnClass}
+>
+  خريطة المشاريع
+</a>
               </div>
             </div>
 
@@ -336,25 +327,16 @@ export default function Navbar() {
                 </div>
               </div>
 
-              {/* مناطق عملنا Dropdown */}
-              <div className="relative group shrink-0">
-                <button type="button" className={dropdownBtnClass}>
-                  مناطق عملنا <span className="text-xs">▾</span>
-                </button>
-
-                <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                  <a
-                    href="/contractor-almalqa-riyadh"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      goTo("/contractor-almalqa-riyadh");
-                    }}
-                    className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 rounded-xl transition whitespace-nowrap"
-                  >
-                    حي الملقا
-                  </a>
-                </div>
-              </div>
+<a
+  href="/projects-in-riyadh"
+  onClick={(e) => {
+    e.preventDefault();
+    goTo("/projects-in-riyadh");
+  }}
+  className={dropdownBtnClass}
+>
+  خريطة المشاريع
+</a>
             </div>
           </div>
 
@@ -649,17 +631,17 @@ export default function Navbar() {
 
                   <div className="my-4 h-px bg-white/10" />
 
-                  <a
-                    href="/contractor-almalqa-riyadh"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsOpen(false);
-                      goTo("/contractor-almalqa-riyadh");
-                    }}
-                    className="px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition"
-                  >
-                    مناطق عملنا – حي الملقا
-                  </a>
+<a
+  href="/projects-in-riyadh"
+  onClick={(e) => {
+    e.preventDefault();
+    setIsOpen(false);
+    goTo("/projects-in-riyadh");
+  }}
+  className="px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition"
+>
+  خريطة المشاريع
+</a>
                 </nav>
 
                 <div className="mt-auto pt-6 border-t border-white/10">
