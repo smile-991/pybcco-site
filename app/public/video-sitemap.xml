@@ -4,8 +4,7 @@
   xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 
   <url>
-    <loc>https://pybcco.com/videos</loc>
-
+    <loc>https://pybcco.com/videos#luxury-bathroom-finishing-riyadh</loc>
     <video:video>
       <video:thumbnail_loc>https://pybcco.com/vedio%20cover/laxury-bathroom.webp</video:thumbnail_loc>
       <video:title>تشطيب حمامات فاخرة في الرياض | تصميم ملهم وتنفيذ راقٍ في معرض الصقور والأسلحة</video:title>
@@ -19,7 +18,10 @@
       <video:tag>تشطيبات داخلية فاخرة</video:tag>
       <video:tag>شركة مقاولات بالرياض</video:tag>
     </video:video>
+  </url>
 
+  <url>
+    <loc>https://pybcco.com/videos#villa-renovation-yasmin-riyadh</loc>
     <video:video>
       <video:thumbnail_loc>https://pybcco.com/vedio%20cover/villa-renuvation.webp</video:thumbnail_loc>
       <video:title>ترميم فيلا سكنية في حي الياسمين بالرياض | تجديد عملي وتحسين جودة المساحات</video:title>
@@ -33,7 +35,10 @@
       <video:tag>تجديد فلل سكنية</video:tag>
       <video:tag>مقاولات ترميم الرياض</video:tag>
     </video:video>
+  </url>
 
+  <url>
+    <loc>https://pybcco.com/videos#before-after-roof-finishing-riyadh</loc>
     <video:video>
       <video:thumbnail_loc>https://pybcco.com/vedio%20cover/befor-after.webp</video:thumbnail_loc>
       <video:title>قبل وبعد تشطيب سطح شقة سكنية فاخرة | تحويل بصري عملي في الرياض</video:title>
@@ -47,6 +52,6 @@
       <video:tag>تشطيب فاخر</video:tag>
       <video:tag>مقاول تشطيب أسطح</video:tag>
     </video:video>
-
   </url>
+
 </urlset>
