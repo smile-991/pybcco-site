@@ -606,7 +606,7 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 gap-4">
             {[
-              { text: "إشراف هندسي مباشر ومتابعة ميدانية", href: "/team" },
+              { text: "إشراف هندسي مباشر ومتابعة ميدانية", href: "/#team" },
               { text: "عقود واضحة وبنود مفهومة" },
               {
                 text: "جدول زمني وخطة تنفيذ قابلة للمتابعة",
