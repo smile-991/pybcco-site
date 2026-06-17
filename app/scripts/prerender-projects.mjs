@@ -6,14 +6,20 @@ const sourceIndex = path.join(distDir, "index.html");
 const projectsDir = path.join(distDir, "projects");
 const projectsIndex = path.join(projectsDir, "index.html");
 
+const PROJECTS_TITLE = "معرض مشاريع بنيان الهرم | تشطيب وعظم وترفيه بالرياض";
+const PROJECTS_DESCRIPTION =
+  "شاهد معرض مشاريع بنيان الهرم للمقاولات بالرياض: تشطيب فلل وشقق، بناء عظم، وأعمال ترفيه من مشاريع منفذة فعليًا.";
+const PROJECTS_URL = "https://pybcco.com/projects";
+const PROJECTS_OG_IMAGE = "https://pybcco.com/og.jpg";
+
 if (!fs.existsSync(sourceIndex)) {
   console.error("dist/index.html not found");
   process.exit(1);
 }
 
-const html = fs.readFileSync(sourceIndex, "utf-8");
+let html = fs.readFileSync(sourceIndex, "utf-8");
 
-// ✅ قراءة JSON
+// قراءة بيانات المعرض
 const galleryPath = path.join(process.cwd(), "src/data/gallery.json");
 const gallery = JSON.parse(fs.readFileSync(galleryPath, "utf-8"));
 
@@ -36,7 +42,6 @@ function buildCategoryImages(category) {
   `;
 }
 
-// ✅ بناء كل الأقسام من JSON
 const categoriesHtml = Object.values(gallery)
   .map(buildCategoryImages)
   .join("\n");
@@ -65,12 +70,53 @@ const staticProjectsHtml = `
 </main>
 `;
 
-const updatedHtml = html.replace(
+// استبدال محتوى الصفحة
+html = html.replace(
   /<div id="root">[\s\S]*?<\/div>/,
   `<div id="root">${staticProjectsHtml}</div>`
 );
 
-fs.mkdirSync(projectsDir, { recursive: true });
-fs.writeFileSync(projectsIndex, updatedHtml, "utf-8");
+// تخصيص SEO Head لصفحة /projects داخل النسخة المولّدة
+html = html
+  .replace(/<title>[\s\S]*?<\/title>/, `<title>${PROJECTS_TITLE}</title>`)
+  .replace(
+    /<meta\s+name="description"[\s\S]*?\/>/,
+    `<meta name="description" content="${PROJECTS_DESCRIPTION}" />`
+  )
+  .replace(
+    /<link\s+rel="canonical"\s+href="[^"]*"\s*\/>/,
+    `<link rel="canonical" href="${PROJECTS_URL}" />`
+  )
+  .replace(
+    /<meta\s+property="og:title"\s+content="[^"]*"\s*\/>/,
+    `<meta property="og:title" content="${PROJECTS_TITLE}" />`
+  )
+  .replace(
+    /<meta\s+property="og:description"[\s\S]*?\/>/,
+    `<meta property="og:description" content="${PROJECTS_DESCRIPTION}" />`
+  )
+  .replace(
+    /<meta\s+property="og:url"\s+content="[^"]*"\s*\/>/,
+    `<meta property="og:url" content="${PROJECTS_URL}" />`
+  )
+  .replace(
+    /<meta\s+property="og:image"\s+content="[^"]*"\s*\/>/,
+    `<meta property="og:image" content="${PROJECTS_OG_IMAGE}" />`
+  )
+  .replace(
+    /<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/>/,
+    `<meta name="twitter:title" content="${PROJECTS_TITLE}" />`
+  )
+  .replace(
+    /<meta\s+name="twitter:description"[\s\S]*?\/>/,
+    `<meta name="twitter:description" content="${PROJECTS_DESCRIPTION}" />`
+  )
+  .replace(
+    /<meta\s+name="twitter:image"\s+content="[^"]*"\s*\/>/,
+    `<meta name="twitter:image" content="${PROJECTS_OG_IMAGE}" />`
+  );
 
-console.log("✅ Pre-rendered /projects from gallery.json");
+fs.mkdirSync(projectsDir, { recursive: true });
+fs.writeFileSync(projectsIndex, html, "utf-8");
+
+console.log("✅ Pre-rendered /projects from gallery.json with correct SEO head");
