@@ -1414,7 +1414,7 @@ export default function RiyadhProjectsMapPage() {
           </div>
 
           {(selectedVisibleDistrict || filteredDistricts.length === 0) && (
-            <aside className="absolute bottom-0 right-0 z-40 w-full max-h-[56dvh] animate-[mapFadeUp_.5s_cubic-bezier(.22,1,.36,1)_both] overflow-hidden rounded-t-[2rem] border border-white/[0.12] bg-black/[0.86] p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-2xl shadow-black/50 backdrop-blur-2xl md:bottom-20 md:right-8 md:w-[calc(100%-2rem)] md:max-h-none md:max-w-[520px] md:origin-bottom-right md:scale-[0.48] md:rounded-[2rem] md:bg-black/[0.74] md:p-5 lg:right-12 xl:max-w-[560px] xl:scale-[0.51]">
+            <aside className="projects-district-scroll fixed bottom-0 left-0 right-0 z-[110] max-h-[calc(100dvh-7rem)] w-full animate-[mapFadeUp_.5s_cubic-bezier(.22,1,.36,1)_both] overflow-y-auto rounded-t-[2rem] border border-white/[0.12] bg-black/[0.92] p-4 pb-[max(2rem,env(safe-area-inset-bottom))] shadow-2xl shadow-black/50 backdrop-blur-2xl md:absolute md:bottom-20 md:left-auto md:right-8 md:z-40 md:max-h-none md:w-[calc(100%-2rem)] md:max-w-[520px] md:origin-bottom-right md:scale-[0.48] md:overflow-hidden md:rounded-[2rem] md:bg-black/[0.74] md:p-5 lg:right-12 xl:max-w-[560px] xl:scale-[0.51]">
               <div className="mx-auto mb-3 h-1.5 w-12 rounded-full bg-white/20 md:hidden" />
 
               {selectedVisibleDistrict ? (
