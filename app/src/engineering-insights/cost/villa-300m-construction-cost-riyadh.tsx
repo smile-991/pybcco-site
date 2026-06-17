@@ -16,8 +16,8 @@ const CANONICAL =
   "https://pybcco.com/engineering-insights/cost/villa-300m-construction-cost-riyadh";
 
 const DATE_PUBLISHED = "2026-03-06";
-const DATE_MODIFIED = "2026-03-06";
-const VIDEO_UPLOAD_DATE = "2026-03-14";
+const DATE_MODIFIED = "2026-06-17";
+const VIDEO_UPLOAD_DATE = "2026-03-14T12:00:00+03:00";
 const YOUTUBE_VIDEO_ID = "re44BUTtHUk";
 const YOUTUBE_SHORTS_URL = `https://youtube.com/shorts/${YOUTUBE_VIDEO_ID}`;
 const YOUTUBE_EMBED_URL = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`;
