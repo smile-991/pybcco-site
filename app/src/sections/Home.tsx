@@ -282,7 +282,7 @@ function GalleryTabs() {
 
 export default function Home() {
   const heroImage =
-    GALLERY.finishing.items[0]?.src ?? "/projects/finishing/finishing-01.jpg";
+    GALLERY.finishing.items[0]?.src ?? "/projects/finishing/finishing-01.webp";
 
   return (
     <main dir="rtl">

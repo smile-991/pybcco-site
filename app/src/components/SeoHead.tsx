@@ -198,7 +198,7 @@ function buildLocalBusinessJsonLd(): JsonLd {
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "5",
-      reviewCount: "18",
+      reviewCount: "19",
     },
 
     parentOrganization: {
