@@ -612,7 +612,7 @@ export default function Home() {
                 text: "جدول زمني وخطة تنفيذ قابلة للمتابعة",
                 href: "/project-tracking-system-riyadh",
               },
-              { text: "جودة مواد ومواصفات محددة", href: "/services" },
+              { text: "جودة مواد ومواصفات محددة", href: "/#services" },
               { text: "تسليم مفتاح حسب الاتفاق", href: "/villa-finishing-riyadh" },
               { text: "التزام بالتواصل والشفافية مع العميل", href: "/#contact" },
               {
