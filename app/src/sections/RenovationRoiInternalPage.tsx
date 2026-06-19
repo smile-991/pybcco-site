@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import SeoHead from "@/components/SeoHead";
 
 type PropertyType = "villa" | "apartment";
