@@ -244,8 +244,7 @@ export default function VillaConstructionCostCalculatorRiyadh() {
     return Number.isFinite(n) ? n : 0;
   }, [builtUpArea]);
 
-  const isBuiltAreaMode =
-    serviceType === "finishing" && areaCalculationMode === "built";
+  const isBuiltAreaMode = areaCalculationMode === "built";
 
   const governmentFeesNumber = useMemo(() => {
     const n = Number(governmentFees);
@@ -428,7 +427,7 @@ export default function VillaConstructionCostCalculatorRiyadh() {
 
     if (serviceType === "bone") {
       rows.push({
-        title: "أعمال العظم",
+        title: isBuiltAreaMode ? "أعمال العظم حسب إجمالي المسطحات" : "أعمال العظم",
         quantity: mainBuiltArea,
         unit: "م²",
         unitPrice: BONE_RATE,
@@ -450,7 +449,9 @@ export default function VillaConstructionCostCalculatorRiyadh() {
 
     if (serviceType === "turnkey") {
       rows.push({
-        title: `تسليم مفتاح (${levelLabel})`,
+        title: isBuiltAreaMode
+          ? `تسليم مفتاح حسب إجمالي المسطحات (${levelLabel})`
+          : `تسليم مفتاح (${levelLabel})`,
         quantity: mainBuiltArea,
         unit: "م²",
         unitPrice: TURNKEY_RATES[level],
@@ -915,10 +916,9 @@ body {
                 </div>
               )}
 
-              {serviceType === "finishing" && (
-                <div className="rounded-xl border border-gold/20 bg-gold/5 p-4 md:col-span-2">
+              <div className="rounded-xl border border-gold/20 bg-gold/5 p-4 md:col-span-2">
                   <div className="text-sm text-white/75 mb-2">
-                    طريقة حساب مساحة التشطيب
+                    طريقة حساب المساحة المعتمدة
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -958,16 +958,15 @@ body {
                   </div>
 
                   <div className="mt-3 text-xs text-white/65 leading-6">
-                    إذا كانت الفيلا عظم ولديك رقم المسطحات، أدخل إجمالي المسطحات
-                    فقط. مثال: أرضي 100 + أول 100 + ملحق 50 = 250 م².
+                    إذا كانت لديك المخططات أو تعرف إجمالي المسطحات، أدخل رقم
+                    المسطحات مباشرة. مثال: أرضي 100 + أول 100 + ملحق 50 = 250 م².
                   </div>
                 </div>
-              )}
 
               {isBuiltAreaMode ? (
                 <div className="rounded-xl border border-white/10 bg-black/30 p-4 md:col-span-2">
                   <div className="text-sm text-white/70 mb-2">
-                    إجمالي مسطحات البناء المطلوب تشطيبها (م²)
+                    إجمالي مسطحات البناء المعتمدة (م²)
                   </div>
                   <input
                     value={builtUpArea}
@@ -981,7 +980,7 @@ body {
                     className="w-full rounded-lg bg-black/40 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
                   />
                   <div className="mt-2 text-xs text-white/55 leading-6">
-                    أدخل إجمالي المسطحات فقط، وليس مساحة الأرض.
+                    أدخل إجمالي المسطحات فقط، وليس مساحة الأرض. مثال: إذا كان مجموع المسطحات 250 م²، أدخل 250.
                   </div>
                 </div>
               ) : (
@@ -1248,7 +1247,7 @@ body {
                   <div className="rounded-xl border border-white/10 bg-black/30 p-4">
                     <div className="text-white/60">
                       {isBuiltAreaMode
-                        ? "إجمالي مسطحات التشطيب"
+                        ? "إجمالي مسطحات البناء"
                         : "مساحة البناء الكلية"}
                     </div>
                     <div className="mt-1 font-bold text-gold">
@@ -1311,7 +1310,7 @@ body {
                       <div>طريقة الحساب: {areaCalculationLabel}</div>
                       {isBuiltAreaMode ? (
                         <div>
-                          إجمالي مسطحات التشطيب: {formatNumber(mainBuiltArea)} م²
+                          إجمالي مسطحات البناء: {formatNumber(mainBuiltArea)} م²
                         </div>
                       ) : (
                         <>
@@ -1476,7 +1475,7 @@ body {
                     {isBuiltAreaMode ? (
                       <div className="border border-[#ddd] rounded-lg p-2">
                         <div className="text-[#777] text-[10px]">
-                          إجمالي مسطحات التشطيب
+                          إجمالي مسطحات البناء
                         </div>
                         <div className="font-bold text-[13px] mt-1">
                           {formatNumber(mainBuiltArea)} م²
@@ -1580,7 +1579,7 @@ body {
                       <div>طريقة الحساب: {areaCalculationLabel}</div>
                       {isBuiltAreaMode ? (
                         <div className="mt-1.5 font-bold text-[#d4a017]">
-                          إجمالي مسطحات التشطيب: {formatNumber(mainBuiltArea)} م²
+                          إجمالي مسطحات البناء: {formatNumber(mainBuiltArea)} م²
                         </div>
                       ) : (
                         <>
@@ -1645,7 +1644,7 @@ body {
                     )}
                     {isBuiltAreaMode && (
                       <div>
-                        • تم احتساب التشطيب بناءً على إجمالي مسطحات البناء المدخلة
+                        • تم احتساب التكلفة بناءً على إجمالي مسطحات البناء المدخلة
                         من العميل، وليس على مساحة الأرض.
                       </div>
                     )}
