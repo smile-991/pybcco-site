@@ -14,6 +14,7 @@ import ActivateAccountPage from "./sections/activate-account";
 import RequestProjectPage from "@/sections/RequestProjectPage";
 import BuildingAndFinishingPricesRiyadh from "./sections/building-and-finishing-prices-riyadh";
 import RiyadhProjectsMapPage from "./sections/RiyadhProjectsMapPage";
+import RenovationRoiInternalPage from "./sections/RenovationRoiInternalPage";
 
 import Decor from "@/sections/Decor";
 import DecorWood from "@/sections/DecorWood";
@@ -157,6 +158,8 @@ export default function App() {
   path="/engineering-insights/cost/painting-price-per-square-meter-riyadh"
   element={<PaintingPricePerSquareMeterRiyadh />}
 />
+
+<Route path="/internal/renovation-roi-test" element={<RenovationRoiInternalPage />} />
 
           <Route path="/account" element={<AccountHome />} />
           <Route path="/portal" element={<PortalPage />} />
