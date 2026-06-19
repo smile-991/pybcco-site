@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 type ServiceType = "bone" | "finishing" | "turnkey";
 type Level = "commercial" | "standard" | "luxury";
 type StreetWidthCategory = "lt15" | "15to30" | "gt30";
+type AreaCalculationMode = "land" | "built";
 
 type ActivatedUser = {
   phone: string;
@@ -184,6 +185,9 @@ export default function VillaConstructionCostCalculatorRiyadh() {
   const [level, setLevel] = useState<Level>("standard");
 
   const [landArea, setLandArea] = useState<string>("");
+  const [areaCalculationMode, setAreaCalculationMode] =
+    useState<AreaCalculationMode>("built");
+  const [builtUpArea, setBuiltUpArea] = useState<string>("");
   const [streetCount, setStreetCount] = useState<string>("1");
   const [streetWidth, setStreetWidth] = useState<StreetWidthCategory>("lt15");
   const [buildRatio, setBuildRatio] = useState<number>(75);
@@ -235,6 +239,14 @@ export default function VillaConstructionCostCalculatorRiyadh() {
     return Number.isFinite(n) ? n : 0;
   }, [landArea]);
 
+  const builtUpAreaNumber = useMemo(() => {
+    const n = Number(builtUpArea);
+    return Number.isFinite(n) ? n : 0;
+  }, [builtUpArea]);
+
+  const isBuiltAreaMode =
+    serviceType === "finishing" && areaCalculationMode === "built";
+
   const governmentFeesNumber = useMemo(() => {
     const n = Number(governmentFees);
     return Number.isFinite(n) ? n : 0;
@@ -245,28 +257,40 @@ export default function VillaConstructionCostCalculatorRiyadh() {
     return Number.isFinite(n) ? n : 60;
   }, [basementRatio]);
 
-  const isValid = landAreaNumber > 0 && buildRatio > 0;
+  const isValid = isBuiltAreaMode
+    ? builtUpAreaNumber > 0
+    : landAreaNumber > 0 && buildRatio > 0;
 
   const groundFloorArea = useMemo(() => {
-    if (!isValid) return 0;
+    if (!isValid || isBuiltAreaMode) return 0;
     return landAreaNumber * (buildRatio / 100);
-  }, [isValid, landAreaNumber, buildRatio]);
+  }, [isValid, isBuiltAreaMode, landAreaNumber, buildRatio]);
 
   const firstFloorArea = groundFloorArea;
   const penthouseArea = groundFloorArea * 0.7;
 
   const mainBuiltArea = useMemo(() => {
+    if (!isValid) return 0;
+    if (isBuiltAreaMode) return builtUpAreaNumber;
     return groundFloorArea + firstFloorArea + penthouseArea;
-  }, [groundFloorArea, firstFloorArea, penthouseArea]);
+  }, [
+    isValid,
+    isBuiltAreaMode,
+    builtUpAreaNumber,
+    groundFloorArea,
+    firstFloorArea,
+    penthouseArea,
+  ]);
 
   const roofRemainingArea = useMemo(() => {
+    if (isBuiltAreaMode) return 0;
     return Math.max(groundFloorArea - penthouseArea, 0);
-  }, [groundFloorArea, penthouseArea]);
+  }, [isBuiltAreaMode, groundFloorArea, penthouseArea]);
 
   const basementArea = useMemo(() => {
-    if (!hasBasement) return 0;
+    if (!hasBasement || isBuiltAreaMode) return 0;
     return groundFloorArea * (basementRatioNumber / 100);
-  }, [hasBasement, groundFloorArea, basementRatioNumber]);
+  }, [hasBasement, isBuiltAreaMode, groundFloorArea, basementRatioNumber]);
 
   const activeRate = useMemo(() => {
     if (serviceType === "bone") return BONE_RATE;
@@ -284,9 +308,9 @@ export default function VillaConstructionCostCalculatorRiyadh() {
   }, [mainBuiltArea, activeRate]);
 
   const basementCost = useMemo(() => {
-    if (!hasBasement) return 0;
+    if (!hasBasement || isBuiltAreaMode) return 0;
     return basementArea * activeRate * 1.5;
-  }, [hasBasement, basementArea, activeRate]);
+  }, [hasBasement, isBuiltAreaMode, basementArea, activeRate]);
 
   const excavationCost = useMemo(() => {
     if (serviceType === "finishing") return 0;
@@ -318,9 +342,15 @@ export default function VillaConstructionCostCalculatorRiyadh() {
   }, [hasPool, serviceType, level]);
 
   const roofSeatingCost = useMemo(() => {
-    if (!hasRoofSeating || serviceType === "bone") return 0;
+    if (!hasRoofSeating || serviceType === "bone" || isBuiltAreaMode) return 0;
     return roofRemainingArea * roofSeatingRate;
-  }, [hasRoofSeating, serviceType, roofRemainingArea, roofSeatingRate]);
+  }, [
+    hasRoofSeating,
+    serviceType,
+    isBuiltAreaMode,
+    roofRemainingArea,
+    roofSeatingRate,
+  ]);
 
   const totalCost = useMemo(() => {
     return (
@@ -357,6 +387,9 @@ export default function VillaConstructionCostCalculatorRiyadh() {
   const serviceLabel = getServiceLabel(serviceType);
   const levelLabel = getLevelLabel(level);
   const streetWidthLabel = getStreetWidthLabel(streetWidth);
+  const areaCalculationLabel = isBuiltAreaMode
+    ? "حسب إجمالي مسطحات البناء"
+    : "حسب مساحة الأرض";
 
   const detailedCalculatorLink = "/villa-finishing-price-riyadh";
 
@@ -364,14 +397,23 @@ export default function VillaConstructionCostCalculatorRiyadh() {
     `السلام عليكم، أريد مراجعة هذا التقدير من بنيان الهرم (PYBCCO).\n` +
       `نوع الخدمة: ${serviceLabel}\n` +
       `${serviceType !== "bone" ? `المستوى: ${levelLabel}\n` : ""}` +
-      `مساحة الأرض: ${formatNumber(landAreaNumber)} م²\n` +
-      `عدد الشوارع: ${streetCount}\n` +
-      `عرض الشارع الرئيسي: ${streetWidthLabel}\n` +
-      `نسبة البناء التقديرية: ${formatNumber(buildRatio)}%\n` +
-      `مساحة البناء الكلية: ${formatNumber(mainBuiltArea)} م²\n` +
-      `${hasBasement ? `مساحة البدروم: ${formatNumber(basementArea)} م²\n` : ""}` +
+      `طريقة حساب المساحة: ${areaCalculationLabel}\n` +
       `${
-        hasRoofSeating && serviceType !== "bone"
+        isBuiltAreaMode
+          ? `إجمالي مسطحات البناء: ${formatNumber(mainBuiltArea)} م²\n`
+          : `مساحة الأرض: ${formatNumber(landAreaNumber)} م²\n` +
+            `عدد الشوارع: ${streetCount}\n` +
+            `عرض الشارع الرئيسي: ${streetWidthLabel}\n` +
+            `نسبة البناء التقديرية: ${formatNumber(buildRatio)}%\n` +
+            `مساحة البناء الكلية: ${formatNumber(mainBuiltArea)} م²\n`
+      }` +
+      `${
+        hasBasement && !isBuiltAreaMode
+          ? `مساحة البدروم: ${formatNumber(basementArea)} م²\n`
+          : ""
+      }` +
+      `${
+        hasRoofSeating && serviceType !== "bone" && !isBuiltAreaMode
           ? `مساحة جلسات السطح: ${formatNumber(roofRemainingArea)} م²\n`
           : ""
       }` +
@@ -396,7 +438,9 @@ export default function VillaConstructionCostCalculatorRiyadh() {
 
     if (serviceType === "finishing") {
       rows.push({
-        title: `أعمال التشطيب (${levelLabel})`,
+        title: isBuiltAreaMode
+          ? `أعمال التشطيب حسب إجمالي المسطحات (${levelLabel})`
+          : `أعمال التشطيب (${levelLabel})`,
         quantity: mainBuiltArea,
         unit: "م²",
         unitPrice: FINISHING_RATES[level],
@@ -428,7 +472,7 @@ export default function VillaConstructionCostCalculatorRiyadh() {
       });
     }
 
-    if (hasBasement) {
+    if (hasBasement && !isBuiltAreaMode) {
       rows.push({
         title: "أعمال البدروم",
         quantity: basementArea,
@@ -458,7 +502,7 @@ export default function VillaConstructionCostCalculatorRiyadh() {
       });
     }
 
-    if (hasRoofSeating && serviceType !== "bone") {
+    if (hasRoofSeating && serviceType !== "bone" && !isBuiltAreaMode) {
       rows.push({
         title: `تشطيب جلسات السطح (${levelLabel})`,
         quantity: roofRemainingArea,
@@ -483,6 +527,7 @@ export default function VillaConstructionCostCalculatorRiyadh() {
     serviceType,
     level,
     levelLabel,
+    isBuiltAreaMode,
     mainBuiltArea,
     mainAreaCost,
     excavationCost,
@@ -763,6 +808,7 @@ body {
                     type="button"
                     onClick={() => {
                       setServiceType("bone");
+                      setAreaCalculationMode("land");
                       setShowResult(false);
                       setHasRoofSeating(false);
                       setSaveMessage("");
@@ -780,6 +826,9 @@ body {
                     type="button"
                     onClick={() => {
                       setServiceType("finishing");
+                      setAreaCalculationMode("built");
+                      setHasBasement(false);
+                      setHasRoofSeating(false);
                       setShowResult(false);
                       setSaveMessage("");
                     }}
@@ -796,6 +845,7 @@ body {
                     type="button"
                     onClick={() => {
                       setServiceType("turnkey");
+                      setAreaCalculationMode("land");
                       setShowResult(false);
                       setSaveMessage("");
                     }}
@@ -865,6 +915,77 @@ body {
                 </div>
               )}
 
+              {serviceType === "finishing" && (
+                <div className="rounded-xl border border-gold/20 bg-gold/5 p-4 md:col-span-2">
+                  <div className="text-sm text-white/75 mb-2">
+                    طريقة حساب مساحة التشطيب
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setAreaCalculationMode("built");
+                        setHasBasement(false);
+                        setHasRoofSeating(false);
+                        setShowResult(false);
+                        setSaveMessage("");
+                      }}
+                      className={`rounded-lg px-3 py-3 text-sm border ${
+                        isBuiltAreaMode
+                          ? "border-gold bg-gold/15 text-gold"
+                          : "border-white/10 bg-transparent hover:bg-white/5"
+                      }`}
+                    >
+                      حسب إجمالي مسطحات البناء
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setAreaCalculationMode("land");
+                        setShowResult(false);
+                        setSaveMessage("");
+                      }}
+                      className={`rounded-lg px-3 py-3 text-sm border ${
+                        !isBuiltAreaMode
+                          ? "border-gold bg-gold/15 text-gold"
+                          : "border-white/10 bg-transparent hover:bg-white/5"
+                      }`}
+                    >
+                      حسب مساحة الأرض
+                    </button>
+                  </div>
+
+                  <div className="mt-3 text-xs text-white/65 leading-6">
+                    إذا كانت الفيلا عظم ولديك رقم المسطحات، أدخل إجمالي المسطحات
+                    فقط. مثال: أرضي 100 + أول 100 + ملحق 50 = 250 م².
+                  </div>
+                </div>
+              )}
+
+              {isBuiltAreaMode ? (
+                <div className="rounded-xl border border-white/10 bg-black/30 p-4 md:col-span-2">
+                  <div className="text-sm text-white/70 mb-2">
+                    إجمالي مسطحات البناء المطلوب تشطيبها (م²)
+                  </div>
+                  <input
+                    value={builtUpArea}
+                    onChange={(e) => {
+                      setBuiltUpArea(e.target.value.replace(/[^\d.]/g, ""));
+                      setShowResult(false);
+                      setSaveMessage("");
+                    }}
+                    inputMode="decimal"
+                    placeholder="مثال: 250"
+                    className="w-full rounded-lg bg-black/40 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
+                  />
+                  <div className="mt-2 text-xs text-white/55 leading-6">
+                    أدخل إجمالي المسطحات فقط، وليس مساحة الأرض.
+                  </div>
+                </div>
+              ) : (
+                <>
               <div className="rounded-xl border border-white/10 bg-black/30 p-4">
                 <div className="text-sm text-white/70 mb-2">مساحة الأرض (م²)</div>
                 <input
@@ -930,6 +1051,8 @@ body {
                   الأرض مربعة.
                 </div>
               </div>
+                </>
+              )}
 
               <div className="rounded-xl border border-white/10 bg-black/30 p-4 md:col-span-2">
                 <div className="text-sm text-white/70 mb-2">
@@ -952,18 +1075,20 @@ body {
                 <div className="text-sm text-white/70 mb-3">إضافات المشروع</div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <label className="flex items-center justify-between rounded-lg border border-white/10 bg-black/20 px-4 py-3">
-                    <span>يوجد بدروم</span>
-                    <input
-                      type="checkbox"
-                      checked={hasBasement}
-                      onChange={(e) => {
-                        setHasBasement(e.target.checked);
-                        setShowResult(false);
-                        setSaveMessage("");
-                      }}
-                    />
-                  </label>
+                  {!isBuiltAreaMode && (
+                    <label className="flex items-center justify-between rounded-lg border border-white/10 bg-black/20 px-4 py-3">
+                      <span>يوجد بدروم</span>
+                      <input
+                        type="checkbox"
+                        checked={hasBasement}
+                        onChange={(e) => {
+                          setHasBasement(e.target.checked);
+                          setShowResult(false);
+                          setSaveMessage("");
+                        }}
+                      />
+                    </label>
+                  )}
 
                   <label className="flex items-center justify-between rounded-lg border border-white/10 bg-black/20 px-4 py-3">
                     <span>يوجد مصعد</span>
@@ -991,7 +1116,7 @@ body {
                     />
                   </label>
 
-                  {serviceType !== "bone" && (
+                  {serviceType !== "bone" && !isBuiltAreaMode && (
                     <label className="flex items-center justify-between rounded-lg border border-white/10 bg-black/20 px-4 py-3">
                       <span>تشطيب جلسات سطح</span>
                       <input
@@ -1007,7 +1132,7 @@ body {
                   )}
                 </div>
 
-                {hasBasement && (
+                {hasBasement && !isBuiltAreaMode && (
                   <div className="mt-4">
                     <div className="text-sm text-white/70 mb-2">
                       نسبة البدروم من مساحة الأرضي (%)
@@ -1025,7 +1150,7 @@ body {
                   </div>
                 )}
 
-                {hasRoofSeating && serviceType !== "bone" && (
+                {hasRoofSeating && serviceType !== "bone" && !isBuiltAreaMode && (
                   <div className="mt-4 rounded-xl border border-gold/20 bg-gold/5 p-4 text-sm text-white/80 leading-7">
                     سيتم احتساب جلسات السطح تلقائيًا على المساحة المتبقية من
                     السطح بعد خصم مساحة الملحق العلوي:
@@ -1080,6 +1205,13 @@ body {
                 </div>
 
                 <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                  <div className="rounded-xl border border-white/10 bg-black/30 p-4 md:col-span-2">
+                    <div className="text-white/60">طريقة حساب المساحة</div>
+                    <div className="mt-1 font-bold text-gold">
+                      {areaCalculationLabel}
+                    </div>
+                  </div>
+
                   <div className="rounded-xl border border-white/10 bg-black/30 p-4">
                     <div className="text-white/60">نوع الخدمة</div>
                     <div className="mt-1 font-bold">{serviceLabel}</div>
@@ -1092,25 +1224,33 @@ body {
                     </div>
                   </div>
 
-                  <div className="rounded-xl border border-white/10 bg-black/30 p-4">
-                    <div className="text-white/60">عدد الشوارع</div>
-                    <div className="mt-1 font-bold">{streetCount}</div>
-                  </div>
+                  {!isBuiltAreaMode && (
+                    <>
+                      <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+                        <div className="text-white/60">عدد الشوارع</div>
+                        <div className="mt-1 font-bold">{streetCount}</div>
+                      </div>
+
+                      <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+                        <div className="text-white/60">عرض الشارع الرئيسي</div>
+                        <div className="mt-1 font-bold">{streetWidthLabel}</div>
+                      </div>
+
+                      <div className="rounded-xl border border-white/10 bg-black/30 p-4">
+                        <div className="text-white/60">نسبة البناء التقديرية</div>
+                        <div className="mt-1 font-bold text-gold">
+                          {formatNumber(buildRatio)}%
+                        </div>
+                      </div>
+                    </>
+                  )}
 
                   <div className="rounded-xl border border-white/10 bg-black/30 p-4">
-                    <div className="text-white/60">عرض الشارع الرئيسي</div>
-                    <div className="mt-1 font-bold">{streetWidthLabel}</div>
-                  </div>
-
-                  <div className="rounded-xl border border-white/10 bg-black/30 p-4">
-                    <div className="text-white/60">نسبة البناء التقديرية</div>
-                    <div className="mt-1 font-bold text-gold">
-                      {formatNumber(buildRatio)}%
+                    <div className="text-white/60">
+                      {isBuiltAreaMode
+                        ? "إجمالي مسطحات التشطيب"
+                        : "مساحة البناء الكلية"}
                     </div>
-                  </div>
-
-                  <div className="rounded-xl border border-white/10 bg-black/30 p-4">
-                    <div className="text-white/60">مساحة البناء الكلية</div>
                     <div className="mt-1 font-bold text-gold">
                       {formatNumber(mainBuiltArea)} م²
                     </div>
@@ -1168,16 +1308,29 @@ body {
                       المساحات المعتمدة
                     </div>
                     <div className="space-y-2 text-sm text-white/80">
-                      <div>الدور الأرضي: {formatNumber(groundFloorArea)} م²</div>
-                      <div>الدور الأول: {formatNumber(firstFloorArea)} م²</div>
-                      <div>الملحق العلوي: {formatNumber(penthouseArea)} م²</div>
-                      {hasBasement && (
-                        <div>البدروم: {formatNumber(basementArea)} م²</div>
-                      )}
-                      {hasRoofSeating && serviceType !== "bone" && (
+                      <div>طريقة الحساب: {areaCalculationLabel}</div>
+                      {isBuiltAreaMode ? (
                         <div>
-                          جلسات السطح: {formatNumber(roofRemainingArea)} م²
+                          إجمالي مسطحات التشطيب: {formatNumber(mainBuiltArea)} م²
                         </div>
+                      ) : (
+                        <>
+                          <div>
+                            الدور الأرضي: {formatNumber(groundFloorArea)} م²
+                          </div>
+                          <div>الدور الأول: {formatNumber(firstFloorArea)} م²</div>
+                          <div>
+                            الملحق العلوي: {formatNumber(penthouseArea)} م²
+                          </div>
+                          {hasBasement && (
+                            <div>البدروم: {formatNumber(basementArea)} م²</div>
+                          )}
+                          {hasRoofSeating && serviceType !== "bone" && (
+                            <div>
+                              جلسات السطح: {formatNumber(roofRemainingArea)} م²
+                            </div>
+                          )}
+                        </>
                       )}
                     </div>
                   </div>
@@ -1312,36 +1465,58 @@ body {
                     </div>
 
                     <div className="border border-[#ddd] rounded-lg p-2">
-                      <div className="text-[#777] text-[10px]">مساحة الأرض</div>
-                      <div className="font-bold text-[13px] mt-1">
-                        {formatNumber(landAreaNumber)} م²
-                      </div>
-                    </div>
-
-                    <div className="border border-[#ddd] rounded-lg p-2">
-                      <div className="text-[#777] text-[10px]">عدد الشوارع</div>
-                      <div className="font-bold text-[13px] mt-1">
-                        {streetCount}
-                      </div>
-                    </div>
-
-                    <div className="border border-[#ddd] rounded-lg p-2">
                       <div className="text-[#777] text-[10px]">
-                        عرض الشارع الرئيسي
+                        طريقة حساب المساحة
                       </div>
                       <div className="font-bold text-[13px] mt-1">
-                        {streetWidthLabel}
+                        {areaCalculationLabel}
                       </div>
                     </div>
 
-                    <div className="border border-[#ddd] rounded-lg p-2">
-                      <div className="text-[#777] text-[10px]">
-                        نسبة البناء التقديرية
+                    {isBuiltAreaMode ? (
+                      <div className="border border-[#ddd] rounded-lg p-2">
+                        <div className="text-[#777] text-[10px]">
+                          إجمالي مسطحات التشطيب
+                        </div>
+                        <div className="font-bold text-[13px] mt-1">
+                          {formatNumber(mainBuiltArea)} م²
+                        </div>
                       </div>
-                      <div className="font-bold text-[13px] mt-1">
-                        {formatNumber(buildRatio)}%
-                      </div>
-                    </div>
+                    ) : (
+                      <>
+                        <div className="border border-[#ddd] rounded-lg p-2">
+                          <div className="text-[#777] text-[10px]">مساحة الأرض</div>
+                          <div className="font-bold text-[13px] mt-1">
+                            {formatNumber(landAreaNumber)} م²
+                          </div>
+                        </div>
+
+                        <div className="border border-[#ddd] rounded-lg p-2">
+                          <div className="text-[#777] text-[10px]">عدد الشوارع</div>
+                          <div className="font-bold text-[13px] mt-1">
+                            {streetCount}
+                          </div>
+                        </div>
+
+                        <div className="border border-[#ddd] rounded-lg p-2">
+                          <div className="text-[#777] text-[10px]">
+                            عرض الشارع الرئيسي
+                          </div>
+                          <div className="font-bold text-[13px] mt-1">
+                            {streetWidthLabel}
+                          </div>
+                        </div>
+
+                        <div className="border border-[#ddd] rounded-lg p-2">
+                          <div className="text-[#777] text-[10px]">
+                            نسبة البناء التقديرية
+                          </div>
+                          <div className="font-bold text-[13px] mt-1">
+                            {formatNumber(buildRatio)}%
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
 
                   <div className="mt-3 print-page-break-avoid">
@@ -1402,18 +1577,33 @@ body {
                       <div className="font-bold text-[12px] mb-1.5">
                         المساحات المعتمدة
                       </div>
-                      <div>الدور الأرضي: {formatNumber(groundFloorArea)} م²</div>
-                      <div>الدور الأول: {formatNumber(firstFloorArea)} م²</div>
-                      <div>الملحق العلوي: {formatNumber(penthouseArea)} م²</div>
-                      {hasBasement && (
-                        <div>البدروم: {formatNumber(basementArea)} م²</div>
+                      <div>طريقة الحساب: {areaCalculationLabel}</div>
+                      {isBuiltAreaMode ? (
+                        <div className="mt-1.5 font-bold text-[#d4a017]">
+                          إجمالي مسطحات التشطيب: {formatNumber(mainBuiltArea)} م²
+                        </div>
+                      ) : (
+                        <>
+                          <div>
+                            الدور الأرضي: {formatNumber(groundFloorArea)} م²
+                          </div>
+                          <div>الدور الأول: {formatNumber(firstFloorArea)} م²</div>
+                          <div>
+                            الملحق العلوي: {formatNumber(penthouseArea)} م²
+                          </div>
+                          {hasBasement && (
+                            <div>البدروم: {formatNumber(basementArea)} م²</div>
+                          )}
+                          {hasRoofSeating && serviceType !== "bone" && (
+                            <div>
+                              جلسات السطح: {formatNumber(roofRemainingArea)} م²
+                            </div>
+                          )}
+                          <div className="mt-1.5 font-bold text-[#d4a017]">
+                            مساحة البناء الكلية: {formatNumber(mainBuiltArea)} م²
+                          </div>
+                        </>
                       )}
-                      {hasRoofSeating && serviceType !== "bone" && (
-                        <div>جلسات السطح: {formatNumber(roofRemainingArea)} م²</div>
-                      )}
-                      <div className="mt-1.5 font-bold text-[#d4a017]">
-                        مساحة البناء الكلية: {formatNumber(mainBuiltArea)} م²
-                      </div>
                     </div>
 
                     <div className="border border-[#ddd] rounded-lg p-2.5">
@@ -1441,14 +1631,24 @@ body {
                       • السعر النهائي يعتمد على المخططات التنفيذية والمعاينة ونطاق
                       العمل.
                     </div>
-                    <div>
-                      • تم اعتماد نسبة البناء التقديرية بناءً على عدد الشوارع
-                      وعرض الشارع الرئيسي بافتراض أن الأرض مربعة.
-                    </div>
-                    <div>
-                      • تم اعتماد نسبة البدروم الافتراضية 60% من مساحة الدور الأرضي
-                      مع إمكانية التعديل.
-                    </div>
+                    {!isBuiltAreaMode && (
+                      <>
+                        <div>
+                          • تم اعتماد نسبة البناء التقديرية بناءً على عدد الشوارع
+                          وعرض الشارع الرئيسي بافتراض أن الأرض مربعة.
+                        </div>
+                        <div>
+                          • تم اعتماد نسبة البدروم الافتراضية 60% من مساحة الدور
+                          الأرضي مع إمكانية التعديل.
+                        </div>
+                      </>
+                    )}
+                    {isBuiltAreaMode && (
+                      <div>
+                        • تم احتساب التشطيب بناءً على إجمالي مسطحات البناء المدخلة
+                        من العميل، وليس على مساحة الأرض.
+                      </div>
+                    )}
                     <div>
                       • تم اعتماد مسبح قياسي بمقاس 2.5 × 4 م لأغراض الحساب التقديري.
                     </div>
