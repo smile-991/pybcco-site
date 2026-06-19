@@ -1042,12 +1042,21 @@ body {
                 </div>
                 <input
                   value={String(buildRatio)}
-                  readOnly
-                  className="w-full rounded-lg bg-black/30 border border-white/10 px-4 py-3 outline-none text-white/90"
+                  onChange={(e) => {
+                    const cleaned = e.target.value.replace(/[^\d.]/g, "");
+                    const nextValue = Number(cleaned);
+
+                    setBuildRatio(Number.isFinite(nextValue) ? nextValue : 0);
+                    setShowResult(false);
+                    setSaveMessage("");
+                  }}
+                  inputMode="decimal"
+                  placeholder="مثال: 75"
+                  className="w-full rounded-lg bg-black/40 border border-white/10 px-4 py-3 outline-none focus:border-white/30 text-white/90"
                 />
                 <div className="mt-2 text-xs text-white/55 leading-6">
                   تُحسب تلقائيًا حسب عدد الشوارع وعرض الشارع الرئيسي بافتراض أن
-                  الأرض مربعة.
+                  الأرض مربعة، ويمكنك تعديلها يدويًا حسب المخططات أو الرخصة.
                 </div>
               </div>
                 </>
