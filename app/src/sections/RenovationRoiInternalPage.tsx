@@ -150,8 +150,8 @@ export default function RenovationRoiInternalPage() {
         unit: "م² مسطحات",
         costLow: 2500 + safeBuiltArea * 6,
         costHigh: 4500 + safeBuiltArea * 14,
-        impactLow: 0.1,
-        impactHigh: 0.35,
+        impactLow: 0.4,
+        impactHigh: 1.0,
         visualImpact: "مرتفع جدًا",
         negotiationImpact: "متوسط",
         priority: "high",
@@ -168,8 +168,8 @@ export default function RenovationRoiInternalPage() {
         unit: "م² دهان تقديري",
         costLow: paintQty * 12 * conditionMultiplier(paintCondition),
         costHigh: paintQty * 22 * conditionMultiplier(paintCondition),
-        impactLow: 0.35 * conditionImpactBoost(paintCondition),
-        impactHigh: 0.95 * conditionImpactBoost(paintCondition) * ageBoost,
+        impactLow: 1.0 * conditionImpactBoost(paintCondition),
+        impactHigh: 2.2 * conditionImpactBoost(paintCondition) * ageBoost,
         visualImpact: "مرتفع جدًا",
         negotiationImpact: "متوسط",
         priority: "high",
@@ -186,8 +186,8 @@ export default function RenovationRoiInternalPage() {
         unit: "حمام",
         costLow: safeBathrooms * 6000 * bathBoost,
         costHigh: safeBathrooms * 11000 * bathBoost,
-        impactLow: Math.min(1.2, safeBathrooms * 0.18 * bathImpact),
-        impactHigh: Math.min(2.2, safeBathrooms * 0.38 * bathImpact),
+        impactLow: Math.min(2.4, safeBathrooms * 0.35 * bathImpact),
+        impactHigh: Math.min(4.2, safeBathrooms * 0.75 * bathImpact),
         visualImpact: "مرتفع",
         negotiationImpact: "مرتفع",
         priority: "high",
@@ -204,8 +204,8 @@ export default function RenovationRoiInternalPage() {
         unit: "بند",
         costLow: hasMoisture ? 12000 : 0,
         costHigh: hasMoisture ? 55000 : 0,
-        impactLow: hasMoisture ? 0.7 : 0,
-        impactHigh: hasMoisture ? 1.8 : 0,
+        impactLow: hasMoisture ? 1.2 : 0,
+        impactHigh: hasMoisture ? 3.4 : 0,
         visualImpact: hasMoisture ? "مرتفع" : "منخفض",
         negotiationImpact: hasMoisture ? "مرتفع جدًا" : "منخفض",
         priority: hasMoisture ? "high" : "low",
@@ -223,8 +223,8 @@ export default function RenovationRoiInternalPage() {
         unit: "م طولي ظاهر",
         costLow: visibleWallLm * 180 * exteriorBoost + 4000,
         costHigh: visibleWallLm * 420 * exteriorBoost + 14000,
-        impactLow: 0.25 * exteriorImpact,
-        impactHigh: 0.9 * exteriorImpact,
+        impactLow: 0.6 * exteriorImpact,
+        impactHigh: 1.6 * exteriorImpact,
         visualImpact: "مرتفع جدًا",
         negotiationImpact: "متوسط",
         priority: propertyType === "villa" ? "high" : "avoid",
@@ -241,8 +241,8 @@ export default function RenovationRoiInternalPage() {
         unit: "م² واجهة تقديرية",
         costLow: safeBuiltArea * (facadeCount === 2 ? 52 : 36) * exteriorBoost,
         costHigh: safeBuiltArea * (facadeCount === 2 ? 135 : 82) * exteriorBoost,
-        impactLow: (facadeCount === 2 ? 0.45 : 0.3) * exteriorImpact,
-        impactHigh: (facadeCount === 2 ? 1.45 : 1.0) * exteriorImpact,
+        impactLow: (facadeCount === 2 ? 0.8 : 0.55) * exteriorImpact,
+        impactHigh: (facadeCount === 2 ? 2.8 : 1.9) * exteriorImpact,
         visualImpact: "مرتفع جدًا",
         negotiationImpact: "متوسط",
         priority: propertyType === "villa" ? "high" : "avoid",
@@ -259,8 +259,8 @@ export default function RenovationRoiInternalPage() {
         unit: "م² حوش تقديري",
         costLow: Math.max(6000, estimatedYardArea * 55 * yardBoost),
         costHigh: Math.max(16000, estimatedYardArea * 165 * yardBoost),
-        impactLow: 0.2 * yardImpact,
-        impactHigh: 1.1 * yardImpact,
+        impactLow: 0.45 * yardImpact,
+        impactHigh: 1.65 * yardImpact,
         visualImpact: "مرتفع",
         negotiationImpact: "متوسط",
         priority: propertyType === "villa" ? "medium" : "avoid",
@@ -277,8 +277,8 @@ export default function RenovationRoiInternalPage() {
         unit: "م طولي ظاهر",
         costLow: propertyType === "villa" ? Math.max(5000, visibleWallLm * 80) : 0,
         costHigh: propertyType === "villa" ? Math.max(18000, visibleWallLm * 180) : 0,
-        impactLow: propertyType === "villa" ? 0.15 * exteriorImpact : 0,
-        impactHigh: propertyType === "villa" ? 0.55 * exteriorImpact : 0,
+        impactLow: propertyType === "villa" ? 0.25 * exteriorImpact : 0,
+        impactHigh: propertyType === "villa" ? 0.85 * exteriorImpact : 0,
         visualImpact: "مرتفع",
         negotiationImpact: "منخفض",
         priority: propertyType === "villa" ? "medium" : "avoid",
@@ -295,8 +295,8 @@ export default function RenovationRoiInternalPage() {
         unit: "م² مسطحات",
         costLow: safeBuiltArea * 25,
         costHigh: safeBuiltArea * 55,
-        impactLow: 0.2,
-        impactHigh: 0.65,
+        impactLow: 0.4,
+        impactHigh: 1.1,
         visualImpact: "مرتفع",
         negotiationImpact: "منخفض",
         priority: "medium",
@@ -313,8 +313,8 @@ export default function RenovationRoiInternalPage() {
         unit: "م² مسطحات",
         costLow: safeBuiltArea * 18,
         costHigh: safeBuiltArea * 55,
-        impactLow: 0.15,
-        impactHigh: 0.55,
+        impactLow: 0.25,
+        impactHigh: 0.85,
         visualImpact: "متوسط",
         negotiationImpact: "متوسط",
         priority: "low",
@@ -358,12 +358,12 @@ export default function RenovationRoiInternalPage() {
     });
 
     const adjustedLow = Math.min(
-      propertyType === "villa" ? 4.5 : 2.8,
+      propertyType === "villa" ? 10.5 : 6.5,
       Object.values(groups).reduce((sum, group) => sum + applyOverlapReduction(group.low), 0)
     );
 
     const adjustedHigh = Math.min(
-      propertyType === "villa" ? 5.2 : 3.4,
+      propertyType === "villa" ? 12.0 : 8.0,
       Object.values(groups).reduce((sum, group) => sum + applyOverlapReduction(group.high), 0)
     );
 
@@ -372,6 +372,8 @@ export default function RenovationRoiInternalPage() {
     const avgCost = (costLow + costHigh) / 2 || 1;
     const avgValue = (valueLow + valueHigh) / 2;
     const efficiency = avgValue / avgCost;
+    const netLow = valueLow - costHigh;
+    const netHigh = valueHigh - costLow;
 
     const score = Math.max(
       0,
@@ -385,6 +387,8 @@ export default function RenovationRoiInternalPage() {
       adjustedHigh,
       valueLow,
       valueHigh,
+      netLow,
+      netHigh,
       score,
       efficiency,
       groups,
@@ -411,7 +415,7 @@ export default function RenovationRoiInternalPage() {
       `قيمة العقار التقريبية: ${formatSAR(normalized.safeValue)} ريال\n` +
       `البنود المختارة: ${selectedItems.map((item) => item.title).join("، ")}\n` +
       `التكلفة التقريبية: ${formatSAR(result.costLow)} - ${formatSAR(result.costHigh)} ريال\n` +
-      `الأثر المحتمل: ${formatPercent(result.adjustedLow)} - ${formatPercent(result.adjustedHigh)}\n` +
+      `رفع القيمة المحتمل: ${formatPercent(result.adjustedLow)} - ${formatPercent(result.adjustedHigh)}\n` +
       `رابط الصفحة التجريبية: https://pybcco.com${INTERNAL_PATH}`
   );
 
@@ -453,7 +457,7 @@ export default function RenovationRoiInternalPage() {
             </h1>
 
             <p className="mt-6 max-w-3xl text-base leading-8 text-slate-200 md:text-lg">
-              هذه نسخة تجريبية لحاسبة تساعد مالك الفيلا أو الشقة على اختيار البنود التي قد ترفع جاذبية العقار قبل البيع وتقلل تفاوض المشتري، بدون الدخول في ترميم فاخر أو ذوق شخصي قد لا يسترد تكلفته.
+              هذه نسخة تجريبية لحاسبة تساعد مالك الفيلا أو الشقة على تقدير الفرق بين قيمة العقار وهو على وضعه الحالي وبين قيمته المحتملة بعد ترميم ذكي، بدون الدخول في ترميم فاخر أو ذوق شخصي قد لا يسترد تكلفته.
             </p>
 
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
@@ -492,7 +496,7 @@ export default function RenovationRoiInternalPage() {
               </label>
 
               <label className="space-y-2">
-                <span className="text-sm font-bold">قيمة العقار التقريبية</span>
+                <span className="text-sm font-bold">قيمة العقار الحالية وهو على وضعه</span>
                 <input
                   type="number"
                   value={propertyValue}
@@ -674,7 +678,7 @@ export default function RenovationRoiInternalPage() {
                     <p className="mt-1 font-black">{formatSAR(item.costLow)} – {formatSAR(item.costHigh)} ريال</p>
                   </div>
                   <div className="rounded-2xl bg-slate-50 p-4">
-                    <p className="text-xs font-bold text-slate-500">الأثر المحتمل</p>
+                    <p className="text-xs font-bold text-slate-500">رفع محتمل من قيمته الحالية</p>
                     <p className="mt-1 font-black">{formatPercent(item.impactLow)} – {formatPercent(item.impactHigh)}</p>
                   </div>
                 </div>
@@ -714,7 +718,7 @@ export default function RenovationRoiInternalPage() {
               </div>
 
               <div className="rounded-3xl border border-white/10 bg-white/10 p-5">
-                <p className="text-sm text-slate-300">الأثر المحتمل بعد احتساب تداخل البنود</p>
+                <p className="text-sm text-slate-300">رفع القيمة المحتمل من سعره الحالي بعد احتساب تداخل البنود</p>
                 <p className="mt-2 text-2xl font-black text-yellow-300">
                   {formatPercent(result.adjustedLow)} – {formatPercent(result.adjustedHigh)}
                 </p>
@@ -724,9 +728,22 @@ export default function RenovationRoiInternalPage() {
               </div>
 
               <div className="rounded-3xl border border-white/10 bg-white/10 p-5">
-                <p className="text-sm text-slate-300">قيمة الأثر التقريبية على عقار بقيمة {formatSAR(normalized.safeValue)} ريال</p>
+                <p className="text-sm text-slate-300">قيمة الزيادة المحتملة على عقار قيمته الحالية {formatSAR(normalized.safeValue)} ريال</p>
                 <p className="mt-2 text-2xl font-black text-yellow-300">
                   {formatSAR(result.valueLow)} – {formatSAR(result.valueHigh)} ريال
+                </p>
+                <p className="mt-2 text-sm leading-7 text-slate-300">
+                  مثال: عقار قيمته الحالية ٢,٠٠٠,٠٠٠ ريال بسبب حالته، ورفع ٨٪ يعني زيادة محتملة ١٦٠,٠٠٠ ريال قبل خصم تكلفة الترميم.
+                </p>
+              </div>
+
+              <div className="rounded-3xl border border-white/10 bg-white/10 p-5">
+                <p className="text-sm text-slate-300">صافي الفرق التقريبي بعد خصم تكلفة الترميم</p>
+                <p className={`mt-2 text-2xl font-black ${result.netHigh >= 0 ? "text-emerald-300" : "text-red-300"}`}>
+                  {formatSAR(result.netLow)} – {formatSAR(result.netHigh)} ريال
+                </p>
+                <p className="mt-2 text-sm leading-7 text-slate-300">
+                  الصافي هنا تقديري، ويقارن بين الزيادة المحتملة وبين تكلفة البنود المختارة.
                 </p>
               </div>
 
@@ -752,7 +769,7 @@ export default function RenovationRoiInternalPage() {
           <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 lg:p-8">
             <h2 className="text-2xl font-black">أفضل البنود حسب الجدوى</h2>
             <p className="mt-3 leading-8 text-slate-600">
-              هذه قائمة ترتيب داخلية تساعدنا نقرر ما الذي يجب أن نعرضه للعميل أولًا. ليست وعدًا بزيادة سعر البيع.
+              هذه قائمة ترتيب داخلية تساعدنا نقرر ما الذي يجب أن نعرضه للعميل أولًا. الأرقام تقديرية مبنية على أن قيمة العقار المدخلة هي قيمته وهو متعب أو غير مجهز للبيع.
             </p>
 
             <div className="mt-6 space-y-3">
