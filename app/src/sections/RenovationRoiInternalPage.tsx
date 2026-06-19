@@ -29,6 +29,7 @@ type RenovationItem = {
 
 const INTERNAL_PATH = "/internal/renovation-roi-test";
 const WHATSAPP_NUMBER = "966550604837";
+const PAGE_VERSION = "V3.3 — lean default plan / 2026-06-19";
 
 function clampNumber(value: number, fallback: number, min = 0) {
   if (!Number.isFinite(value) || value < min) return fallback;
@@ -265,7 +266,7 @@ export default function RenovationRoiInternalPage() {
         negotiationImpact: "مرتفع",
         priority: "high",
         note: "قبل البيع الأفضل تحسين خفيف أو متوسط. التكسير الكامل لا ننصح به إلا إذا الحمام منفّر جدًا أو فيه مشاكل واضحة.",
-        enabledByDefault: true,
+        enabledByDefault: false,
         visible: true,
       },
       {
@@ -412,14 +413,16 @@ export default function RenovationRoiInternalPage() {
   ]);
 
   const [enabled, setEnabled] = useState<Record<string, boolean>>({
+    // V3.3: الخطة الافتراضية خفيفة عمدًا حتى لا تتجاوز تكلفة الترميم سقف العائد السوقي.
+    // البنود الخارجية والحمامات تبقى متاحة، لكنها لا تكون مفعلة تلقائيًا.
     "deep-clean-staging": true,
     "interior-paint": true,
-    "bathrooms-light-renovation": true,
+    "bathrooms-light-renovation": false,
     "moisture-leaks": false,
-    "external-wall-gate": true,
-    "facade-main": true,
-    "yard-sale-prep": true,
-    "exterior-lighting": true,
+    "external-wall-gate": false,
+    "facade-main": false,
+    "yard-sale-prep": false,
+    "exterior-lighting": false,
     "interior-lighting-switches": true,
     "floor-repair-polish": false,
   });
@@ -519,10 +522,26 @@ export default function RenovationRoiInternalPage() {
   }, [normalized.safeValue, visibleItems]);
 
   const suggestedLeanPlan = useMemo(() => {
-    return recommendedItems
-      .filter((item) => item.priority === "essential" || item.priority === "high" || item.id === "exterior-lighting")
-      .slice(0, 4);
-  }, [recommendedItems]);
+    const leanIds = [
+      "deep-clean-staging",
+      "interior-paint",
+      "interior-lighting-switches",
+      ...(hasMoisture ? ["moisture-leaks"] : []),
+    ];
+
+    return leanIds
+      .map((id) => visibleItems.find((item) => item.id === id))
+      .filter((item): item is RenovationItem => Boolean(item));
+  }, [hasMoisture, visibleItems]);
+
+  const applyLeanPlan = () => {
+    const leanIds = new Set(suggestedLeanPlan.map((item) => item.id));
+    setEnabled(
+      Object.fromEntries(
+        visibleItems.map((item) => [item.id, leanIds.has(item.id)])
+      ) as Record<string, boolean>
+    );
+  };
 
   const waText = encodeURIComponent(
     `السلام عليكم، أريد تجربة تقييم ترميم عقار قبل البيع من PYBCCO.\n` +
@@ -568,6 +587,9 @@ export default function RenovationRoiInternalPage() {
             <div className="mb-4 flex flex-wrap gap-2">
               <span className="rounded-full border border-yellow-400/40 bg-yellow-400/10 px-4 py-2 text-xs font-extrabold text-yellow-300">
                 صفحة داخلية تجريبية — Noindex
+              </span>
+              <span className="rounded-full border border-emerald-400/40 bg-emerald-400/10 px-4 py-2 text-xs font-extrabold text-emerald-300">
+                {PAGE_VERSION}
               </span>
               <span className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold text-white/80">
                 نموذج مالي مبني على قيمة العقار وهو على وضعه الحالي
@@ -970,6 +992,13 @@ export default function RenovationRoiInternalPage() {
                   <li key={item.id}>• {item.title}</li>
                 ))}
               </ul>
+              <button
+                type="button"
+                onClick={applyLeanPlan}
+                className="mt-4 rounded-2xl bg-emerald-600 px-5 py-3 text-sm font-black text-white shadow-sm hover:bg-emerald-700"
+              >
+                تطبيق الخطة الأخف على الاختيارات
+              </button>
             </div>
 
             <div className="mt-6 rounded-3xl border border-red-100 bg-red-50 p-5">
