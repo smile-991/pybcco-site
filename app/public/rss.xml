@@ -7,7 +7,7 @@
 <description>Construction, villa finishing, project case studies, and cost guides in Riyadh</description>
 
 <language>ar-sa</language>
-<lastBuildDate>Tue, 17 Jun 2026 12:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 24 Jun 2026 12:00:00 GMT</lastBuildDate>
 
 <!-- 🏠 Homepage -->
 <item>
@@ -31,7 +31,7 @@
 <pubDate>Sat, 13 Jun 2026 12:00:00 GMT</pubDate>
 </item>
 
-<!-- 🔥 Calculator -->
+<!-- 🔥 Construction Calculator -->
 <item>
 <title>حاسبة تكلفة البناء والتشطيب في الرياض</title>
 <link>https://pybcco.com/villa-construction-cost-calculator-riyadh</link>
@@ -39,7 +39,18 @@
 <description>
 احسب تكلفة مشروعك في الرياض بدقة باستخدام حاسبة تفاعلية تشمل التشطيب والبناء.
 </description>
-<pubDate>Mon, 18 Mar 2026 12:00:00 GMT</pubDate>
+<pubDate>Wed, 18 Mar 2026 12:00:00 GMT</pubDate>
+</item>
+
+<!-- 🧮 Villa Finishing Calculator -->
+<item>
+<title>حاسبة تكلفة تشطيب فيلا بالرياض 2026</title>
+<link>https://pybcco.com/villa-finishing-price-riyadh</link>
+<guid>https://pybcco.com/villa-finishing-price-riyadh</guid>
+<description>
+احسب تكلفة تشطيب الفيلا في الرياض حسب البنود والكميات، مع تقدير تفصيلي يساعدك على فهم تكلفة التشطيب قبل طلب عرض السعر.
+</description>
+<pubDate>Wed, 24 Jun 2026 12:00:00 GMT</pubDate>
 </item>
 
 <!-- 🎥 Videos -->
@@ -50,7 +61,7 @@
 <description>
 شاهد مشاريع حقيقية قبل وبعد التنفيذ مع تفاصيل التشطيب وجودة العمل.
 </description>
-<pubDate>Mon, 18 Mar 2026 12:00:00 GMT</pubDate>
+<pubDate>Wed, 18 Mar 2026 12:00:00 GMT</pubDate>
 </item>
 
 <!-- 🏗 Villa Case Study -->
@@ -61,7 +72,7 @@
 <description>
 تفاصيل تنفيذ مشروع تشطيب فاخر في الرياض مع جودة عالية وإدارة احترافية.
 </description>
-<pubDate>Sun, 16 Mar 2026 12:00:00 GMT</pubDate>
+<pubDate>Mon, 16 Mar 2026 12:00:00 GMT</pubDate>
 </item>
 
 <!-- 🏗 Restaurant Outdoor Case Study -->
@@ -83,7 +94,7 @@
 <description>
 دليل شامل لفهم تكلفة بناء الفلل في الرياض والعوامل المؤثرة على السعر.
 </description>
-<pubDate>Sat, 08 Mar 2026 12:00:00 GMT</pubDate>
+<pubDate>Sun, 08 Mar 2026 12:00:00 GMT</pubDate>
 </item>
 
 <!-- 💰 Prices Guide -->
@@ -105,7 +116,7 @@
 <description>
 استعرض نماذج حقيقية من مشاريع بنيان الهرم المنفذة داخل أحياء الرياض عبر خريطة تفاعلية تشمل مشاريع العظم، التشطيب، الترميم، والجلسات الخارجية.
 </description>
-<pubDate>Tue, 17 Jun 2026 12:00:00 GMT</pubDate>
+<pubDate>Wed, 17 Jun 2026 12:00:00 GMT</pubDate>
 </item>
 
 </channel>
