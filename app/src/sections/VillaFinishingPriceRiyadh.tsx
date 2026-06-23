@@ -34,6 +34,41 @@ function formatSAR(value: number) {
   );
 }
 
+function formatQuantity(value: number) {
+  return new Intl.NumberFormat("ar-SA", {
+    maximumFractionDigits: 2,
+  }).format(value);
+}
+
+function normalizeUnit(unit: string) {
+  const clean = String(unit || "").trim();
+
+  if (["m2", "m²", "م2", "م²", "2p"].includes(clean)) {
+    return "م²";
+  }
+
+  if (["lm", "m", "م", "متر", "متر طولي"].includes(clean)) {
+    return "متر طولي";
+  }
+
+  if (["pcs", "pc", "no", "nos", "عدد", "قطعة", "مقطوعة"].includes(clean)) {
+    return "مقطوعة";
+  }
+
+  return clean || "وحدة";
+}
+
+function trackEvent(eventName: string, params?: Record<string, unknown>) {
+  try {
+    const gtag = (window as any).gtag;
+    if (typeof gtag === "function") {
+      gtag("event", eventName, params || {});
+    }
+  } catch {
+    // Ignore tracking errors so the calculator never breaks for the user.
+  }
+}
+
 export default function VillaFinishingPriceRiyadh() {
   const title = "حاسبة تكلفة التشطيب التفصيلية بالرياض 2026 | بنيان الهرم";
   const description =
@@ -164,33 +199,50 @@ export default function VillaFinishingPriceRiyadh() {
 
   const grandTotal = useMemo(() => extrasTotal, [extrasTotal]);
 
-  const levelLabel =
-    level === "commercial" ? "تجاري" : level === "standard" ? "قياسي" : "فاخر";
-
-  const workLabel = workType === "finishing" ? "تشطيب" : "عظم";
 
   const itemsForSaving = useMemo(() => {
     return boqItems
       .map((item) => ({
         title: String(item?.title || "").trim(),
         quantity: Number(item?.quantity || 0),
-        unit: String(item?.unit || "").trim(),
+        unit: normalizeUnit(String(item?.unit || "").trim()),
         total: Number(item?.total || 0),
       }))
       .filter((item) => item.title && item.total > 0);
   }, [boqItems]);
 
-  const waText = encodeURIComponent(
-    `السلام عليكم، أريد عرض سعر من بنيان الهرم (PYBCCO).\n` +
-      `نوع العمل: ${workLabel}\n` +
-      `المستوى: ${levelLabel}\n` +
-      `المساحة المرجعية: ${areaNumber || 0} م²\n` +
-      `إجمالي البنود التفصيلية: ${formatSAR(extrasTotal)} ريال\n` +
-      `الإجمالي الحالي: ${formatSAR(grandTotal)} ريال\n` +
-      `رابط الحاسبة: ${canonical}`
-  );
+  const selectedItemsText = useMemo(() => {
+    if (!itemsForSaving.length) {
+      return "لم يتم اختيار بنود تفصيلية بعد.";
+    }
 
-  const waLink = `https://wa.me/966550604837?text=${waText}`;
+    return itemsForSaving
+      .map((item, index) => {
+        return (
+          `${index + 1}. ${item.title}\n` +
+          `   الكمية: ${formatQuantity(item.quantity)} ${normalizeUnit(item.unit)}\n` +
+          `   الإجمالي: ${formatSAR(item.total)} ريال`
+        );
+      })
+      .join("\n");
+  }, [itemsForSaving]);
+
+  const waText = useMemo(() => {
+    return encodeURIComponent(
+      `السلام عليكم، أريد عرض سعر من بنيان الهرم (PYBCCO).\n\n` +
+        `الصفحة: حاسبة تكلفة التشطيب التفصيلية بالرياض 2026\n` +
+        `نوع الطلب: تقدير بنود تشطيب تفصيلية\n\n` +
+        `البنود المختارة:\n${selectedItemsText}\n\n` +
+        `إجمالي البنود التفصيلية: ${formatSAR(extrasTotal)} ريال\n` +
+        `الإجمالي الحالي: ${formatSAR(grandTotal)} ريال\n\n` +
+        `ملاحظة: أريد مراجعة البنود وتأكيد السعر النهائي بعد المعاينة.\n` +
+        `رابط الحاسبة: ${canonical}`
+    );
+  }, [selectedItemsText, extrasTotal, grandTotal]);
+
+  const waLink = useMemo(() => {
+    return `https://wa.me/966550604837?text=${waText}`;
+  }, [waText]);
 
   const handleSaveEstimate = async () => {
     setSaveMessage("");
@@ -215,7 +267,7 @@ export default function VillaFinishingPriceRiyadh() {
         },
         body: JSON.stringify({
           phone: activatedUser.phone,
-          area: areaNumber,
+          area: areaNumber > 0 ? areaNumber : null,
           finishing_level: level,
           estimated_cost: grandTotal,
           grand_total: grandTotal,
@@ -282,7 +334,12 @@ export default function VillaFinishingPriceRiyadh() {
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <Button
               className="bg-gold text-black font-bold px-8 py-6 text-lg"
-              onClick={() => (window.location.href = "tel:+966550604837")}
+              onClick={() => {
+                trackEvent("phone_click", {
+                  source: "villa_finishing_price_hero",
+                });
+                window.location.href = "tel:+966550604837";
+              }}
             >
               اتصال مباشر
             </Button>
@@ -426,45 +483,52 @@ export default function VillaFinishingPriceRiyadh() {
                 داخل حسابك وطباعته PDF، والحصول على{" "}
                 <span className="font-bold text-gold">خصم خاص</span> وميزة{" "}
                 <span className="font-bold text-gold">ضمان أعمال إضافي</span> عند
-                بدء التنفيذ، احفظ التقدير مباشرة إذا كنت مسجلًا، أو أنشئ حسابًا
-                جديدًا.
+                بدء التنفيذ، أرسل البنود مباشرة عبر واتساب، أو احفظ التقدير إذا كان
+                لديك حساب مفعّل.
               </p>
 
               <div className="mt-4 flex flex-col md:flex-row gap-3">
-  <button
-    type="button"
-    onClick={handleSaveEstimate}
-    disabled={saving}
-    className="inline-flex items-center justify-center rounded-lg bg-gold px-5 py-3 text-sm font-extrabold text-black hover:opacity-90 transition disabled:opacity-60"
-  >
-    {saving ? "جاري حفظ التقدير..." : "حفظ التقدير داخل حسابي"}
-  </button>
+                <a
+                  href={waLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => {
+                    trackEvent("whatsapp_click", {
+                      source: "villa_finishing_price_result",
+                      estimate_value: grandTotal,
+                      items_count: itemsForSaving.length,
+                    });
+                  }}
+                  className="inline-flex items-center justify-center rounded-lg bg-gold px-5 py-3 text-sm font-extrabold text-black hover:opacity-90 transition"
+                >
+                  إرسال البنود وطلب عرض سعر عبر واتساب
+                </a>
 
-  <Link
-    to={lumpsumCalculatorUrl}
-    className="inline-flex items-center justify-center rounded-lg bg-gold px-5 py-3 text-sm font-extrabold text-black hover:opacity-90 transition"
-  >
-    انتقل إلى حاسبة المقطوعية
-  </Link>
+                {activatedUser?.phone ? (
+                  <button
+                    type="button"
+                    onClick={handleSaveEstimate}
+                    disabled={saving}
+                    className="inline-flex items-center justify-center rounded-lg border border-gold/40 bg-gold/10 px-5 py-3 text-sm font-extrabold text-gold hover:bg-gold/15 transition disabled:opacity-60"
+                  >
+                    {saving ? "جاري حفظ التقدير..." : "حفظ التقدير داخل حسابي"}
+                  </button>
+                ) : (
+                  <Link
+                    to="/create-account"
+                    className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/10 px-5 py-3 text-sm font-bold text-white hover:bg-white/15 transition"
+                  >
+                    إنشاء حساب لحفظ التقدير
+                  </Link>
+                )}
 
-  {!activatedUser?.phone && (
-    <Link
-      to="/create-account"
-      className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/10 px-5 py-3 text-sm font-bold text-white hover:bg-white/15 transition"
-    >
-      إنشاء حساب
-    </Link>
-  )}
-
-  <a
-    href={waLink}
-    target="_blank"
-    rel="noreferrer"
-    className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white hover:bg-white/10 transition"
-  >
-    طلب عرض سعر عبر واتساب
-  </a>
-</div>
+                <Link
+                  to={lumpsumCalculatorUrl}
+                  className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white hover:bg-white/10 transition"
+                >
+                  الانتقال إلى حاسبة المقطوعية
+                </Link>
+              </div>
 
               {saveMessage && (
                 <div className="mt-3 text-sm text-white/85">{saveMessage}</div>
@@ -721,6 +785,13 @@ export default function VillaFinishingPriceRiyadh() {
               href={waLink}
               target="_blank"
               rel="noreferrer"
+              onClick={() => {
+                trackEvent("whatsapp_click", {
+                  source: "villa_finishing_price_mobile_sticky",
+                  estimate_value: grandTotal,
+                  items_count: itemsForSaving.length,
+                });
+              }}
               className="rounded-xl bg-gold px-4 py-3 text-sm font-extrabold text-black"
             >
               واتساب عرض السعر
