@@ -21,41 +21,13 @@ import {
 
 type JsonLd = Record<string, any>;
 
-type AnalyticsWindow = Window & {
-  dataLayer?: Array<Record<string, unknown>>;
-  gtag?: (
-    command: string,
-    eventName: string,
-    params?: Record<string, unknown>
-  ) => void;
-};
-
-type MapEventParams = Record<
-  string,
-  string | number | boolean | null | undefined
->;
-
-function trackMapEvent(action: string, params: MapEventParams = {}) {
-  if (typeof window === "undefined") return;
-
-  const payload = {
-    event: "riyadh_projects_map_interaction",
-    map_action: action,
-    page_path: "/projects-in-riyadh",
-    ...params,
-  };
-
-  const analyticsWindow = window as AnalyticsWindow;
-
-  analyticsWindow.dataLayer = analyticsWindow.dataLayer || [];
-  analyticsWindow.dataLayer.push(payload);
-
-  if (typeof analyticsWindow.gtag === "function") {
-    analyticsWindow.gtag("event", action, {
-      event_category: "riyadh_projects_map",
-      ...params,
-    });
-  }
+function trackMapEvent(
+  _action: string,
+  _params: Record<string, string | number | boolean | null | undefined> = {}
+) {
+  // هذه الصفحة تعتمد على Google Tag العام مثل صفحات الحاسبة.
+  // أبقينا الدالة كغلاف صامت حتى تبقى أزرار الواجهة كما هي بدون أي تتبع خاص من داخل الصفحة.
+  return;
 }
 
 type ProjectType = "الكل" | "تشطيب" | "ترميم" | "عظم" | "تجاري" | "واجهات";

@@ -5,7 +5,6 @@ import Navbar from "./sections/Navbar";
 import Footer from "./sections/Footer";
 import Home from "./sections/Home";
 import ScrollToTop from "./ScrollToTop";
-import AnalyticsRouteTracker from "./components/AnalyticsRouteTracker";
 
 import { Toaster } from "@/components/ui/sonner";
 
@@ -419,7 +418,6 @@ export default function App() {
 
       <div className="pt-18">
         <ScrollToTop />
-        <AnalyticsRouteTracker />
 
         <Suspense fallback={null}>
           <Routes>
