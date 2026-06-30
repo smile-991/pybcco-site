@@ -27,9 +27,7 @@ const BuildingAndFinishingPricesRiyadh = lazy(
 const RiyadhProjectsMapPage = lazy(
   () => import("./sections/RiyadhProjectsMapPage")
 );
-const RenovationRoiInternalPage = lazy(
-  () => import("./sections/RenovationRoiInternalPage")
-);
+
 
 const Decor = lazy(() => import("@/sections/Decor"));
 const DecorWood = lazy(() => import("@/sections/DecorWood"));
@@ -481,11 +479,6 @@ export default function App() {
             <Route
               path="/engineering-insights/cost/painting-price-per-square-meter-riyadh"
               element={<PaintingPricePerSquareMeterRiyadh />}
-            />
-
-            <Route
-              path="/internal/renovation-roi-test"
-              element={<RenovationRoiInternalPage />}
             />
 
             <Route path="/account" element={<AccountHome />} />
