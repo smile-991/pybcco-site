@@ -103,6 +103,17 @@ const RIYADH_PROJECTS_MAP_IMAGES = [
     ],
   },
   {
+    title: "ترميم وإعادة تأهيل واجهة عمارة سكنية في حي الملز بالرياض",
+    images: [
+      "/projects/al-malaz-facade/al-malaz-facade-under-construction-01.webp",
+      "/projects/al-malaz-facade/al-malaz-facade-under-construction-02.webp",
+      "/projects/al-malaz-facade/al-malaz-facade-under-construction-03.webp",
+      "/projects/al-malaz-facade/al-malaz-facade-under-construction-04.webp",
+      "/projects/al-malaz-facade/al-malaz-facade-under-construction-05.webp",
+      "/projects/al-malaz-facade/al-malaz-facade-under-construction-06.webp",
+    ],
+  },
+  {
     title: "تشطيب جلسات خارجية لمطعم في حي المربع بالرياض",
     images: [
       "/projects/restaurant-outdoor/13-restaurant-outdoor-area-after-construction-riyadh.webp",

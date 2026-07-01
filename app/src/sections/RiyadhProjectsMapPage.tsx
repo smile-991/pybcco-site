@@ -21,13 +21,41 @@ import {
 
 type JsonLd = Record<string, any>;
 
-function trackMapEvent(
-  _action: string,
-  _params: Record<string, string | number | boolean | null | undefined> = {}
-) {
-  // هذه الصفحة تعتمد على Google Tag العام مثل صفحات الحاسبة.
-  // أبقينا الدالة كغلاف صامت حتى تبقى أزرار الواجهة كما هي بدون أي تتبع خاص من داخل الصفحة.
-  return;
+type AnalyticsWindow = Window & {
+  dataLayer?: Array<Record<string, unknown>>;
+  gtag?: (
+    command: string,
+    eventName: string,
+    params?: Record<string, unknown>
+  ) => void;
+};
+
+type MapEventParams = Record<
+  string,
+  string | number | boolean | null | undefined
+>;
+
+function trackMapEvent(action: string, params: MapEventParams = {}) {
+  if (typeof window === "undefined") return;
+
+  const payload = {
+    event: "riyadh_projects_map_interaction",
+    map_action: action,
+    page_path: "/projects-in-riyadh",
+    ...params,
+  };
+
+  const analyticsWindow = window as AnalyticsWindow;
+
+  analyticsWindow.dataLayer = analyticsWindow.dataLayer || [];
+  analyticsWindow.dataLayer.push(payload);
+
+  if (typeof analyticsWindow.gtag === "function") {
+    analyticsWindow.gtag("event", action, {
+      event_category: "riyadh_projects_map",
+      ...params,
+    });
+  }
 }
 
 type ProjectType = "الكل" | "تشطيب" | "ترميم" | "عظم" | "تجاري" | "واجهات";
@@ -379,7 +407,7 @@ const DISTRICTS: DistrictPin[] = [
     id: "murabba",
     name: "المربع",
     top: "82%",
-    left: "48%",
+    left: "50%",
     projects: [
       {
         id: "restaurant-outdoor-seating-al-murabba-riyadh",
@@ -417,6 +445,45 @@ const DISTRICTS: DistrictPin[] = [
         href: "/projects",
         description:
           "تنفيذ أعمال تشطيب وتجهيز الجلسات الخارجية لمطعم سمك في حي المربع بالرياض، ضمن نطاق شمل تحسين المساحة الخارجية وتجهيز منطقة الجلوس والطعام بشكل مناسب للاستخدام التجاري وتجربة العملاء.",
+      },
+    ],
+  },
+  {
+    id: "malaz",
+    name: "الملز",
+    top: "78%",
+    left: "55%",
+    projects: [
+      {
+        id: "residential-building-facade-renovation-al-malaz-riyadh",
+        title: "مشروع ترميم وإعادة تأهيل واجهة عمارة سكنية في حي الملز – الرياض",
+        district: "الملز",
+        type: "واجهات",
+        status: "جاري التنفيذ",
+        area: "عمارة سكنية",
+        duration: "قيد التنفيذ",
+        image: "/projects/al-malaz-facade/al-malaz-facade-under-construction-01.webp",
+        images: [
+          "/projects/al-malaz-facade/al-malaz-facade-under-construction-01.webp",
+          "/projects/al-malaz-facade/al-malaz-facade-under-construction-02.webp",
+          "/projects/al-malaz-facade/al-malaz-facade-under-construction-03.webp",
+          "/projects/al-malaz-facade/al-malaz-facade-under-construction-04.webp",
+          "/projects/al-malaz-facade/al-malaz-facade-under-construction-05.webp",
+          "/projects/al-malaz-facade/al-malaz-facade-under-construction-06.webp",
+        ],
+        category: "ترميم واجهات",
+        scope: "إعادة تأهيل واجهة خارجية لعمارة سكنية",
+        highlights: [
+          "قيد التنفيذ",
+          "ترميم واجهة",
+          "معالجة وتشطيب خارجي",
+          "عمارة سكنية",
+          "الملز",
+        ],
+        hasVideo: false,
+        href: "/projects-in-riyadh",
+        description:
+          "مشروع قيد التنفيذ لإعادة تأهيل واجهة عمارة سكنية في حي الملز بالرياض، يشمل أعمال معالجة الواجهة الخارجية وتحسين التشطيبات وإعادة تجهيز الشكل العام للمبنى بما يناسب الاستخدام السكني.",
       },
     ],
   },
@@ -1880,7 +1947,7 @@ export default function RiyadhProjectsMapPage() {
                   تحسين الواجهات، وتنفيذ الأعمال السكنية والتجارية. يساعد عرض
                   المشاريع على الخريطة أصحاب الفلل والمباني على فهم نطاق عملنا
                   داخل أحياء مثل الياسمين، الملقا، القيروان، العارض، الروضة، الحمراء،
-                  المربع، طويق، السلي، خشم العان، ومدينة الملك عبدالله المالية.
+                  المربع، الملز، طويق، السلي، خشم العان، ومدينة الملك عبدالله المالية.
                 </p>
 
                 <p className="mt-4 text-sm leading-8 text-white/65 md:text-base">
