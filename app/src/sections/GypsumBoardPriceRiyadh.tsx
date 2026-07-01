@@ -526,17 +526,17 @@ export default function GypsumBoardPriceRiyadh() {
 
         <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-6">
           <p className="leading-8 text-white/80">
-            إذا كانت لديك صالة مساحتها 40 م² وتريد سقف جبس بورد مستوي بسيط
+            إذا كانت لديك صالة مساحتها 25 م² وتريد سقف جبس بورد مستوي بسيط
             بسعر 60 ريال / م²، فالتكلفة التقريبية تكون:
           </p>
 
           <p className="mt-4 rounded-xl bg-black/40 p-4 text-center text-2xl font-black text-gold">
-            40 × 60 = 2,400 ريال
+            25 × 60 = 1,500 ريال
           </p>
 
           <p className="mt-4 leading-8 text-white/70">
             لكن إذا أضفت إنارة مخفية، فتحات سبوت كثيرة، أو مستوى ديكوري إضافي،
-            فقد يتغير السعر لأن التنفيذ لم يعد سقفًا مستويًا بسيطًا.
+            فقد يتغير السعر لأن التنفيذ لم يعد سقفًا مستويًا بسيطًا. وهذا بدون دهانات 
           </p>
         </div>
 
