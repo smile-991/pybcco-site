@@ -3,8 +3,11 @@ import path from "path";
 
 const SITE_URL = "https://pybcco.com";
 
-// ✅ الصحيح: داخل public مباشرة
-const OUTPUT = path.join(process.cwd(), "public", "image-sitemap.xml");
+// ✅ نكتب الملف داخل public للنسخة المصدرية، وداخل dist إذا كان موجودًا بعد build
+const OUTPUTS = [
+  path.join(process.cwd(), "public", "image-sitemap.xml"),
+  path.join(process.cwd(), "dist", "image-sitemap.xml"),
+];
 
 // ✅ قراءة البيانات من المصدر الموحد
 const galleryPath = path.join(process.cwd(), "src", "data", "gallery.json");
@@ -179,6 +182,19 @@ const RIYADH_PROJECTS_MAP_IMAGES = [
   }))
 );
 
+
+// 🎨 صور خدمة التصميم المبدئي المجاني للديكور
+const FREE_DECOR_DESIGN_IMAGES = [
+  {
+    src: "/decor/free-design/tv-wall-before.webp",
+    alt: "جدار تلفزيون قبل التصميم المبدئي - بنيان الهرم للمقاولات",
+  },
+  {
+    src: "/decor/free-design/tv-wall-concept.webp",
+    alt: "تصور تصميمي مبدئي لجدار تلفزيون باستخدام بديل الخشب وبديل الرخام",
+  },
+];
+
 function escapeXml(str) {
   return String(str)
     .replace(/&/g, "&amp;")
@@ -230,7 +246,10 @@ const projectsMapUrl = buildUrlBlock(
   RIYADH_PROJECTS_MAP_IMAGES
 );
 
-const urls = [galleryUrls, projectsMapUrl].join("\n");
+const decorUrl = buildUrlBlock(`${SITE_URL}/decor`, FREE_DECOR_DESIGN_IMAGES);
+const decorWoodUrl = buildUrlBlock(`${SITE_URL}/decor/wood`, FREE_DECOR_DESIGN_IMAGES);
+
+const urls = [galleryUrls, projectsMapUrl, decorUrl, decorWoodUrl].join("\n");
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset
@@ -239,10 +258,16 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>
 ${urls}
 </urlset>`;
 
-// ✅ تأكد أن المجلد موجود
-fs.mkdirSync(path.dirname(OUTPUT), { recursive: true });
+for (const output of OUTPUTS) {
+  const outputDir = path.dirname(output);
 
-// ✅ حفظ الملف
-fs.writeFileSync(OUTPUT, xml.trim(), "utf-8");
+  // لا ننشئ dist من الصفر؛ نكتب داخله فقط إذا كان موجودًا بعد vite build
+  if (output.includes(`${path.sep}dist${path.sep}`) && !fs.existsSync(outputDir)) {
+    continue;
+  }
 
-console.log("✅ image-sitemap.xml generated from gallery.json + full projects map images");
+  fs.mkdirSync(outputDir, { recursive: true });
+  fs.writeFileSync(output, xml.trim(), "utf-8");
+}
+
+console.log("✅ image-sitemap.xml generated in public and dist when available");

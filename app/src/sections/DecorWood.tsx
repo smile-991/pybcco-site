@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SeoHead from "@/components/SeoHead";
+import FreeDesignPreview from "@/components/FreeDesignPreview";
 
 type Product = {
   id: string; // مثل N006 أو F1
@@ -585,8 +586,10 @@ export default function DecorWood() {
             </ul>
           </div>
 
+          <FreeDesignPreview />
+
           {/* Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {products.map((p, idx) => {
               const allImgs = candidates(...p.mainCandidates, ...(p.extraCandidates || []));
 

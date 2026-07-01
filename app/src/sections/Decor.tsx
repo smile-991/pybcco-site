@@ -1,5 +1,6 @@
 import SeoHead from "@/components/SeoHead";
 import { Button } from "@/components/ui/button";
+import FreeDesignPreview from "@/components/FreeDesignPreview";
 
 const SITE_URL = "https://pybcco.com";
 
@@ -37,6 +38,8 @@ export default function Decor() {
           <p className="mt-3 text-gray-600 max-w-2xl">
             مواد ديكورية محلية داخل الرياض — أسعار واضحة + طلب سريع واتساب — مع خيار توريد + تركيب بإشراف مقاول.
           </p>
+
+          <FreeDesignPreview compact />
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {/* ===== بديل الخشب ===== */}
