@@ -248,8 +248,10 @@ const projectsMapUrl = buildUrlBlock(
 
 const decorUrl = buildUrlBlock(`${SITE_URL}/decor`, FREE_DECOR_DESIGN_IMAGES);
 const decorWoodUrl = buildUrlBlock(`${SITE_URL}/decor/wood`, FREE_DECOR_DESIGN_IMAGES);
+const decorMarbleUrl = buildUrlBlock(`${SITE_URL}/decor/marble`, FREE_DECOR_DESIGN_IMAGES);
+const decorShipboardUrl = buildUrlBlock(`${SITE_URL}/decor/shipboard`, FREE_DECOR_DESIGN_IMAGES);
 
-const urls = [galleryUrls, projectsMapUrl, decorUrl, decorWoodUrl].join("\n");
+const urls = [galleryUrls, projectsMapUrl, decorUrl, decorWoodUrl, decorMarbleUrl, decorShipboardUrl].join("\n");
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset
