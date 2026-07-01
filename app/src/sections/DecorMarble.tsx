@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SeoHead from "@/components/SeoHead";
+import FreeDesignPreview from "@/components/FreeDesignPreview";
 
 type Product = {
   id: string;        // A / B / C ...
@@ -613,6 +614,8 @@ export default function DecorMarble() {
               ))}
             </ul>
           </div>
+
+          <FreeDesignPreview product="marble" />
 
           {/* Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

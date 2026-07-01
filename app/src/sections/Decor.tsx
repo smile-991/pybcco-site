@@ -39,7 +39,7 @@ export default function Decor() {
             مواد ديكورية محلية داخل الرياض — أسعار واضحة + طلب سريع واتساب — مع خيار توريد + تركيب بإشراف مقاول.
           </p>
 
-          <FreeDesignPreview compact />
+          <FreeDesignPreview compact product="decor" />
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {/* ===== بديل الخشب ===== */}

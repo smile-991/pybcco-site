@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { CheckCircle2, Calculator, Phone, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SeoHead from "@/components/SeoHead";
+import FreeDesignPreview from "@/components/FreeDesignPreview";
 
 type Product = {
   id: string; // SB01...
@@ -374,6 +375,8 @@ export default function DecorShipboard() {
               ))}
             </ul>
           </div>
+
+          <FreeDesignPreview product="shipboard" />
 
           {/* Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
