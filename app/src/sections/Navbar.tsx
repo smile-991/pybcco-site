@@ -21,7 +21,6 @@ const navLinks = [
   { name: "خدماتنا", href: "#services", type: "scroll" as const },
   { name: "فريق العمل", href: "#team", type: "scroll" as const },
   { name: "تواصل معنا", href: "#contact", type: "scroll" as const },
-  { name: "معرض الأعمال", href: "/projects", type: "route" as const },
 ];
 
 // ✅ روابط المتجر
@@ -66,10 +65,10 @@ export default function Navbar() {
   const desktopAllLinks = navLinks;
 
   const desktopPrimaryLinks = [
-  navLinks[0], // الرئيسية
-  navLinks[1], // خدماتنا
-  navLinks[3], // تواصل معنا
-].filter(Boolean);
+    navLinks[0], // الرئيسية
+    navLinks[1], // العروض
+    navLinks[4], // تواصل معنا
+  ].filter(Boolean);
 
   const desktopMoreLinks = navLinks.filter(
     (l) =>
@@ -173,14 +172,14 @@ export default function Navbar() {
   <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden z-50">
 
     <a
-      href="#projects"
+      href="/projects"
       onClick={(e) => {
         e.preventDefault();
-        goTo("#projects");
+        goTo("/projects");
       }}
       className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 transition whitespace-nowrap"
     >
-      صور المشاريع
+      معرض الصور
     </a>
 
     <a
@@ -259,14 +258,14 @@ export default function Navbar() {
 
   <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl rounded-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden z-50">
     <a
-      href="#projects"
+      href="/projects"
       onClick={(e) => {
         e.preventDefault();
-        goTo("#projects");
+        goTo("/projects");
       }}
       className="block px-4 py-3 text-sm text-gray-800 hover:bg-gold/10 transition whitespace-nowrap"
     >
-      صور المشاريع
+      معرض الصور
     </a>
 
     <a
@@ -549,14 +548,14 @@ export default function Navbar() {
   </div>
 
   <a
-    href="#projects"
+    href="/projects"
     onClick={(e) => {
       e.preventDefault();
-      goTo("#projects");
+      goTo("/projects");
     }}
     className="block px-4 py-3 text-[15px] font-medium text-white hover:bg-white/10 rounded-lg transition"
   >
-    صور المشاريع
+    معرض الصور
   </a>
 
   <a
