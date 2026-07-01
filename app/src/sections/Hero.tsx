@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { ArrowDown, Building2, HardHat, Ruler, Phone } from "lucide-react";
+import { ArrowDown, Building2, HardHat, Ruler, Phone, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const stats = [
@@ -106,6 +106,15 @@ export default function Hero() {
             نقدم حلول مقاولات متكاملة تشمل الأعمال الإنشائية وأعمال التشطيبات،
             وفق أعلى معايير الجودة والالتزام داخل المملكة العربية السعودية.
           </p>
+
+          <a
+            href="/offers"
+            className="mt-6 inline-flex items-center justify-center gap-3 rounded-2xl border border-gold/40 bg-gradient-to-l from-gold via-gold-400 to-gold-700 px-5 py-3 text-black font-extrabold shadow-[0_0_35px_rgba(255,193,7,0.25)] hover:scale-[1.02] transition-transform"
+            aria-label="عروض بنيان الهرم للمقاولات الحالية"
+          >
+            <Gift className="w-5 h-5" />
+            عروض شهرية للمشاريع الجديدة: خصم 3% + تصميم مبدئي مجاني
+          </a>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10 md:mb-16 mt-6">
             <Button

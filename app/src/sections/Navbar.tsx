@@ -17,6 +17,7 @@ const PORTAL_LANDING_URL = "/project-tracking-system-riyadh"; // ✅ مفهرس 
 // ✅ روابط الناف الأساسية (✅ حذف "من نحن")
 const navLinks = [
   { name: "الرئيسية", href: "#hero", type: "scroll" as const },
+  { name: "العروض", href: "/offers", type: "route" as const },
   { name: "خدماتنا", href: "#services", type: "scroll" as const },
   { name: "فريق العمل", href: "#team", type: "scroll" as const },
   { name: "تواصل معنا", href: "#contact", type: "scroll" as const },

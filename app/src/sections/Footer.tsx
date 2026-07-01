@@ -28,6 +28,7 @@ const MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=${encodeURICo
 // ===== روابط الهوم =====
 const quickLinks = [
   { name: "الرئيسية", href: "#hero" },
+  { name: "العروض", href: "/offers" },
   { name: "من نحن", href: "#about" },
   { name: "خدماتنا", href: "#services" },
   { name: "معرض الأعمال", href: "/projects" },

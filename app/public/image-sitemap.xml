@@ -765,6 +765,14 @@
     </image:image>
   </url>
   <url>
+    <loc>https://pybcco.com/offers</loc>
+    <image:image>
+      <image:loc>https://pybcco.com/images/construction-offers.webp</image:loc>
+      <image:title>عروض مقاولات وتشطيب في الرياض من بنيان الهرم للمقاولات</image:title>
+      <image:caption>عروض مقاولات وتشطيب في الرياض من بنيان الهرم للمقاولات</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://pybcco.com/decor</loc>
     <image:image>
       <image:loc>https://pybcco.com/decor/free-design/tv-wall-before.webp</image:loc>

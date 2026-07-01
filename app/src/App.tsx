@@ -8,7 +8,6 @@ import ScrollToTop from "./ScrollToTop";
 
 import { Toaster } from "@/components/ui/sonner";
 
-
 /* ================= Lazy Pages ================= */
 
 const ProjectsGallery = lazy(() => import("./sections/ProjectsGallery"));
@@ -27,7 +26,9 @@ const BuildingAndFinishingPricesRiyadh = lazy(
 const RiyadhProjectsMapPage = lazy(
   () => import("./sections/RiyadhProjectsMapPage")
 );
-
+const RenovationRoiInternalPage = lazy(
+  () => import("./sections/RenovationRoiInternalPage")
+);
 
 const Decor = lazy(() => import("@/sections/Decor"));
 const DecorWood = lazy(() => import("@/sections/DecorWood"));
@@ -62,6 +63,7 @@ const ContractorAlMalqaRiyadh = lazy(
   () => import("./sections/ContractorAlMalqaRiyadh")
 );
 const VideosLibraryPage = lazy(() => import("./sections/VideosLibraryPage"));
+const OffersPage = lazy(() => import("./sections/OffersPage"));
 
 const CaseStudyVillaRiyadh = lazy(
   () => import("@/sections/CaseStudyVillaRiyadh")
@@ -420,6 +422,7 @@ export default function App() {
         <Suspense fallback={null}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/offers" element={<OffersPage />} />
             <Route path="/projects" element={<ProjectsGallery />} />
 
             <Route path="/decor" element={<Decor />} />
@@ -479,6 +482,11 @@ export default function App() {
             <Route
               path="/engineering-insights/cost/painting-price-per-square-meter-riyadh"
               element={<PaintingPricePerSquareMeterRiyadh />}
+            />
+
+            <Route
+              path="/internal/renovation-roi-test"
+              element={<RenovationRoiInternalPage />}
             />
 
             <Route path="/account" element={<AccountHome />} />

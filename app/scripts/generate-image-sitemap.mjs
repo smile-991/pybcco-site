@@ -194,6 +194,15 @@ const RIYADH_PROJECTS_MAP_IMAGES = [
 );
 
 
+
+// 🎁 صورة صفحة العروض
+const CONSTRUCTION_OFFERS_IMAGES = [
+  {
+    src: "/images/construction-offers.webp",
+    alt: "عروض مقاولات وتشطيب في الرياض من بنيان الهرم للمقاولات",
+  },
+];
+
 // 🎨 صور خدمة التصميم المبدئي المجاني للديكور
 const FREE_DECOR_DESIGN_IMAGES = [
   {
@@ -261,8 +270,17 @@ const decorUrl = buildUrlBlock(`${SITE_URL}/decor`, FREE_DECOR_DESIGN_IMAGES);
 const decorWoodUrl = buildUrlBlock(`${SITE_URL}/decor/wood`, FREE_DECOR_DESIGN_IMAGES);
 const decorMarbleUrl = buildUrlBlock(`${SITE_URL}/decor/marble`, FREE_DECOR_DESIGN_IMAGES);
 const decorShipboardUrl = buildUrlBlock(`${SITE_URL}/decor/shipboard`, FREE_DECOR_DESIGN_IMAGES);
+const offersUrl = buildUrlBlock(`${SITE_URL}/offers`, CONSTRUCTION_OFFERS_IMAGES);
 
-const urls = [galleryUrls, projectsMapUrl, decorUrl, decorWoodUrl, decorMarbleUrl, decorShipboardUrl].join("\n");
+const urls = [
+  galleryUrls,
+  projectsMapUrl,
+  offersUrl,
+  decorUrl,
+  decorWoodUrl,
+  decorMarbleUrl,
+  decorShipboardUrl,
+].join("\n");
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset
