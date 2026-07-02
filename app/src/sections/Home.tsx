@@ -356,6 +356,18 @@ export default function Home() {
   </span>
 </div>
 
+            <Link
+              to="/offers"
+              className="mt-5 inline-flex max-w-full items-center justify-center gap-2 rounded-full border border-gold/40 bg-gold/15 px-4 py-2.5 text-sm sm:text-base font-extrabold text-gold shadow-[0_0_28px_rgba(245,170,0,0.18)] backdrop-blur-sm transition hover:bg-gold hover:text-black hover:shadow-[0_0_35px_rgba(245,170,0,0.28)]"
+              aria-label="شاهد عروض بنيان الهرم للمقاولات الحالية"
+            >
+              <Sparkles className="w-4 h-4 shrink-0" />
+              <span className="truncate">
+                عروض يوليو للمشاريع الجديدة — خصم 3% وتصميم مبدئي مجاني
+              </span>
+              <span className="text-lg leading-none">←</span>
+            </Link>
+
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
                 onClick={() => window.open(WA_LINK, "_blank")}
