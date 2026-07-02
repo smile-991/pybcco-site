@@ -307,7 +307,7 @@ export default function Home() {
       {/* HERO */}
       <section
         id="hero"
-        className="relative min-h-[85svh] sm:min-h-[100svh] flex items-center justify-center overflow-hidden"
+        className="relative min-h-[92svh] sm:min-h-[100svh] flex items-center justify-center overflow-hidden"
       >
         <div className="absolute inset-0">
           <img
@@ -323,8 +323,8 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/85" />
         </div>
 
-        <div className="relative z-10 container-custom pt-24 pb-14 px-4">
-          <div className="text-center max-w-4xl mx-auto">
+        <div className="relative z-10 container-custom w-full max-w-full overflow-hidden pt-24 pb-12 px-4 sm:pt-28 sm:pb-16">
+          <div className="text-center w-full max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 bg-gold/20 rounded-full px-4 py-2 mb-6 sm:backdrop-blur-sm">
               <span className="w-2 h-2 bg-gold rounded-full" />
               <span className="text-gold text-sm font-medium">
@@ -332,13 +332,15 @@ export default function Home() {
               </span>
             </div>
 
-            <h1 className="text-white font-extrabold leading-tight tracking-wide text-4xl sm:text-5xl lg:text-6xl text-center mb-6">
-              شركة مقاولات بالرياض{" "}
-              <span className="text-gold/90">بنيان الهرم</span>{" "}
-              <span className="whitespace-nowrap">PYBCCO</span>
+            <h1 className="mx-auto max-w-[92vw] text-white font-extrabold leading-[1.18] tracking-normal text-[2rem] min-[380px]:text-[2.25rem] sm:text-5xl lg:text-6xl text-center mb-5 sm:mb-6 break-words overflow-visible">
+              <span className="block">شركة مقاولات بالرياض</span>
+              <span className="block mt-1 sm:mt-2">
+                <span className="text-gold/90">بنيان الهرم</span>{" "}
+                <span className="whitespace-nowrap">PYBCCO</span>
+              </span>
             </h1>
 
-            <p className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed text-center">
+            <p className="text-white/85 text-sm min-[380px]:text-base sm:text-lg max-w-[92vw] sm:max-w-2xl mx-auto leading-relaxed text-center">
               تنفيذ بناء وتشطيب وترميم في الرياض بإشراف هندسي، عقود واضحة، وجدول
               زمني منضبط وجودة تسليم.
             </p>
@@ -358,22 +360,22 @@ export default function Home() {
 
             <Link
               to="/offers"
-              className="mt-5 inline-flex max-w-full items-center justify-center gap-2 rounded-full border border-gold/40 bg-gold/15 px-4 py-2.5 text-sm sm:text-base font-extrabold text-gold shadow-[0_0_28px_rgba(245,170,0,0.18)] backdrop-blur-sm transition hover:bg-gold hover:text-black hover:shadow-[0_0_35px_rgba(245,170,0,0.28)]"
+              className="mt-5 inline-flex w-full max-w-[92vw] sm:w-auto sm:max-w-full items-center justify-center gap-2 rounded-2xl sm:rounded-full border border-gold/40 bg-gold/15 px-3 sm:px-4 py-3 sm:py-2.5 text-sm sm:text-base font-extrabold text-gold text-center leading-snug shadow-[0_0_28px_rgba(245,170,0,0.18)] backdrop-blur-sm transition hover:bg-gold hover:text-black hover:shadow-[0_0_35px_rgba(245,170,0,0.28)]"
               aria-label="شاهد عروض بنيان الهرم للمقاولات الحالية"
             >
               <Sparkles className="w-4 h-4 shrink-0" />
-              <span className="truncate">
+              <span>
                 عروض يوليو للمشاريع الجديدة — خصم 3% وتصميم مبدئي مجاني
               </span>
-              <span className="text-lg leading-none">←</span>
+              <span className="hidden sm:inline text-lg leading-none">←</span>
             </Link>
 
-            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="mt-7 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-[92vw] sm:max-w-none mx-auto">
               <Button
                 onClick={() => window.open(WA_LINK, "_blank")}
                 size="lg"
                 variant="outline"
-                className="text-gold bg-transparent hover:bg-white/10 px-8 py-6 text-lg w-full sm:w-auto"
+                className="text-gold bg-transparent hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg w-full sm:w-auto"
               >
                 <Phone className="w-5 h-5 ml-2" />
                 اطلب معاينة
@@ -383,7 +385,7 @@ export default function Home() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="bg-gold hover:bg-gold/90 text-black font-bold px-8 py-6 text-lg w-full sm:w-auto"
+                className="bg-gold hover:bg-gold/90 text-black font-bold px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg w-full sm:w-auto"
               >
                 <Link to="/villa-finishing-price-riyadh">
                   <Calculator className="w-5 h-5 ml-2" />
@@ -395,7 +397,7 @@ export default function Home() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="text-gold bg-transparent hover:bg-white/10 px-8 py-6 text-lg w-full sm:w-auto"
+                className="text-gold bg-transparent hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg w-full sm:w-auto"
               >
                 <Link to="/decor">🛍 المتجر</Link>
               </Button>
@@ -417,7 +419,7 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="mt-10 text-white/60 text-sm">
+            <div className="mt-8 sm:mt-10 text-white/60 text-xs sm:text-sm">
               <button
                 type="button"
                 onClick={() => scrollToId("#calculator-cta")}
