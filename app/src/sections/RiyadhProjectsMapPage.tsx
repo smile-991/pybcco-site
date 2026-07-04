@@ -1839,10 +1839,10 @@ export default function RiyadhProjectsMapPage() {
             </div>
           )}
 
-          <div className="fixed bottom-6 left-4 z-50 hidden origin-bottom-left scale-[0.51] flex-col gap-2 md:flex xl:scale-[0.54]">
+          <div className="fixed bottom-6 left-5 z-40 hidden flex-col gap-3 md:flex lg:left-6">
             <Button
               asChild
-              className="rounded-full bg-[#D4AF37] px-5 text-black shadow-2xl shadow-[#D4AF37]/20 hover:bg-[#e5c158]"
+              className="h-11 min-w-[176px] rounded-full bg-[#D4AF37] px-6 text-sm font-extrabold text-black shadow-2xl shadow-[#D4AF37]/20 hover:bg-[#e5c158]"
             >
               <Link
                 to="/villa-finishing-price-riyadh"
@@ -1859,7 +1859,7 @@ export default function RiyadhProjectsMapPage() {
             <Button
               asChild
               variant="outline"
-              className="rounded-full border-white/15 bg-black/65 px-5 text-white backdrop-blur-xl hover:bg-white/10"
+              className="h-11 min-w-[176px] rounded-full border-white/15 bg-black/75 px-6 text-sm font-bold text-white shadow-xl shadow-black/30 backdrop-blur-xl hover:bg-white/10"
             >
               <Link
                 to="/#contact"
