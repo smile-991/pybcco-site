@@ -1877,17 +1877,15 @@ export default function RiyadhProjectsMapPage() {
           <div className="mx-auto max-w-5xl text-center">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 px-4 py-2 text-sm text-[#D4AF37]">
               <Eye className="h-4 w-4" />
-              من الخريطة إلى تفاصيل المشروع
+              مشاريع موثقة داخل الرياض
             </div>
 
             <h2 className="text-2xl font-extrabold md:text-4xl">
-              كل مشروع جديد يمكن إضافته كنقطة تفاعلية وصفحة مستقلة
+              استعرض نماذج من مشاريعنا المنفذة داخل أحياء الرياض
             </h2>
 
             <p className="mx-auto mt-5 max-w-3xl text-sm leading-8 text-white/65 md:text-base">
-              هذه الصفحة مصممة لتكبر مع أعمال الشركة. عند إضافة مشروع جديد داخل
-              أي حي في الرياض، يمكن وضعه على الخريطة وربطه بصفحة تحتوي الصور
-              والفيديو وتفاصيل التنفيذ.
+              شاهد مواقع وأمثلة حقيقية من أعمال بنيان الهرم في التشطيب، الترميم، العظم، والمشاريع التجارية داخل الرياض. هذه الخريطة تساعدك على التعرف على جودة التنفيذ وانتشار أعمالنا قبل طلب عرض السعر.
             </p>
 
             <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -1903,7 +1901,7 @@ export default function RiyadhProjectsMapPage() {
                     })
                   }
                 >
-                  مشاهدة معرض المشاريع
+                  مشاهدة صور المشاريع
                   <ArrowLeft className="mr-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -1921,7 +1919,7 @@ export default function RiyadhProjectsMapPage() {
                     })
                   }
                 >
-                  مشاهدة فيديوهات التنفيذ
+                  مشاهدة فيديوهات من أعمالنا
                 </Link>
               </Button>
             </div>

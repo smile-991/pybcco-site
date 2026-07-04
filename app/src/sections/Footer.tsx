@@ -337,7 +337,7 @@ export default function Footer() {
   size="icon"
   aria-label="العودة إلى أعلى الصفحة"
   title="العودة إلى أعلى الصفحة"
-  className="fixed bottom-6 left-6 w-12 h-12 bg-gold hover:bg-gold/90 text-black rounded-full shadow-lg z-50"
+  className="fixed bottom-24 right-4 md:bottom-6 md:right-6 w-12 h-12 bg-gold hover:bg-gold/90 text-black rounded-full shadow-lg z-40"
 >
   <ArrowUp className="w-6 h-6" />
 </Button>
