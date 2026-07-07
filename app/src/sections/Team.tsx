@@ -68,7 +68,7 @@ const teamMembers = [
   },
   {
     id: 5,
-    name: 'أحمد صبيح',
+    name: 'عماد كحيل',
     nameEn: 'Ahmed Sebaie',
     position: 'العلاقات العامة',
     positionEn: 'Public Relations',
