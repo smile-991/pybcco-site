@@ -12,8 +12,8 @@ import {
 const teamMembers = [
   {
     id: 1,
-    name: 'طارق القصيباتي',
-    nameEn: 'Tariq Al-Qosaibaty',
+    name: 'أحمد السباعي',
+    nameEn: 'Ahmed Al-Sebaei',
     position: 'المدير العام',
     positionEn: 'General Manager',
     image: null,
@@ -68,8 +68,8 @@ const teamMembers = [
   },
   {
     id: 5,
-    name: 'عماد كحيل',
-    nameEn: 'Ahmed Sebaie',
+    name: 'أحمد صبيح',
+    nameEn: 'Ahmed Sbeih',
     position: 'العلاقات العامة',
     positionEn: 'Public Relations',
     image: null,
