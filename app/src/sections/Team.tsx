@@ -194,6 +194,7 @@ export default function Team() {
           ))}
         </div>
 
+
         {/* Join Team CTA */}
         <div
           className={`mt-10 text-center transition-all duration-700 delay-700 ${
