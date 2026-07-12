@@ -29,48 +29,97 @@ const WA_LINK =
 
 const CASE_STUDY_URL = "/case-study-villa-renovation-riyadh";
 
+const serviceImage = (
+  category: GalleryCat,
+  index: number,
+  fallback: string,
+) => GALLERY[category].items[index]?.src ?? fallback;
+
 const SERVICES = [
   {
     title: "بناء عظم فلل",
-    desc: "تنفيذ العظم وفق المخططات والمواصفات وبإشراف هندسي.",
+    desc: "تنفيذ الهيكل الإنشائي وفق المخططات والمواصفات، مع إشراف هندسي ومتابعة للمراحل الأساسية.",
     href: "/villa-bone-construction-riyadh",
     icon: Hammer,
+    image: serviceImage(
+      "concrete",
+      0,
+      "/projects/concrete/concrete-1.webp",
+    ),
+    tag: "من الأساسات حتى اكتمال الهيكل",
   },
   {
     title: "تشطيب فلل",
-    desc: "تشطيب متكامل بمواد مختارة وإدارة دقيقة للتفاصيل.",
+    desc: "تشطيب متكامل من الأعمال التأسيسية حتى التفاصيل النهائية، بمواد مختارة وإدارة دقيقة للتنفيذ.",
     href: "/villa-finishing-riyadh",
     icon: Paintbrush2,
+    image: serviceImage(
+      "finishing",
+      0,
+      "/projects/finishing/finishing-01.webp",
+    ),
+    tag: "الخدمة الأكثر طلبًا",
+    featured: true,
   },
   {
     title: "سعر التشطيب",
-    desc: "احسب تكلفة التشطيب الذكية حسب المستوى والمساحة.",
+    desc: "احصل على تقدير مبدئي حسب المساحة ومستوى التشطيب قبل طلب المعاينة وعرض السعر التفصيلي.",
     href: "/villa-finishing-price-riyadh",
     icon: Calculator,
+    image: serviceImage(
+      "finishing",
+      1,
+      "/projects/finishing/finishing-02.webp",
+    ),
+    tag: "حاسبة فورية",
   },
   {
     title: "ترميم فلل",
-    desc: "صيانة وتجديد شامل (دهانات، جبس، أرضيات) حسب المعاينة.",
+    desc: "إعادة تأهيل وتجديد شامل للواجهات والمساحات الداخلية والدهانات والجبس والأرضيات حسب حالة الموقع.",
     href: "/villa-renovation-riyadh",
     icon: Sparkles,
+    image: serviceImage(
+      "finishing",
+      2,
+      "/projects/finishing/finishing-03.webp",
+    ),
+    tag: "تجديد وإعادة تأهيل",
   },
   {
     title: "تشطيب شقق",
-    desc: "حلول عملية ومرتبة لتشطيب الشقق وفق احتياجك وميزانيتك.",
+    desc: "حلول عملية ومنظمة لتشطيب الشقق الجديدة أو إعادة تجهيز الشقق القائمة وفق الاحتياج والميزانية.",
     href: "/apartment-finishing-riyadh",
     icon: Paintbrush2,
+    image: serviceImage(
+      "finishing",
+      3,
+      "/projects/finishing/finishing-04.webp",
+    ),
+    tag: "سكني وتسليم مفتاح",
   },
   {
     title: "شركة مقاولات بالرياض",
-    desc: "تنفيذ وإدارة مشاريع بناء وتشطيب وتسليم مفتاح داخل الرياض.",
+    desc: "إدارة وتنفيذ مشاريع البناء والتشطيب والترميم والتسليم المفتاح تحت مسؤولية جهة واحدة.",
     href: "/construction-company-riyadh",
     icon: Hammer,
+    image: serviceImage(
+      "concrete",
+      1,
+      "/projects/concrete/concrete-2.webp",
+    ),
+    tag: "إدارة متكاملة للمشروع",
   },
   {
     title: "مقاول حي الملقا",
-    desc: "تغطية حي الملقا وما حوله بسرعة معاينة وتنفيذ منظم.",
+    desc: "خدمة معاينة وتنفيذ منظم في حي الملقا وما حوله ضمن نطاق عملنا داخل أحياء الرياض.",
     href: "/contractor-almalqa-riyadh",
     icon: MapPin,
+    image: serviceImage(
+      "finishing",
+      4,
+      "/projects/finishing/finishing-05.webp",
+    ),
+    tag: "تغطية محلية داخل الرياض",
   },
 ];
 
@@ -469,41 +518,241 @@ export default function Home() {
       </section>
 
       {/* الخدمات */}
-      <section id="services" className="section-padding bg-white">
-        <div className="container-custom px-4">
-          <div className="text-center mb-10">
-            <span className="inline-block bg-gold/10 text-gold-dark px-4 py-2 rounded-full text-sm font-semibold mb-4">
-              خدماتنا
+      <section
+        id="services"
+        className="relative overflow-hidden bg-[#070b16] py-20 sm:py-24 text-white"
+      >
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <div className="absolute -top-32 right-[8%] h-80 w-80 rounded-full bg-gold/15 blur-3xl motion-safe:animate-pulse" />
+          <div className="absolute -bottom-40 left-[4%] h-96 w-96 rounded-full bg-blue-500/10 blur-3xl" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.05),transparent_32%)]" />
+        </div>
+
+        <div className="container-custom relative z-10 px-4">
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-gold/25 bg-gold/10 px-4 py-2 text-sm font-bold text-gold">
+              <Sparkles className="h-4 w-4" />
+              خدماتنا الرئيسية
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3">
-              خدمات <span className="text-gold">رئيسية</span> واضحة
+
+            <h2 className="mt-5 text-3xl font-extrabold leading-tight sm:text-4xl lg:text-5xl">
+              كل ما يحتاجه مشروعك
+              <span className="block text-gold">تحت إدارة واحدة</span>
             </h2>
+
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-white/65 sm:text-base">
+              من بناء العظم إلى التشطيب والترميم والتسليم المفتاح، نرتب لك نطاق
+              العمل ونربط كل مرحلة بما بعدها حتى يكون التنفيذ أوضح وأسهل للمتابعة.
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {SERVICES.map((s, i) => (
-              <div
-                key={i}
-                className="bg-white rounded-3xl p-6 shadow-sm hover:shadow-md transition border border-black/5"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-11 h-11 rounded-2xl bg-gold/15 flex items-center justify-center">
-                    <s.icon className="w-5 h-5 text-gold" />
-                  </div>
-                  <h3 className="text-lg font-extrabold text-gray-900">
-                    {s.title}
-                  </h3>
+          <div className="mt-12 grid gap-5 lg:grid-cols-12">
+            {/* الخدمة الرئيسية */}
+            <Link
+              to={SERVICES[1].href}
+              className="group relative min-h-[440px] overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 shadow-2xl lg:col-span-7"
+              aria-label="التعرف على خدمة تشطيب الفلل"
+            >
+              <img
+                src={SERVICES[1].image}
+                alt="تشطيب فلل في الرياض - بنيان الهرم للمقاولات"
+                className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050812] via-[#050812]/78 to-black/10" />
+              <div className="absolute inset-0 bg-gradient-to-l from-black/20 via-transparent to-gold/10 opacity-0 transition duration-500 group-hover:opacity-100" />
+
+              <div className="relative flex h-full min-h-[440px] flex-col justify-end p-6 sm:p-9">
+                <div className="mb-auto flex items-center justify-between gap-3">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-gold/35 bg-black/45 px-3 py-1.5 text-xs font-bold text-gold backdrop-blur-md">
+                    <Sparkles className="h-4 w-4" />
+                    {SERVICES[1].tag}
+                  </span>
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md transition group-hover:bg-gold group-hover:text-black">
+                    <Paintbrush2 className="h-5 w-5" />
+                  </span>
                 </div>
 
-                <p className="mt-3 text-gray-600 leading-relaxed">{s.desc}</p>
+                <div className="max-w-xl">
+                  <p className="text-sm font-bold text-gold">من العظم إلى الجاهزية</p>
+                  <h3 className="mt-2 text-3xl font-extrabold sm:text-4xl">
+                    تشطيب فلل وتسليم مفتاح
+                  </h3>
+                  <p className="mt-4 max-w-lg leading-7 text-white/75">
+                    {SERVICES[1].desc}
+                  </p>
 
-                <div className="mt-5">
-                  <Button asChild variant="outline" className="hover:bg-black/5">
-                    <Link to={s.href}>اعرف أكثر</Link>
-                  </Button>
+                  <div className="mt-5 flex flex-wrap gap-2 text-xs font-bold text-white/80">
+                    {["كهرباء وسباكة", "جبس ودهانات", "أرضيات وأبواب", "إشراف وتسليم"].map(
+                      (item) => (
+                        <span
+                          key={item}
+                          className="rounded-full border border-white/10 bg-white/10 px-3 py-1.5 backdrop-blur-sm"
+                        >
+                          {item}
+                        </span>
+                      ),
+                    )}
+                  </div>
+
+                  <div className="mt-7 inline-flex items-center gap-2 font-extrabold text-gold">
+                    استعرض خدمة تشطيب الفلل
+                    <ArrowLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
+                  </div>
                 </div>
               </div>
+            </Link>
+
+            {/* حاسبة السعر */}
+            <div className="relative overflow-hidden rounded-[2rem] border border-gold/20 bg-gradient-to-b from-[#14182a] to-[#090c17] p-6 shadow-2xl lg:col-span-5 sm:p-8">
+              <div className="pointer-events-none absolute -left-16 -top-16 h-48 w-48 rounded-full bg-gold/15 blur-3xl" />
+
+              <div className="relative">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <span className="text-sm font-bold text-gold">ابدأ من الميزانية</span>
+                    <h3 className="mt-2 text-2xl font-extrabold sm:text-3xl">
+                      اعرف نطاق تكلفة التشطيب قبل المعاينة
+                    </h3>
+                  </div>
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gold text-black shadow-[0_0_30px_rgba(245,170,0,0.25)]">
+                    <Calculator className="h-5 w-5" />
+                  </div>
+                </div>
+
+                <p className="mt-4 leading-7 text-white/65">
+                  غيّر المساحة واختر المستوى المناسب لتحصل على تقدير مبدئي يساعدك
+                  على اتخاذ القرار قبل طلب عرض السعر التفصيلي.
+                </p>
+
+                <div className="mt-7 grid grid-cols-3 gap-2">
+                  {["تجاري", "قياسي", "فاخر"].map((level, index) => (
+                    <div
+                      key={level}
+                      className={[
+                        "rounded-2xl border px-3 py-4 text-center",
+                        index === 1
+                          ? "border-gold/50 bg-gold/[0.12] text-gold"
+                          : "border-white/10 bg-white/[0.04] text-white/70",
+                      ].join(" ")}
+                    >
+                      <div className="text-xs opacity-70">مستوى</div>
+                      <div className="mt-1 font-extrabold">{level}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <Button
+                  asChild
+                  size="lg"
+                  className="mt-7 w-full bg-gold font-extrabold text-black hover:bg-gold/90"
+                >
+                  <Link to={SERVICES[2].href}>
+                    افتح حاسبة سعر التشطيب
+                    <ArrowLeft className="mr-2 h-5 w-5" />
+                  </Link>
+                </Button>
+
+                <button
+                  type="button"
+                  onClick={() => window.open(WA_LINK, "_blank")}
+                  className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 px-4 py-3 text-sm font-bold text-white/80 transition hover:border-gold/40 hover:text-gold"
+                >
+                  <Phone className="h-4 w-4" />
+                  استفسار وتسعير مباشر عبر واتساب
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* الخدمات الداعمة */}
+          <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {[SERVICES[0], SERVICES[3], SERVICES[4], SERVICES[5]].map((service) => (
+              <Link
+                key={service.href}
+                to={service.href}
+                className="group relative min-h-[275px] overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.04]"
+              >
+                <img
+                  src={service.image}
+                  alt={`${service.title} في الرياض - بنيان الهرم للمقاولات`}
+                  className="absolute inset-0 h-full w-full object-cover opacity-25 grayscale transition duration-700 group-hover:scale-105 group-hover:opacity-50 group-hover:grayscale-0"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#070b16] via-[#070b16]/82 to-[#070b16]/35" />
+
+                <div className="relative flex min-h-[275px] flex-col p-5">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="rounded-full border border-white/10 bg-black/25 px-3 py-1 text-xs font-bold text-white/65 backdrop-blur-sm">
+                      {service.tag}
+                    </span>
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10 text-gold backdrop-blur-md transition group-hover:bg-gold group-hover:text-black">
+                      <service.icon className="h-5 w-5" />
+                    </div>
+                  </div>
+
+                  <div className="mt-auto">
+                    <h3 className="text-xl font-extrabold">{service.title}</h3>
+                    <p className="mt-3 text-sm leading-6 text-white/65">
+                      {service.desc}
+                    </p>
+                    <div className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-gold">
+                      تفاصيل الخدمة
+                      <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+                    </div>
+                  </div>
+                </div>
+              </Link>
             ))}
+          </div>
+
+          {/* التغطية المحلية وروابط التحويل */}
+          <div className="mt-5 grid gap-4 lg:grid-cols-[1.2fr_1fr]">
+            <Link
+              to={SERVICES[6].href}
+              className="group flex flex-col justify-between gap-5 rounded-[1.75rem] border border-white/10 bg-white/[0.045] p-5 transition hover:border-gold/35 sm:flex-row sm:items-center sm:p-6"
+            >
+              <div className="flex items-start gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gold/15 text-gold">
+                  <MapPin className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-gold">نخدم أحياء الرياض</p>
+                  <h3 className="mt-1 text-xl font-extrabold">مقاول حي الملقا وما حوله</h3>
+                  <p className="mt-2 text-sm leading-6 text-white/60">
+                    معاينة وتنفيذ منظم للمشاريع السكنية والتجارية ضمن نطاق عملنا
+                    داخل الرياض.
+                  </p>
+                </div>
+              </div>
+              <span className="inline-flex items-center gap-2 font-extrabold text-gold">
+                صفحة الملقا
+                <ArrowLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
+              </span>
+            </Link>
+
+            <div className="flex flex-col justify-center rounded-[1.75rem] border border-gold/20 bg-gold p-5 text-black sm:p-6">
+              <p className="text-sm font-bold opacity-70">شاهد قبل أن تقرر</p>
+              <h3 className="mt-1 text-xl font-extrabold">مشاريع حقيقية داخل الرياض</h3>
+              <p className="mt-2 text-sm leading-6 opacity-70">
+                استعرض الصور ومواقع المشاريع ثم تواصل معنا لمناقشة مشروعك.
+              </p>
+              <div className="mt-5 flex flex-col gap-2 sm:flex-row">
+                <Link
+                  to="/projects-in-riyadh"
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-black px-4 py-3 text-sm font-extrabold text-white transition hover:bg-black/85"
+                >
+                  <MapPin className="h-4 w-4" />
+                  خريطة المشاريع
+                </Link>
+                <Link
+                  to="/projects"
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-black/20 px-4 py-3 text-sm font-extrabold transition hover:bg-black/10"
+                >
+                  معرض الأعمال
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
