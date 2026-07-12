@@ -576,7 +576,6 @@ export default function App() {
               path="/engineering-insights/when-low-construction-price-becomes-red-flag"
               element={<WhenLowConstructionPriceBecomesRedFlag />}
             />
-
             {/* Construction Stages */}
 
             <Route
