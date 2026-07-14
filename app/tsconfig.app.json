@@ -14,8 +14,9 @@
       "@/*": ["./src/*"]
     },
 
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
+"moduleResolution": "bundler",
+"resolveJsonModule": true,
+"allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,

@@ -154,7 +154,7 @@ const RIYADH_PROJECTS_MAP_IMAGES = [
       "/projects/finishing/finishing-06.webp",
       "/projects/finishing/finishing-09.webp",
       "/projects/finishing/finishing-10.webp",
-      "/vedio cover/befor-after.webp",
+      "/video-covers/roof-finishing-before-after.webp",
     ],
   },
   {
@@ -227,7 +227,7 @@ function escapeXml(str) {
 function toAbsoluteImageUrl(src) {
   const absoluteUrl = src.startsWith("http") ? src : `${SITE_URL}${src}`;
 
-  // مهم للمسارات التي فيها فراغ مثل /vedio cover/
+  // مهم للمسارات التي فيها فراغ مثل 
   return absoluteUrl.replace(/ /g, "%20");
 }
 

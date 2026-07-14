@@ -312,7 +312,7 @@ const DISTRICTS: DistrictPin[] = [
         hasVideo: true,
         videoUrl: "https://youtube.com/shorts/re44BUTtHUk?feature=share",
         videoEmbedUrl: "https://www.youtube.com/embed/re44BUTtHUk",
-        videoCover: "/vedio cover/befor-after.webp",
+        videoCover: "/video-covers/roof-finishing-before-after.webp",
         href: "/projects",
         description:
           "تنفيذ أعمال تشطيب شقة سكنية مع إضافة ملحق علوي في حي الياسمين بالرياض، ضمن نطاق شمل تحسين المساحات الداخلية وتجهيز الملحق العلوي بما يناسب الاستخدام السكني.",
