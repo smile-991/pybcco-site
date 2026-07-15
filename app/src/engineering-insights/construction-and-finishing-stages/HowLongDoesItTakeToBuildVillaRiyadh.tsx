@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import SeoHead from "@/components/SeoHead";
 import { Link } from "react-router-dom";
 import {
@@ -48,6 +49,246 @@ const ARTICLE_SCHEMA = {
     url: SITE_URL,
   },
 };
+
+
+const VILLA_TIMELINE_STAGES = [
+  {
+    id: 1,
+    startDay: 0,
+    endDay: 30,
+    title: "القواعد وأعمدة الدور الأرضي",
+    shortTitle: "القواعد والأعمدة",
+    image: "/images/timeline/villa-stage-01.webp",
+    description:
+      "أعمال الحفر وصب القواعد والعزل وتمديدات ما تحت البلاطة، ثم صب أعمدة الدور الأرضي.",
+  },
+  {
+    id: 2,
+    startDay: 31,
+    endDay: 60,
+    title: "اكتمال الهيكل الإنشائي",
+    shortTitle: "الهيكل الإنشائي",
+    image: "/images/timeline/villa-stage-02.webp",
+    description:
+      "تنفيذ الأعمدة والجسور والأسقف حتى اكتمال الهيكل الخرساني الأساسي للفيلا.",
+  },
+  {
+    id: 3,
+    startDay: 61,
+    endDay: 90,
+    title: "العظم والبلوك",
+    shortTitle: "العظم والبلوك",
+    image: "/images/timeline/villa-stage-03.webp",
+    description:
+      "بناء الجدران الداخلية والخارجية وتحديد فتحات الأبواب والنوافذ حتى يظهر الشكل الكامل للفيلا.",
+  },
+  {
+    id: 4,
+    startDay: 91,
+    endDay: 120,
+    title: "التمديدات واللياسة والعزل",
+    shortTitle: "التمديدات والعزل",
+    image: "/images/timeline/villa-stage-04.webp",
+    description:
+      "تنفيذ تمديدات الكهرباء والسباكة، وأعمال اللياسة والعزل المائي والحراري بحسب متطلبات المشروع.",
+  },
+  {
+    id: 5,
+    startDay: 121,
+    endDay: 150,
+    title: "التشطيبات الداخلية",
+    shortTitle: "التشطيبات",
+    image: "/images/timeline/villa-stage-05.webp",
+    description:
+      "أعمال الأرضيات والجبس والدهانات والأبواب والتجهيزات الداخلية واللمسات النهائية.",
+  },
+  {
+    id: 6,
+    startDay: 151,
+    endDay: 180,
+    title: "الواجهة والتسليم",
+    shortTitle: "الواجهة والتسليم",
+    image: "/images/timeline/villa-stage-06.webp",
+    description:
+      "استكمال الواجهة والإنارة والاختبارات والتنظيف والملاحظات النهائية قبل تسليم الفيلا.",
+  },
+] as const;
+
+function VillaConstructionTimeline() {
+  const [activeStageIndex, setActiveStageIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+  const activeStage = VILLA_TIMELINE_STAGES[activeStageIndex];
+  const progress =
+    ((activeStage.endDay - VILLA_TIMELINE_STAGES[0].startDay) / 180) * 100;
+
+  useEffect(() => {
+    VILLA_TIMELINE_STAGES.forEach((stage) => {
+      const image = new Image();
+      image.src = stage.image;
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+
+    const timer = window.setInterval(() => {
+      setActiveStageIndex(
+        (currentIndex) =>
+          (currentIndex + 1) % VILLA_TIMELINE_STAGES.length,
+      );
+    }, 4500);
+
+    return () => window.clearInterval(timer);
+  }, [isAutoPlaying]);
+
+  const selectStage = (index: number) => {
+    setActiveStageIndex(index);
+    setIsAutoPlaying(false);
+  };
+
+  return (
+    <section
+      aria-labelledby="villa-timeline-title"
+      className="border-b border-zinc-100 bg-white"
+    >
+      <div className="mx-auto max-w-5xl px-4 py-8 md:px-6 md:py-12">
+        <div className="overflow-hidden rounded-[30px] border border-zinc-100 bg-white shadow-[0_18px_55px_rgba(0,0,0,0.07)]">
+          <div className="border-b border-zinc-100 bg-gradient-to-l from-[#fff8e7] via-white to-white px-5 py-6 md:px-8 md:py-8">
+            <div className="inline-flex items-center rounded-full border border-[#ecdca9] bg-white/80 px-4 py-2 text-sm font-bold text-[#8a6400]">
+              رحلة بناء فيلا خلال 180 يومًا
+            </div>
+
+            <h2
+              id="villa-timeline-title"
+              className="mt-4 text-2xl font-extrabold leading-tight md:text-4xl"
+            >
+              شاهد تطور الفيلا مرحلة بمرحلة
+            </h2>
+
+            <p className="mt-3 max-w-3xl text-[15px] leading-8 text-zinc-600 md:text-base">
+              نموذج بصري مبسط لفيلا متوسطة من دورين وملحق، يبدأ بعد جاهزية
+              المخططات والتصاريح، مع انتظام القرارات والتوريد وعدم وجود تغييرات
+              مؤثرة أثناء التنفيذ.
+            </p>
+          </div>
+
+          <div className="relative bg-zinc-950">
+            <div className="aspect-[16/10] overflow-hidden md:aspect-[16/8.8]">
+              <img
+                key={activeStage.image}
+                src={activeStage.image}
+                alt={`المرحلة ${activeStage.id} من بناء فيلا في الرياض: ${activeStage.title}`}
+                width="1600"
+                height="900"
+                loading={activeStageIndex === 0 ? "eager" : "lazy"}
+                decoding="async"
+                className="h-full w-full object-cover motion-safe:animate-[fadeIn_500ms_ease-out]"
+              />
+            </div>
+
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-5 pb-5 pt-20 text-white md:px-8 md:pb-7">
+              <div className="flex flex-wrap items-end justify-between gap-4">
+                <div>
+                  <div className="mb-2 inline-flex rounded-full bg-[#f7bf00] px-3 py-1.5 text-xs font-extrabold text-black md:text-sm">
+                    المرحلة {activeStage.id} من {VILLA_TIMELINE_STAGES.length}
+                  </div>
+                  <h3 className="text-xl font-extrabold md:text-3xl">
+                    {activeStage.title}
+                  </h3>
+                  <p className="mt-2 max-w-2xl text-sm leading-7 text-zinc-200 md:text-base">
+                    {activeStage.description}
+                  </p>
+                </div>
+
+                <div className="shrink-0 rounded-2xl border border-white/20 bg-black/35 px-4 py-3 text-center backdrop-blur-sm">
+                  <div className="text-xs text-zinc-300">المدة التقديرية</div>
+                  <div className="mt-1 text-lg font-extrabold text-[#f7bf00]">
+                    اليوم {activeStage.startDay}–{activeStage.endDay}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="px-5 py-6 md:px-8 md:py-8">
+            <div className="relative">
+              <div className="h-2 overflow-hidden rounded-full bg-zinc-200">
+                <div
+                  className="h-full rounded-full bg-[#f7bf00] transition-[width] duration-500 ease-out"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+
+              <div className="mt-3 flex justify-between text-xs font-bold text-zinc-500 md:text-sm">
+                <span>اليوم 0</span>
+                <span>اليوم 30</span>
+                <span>اليوم 60</span>
+                <span>اليوم 90</span>
+                <span>اليوم 120</span>
+                <span>اليوم 150</span>
+                <span>اليوم 180</span>
+              </div>
+            </div>
+
+            <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+              {VILLA_TIMELINE_STAGES.map((stage, index) => {
+                const isActive = index === activeStageIndex;
+
+                return (
+                  <button
+                    key={stage.id}
+                    type="button"
+                    onClick={() => selectStage(index)}
+                    aria-pressed={isActive}
+                    className={`rounded-2xl border p-3 text-right transition md:p-4 ${
+                      isActive
+                        ? "border-[#f7bf00] bg-[#fff8e7] shadow-sm"
+                        : "border-zinc-200 bg-white hover:border-[#e0c16f] hover:bg-zinc-50"
+                    }`}
+                  >
+                    <span
+                      className={`inline-flex h-8 w-8 items-center justify-center rounded-full text-sm font-extrabold ${
+                        isActive
+                          ? "bg-[#f7bf00] text-black"
+                          : "bg-zinc-900 text-[#f7bf00]"
+                      }`}
+                    >
+                      {stage.id}
+                    </span>
+                    <span className="mt-3 block text-sm font-extrabold leading-6 text-zinc-900">
+                      {stage.shortTitle}
+                    </span>
+                    <span className="mt-1 block text-xs text-zinc-500">
+                      حتى اليوم {stage.endDay}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-[#ecdca9] bg-[#fff8e7] p-4 md:flex-row md:items-center md:justify-between md:p-5">
+              <p className="text-sm leading-7 text-zinc-700">
+                <strong className="text-[#8a6400]">ملاحظة:</strong> المدة
+                تقريبية لمشروع منظم، وقد تختلف حسب مساحة الفيلا والبدروم ومستوى
+                التشطيب وسرعة الاعتمادات والتوريد.
+              </p>
+
+              <button
+                type="button"
+                onClick={() => setIsAutoPlaying((current) => !current)}
+                className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full border border-zinc-300 bg-white px-5 py-3 text-sm font-bold text-zinc-900 transition hover:border-[#f7bf00] hover:text-[#8a6400]"
+              >
+                <TimerReset className="h-4 w-4" />
+                {isAutoPlaying ? "إيقاف العرض التلقائي" : "تشغيل العرض التلقائي"}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function HowLongDoesItTakeToBuildVillaRiyadh() {
 
@@ -133,6 +374,8 @@ export default function HowLongDoesItTakeToBuildVillaRiyadh() {
           </div>
         </div>
       </section>
+
+      <VillaConstructionTimeline />
 
       <section className="mx-auto max-w-4xl px-4 py-10 md:px-6 md:py-14">
         <div className="grid gap-6 lg:grid-cols-[1fr_280px]">

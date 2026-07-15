@@ -223,6 +223,35 @@ const VIDEO_LIBRARY_IMAGES = videos.map((video) => ({
   src: video.cover,
 }));
 
+
+// 🏗️ صور الخط الزمني لمراحل بناء الفيلا
+const VILLA_CONSTRUCTION_TIMELINE_IMAGES = [
+  {
+    src: "/images/timeline/villa-stage-01.webp",
+    alt: "مرحلة القواعد وأعمدة الدور الأرضي ضمن بناء فيلا في الرياض",
+  },
+  {
+    src: "/images/timeline/villa-stage-02.webp",
+    alt: "مرحلة اكتمال الهيكل الإنشائي لفيلا في الرياض",
+  },
+  {
+    src: "/images/timeline/villa-stage-03.webp",
+    alt: "مرحلة العظم والبلوك ضمن بناء فيلا في الرياض",
+  },
+  {
+    src: "/images/timeline/villa-stage-04.webp",
+    alt: "مرحلة التمديدات واللياسة والعزل لفيلا في الرياض",
+  },
+  {
+    src: "/images/timeline/villa-stage-05.webp",
+    alt: "مرحلة التشطيبات الداخلية لفيلا في الرياض",
+  },
+  {
+    src: "/images/timeline/villa-stage-06.webp",
+    alt: "مرحلة الواجهة والتسليم النهائي لفيلا في الرياض",
+  },
+];
+
 function escapeXml(str) {
   return String(str)
     .replace(/&/g, "&amp;")
@@ -276,11 +305,17 @@ const decorShipboardUrl = buildUrlBlock(`${SITE_URL}/decor/shipboard`, FREE_DECO
 const offersUrl = buildUrlBlock(`${SITE_URL}/offers`, CONSTRUCTION_OFFERS_IMAGES);
 const videosUrl = buildUrlBlock(`${SITE_URL}/videos`, VIDEO_LIBRARY_IMAGES);
 
+const villaConstructionTimelineUrl = buildUrlBlock(
+  `${SITE_URL}/engineering-insights/construction-and-finishing-stages/how-long-does-it-take-to-build-villa-riyadh`,
+  VILLA_CONSTRUCTION_TIMELINE_IMAGES
+);
+
 const urls = [
   galleryUrls,
   projectsMapUrl,
   offersUrl,
   videosUrl,
+  villaConstructionTimelineUrl,
   decorUrl,
   decorWoodUrl,
   decorMarbleUrl,
