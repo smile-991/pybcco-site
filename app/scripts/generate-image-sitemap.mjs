@@ -13,6 +13,9 @@ const OUTPUTS = [
 const galleryPath = path.join(process.cwd(), "src", "data", "gallery.json");
 const gallery = JSON.parse(fs.readFileSync(galleryPath, "utf-8"));
 
+const videosPath = path.join(process.cwd(), "src", "data", "videos.json");
+const videos = JSON.parse(fs.readFileSync(videosPath, "utf-8"));
+
 // 🧠 توزيع الصفحات
 const PAGE_MAP = {
   finishing: `${SITE_URL}/villa-finishing-riyadh`,
@@ -215,6 +218,11 @@ const FREE_DECOR_DESIGN_IMAGES = [
   },
 ];
 
+// 🎬 أغلفة مكتبة الفيديو من المصدر الموحد
+const VIDEO_LIBRARY_IMAGES = videos.map((video) => ({
+  src: video.cover,
+}));
+
 function escapeXml(str) {
   return String(str)
     .replace(/&/g, "&amp;")
@@ -226,21 +234,16 @@ function escapeXml(str) {
 
 function toAbsoluteImageUrl(src) {
   const absoluteUrl = src.startsWith("http") ? src : `${SITE_URL}${src}`;
-
-  // مهم للمسارات التي فيها فراغ مثل 
-  return absoluteUrl.replace(/ /g, "%20");
+  return encodeURI(absoluteUrl);
 }
 
 function buildImageTags(items = []) {
   return items
     .map((item) => {
-      const title = escapeXml(item.alt);
       const imageUrl = escapeXml(toAbsoluteImageUrl(item.src));
 
       return `    <image:image>
       <image:loc>${imageUrl}</image:loc>
-      <image:title>${title}</image:title>
-      <image:caption>${title}</image:caption>
     </image:image>`;
     })
     .join("\n");
@@ -271,11 +274,13 @@ const decorWoodUrl = buildUrlBlock(`${SITE_URL}/decor/wood`, FREE_DECOR_DESIGN_I
 const decorMarbleUrl = buildUrlBlock(`${SITE_URL}/decor/marble`, FREE_DECOR_DESIGN_IMAGES);
 const decorShipboardUrl = buildUrlBlock(`${SITE_URL}/decor/shipboard`, FREE_DECOR_DESIGN_IMAGES);
 const offersUrl = buildUrlBlock(`${SITE_URL}/offers`, CONSTRUCTION_OFFERS_IMAGES);
+const videosUrl = buildUrlBlock(`${SITE_URL}/videos`, VIDEO_LIBRARY_IMAGES);
 
 const urls = [
   galleryUrls,
   projectsMapUrl,
   offersUrl,
+  videosUrl,
   decorUrl,
   decorWoodUrl,
   decorMarbleUrl,

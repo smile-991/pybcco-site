@@ -3,12 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build && node scripts/prerender-projects.mjs && node scripts/generate-image-sitemap.mjs",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
+"scripts": {
+  "dev": "vite",
+  "build": "tsc -b && vite build && node scripts/prerender-projects.mjs && node scripts/generate-image-sitemap.mjs && node scripts/generate-video-sitemap.mjs",
+  "lint": "eslint .",
+  "preview": "vite preview"
+},
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-accordion": "^1.2.12",

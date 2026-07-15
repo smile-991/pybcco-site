@@ -8,7 +8,10 @@ const PAGE_URL = `${SITE_URL}/videos`;
 const currentFile = fileURLToPath(import.meta.url);
 const projectRoot = path.resolve(path.dirname(currentFile), "..");
 const videosFile = path.join(projectRoot, "src", "data", "videos.json");
-const outputFile = path.join(projectRoot, "public", "video-sitemap.xml");
+const outputFiles = [
+  path.join(projectRoot, "public", "video-sitemap.xml"),
+  path.join(projectRoot, "dist", "video-sitemap.xml"),
+];
 
 function escapeXml(value) {
   return String(value)
@@ -105,5 +108,26 @@ ${videoEntries}
 </urlset>
 `;
 
-await writeFile(outputFile, xml, "utf8");
-console.log(`✓ Generated video sitemap with ${videos.length} videos: ${outputFile}`);
+for (const outputFile of outputFiles) {
+  const outputDir = path.dirname(outputFile);
+
+  // لا ننشئ dist من الصفر؛ نكتب داخله فقط إذا كان موجودًا بعد vite build.
+  try {
+    await writeFile(outputFile, xml, "utf8");
+  } catch (error) {
+    if (
+      outputFile.includes(`${path.sep}dist${path.sep}`) &&
+      error instanceof Error &&
+      "code" in error &&
+      error.code === "ENOENT"
+    ) {
+      continue;
+    }
+
+    throw error;
+  }
+}
+
+console.log(
+  `✓ Generated video sitemap with ${videos.length} videos in public and dist when available`,
+);
