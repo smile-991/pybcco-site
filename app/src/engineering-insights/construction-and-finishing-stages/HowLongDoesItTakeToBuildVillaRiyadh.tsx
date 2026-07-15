@@ -123,13 +123,6 @@ function VillaConstructionTimeline() {
     ((activeStage.endDay - VILLA_TIMELINE_STAGES[0].startDay) / 180) * 100;
 
   useEffect(() => {
-    VILLA_TIMELINE_STAGES.forEach((stage) => {
-      const image = new Image();
-      image.src = stage.image;
-    });
-  }, []);
-
-  useEffect(() => {
     if (!isAutoPlaying) return;
 
     const timer = window.setInterval(() => {
@@ -174,16 +167,16 @@ function VillaConstructionTimeline() {
           </div>
 
           <div className="relative bg-zinc-950">
-            <div className="aspect-[16/10] overflow-hidden md:aspect-[16/8.8]">
+            <div className="aspect-[16/10] overflow-hidden md:aspect-video">
               <img
                 key={activeStage.image}
                 src={activeStage.image}
                 alt={`المرحلة ${activeStage.id} من بناء فيلا في الرياض: ${activeStage.title}`}
                 width="1600"
                 height="900"
-                loading={activeStageIndex === 0 ? "eager" : "lazy"}
+                loading="eager"
                 decoding="async"
-                className="h-full w-full object-cover motion-safe:animate-[fadeIn_500ms_ease-out]"
+                className="h-full w-full object-cover transition-opacity duration-300"
               />
             </div>
 
