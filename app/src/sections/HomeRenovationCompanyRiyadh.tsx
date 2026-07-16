@@ -1,6 +1,26 @@
-import { Button } from "@/components/ui/button";
 import SeoHead from "@/components/SeoHead";
+import RelatedVideoSection from "@/components/video/RelatedVideoSection";
+import { Button } from "@/components/ui/button";
+import {
+  getVideoBySlug,
+  getYoutubeEmbedUrl,
+  type VideoItem,
+} from "@/data/videos";
 import { Link } from "react-router-dom";
+
+function requireVideo(slug: string): VideoItem {
+  const video = getVideoBySlug(slug);
+
+  if (!video) {
+    throw new Error(`تعذر العثور على الفيديو: ${slug}`);
+  }
+
+  return video;
+}
+
+const facadeRenovationVideo = requireVideo(
+  "facade-renovation-before-after",
+);
 
 const HOME_RENOVATION_FAQS = [
   {
@@ -53,6 +73,32 @@ export default function HomeRenovationCompanyRiyadh() {
     },
     {
       "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "@id": `https://pybcco.com/videos/${facadeRenovationVideo.slug}#video`,
+      name: facadeRenovationVideo.title,
+      description: facadeRenovationVideo.description,
+      thumbnailUrl: [
+        `https://pybcco.com${facadeRenovationVideo.cover}`,
+      ],
+      uploadDate: facadeRenovationVideo.uploadDate,
+      duration: facadeRenovationVideo.duration,
+      embedUrl: getYoutubeEmbedUrl(
+        facadeRenovationVideo.youtubeId,
+      ),
+      url: `https://pybcco.com/videos/${facadeRenovationVideo.slug}`,
+      inLanguage: "ar",
+      isFamilyFriendly: true,
+      keywords: facadeRenovationVideo.keywords.join(", "),
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": canonical,
+      },
+      publisher: {
+        "@id": "https://pybcco.com/#organization",
+      },
+    },
+    {
+      "@context": "https://schema.org",
       "@type": "FAQPage",
       mainEntity: HOME_RENOVATION_FAQS.map((x) => ({
         "@type": "Question",
@@ -71,6 +117,7 @@ export default function HomeRenovationCompanyRiyadh() {
         ogImage={ogImage}
         ogType="website"
         twitterCard="summary_large_image"
+        robots="index,follow,max-image-preview:large,max-video-preview:-1"
         jsonLd={jsonLd}
       />
 
@@ -140,6 +187,14 @@ export default function HomeRenovationCompanyRiyadh() {
             </div>
           </section>
         </div>
+      </section>
+
+      <section className="container mx-auto max-w-6xl px-4">
+        <RelatedVideoSection
+          video={facadeRenovationVideo}
+          heading="شاهد ترميم الواجهة قبل وبعد التنفيذ"
+          description="فيديو قصير يوضح أعمال معالجة وتجهيز وتجديد واجهة مبنى في الرياض، ويبين الفرق البصري بعد تنفيذ أعمال الترميم بصورة منظمة."
+        />
       </section>
 
       {/* PROJECT TRACKING SYSTEM LINK */}
