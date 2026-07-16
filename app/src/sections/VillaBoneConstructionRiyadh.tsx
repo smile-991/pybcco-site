@@ -1,6 +1,26 @@
-import { Button } from "@/components/ui/button";
 import SeoHead from "@/components/SeoHead";
+import RelatedVideoSection from "@/components/video/RelatedVideoSection";
+import { Button } from "@/components/ui/button";
+import {
+  getVideoBySlug,
+  getYoutubeEmbedUrl,
+  type VideoItem,
+} from "@/data/videos";
 import { Link } from "react-router-dom";
+
+function requireVideo(slug: string): VideoItem {
+  const video = getVideoBySlug(slug);
+
+  if (!video) {
+    throw new Error(`تعذر العثور على الفيديو: ${slug}`);
+  }
+
+  return video;
+}
+
+const constructionStagesVideo = requireVideo(
+  "construction-stages-riyadh",
+);
 
 const BONE_FAQS = [
   {
@@ -53,6 +73,32 @@ export default function VillaBoneConstructionRiyadh() {
     },
     {
       "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "@id": `https://pybcco.com/videos/${constructionStagesVideo.slug}#video`,
+      name: constructionStagesVideo.title,
+      description: constructionStagesVideo.description,
+      thumbnailUrl: [
+        `https://pybcco.com${constructionStagesVideo.cover}`,
+      ],
+      uploadDate: constructionStagesVideo.uploadDate,
+      duration: constructionStagesVideo.duration,
+      embedUrl: getYoutubeEmbedUrl(
+        constructionStagesVideo.youtubeId,
+      ),
+      url: `https://pybcco.com/videos/${constructionStagesVideo.slug}`,
+      inLanguage: "ar",
+      isFamilyFriendly: true,
+      keywords: constructionStagesVideo.keywords.join(", "),
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": canonical,
+      },
+      publisher: {
+        "@id": "https://pybcco.com/#organization",
+      },
+    },
+    {
+      "@context": "https://schema.org",
       "@type": "FAQPage",
       mainEntity: BONE_FAQS.map((x) => ({
         "@type": "Question",
@@ -71,6 +117,7 @@ export default function VillaBoneConstructionRiyadh() {
         ogImage={ogImage}
         ogType="website"
         twitterCard="summary_large_image"
+        robots="index,follow,max-image-preview:large,max-video-preview:-1"
         jsonLd={jsonLd}
       />
 
@@ -124,6 +171,14 @@ export default function VillaBoneConstructionRiyadh() {
             </Button>
           </div>
         </div>
+      </section>
+
+      <section className="container mx-auto max-w-6xl px-4">
+        <RelatedVideoSection
+          video={constructionStagesVideo}
+          heading="شاهد جانبًا من مراحل تنفيذ البناء خطوة بخطوة"
+          description="فيديو مختصر يعرض تسلسلًا من أعمال التنفيذ والتجهيز داخل مشروع سكني في الرياض، ويوضح أهمية التنظيم والمتابعة خلال مراحل البناء."
+        />
       </section>
 
       {/* WHAT INCLUDED */}
