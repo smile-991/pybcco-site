@@ -1,8 +1,26 @@
 import SeoHead from "@/components/SeoHead"
+import RelatedVideoSection from "@/components/video/RelatedVideoSection"
 import { Button } from "@/components/ui/button"
+import {
+  getVideoBySlug,
+  getYoutubeEmbedUrl,
+  type VideoItem,
+} from "@/data/videos"
 import { Link } from "react-router-dom"
 
 const SITE = "https://pybcco.com"
+
+function requireVideo(slug: string): VideoItem {
+  const video = getVideoBySlug(slug)
+
+  if (!video) {
+    throw new Error(`تعذر العثور على الفيديو: ${slug}`)
+  }
+
+  return video
+}
+
+const trackingVideo = requireVideo("project-tracking-system")
 
 export default function ProjectTrackingSystemRiyadh() {
   const serviceSchema = {
@@ -22,6 +40,31 @@ export default function ProjectTrackingSystemRiyadh() {
     description:
       "منصة متابعة رقمية متكاملة لعملاء PYBCCO في الرياض تتيح متابعة نسبة الإنجاز، مراجعة الدفعات، تحميل العقود والوثائق، والاطلاع على التحديثات الميدانية بالصور بكل شفافية وتنظيم.",
     url: `${SITE}/project-tracking-system-riyadh`,
+  }
+
+  const videoPageUrl = `${SITE}/videos/${trackingVideo.slug}`
+
+  const videoSchema = {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "@id": `${videoPageUrl}#video`,
+    name: trackingVideo.title,
+    description: trackingVideo.description,
+    thumbnailUrl: [`${SITE}${trackingVideo.cover}`],
+    uploadDate: trackingVideo.uploadDate,
+    duration: trackingVideo.duration,
+    embedUrl: getYoutubeEmbedUrl(trackingVideo.youtubeId),
+    url: videoPageUrl,
+    inLanguage: "ar",
+    isFamilyFriendly: true,
+    keywords: trackingVideo.keywords.join(", "),
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${SITE}/project-tracking-system-riyadh`,
+    },
+    publisher: {
+      "@id": `${SITE}/#organization`,
+    },
   }
 
   const faqSchema = {
@@ -85,7 +128,7 @@ export default function ProjectTrackingSystemRiyadh() {
         title="نظام متابعة مشاريع البناء والتشطيب في الرياض | PYBCCO"
         description="منصة متابعة رقمية متكاملة لعملاء PYBCCO في الرياض: نسبة الإنجاز، الدفعات، العقود والوثائق PDF، وتحديثات ميدانية بالصور — بكل شفافية وتنظيم."
         canonical={`${SITE}/project-tracking-system-riyadh`}
-        jsonLd={[serviceSchema, faqSchema]}
+        jsonLd={[serviceSchema, videoSchema, faqSchema]}
       />
 
       <section className="py-20 px-6 max-w-6xl mx-auto">
@@ -114,6 +157,12 @@ export default function ProjectTrackingSystemRiyadh() {
             />
           </div>
         </div>
+
+        <RelatedVideoSection
+          video={trackingVideo}
+          heading="شاهد كيف يتابع عميل PYBCCO مشروعه خطوة بخطوة"
+          description="فيديو مختصر يوضح فكرة نظام متابعة المشاريع وكيف يجمع نسبة الإنجاز والصور والتقارير والدفعات والوثائق داخل تجربة رقمية منظمة للعميل."
+        />
 
         <h2 className="text-2xl font-semibold mb-6">لماذا أطلقنا نظام المتابعة الرقمي؟</h2>
 
