@@ -1,10 +1,28 @@
 import { useMemo } from "react";
-import { Button } from "@/components/ui/button";
 import SeoHead from "@/components/SeoHead";
+import RelatedVideoSection from "@/components/video/RelatedVideoSection";
+import { Button } from "@/components/ui/button";
+import {
+  getVideoBySlug,
+  getYoutubeEmbedUrl,
+  type VideoItem,
+} from "@/data/videos";
 import { Link } from "react-router-dom";
 
 const SITE = "https://pybcco.com";
 const CASE_STUDY_URL = "/case-study-villa-renovation-riyadh";
+
+function requireVideo(slug: string): VideoItem {
+  const video = getVideoBySlug(slug);
+
+  if (!video) {
+    throw new Error(`تعذر العثور على الفيديو: ${slug}`);
+  }
+
+  return video;
+}
+
+const yasminRenovationVideo = requireVideo("villa-renovation-yasmin");
 
 const FAQS = [
   {
@@ -64,6 +82,31 @@ export default function VillaRenovationRiyadh() {
       },
     };
 
+    const videoPageUrl = `${SITE}/videos/${yasminRenovationVideo.slug}`;
+
+    const videoSchema = {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "@id": `${videoPageUrl}#video`,
+      name: yasminRenovationVideo.title,
+      description: yasminRenovationVideo.description,
+      thumbnailUrl: [`${SITE}${yasminRenovationVideo.cover}`],
+      uploadDate: yasminRenovationVideo.uploadDate,
+      duration: yasminRenovationVideo.duration,
+      embedUrl: getYoutubeEmbedUrl(yasminRenovationVideo.youtubeId),
+      url: videoPageUrl,
+      inLanguage: "ar",
+      isFamilyFriendly: true,
+      keywords: yasminRenovationVideo.keywords.join(", "),
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": canonical,
+      },
+      publisher: {
+        "@id": `${SITE}/#organization`,
+      },
+    };
+
     const faqSchema = {
       "@context": "https://schema.org",
       "@type": "FAQPage",
@@ -74,7 +117,7 @@ export default function VillaRenovationRiyadh() {
       })),
     };
 
-    return [webpageSchema, serviceSchema, faqSchema];
+    return [webpageSchema, serviceSchema, videoSchema, faqSchema];
   }, [canonical, description, title]);
 
   const WA_NUMBER = "966550604837";
@@ -96,6 +139,7 @@ export default function VillaRenovationRiyadh() {
         ogImage={ogImage}
         ogType="website"
         twitterCard="summary_large_image"
+        robots="index,follow,max-image-preview:large,max-video-preview:-1"
         jsonLd={jsonLd}
       />
 
@@ -195,6 +239,14 @@ export default function VillaRenovationRiyadh() {
             ))}
           </div>
         </div>
+      </section>
+
+      <section className="container mx-auto max-w-6xl px-4">
+        <RelatedVideoSection
+          video={yasminRenovationVideo}
+          heading="شاهد جانبًا من ترميم فيلا سكنية في حي الياسمين"
+          description="فيديو مختصر يعرض جزءًا من أعمال إعادة التأهيل والتجديد داخل فيلا سكنية في حي الياسمين بالرياض، ويبين مراحل تحسين المساحات قبل التسليم."
+        />
       </section>
 
       {/* CASE STUDY */}
