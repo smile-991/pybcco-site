@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 import SeoHead from "@/components/SeoHead";
 import { Button } from "@/components/ui/button";
 import {
+  getVideoBySlug,
+  getYoutubeEmbedUrl,
+  type VideoItem,
+} from "@/data/videos";
+import {
   ArrowLeft,
   Building2,
   CheckCircle2,
@@ -101,6 +106,18 @@ const PAGE_TITLE =
 
 const PAGE_DESCRIPTION =
   "استكشف خريطة مشاريع بنيان الهرم للمقاولات داخل أحياء الرياض، مع دبابيس تفاعلية تعرض تفاصيل مشاريع التشطيب والترميم والبناء حسب الحي ونوع التنفيذ.";
+
+function requireVideo(slug: string): VideoItem {
+  const video = getVideoBySlug(slug);
+
+  if (!video) {
+    throw new Error(`تعذر العثور على الفيديو: ${slug}`);
+  }
+
+  return video;
+}
+
+const followProjectVideo = requireVideo("follow-project-result");
 
 const DISTRICTS: DistrictPin[] = [
   {
@@ -441,7 +458,10 @@ const DISTRICTS: DistrictPin[] = [
         category: "تشطيب مطاعم وجلسات خارجية",
         scope: "تشطيب وتجهيز جلسات خارجية لمطعم",
         highlights: ["جلسات خارجية", "مطعم سمك", "تشطيب مطاعم", "قبل وبعد", "المربع"],
-        hasVideo: false,
+        hasVideo: true,
+        videoUrl: `${SITE_URL}/videos/${followProjectVideo.slug}`,
+        videoEmbedUrl: getYoutubeEmbedUrl(followProjectVideo.youtubeId),
+        videoCover: followProjectVideo.cover,
         href: "/projects",
         description:
           "تنفيذ أعمال تشطيب وتجهيز الجلسات الخارجية لمطعم سمك في حي المربع بالرياض، ضمن نطاق شمل تحسين المساحة الخارجية وتجهيز منطقة الجلوس والطعام بشكل مناسب للاستخدام التجاري وتجربة العملاء.",
@@ -695,6 +715,28 @@ function buildPageSchema(): JsonLd[] {
     },
     {
       "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "@id": `${SITE_URL}/videos/${followProjectVideo.slug}#video`,
+      name: followProjectVideo.title,
+      description: followProjectVideo.description,
+      thumbnailUrl: [`${SITE_URL}${followProjectVideo.cover}`],
+      uploadDate: followProjectVideo.uploadDate,
+      duration: followProjectVideo.duration,
+      embedUrl: getYoutubeEmbedUrl(followProjectVideo.youtubeId),
+      url: `${SITE_URL}/videos/${followProjectVideo.slug}`,
+      inLanguage: "ar",
+      isFamilyFriendly: true,
+      keywords: followProjectVideo.keywords.join(", "),
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": CANONICAL,
+      },
+      publisher: {
+        "@id": `${SITE_URL}/#organization`,
+      },
+    },
+    {
+      "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       "@id": `${CANONICAL}#breadcrumb`,
       itemListElement: [
@@ -910,7 +952,7 @@ export default function RiyadhProjectsMapPage() {
         title={PAGE_TITLE}
         description={PAGE_DESCRIPTION}
         canonical={CANONICAL}
-        robots="index,follow"
+        robots="index,follow,max-image-preview:large,max-video-preview:-1"
         ogImage={`${SITE_URL}/images/riyadhmap.webp`}
         ogType="website"
         jsonLd={schemas}
@@ -1773,7 +1815,7 @@ export default function RiyadhProjectsMapPage() {
                         <div className="p-4">
                           <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-black/35 px-3 py-1 text-xs font-bold text-[#D4AF37]">
                             <PlayCircle className="h-3.5 w-3.5" />
-                            فيديو قبل / بعد
+                            فيديو المشروع
                           </div>
                           <a
                             href={selectedProject.videoUrl}
@@ -1788,7 +1830,7 @@ export default function RiyadhProjectsMapPage() {
                             }
                             className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#D4AF37] px-4 py-2.5 text-sm font-bold text-black transition hover:bg-[#e5c158]"
                           >
-                            مشاهدة الفيديو
+                            مشاهدة الفيديو والتفاصيل
                             <PlayCircle className="h-4 w-4" />
                           </a>
                         </div>
