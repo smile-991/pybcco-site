@@ -2,4 +2,6 @@
 /villa-finishing-cost-calculator-riyadh /villa-finishing-price-riyadh 301
 /engineering-insights/comparisons-options/ceramic-vs-porcelain /engineering-insights/comparisons-options/ceramic-vs-porcelain-riyadh 301
 /engineering-insights/comparisons-options/turnkey-vs-contractors /engineering-insights/comparisons-options/turnkey-vs-separate-contractors-riyadh 301
-/* /index.html 200
+
+# Only the one truly dynamic React route needs an internal rewrite.
+/portal/projects/* /portal-project-details.html 200
