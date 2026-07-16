@@ -1,7 +1,27 @@
 import SeoHead from "@/components/SeoHead";
+import RelatedVideoSection from "@/components/video/RelatedVideoSection";
+import {
+  getVideoBySlug,
+  getYoutubeEmbedUrl,
+  type VideoItem,
+} from "@/data/videos";
 import { Link } from "react-router-dom";
 
 const SITE_URL = "https://pybcco.com";
+
+function requireVideo(slug: string): VideoItem {
+  const video = getVideoBySlug(slug);
+
+  if (!video) {
+    throw new Error(`تعذر العثور على الفيديو: ${slug}`);
+  }
+
+  return video;
+}
+
+const luxuryBathroomVideo = requireVideo(
+  "luxury-bathroom-finishing",
+);
 
 const canonical =
   "https://pybcco.com/engineering-insights/cost/bathroom-renovation-cost-riyadh";
@@ -104,6 +124,31 @@ export default function BathroomRenovationCostRiyadh() {
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": canonical,
+    },
+  };
+
+  const videoPageUrl = `${SITE_URL}/videos/${luxuryBathroomVideo.slug}`;
+
+  const videoSchema = {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "@id": `${videoPageUrl}#video`,
+    name: luxuryBathroomVideo.title,
+    description: luxuryBathroomVideo.description,
+    thumbnailUrl: [`${SITE_URL}${luxuryBathroomVideo.cover}`],
+    uploadDate: luxuryBathroomVideo.uploadDate,
+    duration: luxuryBathroomVideo.duration,
+    embedUrl: getYoutubeEmbedUrl(luxuryBathroomVideo.youtubeId),
+    url: videoPageUrl,
+    inLanguage: "ar",
+    isFamilyFriendly: true,
+    keywords: luxuryBathroomVideo.keywords.join(", "),
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": canonical,
+    },
+    publisher: {
+      "@id": `${SITE_URL}/#organization`,
     },
   };
 
@@ -250,8 +295,13 @@ export default function BathroomRenovationCostRiyadh() {
         description={description}
         canonical={canonical}
         ogImage="/images/bathroom.webp"
-        robots="index,follow,max-image-preview:large"
-        jsonLd={[articleSchema, breadcrumbSchema, faqSchema]}
+        robots="index,follow,max-image-preview:large,max-video-preview:-1"
+        jsonLd={[
+          articleSchema,
+          videoSchema,
+          breadcrumbSchema,
+          faqSchema,
+        ]}
       />
 
       <main className="container mx-auto max-w-5xl px-4 py-20 text-right">
@@ -430,6 +480,12 @@ export default function BathroomRenovationCostRiyadh() {
             </figure>
           </div>
         </section>
+
+        <RelatedVideoSection
+          video={luxuryBathroomVideo}
+          heading="شاهد نموذج تشطيب حمام فاخر بعد التنفيذ"
+          description="فيديو مختصر يعرض مستوى تشطيب حمام فاخر من حيث البلاط والأدوات الصحية والإضاءة والتفاصيل النهائية، ويوضح كيف تؤثر المواصفات المختارة على النتيجة والتكلفة."
+        />
 
         <section id="price-table">
           <h2 className="mt-12 text-2xl font-bold text-gold md:text-3xl">
