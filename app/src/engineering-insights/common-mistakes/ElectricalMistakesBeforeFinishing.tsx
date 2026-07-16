@@ -34,6 +34,7 @@ const ARTICLE_SCHEMA = {
   },
 };
 
+
 export default function ElectricalMistakesBeforeFinishing() {
 return (
   <>
