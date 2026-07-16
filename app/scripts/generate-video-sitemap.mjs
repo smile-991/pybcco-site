@@ -3,7 +3,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const SITE_URL = "https://pybcco.com";
-const PAGE_URL = `${SITE_URL}/videos`;
 
 const currentFile = fileURLToPath(import.meta.url);
 const projectRoot = path.resolve(path.dirname(currentFile), "..");
@@ -43,6 +42,7 @@ function durationToSeconds(isoDuration) {
 
 function validateVideo(video, index) {
   const requiredStringFields = [
+    "slug",
     "youtubeId",
     "title",
     "description",
@@ -53,7 +53,9 @@ function validateVideo(video, index) {
 
   for (const field of requiredStringFields) {
     if (typeof video[field] !== "string" || video[field].trim() === "") {
-      throw new Error(`الفيديو رقم ${index + 1}: الحقل ${field} ناقص أو غير صحيح.`);
+      throw new Error(
+        `الفيديو رقم ${index + 1}: الحقل ${field} ناقص أو غير صحيح.`,
+      );
     }
   }
 
@@ -71,8 +73,9 @@ if (!Array.isArray(videos) || videos.length === 0) {
 
 videos.forEach(validateVideo);
 
-const videoEntries = videos
+const urlEntries = videos
   .map((video) => {
+    const pageUrl = `${SITE_URL}/videos/${video.slug}`;
     const thumbnailUrl = video.cover.startsWith("http")
       ? video.cover
       : `${SITE_URL}${video.cover}`;
@@ -82,7 +85,9 @@ const videoEntries = videos
       .map((keyword) => `      <video:tag>${escapeXml(keyword)}</video:tag>`)
       .join("\n");
 
-    return `    <video:video>
+    return `  <url>
+    <loc>${escapeXml(pageUrl)}</loc>
+    <video:video>
       <video:thumbnail_loc>${escapeXml(thumbnailUrl)}</video:thumbnail_loc>
       <video:title>${escapeXml(video.title)}</video:title>
       <video:description>${escapeXml(video.description)}</video:description>
@@ -93,7 +98,8 @@ const videoEntries = videos
       <video:publication_date>${escapeXml(video.uploadDate)}</video:publication_date>
       <video:family_friendly>yes</video:family_friendly>
 ${tags}
-    </video:video>`;
+    </video:video>
+  </url>`;
   })
   .join("\n\n");
 
@@ -101,17 +107,11 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-  <url>
-    <loc>${PAGE_URL}</loc>
-${videoEntries}
-  </url>
+${urlEntries}
 </urlset>
 `;
 
 for (const outputFile of outputFiles) {
-  const outputDir = path.dirname(outputFile);
-
-  // لا ننشئ dist من الصفر؛ نكتب داخله فقط إذا كان موجودًا بعد vite build.
   try {
     await writeFile(outputFile, xml, "utf8");
   } catch (error) {
@@ -129,5 +129,5 @@ for (const outputFile of outputFiles) {
 }
 
 console.log(
-  `✓ Generated video sitemap with ${videos.length} videos in public and dist when available`,
+  `✓ Generated video sitemap with ${videos.length} standalone video pages in public and dist when available`,
 );

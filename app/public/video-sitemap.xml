@@ -3,7 +3,7 @@
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
-    <loc>https://pybcco.com/videos</loc>
+    <loc>https://pybcco.com/videos/project-tracking-system</loc>
     <video:video>
       <video:thumbnail_loc>https://pybcco.com/video-covers/project-tracking-system.webp</video:thumbnail_loc>
       <video:title>تابع مشروعك لحظة بلحظة مع نظام متابعة PYBCCO</video:title>
@@ -17,7 +17,10 @@
       <video:tag>بوابة العملاء</video:tag>
       <video:tag>إدارة مشاريع الرياض</video:tag>
     </video:video>
+  </url>
 
+  <url>
+    <loc>https://pybcco.com/videos/facade-renovation-before-after</loc>
     <video:video>
       <video:thumbnail_loc>https://pybcco.com/video-covers/facade-renovation-before-after.webp</video:thumbnail_loc>
       <video:title>قبل وبعد ترميم وتجديد واجهة مبنى في الرياض</video:title>
@@ -31,7 +34,10 @@
       <video:tag>قبل وبعد ترميم</video:tag>
       <video:tag>مقاول ترميم واجهات</video:tag>
     </video:video>
+  </url>
 
+  <url>
+    <loc>https://pybcco.com/videos/follow-project-result</loc>
     <video:video>
       <video:thumbnail_loc>https://pybcco.com/video-covers/follow-result-project-map.webp</video:thumbnail_loc>
       <video:title>ترقبوا نتيجة مشروع ترميم وتجديد داخلي في الرياض</video:title>
@@ -45,7 +51,10 @@
       <video:tag>خريطة المشاريع</video:tag>
       <video:tag>مشاريع ترميم الرياض</video:tag>
     </video:video>
+  </url>
 
+  <url>
+    <loc>https://pybcco.com/videos/construction-stages-riyadh</loc>
     <video:video>
       <video:thumbnail_loc>https://pybcco.com/video-covers/roof-finishing-before-after.webp</video:thumbnail_loc>
       <video:title>مراحل تنفيذ البناء خطوة بخطوة في الرياض</video:title>
@@ -59,7 +68,10 @@
       <video:tag>مقاول بناء فلل</video:tag>
       <video:tag>تنفيذ أعمال البناء</video:tag>
     </video:video>
+  </url>
 
+  <url>
+    <loc>https://pybcco.com/videos/villa-renovation-yasmin</loc>
     <video:video>
       <video:thumbnail_loc>https://pybcco.com/video-covers/villa-renovation-yasmin.webp</video:thumbnail_loc>
       <video:title>ترميم فيلا سكنية في حي الياسمين بالرياض</video:title>
@@ -73,7 +85,10 @@
       <video:tag>تجديد فلل سكنية</video:tag>
       <video:tag>مقاول ترميم الرياض</video:tag>
     </video:video>
+  </url>
 
+  <url>
+    <loc>https://pybcco.com/videos/luxury-bathroom-finishing</loc>
     <video:video>
       <video:thumbnail_loc>https://pybcco.com/video-covers/luxury-bathroom-finishing.webp</video:thumbnail_loc>
       <video:title>تشطيب حمام فاخر في الرياض</video:title>
