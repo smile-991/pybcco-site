@@ -16,6 +16,7 @@ const ENGINEERING_INSIGHTS_PATH = "/engineering-insights";
 const CLUSTER_PATH = "/engineering-insights/construction-and-finishing-stages";
 const COMPANY_PATH = "/construction-company-riyadh";
 const FINISHING_SERVICE_PATH = "/villa-finishing-riyadh";
+const YOUTUBE_VIDEO_ID = "ICBcSHZUaoE";
 
 const SITE_URL = "https://pybcco.com";
 const CANONICAL =
@@ -283,6 +284,58 @@ function VillaConstructionTimeline() {
   );
 }
 
+
+function VillaConstructionVideo() {
+  return (
+    <section
+      aria-labelledby="villa-construction-video-title"
+      className="border-b border-zinc-100 bg-zinc-50"
+    >
+      <div className="mx-auto max-w-5xl px-4 py-8 md:px-6 md:py-12">
+        <div className="grid items-center gap-7 overflow-hidden rounded-[30px] border border-zinc-100 bg-white p-5 shadow-[0_18px_55px_rgba(0,0,0,0.07)] md:grid-cols-[300px_1fr] md:gap-10 md:p-8">
+          <div className="order-2 mx-auto w-full max-w-[300px] overflow-hidden rounded-[24px] bg-black shadow-[0_18px_45px_rgba(0,0,0,0.18)] md:order-1">
+            <div className="aspect-[9/16]">
+              <iframe
+                className="h-full w-full"
+                src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`}
+                title="مراحل بناء فيلا خلال 180 يومًا من القواعد حتى التسليم"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
+          </div>
+
+          <div className="order-1 md:order-2">
+            <div className="inline-flex items-center rounded-full border border-[#ecdca9] bg-[#fff8e7] px-4 py-2 text-sm font-bold text-[#8a6400]">
+              ملخص بصري سريع
+            </div>
+
+            <h2
+              id="villa-construction-video-title"
+              className="mt-4 text-2xl font-extrabold leading-tight md:text-4xl"
+            >
+              شاهد رحلة بناء الفيلا من القواعد حتى التسليم
+            </h2>
+
+            <p className="mt-4 text-[16px] leading-8 text-zinc-600 md:text-lg">
+              بعد استعراض المراحل الست بالتفصيل، يلخص هذا الفيديو تطور الفيلا من
+              الأساسات والهيكل الإنشائي إلى البلوك والواجهة والتشطيبات النهائية
+              ضمن نموذج زمني تقريبي يصل إلى 180 يومًا.
+            </p>
+
+            <p className="mt-4 text-sm leading-7 text-zinc-500">
+              الفيديو توضيحي، وقد تختلف المدة الفعلية بحسب مساحة المشروع،
+              وتعقيد التصميم، ومستوى التشطيب، وسرعة الاعتمادات والتوريد.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function HowLongDoesItTakeToBuildVillaRiyadh() {
 
   return (
@@ -369,6 +422,8 @@ export default function HowLongDoesItTakeToBuildVillaRiyadh() {
       </section>
 
       <VillaConstructionTimeline />
+
+      <VillaConstructionVideo />
 
       <section className="mx-auto max-w-4xl px-4 py-10 md:px-6 md:py-14">
         <div className="grid gap-6 lg:grid-cols-[1fr_280px]">

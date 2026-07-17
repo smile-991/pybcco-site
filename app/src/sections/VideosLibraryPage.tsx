@@ -66,30 +66,24 @@ function absoluteUrl(path: string): string {
   return path.startsWith("http") ? path : `${SITE_URL}${path}`;
 }
 
-function getVideoPageUrl(video: VideoItem): string {
-  return `${SITE_URL}/videos/${video.slug}`;
-}
-
 function buildVideoSchema(video: VideoItem): JsonLd {
-  const pageUrl = getVideoPageUrl(video);
-
   return {
     "@context": "https://schema.org",
     "@type": "VideoObject",
-    "@id": `${pageUrl}#video`,
+    "@id": `${CANONICAL}#${video.slug}`,
     name: video.title,
     description: video.description,
     thumbnailUrl: [absoluteUrl(video.cover)],
     uploadDate: video.uploadDate,
     duration: video.duration,
     embedUrl: getYoutubeEmbedUrl(video.youtubeId),
-    url: pageUrl,
+    url: video.detailPage ? `${SITE_URL}${video.detailPage}` : `${CANONICAL}#${video.slug}`,
     inLanguage: "ar",
     isFamilyFriendly: true,
     keywords: video.keywords.join(", "),
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `${pageUrl}#webpage`,
+      "@id": CANONICAL,
     },
     publisher: {
       "@type": "Organization",
@@ -133,7 +127,7 @@ function buildPageSchema(): JsonLd[] {
     itemListElement: videos.map((video, index) => ({
       "@type": "ListItem",
       position: index + 1,
-      url: getVideoPageUrl(video),
+      url: video.detailPage ? `${SITE_URL}${video.detailPage}` : `${CANONICAL}#${video.slug}`,
       name: video.title,
     })),
   };
@@ -210,7 +204,7 @@ export default function VideosLibraryPage() {
         title={PAGE_TITLE}
         description={PAGE_DESCRIPTION}
         canonical={CANONICAL}
-        robots="index,follow,max-image-preview:large,max-video-preview:-1"
+        robots="index,follow,max-image-preview:large"
         ogImage={
           featuredVideo
             ? absoluteUrl(featuredVideo.cover)
@@ -344,17 +338,6 @@ export default function VideosLibraryPage() {
                     asChild
                     className="rounded-2xl bg-[#d4af37] font-extrabold text-black hover:bg-[#efd36f]"
                   >
-                    <Link to={`/videos/${featuredVideo.slug}`}>
-                      مشاهدة الفيديو والتفاصيل
-                      <ArrowLeft className="mr-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="rounded-2xl border-white/20 bg-transparent text-white hover:bg-white/10"
-                  >
                     <Link to={featuredVideo.relatedPage}>
                       {featuredVideo.relatedLabel}
                       <ArrowLeft className="mr-2 h-4 w-4" />
@@ -479,20 +462,26 @@ export default function VideosLibraryPage() {
                   </p>
 
                   <div className="mt-6 grid gap-3">
-                    <Button
-                      asChild
-                      className="w-full rounded-2xl bg-[#d4af37] font-extrabold text-black hover:bg-[#efd36f]"
-                    >
-                      <Link to={`/videos/${video.slug}`}>
-                        مشاهدة الفيديو والتفاصيل
-                        <ArrowLeft className="mr-2 h-4 w-4" />
-                      </Link>
-                    </Button>
+                    {video.detailPage ? (
+                      <Button
+                        asChild
+                        className="w-full rounded-2xl bg-[#d4af37] font-extrabold text-black hover:bg-[#efd36f]"
+                      >
+                        <Link to={video.detailPage}>
+                          صفحة الفيديو والتفاصيل
+                          <ArrowLeft className="mr-2 h-4 w-4" />
+                        </Link>
+                      </Button>
+                    ) : null}
 
                     <Button
                       asChild
-                      variant="outline"
-                      className="w-full rounded-2xl border-white/15 bg-transparent font-bold text-white hover:bg-white/10 hover:text-white"
+                      variant={video.detailPage ? "outline" : "default"}
+                      className={
+                        video.detailPage
+                          ? "w-full rounded-2xl border-white/15 bg-transparent font-extrabold text-white hover:bg-white/10"
+                          : "w-full rounded-2xl bg-[#d4af37] font-extrabold text-black hover:bg-[#efd36f]"
+                      }
                     >
                       <Link to={video.relatedPage}>
                         {video.relatedLabel}

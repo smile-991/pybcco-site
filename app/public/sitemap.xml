@@ -614,54 +614,16 @@
 
   <url>
     <loc>https://pybcco.com/videos</loc>
-    <lastmod>2026-07-16</lastmod>
+    <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
 
-
-
-  <!-- Standalone Video Pages -->
   <url>
-    <loc>https://pybcco.com/videos/project-tracking-system</loc>
-    <lastmod>2026-07-12</lastmod>
+    <loc>https://pybcco.com/videos/villa-construction-180-days-riyadh</loc>
+    <lastmod>2026-07-18</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.82</priority>
-  </url>
-
-  <url>
-    <loc>https://pybcco.com/videos/facade-renovation-before-after</loc>
-    <lastmod>2026-07-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.78</priority>
-  </url>
-
-  <url>
-    <loc>https://pybcco.com/videos/follow-project-result</loc>
-    <lastmod>2026-03-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.78</priority>
-  </url>
-
-  <url>
-    <loc>https://pybcco.com/videos/construction-stages-riyadh</loc>
-    <lastmod>2026-03-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.78</priority>
-  </url>
-
-  <url>
-    <loc>https://pybcco.com/videos/villa-renovation-yasmin</loc>
-    <lastmod>2026-03-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.78</priority>
-  </url>
-
-  <url>
-    <loc>https://pybcco.com/videos/luxury-bathroom-finishing</loc>
-    <lastmod>2026-03-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.78</priority>
+    <priority>0.85</priority>
   </url>
 
   <url>
