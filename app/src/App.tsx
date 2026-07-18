@@ -61,9 +61,6 @@ const ContractorAlMalqaRiyadh = lazy(
 );
 const VideosLibraryPage = lazy(() => import("./sections/VideosLibraryPage"));
 const VideoDetailPage = lazy(() => import("./sections/VideoDetailPage"));
-const VillaConstruction180DaysVideoPage = lazy(
-  () => import("./sections/VillaConstruction180DaysVideoPage")
-);
 const OffersPage = lazy(() => import("./sections/OffersPage"));
 
 const CaseStudyVillaRiyadh = lazy(
@@ -448,10 +445,6 @@ export default function App() {
               element={<VillaFinishingPriceRiyadh />}
             />
             <Route path="/videos" element={<VideosLibraryPage />} />
-            <Route
-              path="/videos/villa-construction-180-days-riyadh"
-              element={<VillaConstruction180DaysVideoPage />}
-            />
             <Route path="/videos/:slug" element={<VideoDetailPage />} />
             <Route
               path="/villa-construction-cost-calculator-riyadh"

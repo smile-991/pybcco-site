@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "node scripts/clean-dist.mjs && tsc -b && vite build && node scripts/generate-route-shells.mjs && node scripts/prerender-projects.mjs && node scripts/generate-image-sitemap.mjs && node scripts/generate-video-sitemap.mjs && node scripts/verify-build.mjs",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "dev": "npm --prefix app run dev",
+    "build": "npm --prefix app run build",
+    "lint": "npm --prefix app run lint",
+    "preview": "npm --prefix app run preview"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

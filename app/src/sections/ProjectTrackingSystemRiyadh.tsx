@@ -4,23 +4,20 @@ import { Button } from "@/components/ui/button"
 import {
   getVideoBySlug,
   getYoutubeEmbedUrl,
-  type VideoItem,
 } from "@/data/videos"
 import { Link } from "react-router-dom"
 
 const SITE = "https://pybcco.com"
 
-function requireVideo(slug: string): VideoItem {
-  const video = getVideoBySlug(slug)
+const trackingVideo = (() => {
+  const video = getVideoBySlug("project-tracking-system")
 
   if (!video) {
-    throw new Error(`تعذر العثور على الفيديو: ${slug}`)
+    throw new Error("تعذر العثور على فيديو نظام متابعة المشاريع.")
   }
 
   return video
-}
-
-const trackingVideo = requireVideo("project-tracking-system")
+})()
 
 export default function ProjectTrackingSystemRiyadh() {
   const serviceSchema = {

@@ -24,7 +24,6 @@ export type VideoItem = {
   featured: boolean;
   relatedPage: string;
   relatedLabel: string;
-  detailPage?: string;
 };
 
 const categorySet = new Set<string>(VIDEO_CATEGORIES);
@@ -58,8 +57,7 @@ function isVideoItem(value: unknown): value is VideoItem {
     isStringArray(video.keywords) &&
     typeof video.featured === "boolean" &&
     typeof video.relatedPage === "string" &&
-    typeof video.relatedLabel === "string" &&
-    (video.detailPage === undefined || typeof video.detailPage === "string")
+    typeof video.relatedLabel === "string"
   );
 }
 

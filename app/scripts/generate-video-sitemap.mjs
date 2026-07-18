@@ -53,35 +53,15 @@ function validateVideo(video, index) {
 
   for (const field of requiredStringFields) {
     if (typeof video[field] !== "string" || video[field].trim() === "") {
-      throw new Error(`الفيديو رقم ${index + 1}: الحقل ${field} ناقص أو غير صحيح.`);
+      throw new Error(
+        `الفيديو رقم ${index + 1}: الحقل ${field} ناقص أو غير صحيح.`,
+      );
     }
   }
 
   if (!Array.isArray(video.keywords)) {
     throw new Error(`الفيديو رقم ${index + 1}: حقل keywords غير صحيح.`);
   }
-}
-
-function videoXml(video) {
-  const thumbnailUrl = video.cover.startsWith("http")
-    ? video.cover
-    : `${SITE_URL}${video.cover}`;
-
-  const tags = video.keywords
-    .slice(0, 32)
-    .map((keyword) => `      <video:tag>${escapeXml(keyword)}</video:tag>`)
-    .join("\n");
-
-  return `    <video:video>
-      <video:thumbnail_loc>${escapeXml(thumbnailUrl)}</video:thumbnail_loc>
-      <video:title>${escapeXml(video.title)}</video:title>
-      <video:description>${escapeXml(video.description)}</video:description>
-      <video:player_loc>${escapeXml(`https://www.youtube.com/embed/${video.youtubeId}`)}</video:player_loc>
-      <video:duration>${durationToSeconds(video.duration)}</video:duration>
-      <video:publication_date>${escapeXml(video.uploadDate)}</video:publication_date>
-      <video:family_friendly>yes</video:family_friendly>
-${tags}
-    </video:video>`;
 }
 
 const raw = await readFile(videosFile, "utf8");
@@ -96,10 +76,29 @@ videos.forEach(validateVideo);
 const urlEntries = videos
   .map((video) => {
     const pageUrl = `${SITE_URL}/videos/${video.slug}`;
+    const thumbnailUrl = video.cover.startsWith("http")
+      ? video.cover
+      : `${SITE_URL}${video.cover}`;
+
+    const tags = video.keywords
+      .slice(0, 32)
+      .map((keyword) => `      <video:tag>${escapeXml(keyword)}</video:tag>`)
+      .join("\n");
 
     return `  <url>
     <loc>${escapeXml(pageUrl)}</loc>
-${videoXml(video)}
+    <video:video>
+      <video:thumbnail_loc>${escapeXml(thumbnailUrl)}</video:thumbnail_loc>
+      <video:title>${escapeXml(video.title)}</video:title>
+      <video:description>${escapeXml(video.description)}</video:description>
+      <video:player_loc>${escapeXml(
+        `https://www.youtube.com/embed/${video.youtubeId}`,
+      )}</video:player_loc>
+      <video:duration>${durationToSeconds(video.duration)}</video:duration>
+      <video:publication_date>${escapeXml(video.uploadDate)}</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+${tags}
+    </video:video>
   </url>`;
   })
   .join("\n\n");
@@ -129,4 +128,6 @@ for (const outputFile of outputFiles) {
   }
 }
 
-console.log(`✓ Generated video sitemap with ${videos.length} standalone video pages`);
+console.log(
+  `✓ Generated video sitemap with ${videos.length} standalone video pages in public and dist when available`,
+);

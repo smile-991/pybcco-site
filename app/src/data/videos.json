@@ -8,9 +8,7 @@
     "cover": "/video-covers/project-tracking-system.webp",
     "uploadDate": "2026-07-12T12:00:00+03:00",
     "duration": "PT29S",
-    "categories": [
-      "إدارة المشاريع"
-    ],
+    "categories": ["إدارة المشاريع"],
     "keywords": [
       "متابعة مشاريع المقاولات",
       "نظام متابعة المشاريع",
@@ -22,30 +20,6 @@
     "relatedLabel": "تعرّف على نظام متابعة المشاريع"
   },
   {
-    "slug": "villa-construction-180-days-riyadh",
-    "youtubeId": "ICBcSHZUaoE",
-    "title": "مراحل بناء فيلا خلال 180 يومًا من القواعد حتى التسليم",
-    "shortTitle": "بناء فيلا خلال 180 يومًا",
-    "description": "فيديو تايم لابس سريع يوضح تطور الفيلا من القواعد والهيكل الإنشائي وأعمال البلوك، وصولًا إلى الواجهات والتشطيبات والفحص والتسليم ضمن نموذج زمني تقريبي يمتد إلى 180 يومًا.",
-    "cover": "/video-covers/villa-construction-180-days-riyadh.webp",
-    "uploadDate": "2026-07-18T02:00:00+03:00",
-    "duration": "PT16S",
-    "categories": [
-      "البناء"
-    ],
-    "keywords": [
-      "مراحل بناء فيلا",
-      "مدة بناء فيلا",
-      "بناء فلل بالرياض",
-      "جدول تنفيذ فيلا",
-      "مقاول بناء الرياض"
-    ],
-    "featured": false,
-    "relatedPage": "/engineering-insights/construction-and-finishing-stages/how-long-does-it-take-to-build-villa-riyadh",
-    "relatedLabel": "اقرأ الجدول الزمني الكامل",
-    "detailPage": "/videos/villa-construction-180-days-riyadh"
-  },
-  {
     "slug": "facade-renovation-before-after",
     "youtubeId": "a5qccoZ7XgU",
     "title": "قبل وبعد ترميم وتجديد واجهة مبنى في الرياض",
@@ -54,10 +28,7 @@
     "cover": "/video-covers/facade-renovation-before-after.webp",
     "uploadDate": "2026-07-11T12:00:00+03:00",
     "duration": "PT9S",
-    "categories": [
-      "الترميم",
-      "قبل وبعد"
-    ],
+    "categories": ["الترميم", "قبل وبعد"],
     "keywords": [
       "ترميم واجهات بالرياض",
       "تجديد واجهة مبنى",
@@ -77,9 +48,7 @@
     "cover": "/video-covers/follow-result-project-map.webp",
     "uploadDate": "2026-03-16T12:00:00+03:00",
     "duration": "PT15S",
-    "categories": [
-      "الترميم"
-    ],
+    "categories": ["الترميم"],
     "keywords": [
       "ترميم داخلي بالرياض",
       "تجديد مشروع سكني",
@@ -99,9 +68,7 @@
     "cover": "/video-covers/roof-finishing-before-after.webp",
     "uploadDate": "2026-03-14T12:00:00+03:00",
     "duration": "PT24S",
-    "categories": [
-      "البناء"
-    ],
+    "categories": ["البناء"],
     "keywords": [
       "مراحل تنفيذ البناء",
       "بناء فلل بالرياض",
@@ -121,9 +88,7 @@
     "cover": "/video-covers/villa-renovation-yasmin.webp",
     "uploadDate": "2026-03-14T12:00:00+03:00",
     "duration": "PT23S",
-    "categories": [
-      "الترميم"
-    ],
+    "categories": ["الترميم"],
     "keywords": [
       "ترميم فيلا بالرياض",
       "ترميم فلل حي الياسمين",
@@ -143,9 +108,7 @@
     "cover": "/video-covers/luxury-bathroom-finishing.webp",
     "uploadDate": "2026-03-13T12:00:00+03:00",
     "duration": "PT29S",
-    "categories": [
-      "التشطيب"
-    ],
+    "categories": ["التشطيب"],
     "keywords": [
       "تشطيب حمامات فاخرة بالرياض",
       "ترميم حمامات",

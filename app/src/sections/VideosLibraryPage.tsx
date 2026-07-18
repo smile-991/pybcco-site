@@ -210,7 +210,7 @@ export default function VideosLibraryPage() {
         title={PAGE_TITLE}
         description={PAGE_DESCRIPTION}
         canonical={CANONICAL}
-        robots="index,follow,max-image-preview:large"
+        robots="index,follow,max-image-preview:large,max-video-preview:-1"
         ogImage={
           featuredVideo
             ? absoluteUrl(featuredVideo.cover)
@@ -343,6 +343,17 @@ export default function VideosLibraryPage() {
                   <Button
                     asChild
                     className="rounded-2xl bg-[#d4af37] font-extrabold text-black hover:bg-[#efd36f]"
+                  >
+                    <Link to={`/videos/${featuredVideo.slug}`}>
+                      مشاهدة الفيديو والتفاصيل
+                      <ArrowLeft className="mr-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="rounded-2xl border-white/20 bg-transparent text-white hover:bg-white/10"
                   >
                     <Link to={featuredVideo.relatedPage}>
                       {featuredVideo.relatedLabel}
