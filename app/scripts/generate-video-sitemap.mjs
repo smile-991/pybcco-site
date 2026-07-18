@@ -3,7 +3,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const SITE_URL = "https://pybcco.com";
-const LIBRARY_URL = `${SITE_URL}/videos`;
 
 const currentFile = fileURLToPath(import.meta.url);
 const projectRoot = path.resolve(path.dirname(currentFile), "..");
@@ -43,6 +42,7 @@ function durationToSeconds(isoDuration) {
 
 function validateVideo(video, index) {
   const requiredStringFields = [
+    "slug",
     "youtubeId",
     "title",
     "description",
@@ -93,19 +93,15 @@ if (!Array.isArray(videos) || videos.length === 0) {
 
 videos.forEach(validateVideo);
 
-const grouped = new Map();
-for (const video of videos) {
-  const pageUrl = video.detailPage ? `${SITE_URL}${video.detailPage}` : LIBRARY_URL;
-  const current = grouped.get(pageUrl) ?? [];
-  current.push(video);
-  grouped.set(pageUrl, current);
-}
+const urlEntries = videos
+  .map((video) => {
+    const pageUrl = `${SITE_URL}/videos/${video.slug}`;
 
-const urlEntries = [...grouped.entries()]
-  .map(([pageUrl, pageVideos]) => `  <url>
+    return `  <url>
     <loc>${escapeXml(pageUrl)}</loc>
-${pageVideos.map(videoXml).join("\n\n")}
-  </url>`)
+${videoXml(video)}
+  </url>`;
+  })
   .join("\n\n");
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -133,4 +129,4 @@ for (const outputFile of outputFiles) {
   }
 }
 
-console.log(`✓ Generated video sitemap for ${videos.length} videos across ${grouped.size} pages`);
+console.log(`✓ Generated video sitemap with ${videos.length} standalone video pages`);

@@ -60,6 +60,7 @@ const ContractorAlMalqaRiyadh = lazy(
   () => import("./sections/ContractorAlMalqaRiyadh")
 );
 const VideosLibraryPage = lazy(() => import("./sections/VideosLibraryPage"));
+const VideoDetailPage = lazy(() => import("./sections/VideoDetailPage"));
 const VillaConstruction180DaysVideoPage = lazy(
   () => import("./sections/VillaConstruction180DaysVideoPage")
 );
@@ -451,6 +452,7 @@ export default function App() {
               path="/videos/villa-construction-180-days-riyadh"
               element={<VillaConstruction180DaysVideoPage />}
             />
+            <Route path="/videos/:slug" element={<VideoDetailPage />} />
             <Route
               path="/villa-construction-cost-calculator-riyadh"
               element={<VillaConstructionCostCalculatorRiyadh />}
