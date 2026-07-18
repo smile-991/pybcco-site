@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import SeoHead from "@/components/SeoHead";
+import YouTubeFacade from "@/components/video/YouTubeFacade";
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -17,6 +18,8 @@ const CLUSTER_PATH = "/engineering-insights/construction-and-finishing-stages";
 const COMPANY_PATH = "/construction-company-riyadh";
 const FINISHING_SERVICE_PATH = "/villa-finishing-riyadh";
 const YOUTUBE_VIDEO_ID = "ICBcSHZUaoE";
+const VIDEO_PAGE_PATH = "/videos/villa-construction-180-days-riyadh";
+const VIDEO_COVER = "/video-covers/villa-construction-180-days-riyadh.webp";
 
 const SITE_URL = "https://pybcco.com";
 const CANONICAL =
@@ -48,6 +51,25 @@ const ARTICLE_SCHEMA = {
     "@type": "Organization",
     name: "بنيان الهرم للمقاولات",
     url: SITE_URL,
+  },
+};
+
+const VIDEO_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "@id": `${SITE_URL}${VIDEO_PAGE_PATH}#video`,
+  name: "مراحل بناء فيلا خلال 180 يومًا من القواعد حتى التسليم",
+  description:
+    "فيديو تايم لابس سريع يوضح تطور الفيلا من القواعد والهيكل الإنشائي وأعمال البلوك حتى الواجهات والتشطيبات والفحص والتسليم.",
+  thumbnailUrl: [`${SITE_URL}${VIDEO_COVER}`],
+  uploadDate: "2026-07-18T02:00:00+03:00",
+  duration: "PT16S",
+  embedUrl: `https://www.youtube-nocookie.com/embed/${YOUTUBE_VIDEO_ID}`,
+  url: `${SITE_URL}${VIDEO_PAGE_PATH}`,
+  inLanguage: "ar",
+  isFamilyFriendly: true,
+  publisher: {
+    "@id": `${SITE_URL}/#organization`,
   },
 };
 
@@ -294,17 +316,12 @@ function VillaConstructionVideo() {
       <div className="mx-auto max-w-5xl px-4 py-8 md:px-6 md:py-12">
         <div className="grid items-center gap-7 overflow-hidden rounded-[30px] border border-zinc-100 bg-white p-5 shadow-[0_18px_55px_rgba(0,0,0,0.07)] md:grid-cols-[300px_1fr] md:gap-10 md:p-8">
           <div className="order-2 mx-auto w-full max-w-[300px] overflow-hidden rounded-[24px] bg-black shadow-[0_18px_45px_rgba(0,0,0,0.18)] md:order-1">
-            <div className="aspect-[9/16]">
-              <iframe
-                className="h-full w-full"
-                src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`}
-                title="مراحل بناء فيلا خلال 180 يومًا من القواعد حتى التسليم"
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              />
-            </div>
+            <YouTubeFacade
+              youtubeId={YOUTUBE_VIDEO_ID}
+              title="مراحل بناء فيلا خلال 180 يومًا من القواعد حتى التسليم"
+              cover={VIDEO_COVER}
+              className="aspect-[9/16] w-full"
+            />
           </div>
 
           <div className="order-1 md:order-2">
@@ -329,6 +346,14 @@ function VillaConstructionVideo() {
               الفيديو توضيحي، وقد تختلف المدة الفعلية بحسب مساحة المشروع،
               وتعقيد التصميم، ومستوى التشطيب، وسرعة الاعتمادات والتوريد.
             </p>
+
+            <Link
+              to={VIDEO_PAGE_PATH}
+              className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-[#f7bf00] px-5 py-3 text-sm font-extrabold text-black transition hover:bg-[#e0ad00]"
+            >
+              مشاهدة صفحة الفيديو والتفاصيل
+              <ArrowLeft className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </div>
@@ -344,9 +369,9 @@ export default function HowLongDoesItTakeToBuildVillaRiyadh() {
         title={TITLE}
         description={DESCRIPTION}
         canonical={CANONICAL}
-        robots="index,follow,max-image-preview:large"
+        robots="index,follow,max-image-preview:large,max-video-preview:-1"
         ogType="article"
-        jsonLd={ARTICLE_SCHEMA}
+        jsonLd={[ARTICLE_SCHEMA, VIDEO_SCHEMA]}
       />
       <main className="bg-white text-zinc-900">
       <section className="border-b border-zinc-100 bg-gradient-to-b from-[#fff8e7] via-white to-white">

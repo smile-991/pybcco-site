@@ -17,7 +17,6 @@ import {
 import {
   VIDEO_CATEGORIES,
   featuredVideo,
-  getYoutubeEmbedUrl,
   getYoutubeWatchUrl,
   videos,
   type VideoCategory,
@@ -68,43 +67,6 @@ function absoluteUrl(path: string): string {
 
 function getVideoPageUrl(video: VideoItem): string {
   return `${SITE_URL}/videos/${video.slug}`;
-}
-
-function buildVideoSchema(video: VideoItem): JsonLd {
-  const pageUrl = getVideoPageUrl(video);
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "VideoObject",
-    "@id": `${pageUrl}#video`,
-    name: video.title,
-    description: video.description,
-    thumbnailUrl: [absoluteUrl(video.cover)],
-    uploadDate: video.uploadDate,
-    duration: video.duration,
-    embedUrl: getYoutubeEmbedUrl(video.youtubeId),
-    url: pageUrl,
-    inLanguage: "ar",
-    isFamilyFriendly: true,
-    keywords: video.keywords.join(", "),
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `${pageUrl}#webpage`,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "شركة بنيان الهرم للمقاولات – PYBCCO",
-      url: SITE_URL,
-      logo: {
-        "@type": "ImageObject",
-        url: `${SITE_URL}/assets/logo.webp`,
-      },
-    },
-    potentialAction: {
-      "@type": "WatchAction",
-      target: getYoutubeWatchUrl(video.youtubeId),
-    },
-  };
 }
 
 function buildPageSchema(): JsonLd[] {
@@ -172,13 +134,7 @@ function buildPageSchema(): JsonLd[] {
     })),
   };
 
-  return [
-    collectionPage,
-    itemList,
-    breadcrumb,
-    faqSchema,
-    ...videos.map(buildVideoSchema),
-  ];
+  return [collectionPage, itemList, breadcrumb, faqSchema];
 }
 
 function categoryCount(category: VideoCategory): number {

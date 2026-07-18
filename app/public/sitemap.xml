@@ -267,7 +267,7 @@
 
   <url>
     <loc>https://pybcco.com/engineering-insights/construction-and-finishing-stages/how-long-does-it-take-to-build-villa-riyadh</loc>
-    <lastmod>2026-06-18</lastmod>
+    <lastmod>2026-07-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -614,7 +614,7 @@
 
   <url>
     <loc>https://pybcco.com/videos</loc>
-    <lastmod>2026-06-18</lastmod>
+    <lastmod>2026-07-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -633,6 +633,14 @@
     <priority>0.95</priority>
   </url>
 
+
+
+  <url>
+    <loc>https://pybcco.com/videos/villa-construction-180-days-riyadh</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+  </url>
 
   <url>
     <loc>https://pybcco.com/videos/project-tracking-system</loc>

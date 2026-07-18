@@ -4,6 +4,8 @@ import path from "node:path";
 const ROOT = process.cwd();
 const DIST_DIR = path.join(ROOT, "dist");
 const APP_FILE = path.join(ROOT, "src", "App.tsx");
+const VIDEOS_FILE = path.join(ROOT, "src", "data", "videos.json");
+const VIDEOS_LIBRARY_FILE = path.join(ROOT, "src", "sections", "VideosLibraryPage.tsx");
 const SITE_URL = "https://pybcco.com";
 
 const errors = [];
@@ -149,6 +151,75 @@ if (timelineFeatureEnabled) {
         error(`Image sitemap is missing ${fileName}`);
       }
     }
+  }
+}
+
+
+if (!fs.existsSync(VIDEOS_FILE)) {
+  error("src/data/videos.json is missing");
+} else {
+  let videos = [];
+  try {
+    videos = JSON.parse(read(VIDEOS_FILE));
+  } catch (parseError) {
+    error(`Unable to parse videos.json: ${parseError instanceof Error ? parseError.message : String(parseError)}`);
+  }
+
+  if (Array.isArray(videos)) {
+    const videoSitemapPath = path.join(DIST_DIR, "video-sitemap.xml");
+    const mainSitemapPath = path.join(DIST_DIR, "sitemap.xml");
+    const builtRssPath = path.join(DIST_DIR, "rss.xml");
+
+    if (!fs.existsSync(videoSitemapPath)) {
+      error("dist/video-sitemap.xml is missing");
+    } else {
+      const videoSitemap = read(videoSitemapPath);
+      const urlCount = (videoSitemap.match(/<url>/g) || []).length;
+      const videoCount = (videoSitemap.match(/<video:video>/g) || []).length;
+      if (urlCount !== videos.length || videoCount !== videos.length) {
+        error(`Video sitemap mismatch: videos.json=${videos.length}, urls=${urlCount}, videos=${videoCount}`);
+      }
+    }
+
+    const mainSitemap = fs.existsSync(mainSitemapPath) ? read(mainSitemapPath) : "";
+    const builtRss = fs.existsSync(builtRssPath) ? read(builtRssPath) : "";
+
+    for (const video of videos) {
+      const routePath = `/videos/${video.slug}`;
+      const pageFile = routeFile(routePath);
+      if (!fs.existsSync(pageFile)) {
+        error(`Missing pre-rendered video page for ${routePath}`);
+      } else {
+        const pageHtml = read(pageFile);
+        const videoObjectCount = (pageHtml.match(/\"@type\":\"VideoObject\"/g) || []).length;
+        if (videoObjectCount !== 1) {
+          error(`Expected exactly one VideoObject in ${routePath}, found ${videoObjectCount}`);
+        }
+      }
+
+      const coverPath = path.join(DIST_DIR, String(video.cover || "").replace(/^\//, ""));
+      if (!fs.existsSync(coverPath)) {
+        error(`Missing video cover for ${routePath}: ${video.cover}`);
+      }
+
+      const absoluteUrl = `${SITE_URL}${routePath}`;
+      if (!mainSitemap.includes(`<loc>${absoluteUrl}</loc>`)) {
+        error(`Main sitemap is missing ${absoluteUrl}`);
+      }
+      if (!builtRss.includes(`<link>${absoluteUrl}</link>`)) {
+        error(`RSS is missing ${absoluteUrl}`);
+      }
+    }
+  } else {
+    error("videos.json must contain an array");
+  }
+}
+
+
+if (fs.existsSync(VIDEOS_LIBRARY_FILE)) {
+  const librarySource = read(VIDEOS_LIBRARY_FILE);
+  if (librarySource.includes('"@type": "VideoObject"') || librarySource.includes("buildVideoSchema")) {
+    error("Video library must not emit standalone VideoObject schemas; each video owns its schema on /videos/:slug");
   }
 }
 
