@@ -1,62 +1,77 @@
 export async function onRequestGet(context: any) {
   const { request, env } = context
-  const cookie = request.headers.get("cookie") || ""
-
-  // ✅ لازم يكون في session للعميل
-  const match = cookie.match(/pybcco_client=([^;]+)/)
-  if (!match) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), {
-      status: 401,
-      headers: { "Content-Type": "application/json" },
-    })
+  const jsonHeaders = {
+    "Content-Type": "application/json",
+    "Cache-Control": "no-store",
   }
 
-  const accessToken = match[1]
-
-  // ✅ headers للـ RLS
-  if (!env.SUPABASE_URL || !env.SUPABASE_ANON_KEY) {
-    return new Response(JSON.stringify({ error: "Missing Supabase env" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    })
-  }
-
-  const headers: Record<string, string> = {
-    Accept: "application/json",
-    apikey: env.SUPABASE_ANON_KEY,
-    Authorization: `Bearer ${env.SUPABASE_ANON_KEY}`,
-    "x-client-token": accessToken,
-  }
-
-  // ✅ رجّع مشاريع العميل فقط
-  // (بوجود RLS الصحيح على projects رح يرجّع بس تبع العميل)
-  const res = await fetch(
-    `${env.SUPABASE_URL}/rest/v1/projects?select=*&order=created_at.desc`,
-    { headers }
-  )
-
-  const text = await res.text()
-  let data: any = null
   try {
-    data = text ? JSON.parse(text) : null
-  } catch {
-    data = null
-  }
+    const cookie = request.headers.get("cookie") || ""
+    const match = cookie.match(/pybcco_client=([^;]+)/)
+    const accessToken = match?.[1]
+      ? decodeURIComponent(match[1]).trim()
+      : ""
 
-  if (!res.ok) {
+    if (!accessToken) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: jsonHeaders,
+      })
+    }
+
+    const serviceHeaders = {
+      apikey: env.SUPABASE_SERVICE_ROLE_KEY,
+      Authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}`,
+      Accept: "application/json",
+    }
+
+    const clientRes = await fetch(
+      `${env.SUPABASE_URL}/rest/v1/clients?access_token=eq.${encodeURIComponent(
+        accessToken
+      )}&select=id`,
+      { headers: serviceHeaders }
+    )
+
+    const clients = await clientRes.json().catch(() => [])
+    const clientId = Array.isArray(clients) ? clients?.[0]?.id : null
+
+    if (!clientRes.ok || !clientId) {
+      return new Response(JSON.stringify({ error: "Invalid client session" }), {
+        status: 401,
+        headers: jsonHeaders,
+      })
+    }
+
+    const projectsRes = await fetch(
+      `${env.SUPABASE_URL}/rest/v1/projects?client_id=eq.${encodeURIComponent(
+        clientId
+      )}&order=created_at.desc&select=*`,
+      { headers: serviceHeaders }
+    )
+
+    const projects = await projectsRes.json().catch(() => null)
+
+    if (!projectsRes.ok) {
+      return new Response(
+        JSON.stringify({
+          error: "Failed to load projects",
+          details: projects,
+        }),
+        { status: 502, headers: jsonHeaders }
+      )
+    }
+
+    return new Response(
+      JSON.stringify(Array.isArray(projects) ? projects : []),
+      { status: 200, headers: jsonHeaders }
+    )
+  } catch (error: any) {
     return new Response(
       JSON.stringify({
-        error: "Supabase error (projects)",
-        status: res.status,
-        details: data,
+        error: "Server error",
+        details: error?.message || String(error),
       }),
-      { status: res.status, headers: { "Content-Type": "application/json" } }
+      { status: 500, headers: jsonHeaders }
     )
   }
-
-  // ✅ لازم يرجّع Array
-  return new Response(JSON.stringify(Array.isArray(data) ? data : []), {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  })
 }

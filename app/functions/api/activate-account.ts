@@ -164,6 +164,43 @@ export async function onRequestGet(context: any) {
       .eq("phone", phone)
       .eq("activated", false);
 
+    const { data: linkedClient, error: linkedClientError } = await supabase
+      .from("clients")
+      .select("id, access_token")
+      .eq("phone", phone)
+      .maybeSingle();
+
+    if (linkedClientError) {
+      return new Response(
+        JSON.stringify({ error: linkedClientError.message }),
+        {
+          status: 500,
+          headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": "no-store",
+          },
+        }
+      );
+    }
+
+    const responseHeaders: Record<string, string> = {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-store",
+    };
+
+    const clientAccessToken = String(linkedClient?.access_token || "").trim();
+
+    if (clientAccessToken) {
+      responseHeaders["Set-Cookie"] = [
+        `pybcco_client=${encodeURIComponent(clientAccessToken)}`,
+        "HttpOnly",
+        "Secure",
+        "Path=/",
+        "SameSite=Lax",
+        `Max-Age=${60 * 60 * 24 * 365}`,
+      ].join("; ");
+    }
+
     return new Response(
       JSON.stringify({
         success: true,
@@ -175,10 +212,13 @@ export async function onRequestGet(context: any) {
           phone: finalUser.phone,
           activatedAt: new Date().toISOString(),
         },
+        client: linkedClient
+          ? { id: linkedClient.id, hasPortalSession: !!clientAccessToken }
+          : null,
       }),
       {
         status: 200,
-        headers: { "Content-Type": "application/json" },
+        headers: responseHeaders,
       }
     );
   } catch (err: any) {

@@ -24,7 +24,7 @@ export default function PortalPage() {
   const [authorized, setAuthorized] = useState<boolean | null>(null);
   const [activatedSession, setActivatedSession] =
     useState<ActivatedSession | null>(null);
-  const [clientId, setClientId] = useState<string | null>(null);
+  const [portalSessionMissing, setPortalSessionMissing] = useState(false);
 
   useEffect(() => {
     checkAccess();
@@ -38,50 +38,54 @@ export default function PortalPage() {
         return;
       }
 
-      try {
-        const parsed: ActivatedSession = JSON.parse(raw);
+      const parsed: ActivatedSession = JSON.parse(raw);
 
-        if (!parsed?.phone) {
-          localStorage.removeItem(ACTIVATED_USER_STORAGE_KEY);
-          setAuthorized(false);
-          return;
-        }
-
-        if (
-          parsed?.expiresAt &&
-          Number(parsed.expiresAt) > 0 &&
-          Number(parsed.expiresAt) < Date.now()
-        ) {
-          localStorage.removeItem(ACTIVATED_USER_STORAGE_KEY);
-          setAuthorized(false);
-          return;
-        }
-
-        setActivatedSession(parsed);
-
-        const resClient = await fetch(
-          `/api/check-user-client?phone=${encodeURIComponent(parsed.phone)}`
-        );
-
-        const clientData = await resClient.json().catch(() => null);
-
-        if (
-          resClient.ok &&
-          clientData?.found &&
-          clientData?.client?.id &&
-          Number(clientData?.projectsCount || 0) > 0
-        ) {
-          setClientId(String(clientData.client.id));
-          setAuthorized(true);
-          return;
-        }
-
-        navigate("/account", { replace: true });
-        return;
-      } catch {
+      if (!parsed?.phone) {
         localStorage.removeItem(ACTIVATED_USER_STORAGE_KEY);
         setAuthorized(false);
+        return;
       }
+
+      if (
+        parsed?.expiresAt &&
+        Number(parsed.expiresAt) > 0 &&
+        Number(parsed.expiresAt) < Date.now()
+      ) {
+        localStorage.removeItem(ACTIVATED_USER_STORAGE_KEY);
+        setAuthorized(false);
+        return;
+      }
+
+      setActivatedSession(parsed);
+
+      const sessionRes = await fetch("/api/client-session", {
+        credentials: "include",
+        cache: "no-store",
+      });
+
+      if (sessionRes.ok) {
+        setPortalSessionMissing(false);
+        setAuthorized(true);
+        return;
+      }
+
+      const clientRes = await fetch(
+        `/api/check-user-client?phone=${encodeURIComponent(parsed.phone)}`,
+        { cache: "no-store" }
+      );
+      const clientData = await clientRes.json().catch(() => null);
+
+      if (
+        clientRes.ok &&
+        clientData?.found &&
+        Number(clientData?.projectsCount || 0) > 0
+      ) {
+        setPortalSessionMissing(true);
+        setAuthorized(false);
+        return;
+      }
+
+      navigate("/account", { replace: true });
     } catch {
       setAuthorized(false);
     }
@@ -147,8 +151,9 @@ export default function PortalPage() {
             </h1>
 
             <p className="mb-6 text-center text-sm leading-8 text-gray-600">
-              للوصول إلى حسابك ومشاريعك، يرجى إنشاء حسابك وتفعيله عبر البريد
-              الإلكتروني أولًا.
+              {portalSessionMissing
+                ? "حسابك مفعّل والمشروع موجود، لكن جلسة بوابة العملاء القديمة تحتاج تجديدًا مرة واحدة."
+                : "للوصول إلى حسابك ومشاريعك، يرجى إنشاء حسابك وتفعيله عبر البريد الإلكتروني أولًا."}
             </p>
 
             <div className="space-y-3">
@@ -156,7 +161,9 @@ export default function PortalPage() {
                 to="/create-account"
                 className="block w-full rounded-xl bg-yellow-500 py-3 text-center font-bold text-black transition hover:opacity-90"
               >
-                إنشاء حساب جديد
+                {portalSessionMissing
+                  ? "إرسال رابط تفعيل جديد"
+                  : "إنشاء حساب جديد"}
               </Link>
 
               <Link
@@ -175,11 +182,9 @@ export default function PortalPage() {
   return (
     <ClientProjects
       activatedSession={activatedSession}
-      clientId={clientId}
       onLogout={() => {
         setAuthorized(false);
         setActivatedSession(null);
-        setClientId(null);
       }}
     />
   );
@@ -187,11 +192,9 @@ export default function PortalPage() {
 
 function ClientProjects({
   activatedSession,
-  clientId,
   onLogout,
 }: {
   activatedSession: ActivatedSession | null;
-  clientId: string | null;
   onLogout: () => void;
 }) {
   const [projects, setProjects] = useState<ProjectItem[]>([]);
@@ -205,15 +208,15 @@ function ClientProjects({
       setLoading(true);
 
       try {
-        if (!clientId) {
-          setProjects([]);
-          setLoading(false);
+        const res = await fetch("/api/get-client-projects", {
+          credentials: "include",
+          cache: "no-store",
+        });
+
+        if (res.status === 401 || res.status === 403) {
+          onLogout();
           return;
         }
-
-        const res = await fetch(
-          `/api/get-projects-by-client?clientId=${encodeURIComponent(clientId)}`
-        );
 
         const data = await res.json().catch(() => null);
 
@@ -237,7 +240,7 @@ function ClientProjects({
         setLoading(false);
       }
     })();
-  }, [clientId]);
+  }, []);
 
   const handleLogout = async () => {
     localStorage.removeItem(ACTIVATED_USER_STORAGE_KEY);
