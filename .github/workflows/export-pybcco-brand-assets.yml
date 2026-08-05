@@ -1,0 +1,33 @@
+name: Export PYBCCO Brand Assets
+
+on:
+  push:
+    branches:
+      - feature/export-pybcco-brand-assets
+  workflow_dispatch:
+
+jobs:
+  export-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare brand package
+        shell: bash
+        run: |
+          mkdir -p brand-assets/fonts
+          cp app/public/logo.webp brand-assets/logo.webp
+          cp app/public/favicon.webp brand-assets/favicon.webp || true
+          cp app/src/index.css brand-assets/index.css
+          if [ -d app/public/fonts/cairo ]; then
+            cp -R app/public/fonts/cairo/. brand-assets/fonts/
+          fi
+
+      - name: Upload brand assets
+        uses: actions/upload-artifact@v4
+        with:
+          name: PYBCCO-Official-Brand-Assets
+          path: brand-assets/
+          if-no-files-found: error
+          retention-days: 7
