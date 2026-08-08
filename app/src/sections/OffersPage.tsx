@@ -22,8 +22,8 @@ import {
 const SITE_URL = "https://pybcco.com";
 const OFFERS_URL = `${SITE_URL}/offers`;
 const PHONE_WHATSAPP = "966550604837";
-const START_DATE = "2 يوليو 2026";
-const END_DATE = "31 يوليو 2026";
+const START_DATE = "2 اغسطس 2026";
+const END_DATE = "31 اغسطس 2026";
 
 const whatsappUrl = (message: string) =>
   `https://wa.me/${PHONE_WHATSAPP}?text=${encodeURIComponent(message)}`;
@@ -171,8 +171,8 @@ const jsonLd = [
       description: offer.description,
       url: `${OFFERS_URL}#${offer.id}`,
       availability: "https://schema.org/InStock",
-      validFrom: "2026-07-02",
-      validThrough: "2026-07-31",
+      validFrom: "2026-08-02",
+      validThrough: "2026-08-31",
       areaServed: {
         "@type": "City",
         name: "Riyadh",
@@ -307,7 +307,7 @@ export default function OffersPage() {
                 <div className="flex items-center justify-between gap-4 mb-5">
                   <div>
                     <p className="text-gold font-bold text-sm mb-1">صلاحية العروض</p>
-                    <h2 className="text-white text-2xl font-extrabold">عروض يوليو 2026</h2>
+                    <h2 className="text-white text-2xl font-extrabold">عروض اغسطس 2026</h2>
                   </div>
                   <div className="h-14 w-14 rounded-2xl bg-gold text-black flex items-center justify-center">
                     <Timer className="h-7 w-7" />

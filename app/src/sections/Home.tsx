@@ -414,7 +414,7 @@ export default function Home() {
             >
               <Sparkles className="w-4 h-4 shrink-0" />
               <span>
-                عروض يوليو للمشاريع الجديدة — خصم 3% وتصميم مبدئي مجاني
+                عروض اغسطس للمشاريع الجديدة — خصم 3% وتصميم مبدئي مجاني
               </span>
               <span className="hidden sm:inline text-lg leading-none">←</span>
             </Link>
